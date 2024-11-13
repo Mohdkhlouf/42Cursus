@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:31 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/08 14:39:05 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:35:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,3 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
-
-// int main(void)
-// {
-// 	char str[]="Ali";
-// 	char str2[] = "Alz";
-// 	int result = ft_memcmp("t\200", "t\0", 2);
-// 	printf("%d",result);
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:15:39 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/04 12:33:19 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:33:01 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,3 @@ int	ft_atoi(const char *str)
 	}
 	return (num * sign);
 }
-
-// int main(void)
-// {
-// 	char str[]="       --123654";
-// 	int result = ft_atoi(str);
-// 	printf("%d",result);
-// }

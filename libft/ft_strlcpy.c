@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:18:37 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/11 15:19:25 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:37:01 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,3 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t n)
 	}
 	return (count);
 }
-
-// int main(void)
-// {
-// 	char	*dest;
-// 	dest = malloc(15 * sizeof (char));
-// 	int result = ft_strlcpy(dest, "\0", 0);
-// 	printf("%d" , result);
-// }

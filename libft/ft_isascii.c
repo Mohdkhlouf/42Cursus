@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/06 19:34:13 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:33:39 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,3 @@ int	ft_isascii(int c)
 	else
 		return (0);
 }
-/*
-int main(void)
-{
-	char c[] = "¥";
-	printf("%d", ft_isascii(c));
-	return (0);
-}
-*/

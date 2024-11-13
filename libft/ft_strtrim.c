@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:09:07 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/11 20:06:26 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:38:08 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,39 +59,19 @@ static int	right_count(char const *s1, char const *set)
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
-{	
+{
 	char	*newstr;
 	int		start;
 	int		end;
-	size_t	i;
 
 	start = 0;
-	i = 0;
 	end = 0;
-	if (!*s1)
-		return (ft_strdup(""));
+	if (!s1)
+		return (NULL);
+	if (!set)
+		return ((char *)s1);
 	start = left_count(s1, set);
 	end = right_count(s1, set);
-	if (start - end < 0)
-		return (ft_strdup(""));
-	else
-		{
-			newstr = malloc(ft_strlen(s1) - start - end + 1);
-			if (!newstr)
-				return (NULL);
-			
-			while (i < (ft_strlen(s1) - start - end))
-			{
-				newstr[i] = s1[i + start];
-				i++;
-			}
-		}
-	newstr[i] = '\0';
+	newstr = ft_substr(s1, start, (ft_strlen(s1) - end - start));
 	return (newstr);
-}
-int main(void)
-{
-	char * result = ft_strtrim(".....", ".");
-	printf("%s", result);
-	return (0);
 }

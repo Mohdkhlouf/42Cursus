@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:18:59 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/07 18:28:15 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:38:02 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,9 @@ char	*ft_strrchr(const char *s, int c)
 		i++;
 	while (i >= 0)
 	{
-		if (s[i] == (char )c)
-			return ((char *) &s[i]);
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
 		i--;
 	}
 	return (NULL);
 }
-// int main(void)
-// {
-// 	char s[]="mohaad";
-// 	int c = 'm';
-
-// 	char *result = ft_strrchr(s,c);
-// 	printf("%s\n",result);
-// 	printf("%ld\n",result-s);
-// 	return (0);
-// }

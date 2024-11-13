@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:19:05 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/06 19:36:39 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:38:26 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,3 @@ int	ft_tolower(int c)
 		return (c + 32);
 	return (c);
 }
-// int main(void)
-// {
-// 	char result;
-// 	result = 'zz';
-// 	printf("%c", ft_toupper(result));
-// 	return (0);
-// }

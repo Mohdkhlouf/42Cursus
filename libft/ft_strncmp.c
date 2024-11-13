@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:18:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/08 14:20:45 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:37:51 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,3 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
-
-// int main(void)
-// {
-// 	char *str1 = "ABCZ";
-// 	char *str2 = "ABC";
-// 	int n = 4;
-// 	int result = ft_strncmp("test\200", "test\0", 6);
-// 	printf("%d", result);
-// }

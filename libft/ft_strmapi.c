@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 09:56:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/07 11:39:00 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:37:36 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	len = ft_strlen(s);
 	if (!s)
 		return (NULL);
-	str = malloc ((len + 1) * sizeof (char));
+	str = malloc((len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	while (i < len)

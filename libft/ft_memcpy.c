@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:43 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/08 15:01:00 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:35:48 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,3 @@ void	*ft_memcpy(void *s1, const void *s2, size_t n)
 	}
 	return (s1);
 }
-// int main(void)
-// {
-// 	char str[]="Hello, World! 123456";
-// 	char str2[] = "Ali";
-// 	size_t n= 3;
-// 	printf("Before: %s\n", str);
-// 	ft_memcpy(str+7,str,10);
-// 	printf("After: %s", str);
-// 	return (0);
-// }

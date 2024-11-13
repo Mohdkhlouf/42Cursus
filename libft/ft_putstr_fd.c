@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:46:23 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/07 11:41:31 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:37:28 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,3 @@ void	ft_putstr_fd(char *s, int fd)
 		i++;
 	}
 }
-
-// int main(void)
-// {
-// 	char *str = "Mohammad";
-// 	ft_putstr_fd(str, 1);
-// 	return (0);
-// }

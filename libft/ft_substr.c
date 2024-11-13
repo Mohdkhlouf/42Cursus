@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 10:59:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/11 15:56:14 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:38:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 
 	slen = ft_strlen(s);
+	if (!s)
+		return (NULL);
 	if (start >= slen)
 		return (ft_strdup(""));
 	if (len > slen - start)
@@ -35,10 +37,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	sub[i] = 0;
 	return (sub);
 }
-
-// int main(void)
-// {
-// 	char *result = ft_substr("tripouille", 100, 1);
-// 	printf("%s", result);
-// 	return (0);
-// }

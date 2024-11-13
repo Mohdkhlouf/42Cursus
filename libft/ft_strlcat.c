@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:18:10 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/08 11:01:40 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:37:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,3 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 		dst[i + j] = '\0';
 	return (i + ft_strlen(src));
 }
-
-// int main(void)
-// {
-//     char *dest;
-
-// 	dest= (char *)malloc(sizeof(*dest) * 15);
-// 	memset(dest, 0, 15);
-// 	memset(dest, 'r', 14);
-//     int result = ft_strlcat(dest, "lorem ipsum dolor sit amet", 5);
-//     printf("%s\n", dest);
-// 	return (0);
-// }

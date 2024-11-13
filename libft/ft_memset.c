@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:57 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/08 13:33:36 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:35:28 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,3 @@ void	*ft_memset(void *ptr, int x, size_t n)
 	}
 	return (ptr);
 }
-/*
-int main(void)
-{
-	char str[]="Mohammad Khlouf";
-	printf("Before:%s\n", str);
-	ft_memset(str ,'.' , 30 * sizeof(char));
-	printf("After:%s", str);
-	return (0);
-}
-*/

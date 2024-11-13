@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:47:11 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/07 15:04:21 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:33:59 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*convertt(long n, char *str, int counter)
 }
 
 static int	count_int(long n)
-{	
+{
 	int	i;
 
 	i = 0;
@@ -59,14 +59,14 @@ static int	count_int(long n)
 }
 
 char	*ft_itoa(int n)
-{	
+{
 	char	*str;
 	long	nn;
 
 	nn = n;
-	str = malloc ((count_int(nn) + 1) * sizeof (char));
+	str = malloc((count_int(nn) + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	convertt (nn, str, count_int(nn));
+	convertt(nn, str, count_int(nn));
 	return (str);
 }

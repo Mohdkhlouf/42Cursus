@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/07 11:45:36 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:35:00 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,3 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return (NULL);
 }
-// int main(void)
-// {
-
-// 	char str[]="mohammad";
-// 	char * result = ft_memchr(str, 'd', 8);
-// 	printf("%s", result);
-// 	return (0);
-// }

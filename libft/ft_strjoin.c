@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:10:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/07 16:43:33 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:37:08 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	joined_str[i] = '\0';
 	return (joined_str);
 }
-
-// int main(void)
-// {
-// 	char *str1 = "lorem ipsum";
-// 	char *str2 = "dolor sit amet";
-// 	char *result = ft_strjoin(str1, str2);
-// 	printf("Final:%s", result);
-// 	return (0);
-// }

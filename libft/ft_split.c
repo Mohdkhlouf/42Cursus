@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:59:49 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/11 16:47:29 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:37:24 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*fill_word(const char *s, int word_start, int i)
 	int		j;
 
 	j = 0;
-	word = malloc((i - word_start +1) * sizeof (char));
+	word = malloc((i - word_start + 1) * sizeof(char));
 	if (!word)
 		return (NULL);
 	while (word_start < i)
@@ -68,7 +68,7 @@ static char	*fill_word(const char *s, int word_start, int i)
 	return (word);
 }
 
-static char	**loop(char **arr, char c, char *s, int word_start )
+static char	**loop(char **arr, char c, char *s, int word_start)
 {
 	int	i;
 	int	j;
@@ -104,25 +104,15 @@ char	**ft_split(const char *s, char c)
 	word_start = -1;
 	if (!s)
 	{
-		arr = malloc (1);
+		arr = malloc(1);
 		arr[0] = NULL;
 	}
 	else
 	{
-		arr = malloc ((word_count(s, c) + 1) * sizeof (char *));
+		arr = malloc((word_count(s, c) + 1) * sizeof(char *));
 		if (!arr)
 			return (NULL);
 		arr = loop(arr, c, (char *)s, word_start);
 	}
 	return (arr);
 }
-// int main(void)
-// {
-// 	char *str="";
-// 	char **arr = ft_split(str, '@');
-// 	while(*arr)
-// 	{
-// 		printf("%s\n", arr[0]);
-// 	}
-// 	return (0);
-// }

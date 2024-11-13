@@ -6,7 +6,7 @@
 #    By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 11:48:10 by mkhlouf           #+#    #+#              #
-#    Updated: 2024/11/07 11:48:19 by mkhlouf          ###   ########.fr        #
+#    Updated: 2024/11/13 17:38:40 by mkhlouf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,29 +20,31 @@ SOURCES = \
 	ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c \
 	ft_putendl_fd.c ft_putnbr_fd.c 
 
-# BSOURCES = \
-# 	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
-# 	ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
+BSOURCES = \
+	ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bonus.c \
+ 	ft_lstdelone_bonus.c ft_lstclear_bonus.c ft_lstmap_bonus.c ft_lstiter_bonus.c
+	
 OBJECTS = $(SOURCES:.c=.o)
-# BOBJECTS = $(BSOURCES:.c=.o)
+BOBJECTS = $(BSOURCES:.c=.o)
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
+AR = ar
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
 	$(AR) -r $@ $?
 
-# bonus: $(OBJECTS) $(BOBJECTS)
-# 	$(AR) -r $(NAME) $?
+bonus: $(NAME) $(BOBJECTS)
+	$(AR) -r $@ $?
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $?
-	
+
 so:
-	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SOURCES)
-	gcc -nostartfiles -shared -o libft.so $(OBJECTS)
+	$(CC) -nostartfiles -fPIC $(CFLAGS) $(SOURCES) $(BSOURCES)
+	gcc -nostartfiles -shared -o libft.so $(OBJECTS) $(BOBJECTS)
 
 clean:
 	rm -f $(OBJECTS) $(BOBJECTS)
@@ -53,3 +55,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all bonus clean fclean re
+

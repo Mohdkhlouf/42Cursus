@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:16:40 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/06 19:38:34 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:33:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,3 @@ int	ft_isalpha(int c)
 	else
 		return (0);
 }
-/*
-int	main(void)
-{
-	int i;
-	int flag;
-	
-	i = 0;
-	flag = 1;
-	char s[]= "aa1aa";
-	
-	while(s[i]){
-		printf("%c", s[i]);
-		if (ft_isalpha(s[i]) != 1)
-			{flag = 0;
-			break;}
-		i++;
-	}
-	printf("\n%d", flag);
-	return (0);
-}
-*/

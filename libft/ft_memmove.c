@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:50 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/08 16:14:53 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:35:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,27 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	size_t	i;
-	char	*s;
-	char	*d;
+	size_t				i;
+	unsigned const char	*s;
+	unsigned char		*d;
 
 	i = 0;
-	s = (char *)src;
-	d = (char *)dest;
-	if (!s && !d)
+	if (!src && !dest)
 		return (NULL);
+	s = (unsigned const char *)src;
+	d = (unsigned char *)dest;
 	if (d > s)
+	{
 		while (n-- > 0)
 			d[n] = s[n];
+	}
 	else
-		while (i++ < n)
-			d[i - 1] = s[i - 1];
+	{
+		while (i < n)
+		{
+			d[i] = s[i];
+			i++;
+		}
+	}
 	return (d);
 }
-// int main(void)
-// {
-// 	char src[]="lorem ipsum dolor sit amet";
-// 	char	*dest;
-// 	dest = src + 1;
-// 	int size = 128 * 1024 * 1024;
-// 	char *dst = (char *)malloc(sizeof(char) * size);
-// 	char *data = (char *)malloc(sizeof(char) * size);
-// 	ft_memset(data, 'A', size);
-// 	char  *result;
-// 	result = ft_memmove(dst, data, size);
-// 	printf("%s", result);
-// 	return (0);
-// }

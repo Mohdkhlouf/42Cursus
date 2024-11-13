@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 09:24:58 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/11 16:38:42 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:33:15 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,23 @@
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	size_t				i;
-	unsigned char		*ptr;
+	size_t			i;
+	unsigned char	*ptr;
 
 	i = 0;
 	if (nmemb == 0 || size == 0)
-		return (malloc (1));
+		return (malloc(1));
 	if (nmemb > SIZE_MAX / size)
 		return (NULL);
 	if (!nmemb || !size)
 	{
-		ptr = malloc (1);
+		ptr = malloc(1);
 		return (ptr);
 	}
-	ptr = malloc (nmemb * size);
+	ptr = malloc(nmemb * size);
 	if (!ptr)
 		return (NULL);
 	while (i < size * nmemb)
 		ptr[i++] = 0;
 	return (ptr);
 }
-
-// int main(void)
-// {
-// char *result = ft_calloc(-5,-5);
-// printf("%s",result);
-// }
