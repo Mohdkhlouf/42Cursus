@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:49:17 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/19 14:28:56 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/19 16:45:49 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ void	ft_putchar(char c, int *count);
 void	ft_putnbr(int n, int *count);
 void	ft_putstr(char *s, int *count);
 size_t	ft_strlen(const char *str);
-void	ft_putnbr_unsigned(unsigned int n, int *count);
+void	ft_putnbr_unsigned(unsigned long long n, int *count);
 void	ft_putnbr_hex(unsigned int n, int *count, unsigned char c);
 void	ft_putptr(void *n, int *count);
+int		ft_printf(const char *num, ...);
 
 #endif

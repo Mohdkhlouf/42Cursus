@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:46:17 by Xifeng            #+#    #+#             */
-/*   Updated: 2024/11/19 14:28:26 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/19 18:43:55 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,19 @@ void	ft_putstr(char *s, int *count)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	if(!s)
 	{
-		write(1, &s[i], 1);
-		i++;
-		(*count)++;
+		// write(1,"(null)",6);
+		// (*count) = (*count) + 6;
+		ft_putstr("(null)", count);
 	}
+	else
+	{
+		while (s[i])
+		{
+			ft_putchar(s[i], count);
+			i++;
+		}
+	}
+	
 }

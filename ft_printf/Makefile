@@ -1,17 +1,26 @@
-#Variables
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/11/19 15:09:22 by mkhlouf           #+#    #+#              #
+#    Updated: 2024/11/19 16:14:10 by mkhlouf          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
+# Variables
 NAME		= libftprintf.a
 INCLUDE		= include
-LIBFT		= libft
 SRC_DIR		= src/
 OBJ_DIR		= obj/
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra -I
+CFLAGS		= -Wall -Werror -Wextra -I$(INCLUDE)
 RM			= rm -f
 AR			= ar rcs
 
 # Colors
-
 DEF_COLOR = \033[0;39m
 GRAY = \033[0;90m
 RED = \033[0;91m
@@ -22,49 +31,50 @@ MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
-#Sources
+# Source Files (including .c extension)
+SRC_FILES	= ft_printf.c ft_putchar.c ft_putnbr_hex.c ft_putptr.c ft_strlen.c \
+             ft_putnbr.c ft_putnbr_unsigned.c ft_putstr.c
 
-SRC_FILES	=	ft_printf ft_printf_utils ft_print_ptr ft_print_unsigned ft_print_hex
+# Create object and source paths
+SRC 		= 	$(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJ 		= 	$(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 
-
-SRC 		= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(SRC_FILES)))
-OBJ 		= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC_FILES)))
-
-###
-
+# Targets
 OBJF		=	.cache_exists
 
+# Default Target
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
-			@make -C $(LIBFT)
-			@cp libft/libft.a .
-			@mv libft.a $(NAME)
 			@$(AR) $(NAME) $(OBJ)
 			@echo "$(GREEN)ft_printf compiled!$(DEF_COLOR)"
 
+# Compile object files
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJF)
 			@echo "$(YELLOW)Compiling: $< $(DEF_COLOR)"
-			@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+			@$(CC) $(CFLAGS) -c $< -o $@
 
+# Create object directory if it doesn't exist
 $(OBJF):
 			@mkdir -p $(OBJ_DIR)
 
+# Clean object files
 clean:
 			@$(RM) -rf $(OBJ_DIR)
-			@make clean -C $(LIBFT)
 			@echo "$(BLUE)ft_printf object files cleaned!$(DEF_COLOR)"
 
+# Full Clean (remove library and object files)
 fclean:		clean
 			@$(RM) -f $(NAME)
-			@$(RM) -f $(LIBFT)/libft.a
-			@echo "$(CYAN)ft_printf executable files cleaned!$(DEF_COLOR)"
-			@echo "$(CYAN)libft executable files cleaned!$(DEF_COLOR)"
+			@echo "$(CYAN)ft_printf library cleaned!$(DEF_COLOR)"
 
+# Rebuild everything (clean and compile again)
 re:			fclean all
 			@echo "$(GREEN)Cleaned and rebuilt everything for ft_printf!$(DEF_COLOR)"
 
+# Check for code style with norminette
 norm:
-			@norminette $(SRC) $(INCLUDE) $(LIBFT) | grep -v Norme -B1 || true
+			@norminette $(SRC) $(INCLUDE) | grep -v Norme -B1 || true
 
+# Declare all targets as phony (not actual files)
 .PHONY:		all clean fclean re norm
