@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_unsigned.c                               :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 12:37:40 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/19 18:42:22 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/06 11:26:26 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/21 15:32:02 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putnbr_unsigned(unsigned long long n, int *count)
+void	ft_putnbr(int n, int *count)
 {
-	if (n == 0)
+	if (n == -2147483648)
+		ft_putstr("-2147483648", count);
+	else if (n < 0)
 	{
-		ft_putchar('0', count);
+		ft_putchar('-', count);
+		n = n * -1;
+		ft_putnbr(n, count);
 	}
 	else
 	{
@@ -26,9 +30,6 @@ void	ft_putnbr_unsigned(unsigned long long n, int *count)
 			ft_putnbr(n % 10, count);
 		}
 		else
-		{
-			n = n + 48;
-			ft_putchar(n, count);
-		}
+			ft_putchar((char){n + '0'}, count);
 	}
 }

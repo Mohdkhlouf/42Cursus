@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/06 11:26:26 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/19 18:42:33 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/06 10:33:20 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/21 15:31:50 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putnbr(int n, int *count)
+void	ft_putchar(char c, int *count)
 {
-	if (n == -2147483648)
+	ssize_t	result;
+
+	result = write(1, &c, 1);
+	if (result == -1)
 	{
-		ft_putstr("-2147483648", count);
+		(*count) = -1;
+		return ;
 	}
-	else if (n < 0)
-	{
-		ft_putchar('-', count);
-		n = n * -1;
-		ft_putnbr(n, count);
-	}
-	else
-	{
-		if (n > 9)
-		{
-			ft_putnbr(n / 10, count);
-			ft_putnbr(n % 10, count);
-		}
-		else
-		{
-			ft_putchar((char){n + '0'}, count);
-		}
-	}
+	(*count)++;
 }

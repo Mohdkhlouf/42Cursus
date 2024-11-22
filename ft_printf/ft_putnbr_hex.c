@@ -6,13 +6,13 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:53:14 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/19 14:28:45 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/21 15:31:54 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	print_letters(unsigned int n, int *count, unsigned char x)
+void	print_letters(uint64_t n, int *count, unsigned char x)
 {
 	if (n == 10)
 		ft_putchar('a' - x, count);
@@ -28,7 +28,7 @@ void	print_letters(unsigned int n, int *count, unsigned char x)
 		ft_putchar('f' - x, count);
 }
 
-void	ft_putnbr_hex(unsigned int n, int *count, unsigned char c)
+void	ft_putnbr_hex(uint64_t n, int *count, unsigned char c)
 {
 	unsigned char	x;
 
