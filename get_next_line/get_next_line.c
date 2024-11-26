@@ -6,67 +6,76 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:41:20 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/22 16:53:56 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/26 17:36:09 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char * str_filling(char str2[], char str[])
-{	static int i = 0;
-	int j;
-
-	j = 0;
-	while (str[j] != '\0' || str[j] == EOF)
-	{
-		if(str[j] == '\0')
-		{
-			str2[i] = '\0';
-		}
-		str2[i] = str[j];
-		i++;
-		j++;
-	}
-	return (str2);
-}
-
-
-char * print_line(char str[])
+char	*ft_fix_line(char *line, char **remainder)
 {
-	char *str2;
-	
-	str2 = malloc(strlen(str)+1);
-	if(!str2)
+	int		i;
+	char	*temp1;
+
+	i = 0;
+	i = strchr(line, '\n') - line;
+	temp1 = ft_substr(line, 0, i + 1);
+	free(*remainder);
+	*remainder = malloc(1);
+	if (!*remainder)
 		return (NULL);
-	str_filling(str2, str);
-	printf("%s\n",str2);
-	return(str2);
+	*remainder = ft_substr(line, i + 1, (ft_strlen(line) - i));
+	free(line);
+	line = temp1;
+	return (line);
 }
 
+char *read_line(int fd)
+{	
+	
+	char		*buff;
+	int			read_letters;
+	char 		*line;
+	
+	read_letters = 1;
+	buff = malloc(BUFFER_SIZE + 1);
+	line = malloc(BUFFER_SIZE + 1);
+	
+	while (read_letters > 0)
+	{
+		read_letters = read(fd, buff, BUFFER_SIZE);
+		line = ft_strjoin(line, buff);
+		if (strchr(buff, '\n'))
+			break ;
+	}
+	return (line);
+}
 char	*get_next_line(int fd)
 {
-	size_t	buffer_size = 20;
-	char	str[buffer_size];
-
-	while (read(fd, str, buffer_size))
-	{
-		print_line(str);
-		break;
-	}
-	return (0);
+	static char	*remainder;
+	char		*line;
+	
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+    	return (NULL);
+	line = read_line(fd);
+	printf("Line is :##%s\n",line);
+	
+	return (line);
 }
 int	main(void)
 {
 	int fd;
-
+	char *line;
 	fd = open("text.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		return (1);
 	}
-	get_next_line(fd);
-	get_next_line(fd);
-	get_next_line(fd);
+	line = get_next_line(fd);
+	printf("%s", line);
+	line = get_next_line(fd);
+	printf("%s", line);
+	free(line);
 	close(fd);
 	return (0);
 }
