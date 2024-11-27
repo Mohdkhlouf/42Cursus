@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:41:17 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/26 15:35:41 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/11/27 16:21:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 20
+#  define BUFFER_SIZE 10
 # endif
 
 # include <fcntl.h>
