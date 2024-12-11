@@ -1,0 +1,25 @@
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -c
+
+FILES = srcs
+INCDIR = includes
+
+MYLIB = libft.a
+SOURCES = $(FILES)/ft_putchar.c $(FILES)/ft_swap.c $(FILES)/ft_putstr.c $(FILES)/ft_strlen.c $(FILES)/ft_strcmp.c
+OFILES = $(SOURCES:.c=.o)
+
+all: $(MYLIB)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $< -o $@ -I $(INCDIR)
+	
+$(MYLIB): $(OFILES)
+	ar cr $@ $(OFILES)
+
+clean:
+	rm -f $(OFILES)
+
+fclean: clean
+	rm -f $(MYLIB)
+
+re: fclean all

@@ -6,124 +6,84 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:41:20 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/27 18:39:31 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/04 15:17:20 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_fix_line(char *line, char **remainder)
+char	*ft_fix_line(char *line)
 {
-	int		i;
-	char	*temp1;
-
-	i = 0;
-	if (!line)
-		return(NULL	);
-	i = strchr(line, '\n') - line;
-	if (i < 0)
-		i = ft_strlen(line);
-	temp1 = ft_substr(line, 0, i + 1);
-	if (!temp1)
-	{
-		free(line);
-		return (NULL);
-	}
-	free(*remainder);
-	*remainder = ft_substr(line, i + 1, (ft_strlen(line) - i));
-	// *remainder = ft_strdup(line + i);
-	if (!*remainder)
-	{
-		free(line);
-		free(temp1);
-		// free(remainder);
-		return (NULL);
-	}
-	free(line);
-	return (temp1);
-}
-
-char	*read_line(int fd, char *line, char *buff)
-{
-	ssize_t	read_letters;
+	ssize_t	i;
 	char	*temp;
 
-	read_letters = 1;
-	line[0] = '\0';
+	i = 0;
+	while ((line[i] != '\n') && (line[i] != '\0'))
+		i++;
+	if ((line[i] == 0) || (line[i + 1] == 0))
+		return (NULL);
+	temp = ft_substr(line, i + 1, ft_strlen(line) - i);
+	if (!temp)
+	{
+		line[0] = 0;
+		return (NULL);
+	}
+	if (*temp == 0)
+	{
+		free(temp);
+		temp = NULL;
+	}
+	line[i + 1] = 0;
+	return (temp);
+}
+
+char	*ft_read_line(int fd, char *buff, char *remainder, ssize_t read_letters)
+{
 	while (read_letters > 0)
 	{
 		read_letters = read(fd, buff, BUFFER_SIZE);
-		
-		buff[read_letters] = '\0';
-		if(!buff)
-			return (NULL);
-		temp = ft_strjoin(line, buff);
-		if(!temp)
-			return (NULL);
-		free(line);
-		line = temp;
-		
-		if (!line)
-		{
-			free(buff);
-			return (NULL);
-		}
-		
-		if (strchr(buff, '\n'))
+		if (read_letters == -1)
+			return (free(remainder), NULL);
+		else if (read_letters == 0)
+			break ;
+		buff[read_letters] = 0;
+		if (!remainder)
+			remainder = ft_strdup("");
+		if (!remainder)
+			break ;
+		remainder = ft_strjoin(remainder, buff);
+		if (!remainder)
+			break ;
+		if (ft_strchr(buff, '\n'))
 			break ;
 	}
-	free(buff);
-	return (line);
+	return (remainder);
 }
+
 char	*get_next_line(int fd)
 {
 	static char	*remainder;
 	char		*buff;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (NULL);
-	buff = malloc(BUFFER_SIZE + 1);
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
 		return (NULL);
-	line = malloc(BUFFER_SIZE);
-	if (!line)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
+		free(remainder);
 		free(buff);
+		remainder = NULL;
+		buff = NULL;
 		return (NULL);
 	}
-	line = read_line(fd, line, buff);
+	line = ft_read_line(fd, buff, remainder, 1);
+	free(buff);
+	buff = NULL;
 	if (!line)
 		return (NULL);
-	else
-	{
-		if (remainder != NULL)
-			line = ft_strjoin(remainder, line);
-		line = ft_fix_line(line, &remainder);
-	}
+	remainder = ft_fix_line(line);
+	if (line[0] == 0)
+		return (free(line), NULL);
 	return (line);
-}
-int	main(void)
-{
-	int fd;
-	char *line;
-	fd = open("text.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		return (1);
-	}
-	
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
-
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
-
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
-	close(fd);
-	return (0);
 }

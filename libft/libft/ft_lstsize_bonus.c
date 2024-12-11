@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 15:41:17 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/04 15:15:11 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/12 15:11:35 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:35:41 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+int	ft_lstsize(t_list *lst)
+{
+	t_list	*ptr;
+	int		counter;
 
-# include <stdlib.h>
-# include <unistd.h>
-
-char	*get_next_line(int fd);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(char *s1, char const *s2);
-size_t	ft_strlen(const char *str);
-char	*ft_strdup(const char *s);
-char	*ft_strchr(char *s, int c);
-
-#endif
+	counter = 0;
+	ptr = lst;
+	while (ptr)
+	{
+		ptr = ptr->next;
+		counter++;
+	}
+	return (counter);
+}

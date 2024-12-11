@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 15:41:17 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/04 15:15:11 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/04 10:08:20 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:37:16 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+char	*ft_strdup(const char *s)
+{
+	char	*ptr;
+	int		i;
+	int		count;
 
-# include <stdlib.h>
-# include <unistd.h>
-
-char	*get_next_line(int fd);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(char *s1, char const *s2);
-size_t	ft_strlen(const char *str);
-char	*ft_strdup(const char *s);
-char	*ft_strchr(char *s, int c);
-
-#endif
+	i = 0;
+	count = 0;
+	while (s[count])
+		count++;
+	ptr = (char *)malloc(count + 1);
+	if (!ptr)
+		return (NULL);
+	while (i < count)
+	{
+		ptr[i] = s[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}

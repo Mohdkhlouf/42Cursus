@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:41:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/27 16:21:28 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/04 15:14:21 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,19 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	slen;
 	size_t	i;
 
-	slen = ft_strlen(s);
 	if (!s)
 		return (NULL);
+	slen = ft_strlen(s);
 	if (start >= slen)
 		return (ft_strdup(""));
 	if (len > slen - start)
 		len = slen - start;
 	sub = (char *)malloc(sizeof(char) * (len + 1));
 	if (!sub)
+	{
+		free(sub);
 		return (NULL);
+	}
 	i = 0;
 	while (s[start + i] && i < len)
 	{
@@ -38,17 +41,17 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	char			*joined_str;
-	unsigned int	joined_str_len;
 	unsigned int	i;
 	unsigned int	j;
 
-	joined_str_len = ft_strlen(s1) + ft_strlen(s2);
+	if (!s1 || !s2)
+		return (NULL);
 	i = 0;
 	j = 0;
-	joined_str = malloc((joined_str_len + 1) * sizeof(char));
+	joined_str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!joined_str)
 		return (NULL);
 	while (s1[i])
@@ -57,6 +60,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[j])
 		joined_str[i++] = s2[j++];
 	joined_str[i] = '\0';
+	free(s1);
 	return (joined_str);
 }
 
@@ -72,6 +76,7 @@ size_t	ft_strlen(const char *str)
 	}
 	return (i);
 }
+
 char	*ft_strdup(const char *s)
 {
 	char	*ptr;
@@ -92,4 +97,22 @@ char	*ft_strdup(const char *s)
 	}
 	ptr[i] = '\0';
 	return (ptr);
+}
+
+char	*ft_strchr(char *s, int c)
+{
+	unsigned int	i;
+	char			cc;
+
+	cc = (char)c;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == cc)
+			return ((char *)&s[i]);
+		i++;
+	}
+	if (s[i] == cc)
+		return ((char *)&s[i]);
+	return (NULL);
 }
