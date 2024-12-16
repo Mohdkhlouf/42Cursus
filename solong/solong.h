@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:31:19 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/13 14:52:49 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/16 19:50:16 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 #define TILE_SIZE 64
 #define BUFFER_SIZE 1
-char *read_map(int fd,int *map_width, int *map_height);
+char **read_map(int *map_width, int *map_height);
+static mlx_image_t* image;
 
 #endif

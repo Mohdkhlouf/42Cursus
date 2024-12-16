@@ -9,44 +9,42 @@
 
 
 
-void my_keyhook(mlx_key_data_t keydata, void* param)
+static void ft_hook(void* param)
 {
-	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
-		mlx_close_window(param);
-	// if (mlx_is_key_down(param, MLX_KEY_UP))
-	// 	g_img->instances[0].y -= 5;
-	// if (mlx_is_key_down(param, MLX_KEY_DOWN))
-	// 	g_img->instances[0].y += 5;
-	// if (mlx_is_key_down(param, MLX_KEY_LEFT))
-	// 	g_img->instances[0].x -= 5;
-	// if (mlx_is_key_down(param, MLX_KEY_RIGHT))
-	// 	g_img->instances[0].x += 5;
+	const mlx_t* mlx = param;
+
+	printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
 }
+
+
 
 
 int32_t	main(void)
 {
-	int fd;
 	int map_width;
 	int map_height;
-	char *map;
+	char **map;
+	int i;
+	int j;
 
-	fd = 0;
+	i = 0;
+	j = 0;
 	map_width = 0;
 	map_height = 0;
-	fd = open("map.ber", O_RDONLY);
-	if (fd == -1) {
-        perror("Error opening file");
-    }
-	map = read_map(fd, &map_width, &map_height);
+
+	map = read_map(&map_width, &map_height);
 	if (!map_height || !map_width)
 	{
 		perror("null values");
 		exit(1);
 	}
-    // Init mlx with a canvas size of 256x256 and the ability to resize the window.
+	j = 0;
+	mlx_set_setting(MLX_MAXIMIZED, true);
     mlx_t* mlx = mlx_init(map_width * TILE_SIZE, map_height * TILE_SIZE, "MLX42", true);
     if (!mlx) exit(EXIT_FAILURE);
+	
+	// define a color
+
 
 
 	// create my tetures start
@@ -62,10 +60,6 @@ int32_t	main(void)
 	if (!wall)
         perror("error in loading wall image");
 	
-	// mlx_texture_t* ground = mlx_load_png("assets/ground.png");
-	// if (!ground)
-    //     perror("error in loading ground image");
-
 	mlx_texture_t* home = mlx_load_png("assets/home.png");
 	if (!home)
         perror("error in loading Home image");
@@ -73,17 +67,32 @@ int32_t	main(void)
 	mlx_image_t* img = mlx_texture_to_image(mlx, wall);
 	if (!img)
         perror("Error in loading image");
+	
+	mlx_image_t* player_img = mlx_texture_to_image(mlx, player);
+	if (!player_img)
+        perror("Error in loading image");
+	mlx_image_t* baby_img = mlx_texture_to_image(mlx, baby_boy);
+	if (!baby_img)
+        perror("Error in loading image");
 	// create my tetures end
 
-    // Draw the image at coordinate (0, 0).
+	while(i < map_height)
+		{
+			j = 0;
+			while(j < map_width)
+			{
+				if (map[i][j] == '1')
+					mlx_image_to_window(mlx, img, j*TILE_SIZE, i*TILE_SIZE);
+				else if (map[i][j] == 'P')
+					mlx_image_to_window(mlx, player_img, j*TILE_SIZE, i*TILE_SIZE);
+				else if (map[i][j] == 'C')
+					mlx_image_to_window(mlx, baby_img, j*TILE_SIZE, i*TILE_SIZE);
+				j++;
+			}
+			i++;		
+		}
 
-
-    mlx_image_to_window(mlx, img, 0*TILE_SIZE, 0*TILE_SIZE);
-	mlx_image_to_window(mlx, img, 1*TILE_SIZE, 0*TILE_SIZE);
-
-
-    // Run the main loop and terminate on quit.  
-	mlx_key_hook(mlx, &my_keyhook, NULL);
+	mlx_loop_hook(mlx, ft_hook, mlx);
     mlx_loop(mlx);
     mlx_terminate(mlx);
     return (EXIT_SUCCESS);

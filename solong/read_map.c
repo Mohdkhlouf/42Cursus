@@ -6,16 +6,16 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:56:57 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/13 17:12:11 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/16 17:41:46 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
-char **create_map_arr(int *columns,int *rows)
+#include "string.h"
+char **create_map_arr(char **map, int *columns,int *rows)
 {
-	char **map;
 	int i;
-
+	
 	i = 0;
 	map = malloc(*rows * sizeof(char));
 	if (!map)
@@ -32,19 +32,31 @@ char **create_map_arr(int *columns,int *rows)
 			}
 			free(map);
 			return (NULL);
-		}
+		}	
 		i++;
 	}
+
 return (map);
 }
 
-char	*read_map(int fd, int *columns, int *rows)
+char	**read_map(int *columns, int *rows)
 {
 	ssize_t		read_bytes;
 	char	*buffer;
 	char	**map;
 	int		first_col_size;
+	int i;
+	int j;
+	int fd;
 
+	fd = 0;
+	fd = open("map.ber", O_RDONLY);
+	if (fd == -1)
+	{
+        perror("Error opening file");
+    }
+	i = 0;
+	j = 0;
 	read_bytes = 1;
 	first_col_size = 0;
 	buffer = malloc(BUFFER_SIZE);
@@ -82,6 +94,23 @@ char	*read_map(int fd, int *columns, int *rows)
 	}
 	if(!columns || !rows)
 		exit(1);
-	map = create_map_arr( columns, rows);
-	return (0);
+	close(fd);
+	
+	map = create_map_arr(map, columns, rows);
+	char *row;
+	fd = open("map.ber", O_RDONLY);
+	row = malloc(*columns * sizeof(char) +1 );
+	if(!row)
+		return (NULL);
+	i = 0;
+	while (i < *rows)
+	{
+		read(fd, row, *columns+1);
+		row[*columns] = '\n';
+		map[i] = strdup(row);
+		i++;
+	}
+	close(fd);
+	return (map);
 }
+
