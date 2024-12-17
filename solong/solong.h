@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:31:19 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/16 19:50:16 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/17 16:11:31 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,16 @@
 #define BUFFER_SIZE 1
 char **read_map(int *map_width, int *map_height);
 static mlx_image_t* image;
+
+struct player
+{
+	mlx_image_t* img;
+	char **map;
+	int instance_id;
+	int map_width;
+	int map_height;
+};
+
+
 
 #endif
