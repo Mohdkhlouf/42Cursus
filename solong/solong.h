@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:31:19 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/17 16:11:31 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:20:21 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,20 @@ static mlx_image_t* image;
 
 struct player
 {
+	mlx_t* mlx;
 	mlx_image_t* img;
+	mlx_image_t* ground;
+	mlx_image_t* wall;
+	mlx_image_t* baby;
+	mlx_image_t* home;
 	char **map;
 	int instance_id;
 	int map_width;
 	int map_height;
+	int collected;
+	bool game_status;
 };
+
 
 
 
