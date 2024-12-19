@@ -50,6 +50,10 @@ void draw_player(struct player *player1)
 		i++;
 	}
 }
+int	two2one(int x, int y, struct player *player1)
+{
+	return (y * player1->map_width + x);
+}
 void	draw_collectables(struct player *player1)
 {
 	int	i;
@@ -61,11 +65,14 @@ void	draw_collectables(struct player *player1)
 	while (i < player1->map_height)
 	{
 		j = 0;
+
 		while (j < player1->map_width)
 		{
-			if (player1->map[i][j] == 'C')
-				mlx_image_to_window(player1->mlx, player1->baby, j * TILE_SIZE,
+			mlx_image_to_window(player1->mlx, player1->baby, j * TILE_SIZE,
 					i * TILE_SIZE);
+			player1->baby->instances[two2one(j, i,player1)].enabled = false;
+			if (player1->map[i][j] == 'C')
+				player1->baby->instances[two2one(j, i,player1)].enabled = true;
 			j++;
 		}
 		i++;
@@ -79,22 +86,28 @@ void	create_assets(struct player *player1)
 	mlx_texture_t	*home;
 	mlx_texture_t	*ground;
 	mlx_texture_t	*player;
+	int i;
 
+	i = 0;
 	baby_boy = mlx_load_png("assets/babyboy.png");
 	wall = mlx_load_png("assets/wall.png");
 	home = mlx_load_png("assets/home.png");
 	ground = mlx_load_png("assets/ground.png");
 	player = mlx_load_png("assets/player.png");
-	if (!baby_boy || wall || home || ground || player)
+	if (!baby_boy || !wall || !home || !ground || !player)
 		perror("error in loading Baby boy image");
 	player1->wall = mlx_texture_to_image(player1->mlx, wall);
 	player1->ground = mlx_texture_to_image(player1->mlx, ground);
 	player1->home = mlx_texture_to_image(player1->mlx, home);
 	player1->baby = mlx_texture_to_image(player1->mlx, baby_boy);
 	player1->img = mlx_texture_to_image(player1->mlx, player);
-	if (!player1->wall || !player1->ground || !player1->home || !player1->baby
-		|| !player1->img)
+	if (!player1->wall || !player1->ground || !player1->home || !player1->img)
 		perror("Error in loading image");
+	mlx_delete_texture(baby_boy);
+	mlx_delete_texture(wall);
+	mlx_delete_texture(home);
+	mlx_delete_texture(ground);
+	mlx_delete_texture(player);
 }
 
 void	move_player(int x, int y, struct player *player1)
@@ -113,15 +126,19 @@ void	move_player(int x, int y, struct player *player1)
 		puts("allow");
 		player1->img->instances->x = new_location_x * TILE_SIZE;
 		player1->img->instances->y = new_location_y * TILE_SIZE;
+		player1->map[new_location_y][new_location_x] = 'P';
+		player1->map[player_place_y][player_place_x] = '0';
 	}
 	else if (player1->map[new_location_y][new_location_x] == 'C')
 	{
 		puts("BABY");
 		player1->collected += 1;
 		printf("%d", player1->collected);
-		player1->map[new_location_y][new_location_x] = '0';
+		player1->map[new_location_y][new_location_x] = 'P';
 		player1->img->instances->x = new_location_x * TILE_SIZE;
 		player1->img->instances->y = new_location_y * TILE_SIZE;
+		player1->map[player_place_y][player_place_x] = '0';
+		player1->baby->instances[two2one(new_location_x,new_location_y,player1)].enabled = false;
 	}
 	else if (player1->map[new_location_y][new_location_x] == 'P')
 	{
@@ -135,7 +152,7 @@ void	move_player(int x, int y, struct player *player1)
 	{
 		puts("Not Allowed WALL");
 	}
-	draw_collectables(player1);
+	// draw_collectables(player1);
 }
 void	handle_keys(mlx_key_data_t keydata, void *param)
 {
