@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:56:57 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/16 17:41:46 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/20 16:47:25 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char **create_map_arr(char **map, int *columns,int *rows)
 return (map);
 }
 
-char	**read_map(int *columns, int *rows)
+char	**read_map(int *columns, int *rows, s_game *game)
 {
 	ssize_t		read_bytes;
 	char	*buffer;
@@ -67,6 +67,8 @@ char	**read_map(int *columns, int *rows)
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
 			break;
+		if (*buffer == 'C')
+			game->babies_to_collect+=1;
 		if (read_bytes == 0)
 		{
 			if(*rows !=0)
