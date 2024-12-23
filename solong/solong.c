@@ -6,13 +6,13 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:29:16 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/20 16:55:09 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/23 10:26:23 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-void change_image(s_game *game)
+void change_player_direction(s_game *game)
 {	
 	game->player_place_x = game->img->instances->x / TILE_SIZE;
 	game->player_place_y = game->img->instances->y / TILE_SIZE;
@@ -86,13 +86,13 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
 	{
 		if (game->player_direction == -1)
-			change_image(game);
+			change_player_direction(game);
 		move_player(+1, 0, game);
 	}
 	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
 	{
 		if (game->player_direction == 1)
-			change_image(game);
+			change_player_direction(game);
 		move_player(-1, 0, game);
 	}
 }
@@ -125,7 +125,6 @@ int32_t	main(void)
 	create_assets(&game);
 	draw_map(&game);
 	mlx_key_hook(game.mlx, handle_keys, &game);
-	printf("collected Babies:%d\n", game.babies_to_collect);
 	mlx_loop(game.mlx);
 	mlx_terminate(game.mlx);
 	return (EXIT_SUCCESS);
