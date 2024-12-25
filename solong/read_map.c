@@ -6,136 +6,142 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:56:57 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/23 17:46:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/25 17:09:46 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
-#include "string.h"
-char **create_map_arr(char **map, int *columns,int *rows)
+
+// allocate memory for the map
+char	**create_map_arr(char **map, s_game *game)
 {
-	int i;
-	
+	unsigned int	i;
+
 	i = 0;
-	map = malloc(*rows * sizeof(char));
+	map = malloc(game->map_orginal.map_height * sizeof(char *));
 	if (!map)
 		return (NULL);
-	while (i < *rows)
+	while (i < game->map_orginal.map_height)
 	{
-		map[i] = malloc(*columns * sizeof (char));
-		if(!map[i])
+		map[i] = malloc(game->map_orginal.map_width * sizeof(char));
+		if (!map[i])
 		{
-			while(i >= 0)
+			while (i > 0)
 			{
-				free(map[i]);
+				free(map[i - 1]);
 				i--;
 			}
 			free(map);
 			return (NULL);
-		}	
+		}
 		i++;
 	}
-return (map);
+	return (map);
 }
-
-int open_file()
+char **read_map_to_array(int fd,char **map, char *row, s_game *game)
 {
-	int fd;
-	
-	fd = open("map.ber", O_RDONLY);
-	if (fd == -1)
-        perror("Error opening file");
-	return (fd);
-}
-
-void update_game_collectables(const char *buffer, s_game *game, ssize_t read_bytes) {
-    ssize_t i;
+	unsigned int	i;
+	int bytes_read;
 
 	i = 0;
-	while (i < read_bytes)
+	bytes_read = 1;
+	while (i < game->map_orginal.map_height && bytes_read > 0)
 	{
-        if (buffer[i] == 'C')
-            game->babies_to_collect += 1;
-		i++;
-    }
-}
-
-void process_buffer(const char *buffer, int *columns, int *rows, int *first_col_size, ssize_t read_bytes)
-{
-    ssize_t i;
-
-	i = 0;
-	while  (i < read_bytes)
-	{
-        if (buffer[i] == '\n')
+		bytes_read = read(fd, row, game->map_orginal.map_width + 1);
+		if (bytes_read < 0)
 		{
-            (*rows)++;
-            if (*first_col_size == 0)
-                *first_col_size = *columns;
-			else if (*first_col_size != *columns)
-                exit(1);
-            *columns = 0;
+            free(row);
+            close(fd);
+            return (NULL);
         }
-		else 
-            (*columns)++;
-		i++;
-    }
-}
-
-void read_file(int fd, int *columns, int *rows, s_game *game) {
-    ssize_t read_bytes;
-    char *buffer;
-    int first_col_size = 0;
-
-    buffer = malloc(BUFFER_SIZE);
-    if (!buffer)
-        exit(1);
-    while ((read_bytes = read(fd, buffer, BUFFER_SIZE)) > 0) {
-        update_game_collectables(buffer, game, read_bytes);
-        process_buffer(buffer, columns, rows, &first_col_size, read_bytes);
-    }
-    if (read_bytes == -1) {
-        free(buffer);
-        exit(1);
-    }
-    if (*rows != 0) 
-        (*rows)++;
-    free(buffer);
-}
-char **fill_in_2d_map(char **map, int *columns,int *rows)
-{	
-	int fd;
-	char *row;
-	int i;
-	
-	fd = open("map.ber", O_RDONLY);
-	row = malloc(*columns * sizeof(char) +1 );
-	if(!row)
-		return (NULL);
-	i = 0;
-	while (i < *rows)
-	{
-		read(fd, row, *columns+1);
-		row[*columns] = '\n';
-		map[i] = strdup(row);
+		row[game->map_orginal.map_width] ='\0'; 
+		if (!(map[i] = ft_strdup(row)))
+		{
+            free(row);
+            close(fd);
+            return (NULL);
+        }
 		i++;
 	}
+	return (map);
+}
+// will copy the content of the file fo the 2d array.
+char	**fill_in_2d_map(char **map, s_game *game, char *file_name)
+{
+	int				fd;
+	char			*row;
+
+	fd = open_file(file_name);
+	row = malloc(game->map_orginal.map_width + 1);
+	if (!row)
+	{
+		close(fd);
+        print_error_and_exit("error in mallocating row");
+	}
+	map = read_map_to_array(fd, map, row, game);
+	free(row);
 	close(fd);
 	return (map);
 }
-char	**read_map(int *columns, int *rows, s_game *game)
+void	handle_new_line(unsigned int *first_row_size, s_game *game, char buffer)
+{
+	if (buffer == '\n')
+	{
+		(game->map_orginal.map_height)++;
+		if (*first_row_size == 0)
+			*first_row_size = game->map_orginal.map_width;
+		else if (*first_row_size != game->map_orginal.map_width)
+			exit(1);
+		game->map_orginal.map_width = 0;
+	}
+	else
+		game->map_orginal.map_width++;
+}
+// read the map file and count the rows and cols. and collectabels
+void	read_file(int fd, s_game *game)
+{
+	ssize_t			read_bytes;
+	char			*buffer;
+	unsigned int	first_row_size;
+
+	first_row_size = 0;
+	buffer = malloc(BUFFER_SIZE);
+	if (!buffer)
+		exit(1);
+	while ((read_bytes = read(fd, buffer, BUFFER_SIZE)) > 0)
+	{
+		game_counters(*buffer, game);
+		handle_new_line(&first_row_size, game, *buffer);
+	}
+	if (read_bytes == -1)
+	{
+		free(buffer);
+		exit(1);
+	}
+	if (game->assets.babies_to_collect < 1)
+		print_error_and_exit("Map Error: has no collectabes.\n");
+	if (game->map_orginal.map_height != 0)
+		(game->map_orginal.map_height)++;
+	free(buffer);
+}
+
+char	**read_map(s_game *game ,char *file_name)
 {
 	char	**map;
-	int i;
-	int fd;
-	
-	fd = open_file();
-	read_file(fd, columns, rows, game);
-	if(!columns || !rows)
+	char	**map_arr;
+	int		fd;
+
+	map = NULL;
+	map_arr = NULL;
+	fd = open_file(file_name);
+	read_file(fd, game);
+	if (!game->map_orginal.map_width || !game->map_orginal.map_height)
 		exit(1);
 	close(fd);
-	map = create_map_arr(map, columns, rows);
-	map = fill_in_2d_map(map, columns, rows);
-	return (map);
+	map = create_map_arr(map, game);
+	map_arr = fill_in_2d_map(map, game, file_name);
+	map = NULL;
+	map_validation(map_arr,game);
+	game->map = map_arr;
+	return (NULL);
 }
-

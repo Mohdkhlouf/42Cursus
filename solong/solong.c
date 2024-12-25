@@ -6,68 +6,87 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:29:16 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/23 10:26:23 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/25 18:27:49 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-void change_player_direction(s_game *game)
-{	
+void	change_player_direction(s_game *game)
+{
 	game->player_place_x = game->img->instances->x / TILE_SIZE;
 	game->player_place_y = game->img->instances->y / TILE_SIZE;
 	mlx_delete_image(game->mlx, game->img);
 	mlx_new_image(game->mlx, TILE_SIZE, TILE_SIZE);
 	if (game->player_direction == 1)
 	{
-		game->img = mlx_texture_to_image(game->mlx, game->player_to_left_texture);
+		game->img = mlx_texture_to_image(game->mlx,
+				game->textures.player_to_left_texture);
 		game->player_direction = -1;
 	}
 	else if (game->player_direction == -1)
 	{
-		game->img = mlx_texture_to_image(game->mlx, game->player_to_right_texture);
+		game->img = mlx_texture_to_image(game->mlx,
+				game->textures.player_to_right_texture);
 		game->player_direction = 1;
 	}
-	if(!game->img)
+	if (!game->img)
 		perror("Errror loadng player to left image");
-	mlx_image_to_window(game->mlx, game->img, game->player_place_x*TILE_SIZE,game->player_place_y*TILE_SIZE); 
+	mlx_image_to_window(game->mlx, game->img, game->player_place_x * TILE_SIZE,
+		game->player_place_y * TILE_SIZE);
 }
-	
-void handle_collectable(s_game *game, int new_location_x, int new_location_y)
+
+void	handle_collectable(s_game *game, int new_location_x, int new_location_y)
 {
-		game->collected += 1;
-		game->map[new_location_y][new_location_x] = 'P';
-		set_points(game, new_location_x, new_location_y);
-		game->map[game->player_place_y][game->player_place_x] = '0';
-		game->baby->instances[two2one(new_location_x,new_location_y,game)].enabled = false;
+	game->collected += 1;
+	game->map[new_location_y][new_location_x] = 'P';
+	set_points(game, new_location_x, new_location_y);
+	// game->map[game->player_place_y][game->player_place_x] = '0';
+	game->baby->instances[two2one(new_location_x, new_location_y,
+			game)].enabled = false;
 }
-	
+
+
+void delete_textures_exit(s_game *game)
+		{
+			mlx_delete_texture(game->textures.player_to_left_texture);
+			mlx_delete_texture(game->textures.player_to_right_texture);
+			exit(0);
+		}
+
+
+void print_2d_arr(s_game *game){
+	unsigned int i;
+
+	i = 0;
+	while (i < game->map_orginal.map_height)
+	{
+		printf("%s\n", game->map[i]);
+		i++;
+	}
+}
 void	move_player(int x, int y, s_game *game)
 {
 	int	new_location_x;
 	int	new_location_y;
-	
+
 	game->player_place_x = game->img->instances->x / TILE_SIZE;
 	game->player_place_y = game->img->instances->y / TILE_SIZE;
 	new_location_x = game->player_place_x + x;
 	new_location_y = game->player_place_y + y;
-	if (game->map[new_location_y][new_location_x] == '0')
-	{
-		set_points(game, new_location_x, new_location_y);
-		game->map[new_location_y][new_location_x] = 'P';
-		game->map[game->player_place_y][game->player_place_x] = '0';
+	if (game->map[new_location_y][new_location_x] == 'E')
+	{	
+		if (game->collected == game->assets.babies_to_collect)
+			delete_textures_exit(game);
+		else
+			set_points(game, new_location_x, new_location_y);
 	}
-	else if (game->map[new_location_y][new_location_x] == 'C')
-		handle_collectable(game,new_location_x,new_location_y);
-	else if (game->map[new_location_y][new_location_x] == 'P')
+	if (game->map[new_location_y][new_location_x] == '0')
+		set_points(game, new_location_x, new_location_y);	
+	if (game->map[new_location_y][new_location_x] == 'C')
+		handle_collectable(game, new_location_x, new_location_y);
+	if (game->map[new_location_y][new_location_x] == 'P')
 		set_points(game, new_location_x, new_location_y);
-	else if (game->map[new_location_y][new_location_x] == 'E')
-		{
-			if (game->collected == game->babies_to_collect)
-				exit(0);
-			else
-				set_points(game, new_location_x, new_location_y);
-		}
 }
 void	handle_keys(mlx_key_data_t keydata, void *param)
 {
@@ -76,7 +95,8 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 	game = (s_game *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
-		printf("ESC\n"); 
+		printf("ESC\n");
+		free(game->map);
 		exit(0);
 	}
 	if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
@@ -97,31 +117,35 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 	}
 }
 
-int32_t	main(void)
+void initialize_struct_variable(s_game *game)
 {
-	int				map_width;
-	int				map_height;
-	char			**map;
-
+	game->map = NULL;
+	game->map_orginal.map_height = 0;
+	game->map_orginal.map_width = 0;
+	game->player_direction = 1;
+	game->collected = 0;
+	game->assets.babies_to_collect = 0;
+	game->assets.player_counter = 0;
+	game->assets.exit_counter = 0;
+}
+int32_t	main(int argc, char *argv[])
+{
 	s_game	game;
-	game.player_direction = 1;
-	map_width = 0;
-	map_height = 0;
-	game.collected = 0;
-	game.babies_to_collect = 0;
-	map = read_map(&map_width, &map_height, &game);
-	if (!map_height || !map_width)
-	{
-		perror("null values");
-		exit(1);
-	}
-	game.map = map;
-	game.map_width = map_width;
-	game.map_height = map_height;
-	game.mlx = mlx_init(map_width * TILE_SIZE, map_height * TILE_SIZE,
-			"MLX42", true);
+	char *file_name;
+	
+	if(argc > 2)
+		print_error_and_exit("you have to enter only one file");
+	file_name = argv[1];
+	initialize_struct_variable(&game);
+	read_map(&game,file_name);
+	if (!game.map_orginal.map_height || !game.map_orginal.map_width)
+		print_error_and_exit("No height and width for map");
+	game.mlx = mlx_init(game.map_orginal.map_width * TILE_SIZE,
+			game.map_orginal.map_height * TILE_SIZE, "MLX42", true);
 	if (!game.mlx)
-		exit(EXIT_FAILURE);
+		{
+			exit(EXIT_FAILURE);
+		}
 	create_assets(&game);
 	draw_map(&game);
 	mlx_key_hook(game.mlx, handle_keys, &game);
