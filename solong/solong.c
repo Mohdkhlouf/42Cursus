@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:29:16 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/25 18:27:49 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/26 16:26:57 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,16 @@ void	handle_collectable(s_game *game, int new_location_x, int new_location_y)
 			game)].enabled = false;
 }
 
+void	delete_textures_exit(s_game *game)
+{
+	mlx_delete_texture(game->textures.player_to_left_texture);
+	mlx_delete_texture(game->textures.player_to_right_texture);
+	exit(0);
+}
 
-void delete_textures_exit(s_game *game)
-		{
-			mlx_delete_texture(game->textures.player_to_left_texture);
-			mlx_delete_texture(game->textures.player_to_right_texture);
-			exit(0);
-		}
-
-
-void print_2d_arr(s_game *game){
-	unsigned int i;
+void	print_2d_arr(s_game *game)
+{
+	unsigned int	i;
 
 	i = 0;
 	while (i < game->map_orginal.map_height)
@@ -75,14 +74,14 @@ void	move_player(int x, int y, s_game *game)
 	new_location_x = game->player_place_x + x;
 	new_location_y = game->player_place_y + y;
 	if (game->map[new_location_y][new_location_x] == 'E')
-	{	
+	{
 		if (game->collected == game->assets.babies_to_collect)
 			delete_textures_exit(game);
 		else
 			set_points(game, new_location_x, new_location_y);
 	}
 	if (game->map[new_location_y][new_location_x] == '0')
-		set_points(game, new_location_x, new_location_y);	
+		set_points(game, new_location_x, new_location_y);
 	if (game->map[new_location_y][new_location_x] == 'C')
 		handle_collectable(game, new_location_x, new_location_y);
 	if (game->map[new_location_y][new_location_x] == 'P')
@@ -99,17 +98,21 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 		free(game->map);
 		exit(0);
 	}
-	if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
+	if ((keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W)
+		&& keydata.action == MLX_PRESS)
 		move_player(0, -1, game);
-	if (keydata.key == MLX_KEY_DOWN && keydata.action == MLX_PRESS)
+	if ((keydata.key == MLX_KEY_DOWN || keydata.key == MLX_KEY_S)
+		&& keydata.action == MLX_PRESS)
 		move_player(0, +1, game);
-	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS)
+	if ((keydata.key == MLX_KEY_RIGHT || keydata.key == MLX_KEY_D)
+		&& keydata.action == MLX_PRESS)
 	{
 		if (game->player_direction == -1)
 			change_player_direction(game);
 		move_player(+1, 0, game);
 	}
-	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS)
+	if ((keydata.key == MLX_KEY_LEFT || keydata.key == MLX_KEY_A)
+		&& keydata.action == MLX_PRESS)
 	{
 		if (game->player_direction == 1)
 			change_player_direction(game);
@@ -117,7 +120,7 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 	}
 }
 
-void initialize_struct_variable(s_game *game)
+void	initialize_struct_variable(s_game *game)
 {
 	game->map = NULL;
 	game->map_orginal.map_height = 0;
@@ -131,25 +134,26 @@ void initialize_struct_variable(s_game *game)
 int32_t	main(int argc, char *argv[])
 {
 	s_game	game;
-	char *file_name;
-	
-	if(argc > 2)
+	char	*file_name;
+
+	if (argc > 2)
 		print_error_and_exit("you have to enter only one file");
 	file_name = argv[1];
+	check_filen_name(file_name);
 	initialize_struct_variable(&game);
-	read_map(&game,file_name);
+	read_map(&game, file_name);
 	if (!game.map_orginal.map_height || !game.map_orginal.map_width)
 		print_error_and_exit("No height and width for map");
 	game.mlx = mlx_init(game.map_orginal.map_width * TILE_SIZE,
 			game.map_orginal.map_height * TILE_SIZE, "MLX42", true);
 	if (!game.mlx)
-		{
-			exit(EXIT_FAILURE);
-		}
+	{
+		exit(EXIT_FAILURE);
+	}
 	create_assets(&game);
 	draw_map(&game);
 	mlx_key_hook(game.mlx, handle_keys, &game);
 	mlx_loop(game.mlx);
 	mlx_terminate(game.mlx);
-	return (EXIT_SUCCESS);
+	return (0);
 }

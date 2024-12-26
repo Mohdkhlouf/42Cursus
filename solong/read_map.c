@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:56:57 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/25 17:09:46 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/26 16:29:48 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**create_map_arr(char **map, s_game *game)
 				i--;
 			}
 			free(map);
-			return (NULL);
+			print_error_and_exit ("creating 2d array faild");
 		}
 		i++;
 	}
@@ -91,7 +91,7 @@ void	handle_new_line(unsigned int *first_row_size, s_game *game, char buffer)
 		if (*first_row_size == 0)
 			*first_row_size = game->map_orginal.map_width;
 		else if (*first_row_size != game->map_orginal.map_width)
-			exit(1);
+			print_error_and_exit("Map is not rectangle shape, rows are != equl");
 		game->map_orginal.map_width = 0;
 	}
 	else
@@ -118,10 +118,9 @@ void	read_file(int fd, s_game *game)
 		free(buffer);
 		exit(1);
 	}
-	if (game->assets.babies_to_collect < 1)
-		print_error_and_exit("Map Error: has no collectabes.\n");
 	if (game->map_orginal.map_height != 0)
 		(game->map_orginal.map_height)++;
+	reading_validation(game);	
 	free(buffer);
 }
 
@@ -135,8 +134,6 @@ char	**read_map(s_game *game ,char *file_name)
 	map_arr = NULL;
 	fd = open_file(file_name);
 	read_file(fd, game);
-	if (!game->map_orginal.map_width || !game->map_orginal.map_height)
-		exit(1);
 	close(fd);
 	map = create_map_arr(map, game);
 	map_arr = fill_in_2d_map(map, game, file_name);

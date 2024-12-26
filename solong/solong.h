@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:31:19 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/25 17:09:57 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/26 16:38:27 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+#include <errno.h>
 
 # define TILE_SIZE 64
 # define BUFFER_SIZE 1
@@ -84,7 +85,9 @@ void				set_points(s_game *game, int new_location_x,
 int					open_file(char *file_name);
 void				game_counters(char buffer, s_game *game);
 void				print_error_and_exit(char *str);
-int					map_validation(char **map_arr, s_game *game);
+void					map_validation(char **map_arr, s_game *game);
 char				*ft_strdup(const char *s);
+void check_filen_name(char *file_name);
+void reading_validation(s_game *game);
 
 #endif
