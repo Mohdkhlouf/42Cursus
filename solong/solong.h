@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:31:19 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/26 16:38:27 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/27 19:39:15 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,50 @@
 # define SOLONG_H
 
 # include "MLX42/include/MLX42/MLX42.h"
+# include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-#include <errno.h>
 
 # define TILE_SIZE 64
 # define BUFFER_SIZE 1
 
-typedef struct
+typedef struct s_points
+{
+	unsigned int	x;
+	unsigned int	y;
+
+}					t_points;
+
+typedef struct s_assets
 {
 	unsigned int	player_counter;
 	unsigned int	exit_counter;
 	unsigned int	babies_to_collect;
 	unsigned int	walls;
 	unsigned int	allowed_tiles;
-}					s_assets;
+}					t_assets;
 
-typedef struct
+typedef struct s_map
 {
 	unsigned int	map_height;
 	unsigned int	map_width;
-}					s_map;
+}					t_map;
 
-typedef struct
+typedef struct s_textures
 {
 	mlx_texture_t	*baby_boy;
 	mlx_texture_t	*wall;
 	mlx_texture_t	*home;
 	mlx_texture_t	*ground;
 	mlx_texture_t	*player;
-	mlx_texture_t	*player_to_left_texture;
+	mlx_texture_t	*player_left_t;
 	mlx_texture_t	*player_to_right_texture;
-}					s_textures;
+}					t_textures;
 
-typedef struct
+typedef struct s_game
 {
 	mlx_t			*mlx;
 	mlx_image_t		*img;
@@ -60,34 +67,41 @@ typedef struct
 	mlx_image_t		*home;
 	mlx_image_t		*player_to_left;
 	mlx_image_t		*player_to_right;
-	s_assets		assets;
-	s_map			map_orginal;
-	s_textures		textures;
+	t_assets		assets;
+	t_map			map_orginal;
+	t_textures		textures;
+	t_points		player_point;
+	t_points		exit_point;
 	int				player_direction;
 	char			**map;
 	unsigned int	collected;
 	bool			game_status;
 	int				player_place_x;
 	int				player_place_y;
-}					s_game;
+}					t_game;
 
-char				**read_map(s_game *game,char *file_name);
-static mlx_image_t	*image;
-void				draw_bg(s_game *game);
-void				draw_walls_exit(s_game *game);
-void				draw_player(s_game *game);
-int					two2one(int x, int y, s_game *game);
-void				draw_collectables(s_game *game);
-void				create_assets(s_game *game);
-void				draw_map(s_game *game);
-void				set_points(s_game *game, int new_location_x,
+char				**read_map(t_game *game, char *file_name);
+void				draw_bg(t_game *game);
+void				draw_walls_exit(t_game *game);
+void				draw_player(t_game *game);
+int					two2one(int x, int y, t_game *game);
+void				draw_collectables(t_game *game);
+void				create_assets(t_game *game);
+void				draw_map(t_game *game);
+void				set_points(t_game *game, int new_location_x,
 						int new_location_y);
 int					open_file(char *file_name);
-void				game_counters(char buffer, s_game *game);
+void				game_counters(char buffer, t_game *game);
 void				print_error_and_exit(char *str);
-void					map_validation(char **map_arr, s_game *game);
+void				map_validation(char **map_arr, t_game *game);
 char				*ft_strdup(const char *s);
-void check_filen_name(char *file_name);
-void reading_validation(s_game *game);
+void				check_filen_name(char *file_name);
+void				reading_validation(t_game *game);
+char				**create_map_arr(char **map, t_game *game);
+char				**fill_in_map(char **maze, char **map_arr, t_game *game);
+void				print_2d_arr(t_game *game);
+void				path_validation(char **map_arr, t_game *game);
+void				initialize_struct_variable(t_game *game);
+void				delete_textures_exit(t_game *game);
 
 #endif

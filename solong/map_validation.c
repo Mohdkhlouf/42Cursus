@@ -6,31 +6,24 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:40:43 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/26 16:15:21 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/27 19:44:31 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
+#include "string.h"
 
-
-
-// void path_validation(char **map_arr, s_game *game)
-// {
-// 	puts("HI");
-// }
-
-
-void wall_surrounded_faild(int *not_wall)
+void	wall_surrounded_faild(int *not_wall)
 {
 	not_wall = 0;
-	print_error_and_exit("Map is not surrounded by walls horizantally");
+	print_error_and_exit("Map is not surrounded by walls");
 }
 
-void wall_surrounded(char **map_arr, s_game *game)
+void	wall_surrounded(char **map_arr, t_game *game)
 {
-	unsigned int i;
-	unsigned int j;
-	int not_wall;
+	unsigned int	i;
+	unsigned int	j;
+	int				not_wall;
 
 	not_wall = 1;
 	i = 0;
@@ -52,13 +45,13 @@ void wall_surrounded(char **map_arr, s_game *game)
 	}
 }
 
-void	map_validation(char **map_arr, s_game *game)
+void	map_validation(char **map_arr, t_game *game)
 {
-	wall_surrounded(map_arr,game);
-	// path_validation(map_arr,game);
+	wall_surrounded(map_arr, game);
+	path_validation(map_arr, game);
 }
 
-void reading_validation(s_game *game)
+void	reading_validation(t_game *game)
 {
 	if (game->map_orginal.map_height < 3)
 		print_error_and_exit("Map Error: has less than 3 Rows.\n");

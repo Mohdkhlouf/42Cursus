@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:41:10 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/26 16:38:38 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/27 19:23:51 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ void	print_error_and_exit(char *str)
 	perror("Error\n");
 	perror(str);
 	exit(-1);
-	// we habe to ffree all created memory
 }
-// count the collectables.
-void	game_counters(char buffer, s_game *game)
+
+void	game_counters(char buffer, t_game *game)
 {
 	if ((buffer != 'C') && (buffer != 'P') && (buffer != '1') && (buffer != '0')
 		&& (buffer != '\n') && (buffer != 'E'))
@@ -32,10 +31,11 @@ void	game_counters(char buffer, s_game *game)
 	if (buffer == 'E')
 		game->assets.exit_counter += 1;
 }
+
 // to open the file
 int	open_file(char *file_name)
 {
-	int fd;
+	int	fd;
 
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)

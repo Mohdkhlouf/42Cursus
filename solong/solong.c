@@ -6,13 +6,13 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:29:16 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/26 16:26:57 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/27 19:37:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-void	change_player_direction(s_game *game)
+void	change_player_direction(t_game *game)
 {
 	game->player_place_x = game->img->instances->x / TILE_SIZE;
 	game->player_place_y = game->img->instances->y / TILE_SIZE;
@@ -21,7 +21,7 @@ void	change_player_direction(s_game *game)
 	if (game->player_direction == 1)
 	{
 		game->img = mlx_texture_to_image(game->mlx,
-				game->textures.player_to_left_texture);
+				game->textures.player_left_t);
 		game->player_direction = -1;
 	}
 	else if (game->player_direction == -1)
@@ -36,35 +36,16 @@ void	change_player_direction(s_game *game)
 		game->player_place_y * TILE_SIZE);
 }
 
-void	handle_collectable(s_game *game, int new_location_x, int new_location_y)
+void	handle_collectable(t_game *game, int new_location_x, int new_location_y)
 {
 	game->collected += 1;
 	game->map[new_location_y][new_location_x] = 'P';
 	set_points(game, new_location_x, new_location_y);
-	// game->map[game->player_place_y][game->player_place_x] = '0';
 	game->baby->instances[two2one(new_location_x, new_location_y,
 			game)].enabled = false;
 }
 
-void	delete_textures_exit(s_game *game)
-{
-	mlx_delete_texture(game->textures.player_to_left_texture);
-	mlx_delete_texture(game->textures.player_to_right_texture);
-	exit(0);
-}
-
-void	print_2d_arr(s_game *game)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < game->map_orginal.map_height)
-	{
-		printf("%s\n", game->map[i]);
-		i++;
-	}
-}
-void	move_player(int x, int y, s_game *game)
+void	move_player(int x, int y, t_game *game)
 {
 	int	new_location_x;
 	int	new_location_y;
@@ -87,11 +68,12 @@ void	move_player(int x, int y, s_game *game)
 	if (game->map[new_location_y][new_location_x] == 'P')
 		set_points(game, new_location_x, new_location_y);
 }
+
 void	handle_keys(mlx_key_data_t keydata, void *param)
 {
-	s_game	*game;
+	t_game	*game;
 
-	game = (s_game *)param;
+	game = (t_game *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
 		printf("ESC\n");
@@ -120,20 +102,9 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 	}
 }
 
-void	initialize_struct_variable(s_game *game)
-{
-	game->map = NULL;
-	game->map_orginal.map_height = 0;
-	game->map_orginal.map_width = 0;
-	game->player_direction = 1;
-	game->collected = 0;
-	game->assets.babies_to_collect = 0;
-	game->assets.player_counter = 0;
-	game->assets.exit_counter = 0;
-}
 int32_t	main(int argc, char *argv[])
 {
-	s_game	game;
+	t_game	game;
 	char	*file_name;
 
 	if (argc > 2)
