@@ -1,5 +1,0 @@
-{
-   mlx42_library
-   Memcheck:Leak
-   fun:mlx_*
-}

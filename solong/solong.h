@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:31:19 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/27 19:39:15 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/29 22:29:19 by mohammad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SOLONG_H
 # define SOLONG_H
 
-# include "MLX42/include/MLX42/MLX42.h"
+# include "MLX42/MLX42.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>

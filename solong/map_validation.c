@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:40:43 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/27 19:44:31 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/29 22:11:49 by mohammad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	wall_surrounded_faild(int *not_wall)
 {
-	not_wall = 0;
+	*not_wall = 0;
 	print_error_and_exit("Map is not surrounded by walls");
 }
 
