@@ -3,16 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   path_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:01:10 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/29 22:08:02 by mohammad         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:32:54 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
-char	**fill_in_map(char **maze, char **map_arr, t_game *game)
+void	create_maze_arr(char **maze, t_game *game)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < game->map_orginal.map_height * sizeof(char))
+	{
+		maze[i] = malloc(game->map_orginal.map_width * sizeof(char));
+		if (!maze[i])
+		{
+			while (i > 0)
+			{
+				free(maze[i - 1]);
+				i--;
+			}
+			free(maze);
+			print_error_and_exit("creating 2d array faild");
+		}
+		i++;
+	}
+}
+
+
+char	**fill_in_maze(char **maze, t_game *game)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -23,7 +46,7 @@ char	**fill_in_map(char **maze, char **map_arr, t_game *game)
 		j = 0;
 		while (j < game->map_orginal.map_width)
 		{
-			maze[i][j] = map_arr[i][j];
+			maze[i][j] = game->map[i][j];
 			j++;
 		}
 		i++;
@@ -79,7 +102,7 @@ bool	flood_fill_check(char **maze, unsigned int x, unsigned int y,
 	return (false);
 }
 
-void	find_player_points(char **map_arr, t_game *game)
+void	find_player_points(t_game *game)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -91,7 +114,7 @@ void	find_player_points(char **map_arr, t_game *game)
 		j = 0;
 		while (j < game->map_orginal.map_width)
 		{
-			if (map_arr[i][j] == 'P')
+			if (game->map[i][j] == 'P')
 			{
 				game->player_point.x = i;
 				game->player_point.y = j;
@@ -102,21 +125,24 @@ void	find_player_points(char **map_arr, t_game *game)
 	}
 }
 
-void	path_validation(char **map_arr, t_game *game)
+void	path_validation(t_game *game)
 {
 	char	**maze;
 	bool	is_solvable;
 	bool	is_collectable;
 
-	maze = NULL;
-	find_player_points(map_arr, game);
-	maze = create_map_arr(maze, game);
-	maze = fill_in_map(maze, map_arr, game);
+	maze = malloc(game->map_orginal.map_height *sizeof(char *));
+	if (!maze)
+		print_error_and_exit("creating 2d array faild" );
+	find_player_points(game);
+	create_maze_arr(maze, game);
+	maze = fill_in_maze(maze, game);
 	is_solvable = flood_fill_check(maze, game->player_point.x,
 			game->player_point.y, game);
-	maze = fill_in_map(maze, map_arr, game);
+	maze = fill_in_maze(maze,  game);
 	is_collectable = flood_fill_check_collectables(maze, game->player_point.x,
 			game->player_point.y, game);
+	free_2d_arr(maze, game);
 	game->collected = 0;
 	if (!(is_solvable && is_collectable))
 		print_error_and_exit("Map s not solvable");

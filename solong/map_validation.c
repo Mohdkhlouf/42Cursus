@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:40:43 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/29 22:11:49 by mohammad         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:44:12 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	wall_surrounded_faild(int *not_wall)
 	print_error_and_exit("Map is not surrounded by walls");
 }
 
-void	wall_surrounded(char **map_arr, t_game *game)
+void	wall_surrounded(t_game *game)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -33,10 +33,10 @@ void	wall_surrounded(char **map_arr, t_game *game)
 		j = 0;
 		while (j < game->map_orginal.map_width)
 		{
-			if (map_arr[0][j] != '1' || map_arr[game->map_orginal.map_height
+			if (game->map[0][j] != '1' || game->map[game->map_orginal.map_height
 				- 1][j] != '1')
 				wall_surrounded_faild(&not_wall);
-			if (map_arr[i][0] != '1' || map_arr[i][game->map_orginal.map_width
+			if (game->map[i][0] != '1' || game->map[i][game->map_orginal.map_width
 				- 1] != '1')
 				wall_surrounded_faild(&not_wall);
 			j++;
@@ -45,10 +45,10 @@ void	wall_surrounded(char **map_arr, t_game *game)
 	}
 }
 
-void	map_validation(char **map_arr, t_game *game)
+void	map_validation(t_game *game)
 {
-	wall_surrounded(map_arr, game);
-	path_validation(map_arr, game);
+	wall_surrounded(game);
+	path_validation(game);
 }
 
 void	reading_validation(t_game *game)

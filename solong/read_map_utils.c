@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_map_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:41:10 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/29 22:07:49 by mohammad         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:32:23 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,31 @@ int	open_file(char *file_name)
 	if (fd == -1)
 		print_error_and_exit("error in reading file");
 	return (fd);
+}
+
+void free_2d_map(t_game *game)
+{
+	unsigned int i;
+
+	i = 0;
+	while (i < game->map_orginal.map_height)
+	{
+		free(game->map[i]);
+		i++;
+	}
+	free(game->map);
+}
+
+
+void free_2d_arr(char **arr2d , t_game *game)
+{
+	unsigned int i;
+
+	i = 0;
+	while (i < game->map_orginal.map_height)
+	{
+		free(arr2d[i]);
+		i++;
+	}
+	free(arr2d);
 }

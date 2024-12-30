@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:56:57 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/29 22:07:13 by mohammad         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:19:41 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solong.h"
 
 // allocate memory for the map
-char	**read_map_to_array(int fd, char **map, char *row, t_game *game)
+void	read_map_to_array(int fd, char *row, t_game *game)
 {
 	unsigned int	i;
 	int				bytes_read;
@@ -27,38 +27,48 @@ char	**read_map_to_array(int fd, char **map, char *row, t_game *game)
 		{
 			free(row);
 			close(fd);
-			return (NULL);
+			print_error_and_exit("creating 2d array faild");
 		}
 		row[game->map_orginal.map_width] = '\0';
-		map[i] = ft_strdup(row);
-		if (!map[i])
+		game->map[i] = ft_strdup(row);
+		if (!game->map[i])
+		{
+			while (i > 0)
+			{
+				free(game->map[i - 1]);
+				i--;
+			}
+			free(game->map);
+			close(fd);
+			free(row);
+			print_error_and_exit("creating 2d array faild");
+		}
+		if (bytes_read == 0)
 		{
 			free(row);
 			close(fd);
-			return (NULL);
+			break;
 		}
 		i++;
 	}
-	return (map);
 }
 
 // will copy the content of the file fo the 2d array.
-char	**fill_in_2d_map(char **map, t_game *game, char *file_name)
+void	fill_in_2d_map(t_game *game, char *file_name)
 {
 	int		fd;
 	char	*row;
 
 	fd = open_file(file_name);
-	row = malloc(game->map_orginal.map_width + 1);
+	row = malloc(game->map_orginal.map_width * sizeof(char) + 1);
 	if (!row)
 	{
 		close(fd);
-		print_error_and_exit("error in mallocating row");
+		print_error_and_exit("creating 2d array faild");;
 	}
-	map = read_map_to_array(fd, map, row, game);
+	read_map_to_array(fd, row, game);
 	free(row);
 	close(fd);
-	return (map);
 }
 
 void	handle_new_line(unsigned int *first_row_size, t_game *game, char buffer)
@@ -105,21 +115,14 @@ void	read_file(int fd, t_game *game)
 	free(buffer);
 }
 
-char	**read_map(t_game *game, char *file_name)
+void read_map(t_game *game, char *file_name)
 {
-	char	**map;
-	char	**map_arr;
 	int		fd;
 
-	map = NULL;
-	map_arr = NULL;
 	fd = open_file(file_name);
 	read_file(fd, game);
 	close(fd);
-	map = create_map_arr(map, game);
-	map_arr = fill_in_2d_map(map, game, file_name);
-	map = NULL;
-	map_validation(map_arr, game);
-	game->map = map_arr;
-	return (NULL);
+	create_map_arr(game);
+	fill_in_2d_map(game, file_name);
+	map_validation(game);
 }

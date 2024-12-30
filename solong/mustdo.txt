@@ -1,2 +1,0 @@
-have to free memory after each exit. better is to create a function to free everything.
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solong.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:31:19 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/29 22:29:19 by mohammad         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:32:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_game
 	int				player_place_y;
 }					t_game;
 
-char				**read_map(t_game *game, char *file_name);
+void				read_map(t_game *game, char *file_name);
 void				draw_bg(t_game *game);
 void				draw_walls_exit(t_game *game);
 void				draw_player(t_game *game);
@@ -93,15 +93,18 @@ void				set_points(t_game *game, int new_location_x,
 int					open_file(char *file_name);
 void				game_counters(char buffer, t_game *game);
 void				print_error_and_exit(char *str);
-void				map_validation(char **map_arr, t_game *game);
+void				map_validation(t_game *game);
 char				*ft_strdup(const char *s);
 void				check_filen_name(char *file_name);
 void				reading_validation(t_game *game);
-char				**create_map_arr(char **map, t_game *game);
-char				**fill_in_map(char **maze, char **map_arr, t_game *game);
-void				print_2d_arr(t_game *game);
-void				path_validation(char **map_arr, t_game *game);
+void				create_map_arr(t_game *game);
+char				**fill_in_maze(char **maze, t_game *game);
+void				path_validation(t_game *game);
 void				initialize_struct_variable(t_game *game);
 void				delete_textures_exit(t_game *game);
+void 				free_2d_map(t_game *game);
+void				create_maze_arr(char **map, t_game *game);
+void free_2d_arr(char **arr2d , t_game *game);
+
 
 #endif

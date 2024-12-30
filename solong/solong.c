@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solong.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:29:16 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/29 22:07:32 by mohammad         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:27:52 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,12 @@ void	move_player(int x, int y, t_game *game)
 	if (game->map[new_location_y][new_location_x] == 'E')
 	{
 		if (game->collected == game->assets.babies_to_collect)
+		{
 			delete_textures_exit(game);
+			free_2d_map(game);
+			mlx_terminate(game->mlx);
+		}
+			
 		else
 			set_points(game, new_location_x, new_location_y);
 	}
@@ -76,8 +81,9 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 	game = (t_game *)param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
-		printf("ESC\n");
-		free(game->map);
+		free_2d_map(game);
+		delete_textures_exit(game);
+		mlx_terminate(game->mlx);
 		exit(0);
 	}
 	if ((keydata.key == MLX_KEY_UP || keydata.key == MLX_KEY_W)
@@ -113,12 +119,16 @@ int32_t	main(int argc, char *argv[])
 	check_filen_name(file_name);
 	initialize_struct_variable(&game);
 	read_map(&game, file_name);
-	if (!game.map_orginal.map_height || !game.map_orginal.map_width)
+	if (!game.map)
+	{
+		free_2d_map(&game);
 		print_error_and_exit("No height and width for map");
+	}
 	game.mlx = mlx_init(game.map_orginal.map_width * TILE_SIZE,
 			game.map_orginal.map_height * TILE_SIZE, "MLX42", true);
 	if (!game.mlx)
 	{
+		free_2d_map(&game);
 		exit(EXIT_FAILURE);
 	}
 	create_assets(&game);

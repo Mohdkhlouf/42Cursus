@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:29:16 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/29 22:09:17 by mohammad         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:29:44 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,30 +66,29 @@ void	check_filen_name(char *file_name)
 		print_error_and_exit("the Map file extintion is not corret.");
 }
 
-char	**create_map_arr(char **map, t_game *game)
+void	create_map_arr(t_game *game)
 {
 	unsigned int	i;
 
 	i = 0;
-	map = malloc(game->map_orginal.map_height * sizeof(char *));
-	if (!map)
-		return (NULL);
+	game->map = malloc(game->map_orginal.map_height * sizeof(char *));
+	if (!game->map)
+		print_error_and_exit("creating 2d array faild");
 	while (i < game->map_orginal.map_height)
 	{
-		map[i] = malloc(game->map_orginal.map_width * sizeof(char));
-		if (!map[i])
+		game->map[i] = malloc(game->map_orginal.map_width * sizeof(char));
+		if (!game->map[i])
 		{
 			while (i > 0)
 			{
-				free(map[i - 1]);
+				free(game->map[i - 1]);
 				i--;
 			}
-			free(map);
+			free(game->map);
 			print_error_and_exit("creating 2d array faild");
 		}
 		i++;
 	}
-	return (map);
 }
 void	initialize_struct_variable(t_game *game)
 {
@@ -110,5 +109,6 @@ void	delete_textures_exit(t_game *game)
 {
 	mlx_delete_texture(game->textures.player_left_t);
 	mlx_delete_texture(game->textures.player_to_right_texture);
+	mlx_delete_image(game->mlx, game->img);
 	exit(0);
 }
