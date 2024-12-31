@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:31:19 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/30 16:32:29 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2024/12/31 19:33:15 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ typedef struct s_game
 	mlx_image_t		*wall;
 	mlx_image_t		*baby;
 	mlx_image_t		*home;
-	mlx_image_t		*player_to_left;
-	mlx_image_t		*player_to_right;
 	t_assets		assets;
 	t_map			map_orginal;
 	t_textures		textures;
@@ -78,6 +76,7 @@ typedef struct s_game
 	bool			game_status;
 	int				player_place_x;
 	int				player_place_y;
+	unsigned int	tile_size;
 }					t_game;
 
 void				read_map(t_game *game, char *file_name);
@@ -92,7 +91,7 @@ void				set_points(t_game *game, int new_location_x,
 						int new_location_y);
 int					open_file(char *file_name);
 void				game_counters(char buffer, t_game *game);
-void				print_error_and_exit(char *str);
+void				print_error_and_exit(char *str, t_game *game);
 void				map_validation(t_game *game);
 char				*ft_strdup(const char *s);
 void				check_filen_name(char *file_name);
@@ -102,9 +101,19 @@ char				**fill_in_maze(char **maze, t_game *game);
 void				path_validation(t_game *game);
 void				initialize_struct_variable(t_game *game);
 void				delete_textures_exit(t_game *game);
-void 				free_2d_map(t_game *game);
+void				free_2d_map(t_game *game);
 void				create_maze_arr(char **map, t_game *game);
-void free_2d_arr(char **arr2d , t_game *game);
-
+void				free_2d_arr(char **arr2d, t_game *game);
+void				print_game(t_game *game);
+void				change_player_direction(t_game *game);
+void				handle_collectable(t_game *game, int new_location_x,
+						int new_location_y);
+void				move_player(int x, int y, t_game *game);
+void				close_button(void *param);
+char				*ft_strcpy(char *dest, char *src);
+void				free_row_closefd(int fd, char *row, t_game *game);
+void				free_faild_arr(t_game *game, int fd, char *row,
+						unsigned int i);
+char	*ft_strstr(const char *big, const char *little);
 
 #endif

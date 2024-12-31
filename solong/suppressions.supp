@@ -1,6 +1,0 @@
-{
-  suppress_libmlx42
-  Memcheck:Leak
-  obj:libmlx42.a
-  fun:malloc
-}

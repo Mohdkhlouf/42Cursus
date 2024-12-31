@@ -1,4 +1,0 @@
-cc -fsanitize=address -fsanitize=undefined -fsanitize=leak -g -Wall -Wextra -Werror *.c libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
-
-
-./a.out maps/test.ber
