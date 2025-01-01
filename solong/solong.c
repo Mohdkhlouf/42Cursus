@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:29:16 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/31 19:31:21 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/01 15:35:52 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,29 @@ void	initialize_struct_variable(t_game *game)
 	game->exit_point.x = 0;
 	game->exit_point.y = 0;
 	game->tile_size = TILE_SIZE;
+	game->move_counter = 0;
 }
 
-void	check_filen_name(char *file_name)
+void	check_file_name(int argc, char *argv[])
 {
-	if (!(ft_strstr(file_name, ".ber")))
-		print_error_and_exit("the Map file extintion is not corret.", NULL);
+	char *file_name;
+
+	if ( argc == 1)
+	{
+		ft_printf("Error\n%s\n","No file!, No map!");
+		exit(-1);
+	}
+	if (argc > 2)
+	{
+		ft_printf("Error\n%s\n","Only one file is accepted");
+		exit(-1);
+	}
+	file_name = argv[1];
+	if (!ft_strstr(file_name, ".ber"))
+	{
+		ft_printf("Error\n%s\n","No file!, No map!");
+		exit(-1);
+	}
 }
 
 void	handle_keys(mlx_key_data_t keydata, void *param)
@@ -67,28 +84,27 @@ void	handle_keys(mlx_key_data_t keydata, void *param)
 int	main(int argc, char *argv[])
 {
 	t_game	game;
-	char	*file_name;
 
-	if (argc > 2)
-		print_error_and_exit("you have to enter only one file", NULL);
-	file_name = argv[1];
-	check_filen_name(file_name);
+	check_file_name(argc, argv);
 	initialize_struct_variable(&game);
-	read_map(&game, file_name);
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	game.mlx = mlx_init(game.map_orginal.map_width * game.tile_size,
-			game.map_orginal.map_height * game.tile_size, "MLX42", true);
-	if (!game.mlx)
+	read_map(&game, argv[1]);
+	if (game.map)
 	{
+		mlx_set_setting(MLX_STRETCH_IMAGE, true);
+		game.mlx = mlx_init(game.map_orginal.map_width * game.tile_size,
+				game.map_orginal.map_height * game.tile_size, "MLX42", true);
+		if (!game.mlx)
+		{
+			free_2d_map(&game);
+			exit(EXIT_FAILURE);
+		}
+		create_assets(&game);
+		draw_map(&game);
+		mlx_key_hook(game.mlx, handle_keys, &game);
+		mlx_close_hook(game.mlx, close_button, &game);
+		mlx_loop(game.mlx);
 		free_2d_map(&game);
-		exit(EXIT_FAILURE);
+		delete_textures_exit(&game);
 	}
-	create_assets(&game);
-	draw_map(&game);
-	mlx_key_hook(game.mlx, handle_keys, &game);
-	mlx_close_hook(game.mlx, close_button, &game);
-	mlx_loop(game.mlx);
-	free_2d_map(&game);
-	delete_textures_exit(&game);
 	return (0);
 }

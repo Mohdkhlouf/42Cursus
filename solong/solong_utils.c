@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:36:55 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/31 16:17:31 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/01 13:55:52 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,6 @@ void	set_points(t_game *game, int new_location_x, int new_location_y)
 {
 	game->img->instances->x = new_location_x * game->tile_size;
 	game->img->instances->y = new_location_y * game->tile_size;
+	game->move_counter += 1;
+	ft_printf("number of movements: %u\n", game->move_counter);
 }

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:56:57 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/31 19:26:58 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/01 15:10:47 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	read_map_to_array(int fd, char *row, t_game *game)
 	while (i < game->map_orginal.map_height && bytes_read > 0)
 	{
 		bytes_read = read(fd, row, game->map_orginal.map_width + 1);
+		if (bytes_read > 129600)
+			free_row_closefd(fd, row, game,"Huge map");
 		if (bytes_read < 0)
-			free_row_closefd(fd, row, game);
+			free_row_closefd(fd, row, game, "error with reading file");
 		row[game->map_orginal.map_width] = '\0';
 		ft_strcpy(game->map[i], row);
 		if (!game->map[i])
@@ -104,7 +106,7 @@ void	read_file(int fd, t_game *game)
 void	read_map(t_game *game, char *file_name)
 {
 	int	fd;
-
+	
 	fd = open_file(file_name);
 	read_file(fd, game);
 	close(fd);

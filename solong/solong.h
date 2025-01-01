@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:31:19 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/31 19:33:15 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/01 15:48:39 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SOLONG_H
 
 # include "MLX42/MLX42.h"
+# include "ft_printf.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -77,6 +78,7 @@ typedef struct s_game
 	int				player_place_x;
 	int				player_place_y;
 	unsigned int	tile_size;
+	unsigned int	move_counter;
 }					t_game;
 
 void				read_map(t_game *game, char *file_name);
@@ -104,16 +106,16 @@ void				delete_textures_exit(t_game *game);
 void				free_2d_map(t_game *game);
 void				create_maze_arr(char **map, t_game *game);
 void				free_2d_arr(char **arr2d, t_game *game);
-void				print_game(t_game *game);
+void				free_row_closefd(int fd, char *row, t_game *game,
+						char *msg);
 void				change_player_direction(t_game *game);
 void				handle_collectable(t_game *game, int new_location_x,
 						int new_location_y);
 void				move_player(int x, int y, t_game *game);
 void				close_button(void *param);
 char				*ft_strcpy(char *dest, char *src);
-void				free_row_closefd(int fd, char *row, t_game *game);
 void				free_faild_arr(t_game *game, int fd, char *row,
 						unsigned int i);
-char	*ft_strstr(const char *big, const char *little);
+char				*ft_strstr(const char *big, const char *little);
 
 #endif

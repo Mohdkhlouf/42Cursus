@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 10:41:10 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/31 19:28:35 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/01 14:21:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,17 @@ void	free_2d_map(t_game *game)
 	unsigned int	i;
 
 	i = 0;
-	while (i < game->map_orginal.map_height)
+	if (game->map)
 	{
-		free(game->map[i]);
-		game->map[i] = NULL;
-		i++;
+		while (i < game->map_orginal.map_height)
+		{
+			free(game->map[i]);
+			game->map[i] = NULL;
+			i++;
+		}
+		free(game->map);
+		game->map = NULL;
 	}
-	free(game->map);
-	game->map = NULL;
 }
 
 void	free_2d_arr(char **arr2d, t_game *game)
