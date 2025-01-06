@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/06 17:17:01 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/06 10:33:20 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/07 11:40:58 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+#include "libft.h"
 
-#include "libft/libft.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-typedef struct s_stacks
+void	ft_putchar_fd(char c, int fd)
 {
-	int counter;
-	int	*stacka;
-	int	*stachb;
-}			t_stacks;
-
-// void arg_as_numbers(int argc, char *str, t_stacks stacks);
-// void arg_as_string(char *str, t_stacks stacks);
-#endif
+	write (fd, &c, 1);
+}

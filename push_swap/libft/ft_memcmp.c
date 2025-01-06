@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/06 17:17:01 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/01 15:17:31 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:35:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+#include "libft.h"
 
-#include "libft/libft.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-typedef struct s_stacks
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int counter;
-	int	*stacka;
-	int	*stachb;
-}			t_stacks;
+	size_t				i;
+	const unsigned char	*str1;
+	const unsigned char	*str2;
 
-// void arg_as_numbers(int argc, char *str, t_stacks stacks);
-// void arg_as_string(char *str, t_stacks stacks);
-#endif
+	str1 = (const unsigned char *)s1;
+	str2 = (const unsigned char *)s2;
+	i = 0;
+	while (i < n)
+	{
+		if (str1[i] > str2[i])
+			return (1);
+		else if (str1[i] - str2[i])
+			return (-1);
+		i++;
+	}
+	return (0);
+}

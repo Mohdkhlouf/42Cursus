@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/06 17:17:01 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/13 10:00:54 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:34:34 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+#include "libft.h"
 
-#include "libft/libft.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-typedef struct s_stacks
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	int counter;
-	int	*stacka;
-	int	*stachb;
-}			t_stacks;
-
-// void arg_as_numbers(int argc, char *str, t_stacks stacks);
-// void arg_as_string(char *str, t_stacks stacks);
-#endif
+	del(lst->content);
+	free(lst);
+}

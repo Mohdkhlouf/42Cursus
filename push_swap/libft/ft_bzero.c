@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/06 17:17:01 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/01 15:15:47 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/14 10:57:11 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+#include "libft.h"
 
-#include "libft/libft.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-typedef struct s_stacks
+void	ft_bzero(void *s, size_t n)
 {
-	int counter;
-	int	*stacka;
-	int	*stachb;
-}			t_stacks;
+	size_t	i;
 
-// void arg_as_numbers(int argc, char *str, t_stacks stacks);
-// void arg_as_string(char *str, t_stacks stacks);
-#endif
+	i = 0;
+	while (i < n)
+	{
+		((char *)s)[i] = '\0';
+		i++;
+	}
+}

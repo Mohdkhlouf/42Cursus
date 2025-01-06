@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/06 17:17:01 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/01 15:17:50 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 17:57:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+#include "libft.h"
 
-#include "libft/libft.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-typedef struct s_stacks
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	int counter;
-	int	*stacka;
-	int	*stachb;
-}			t_stacks;
+	size_t				i;
+	unsigned const char	*s;
+	unsigned char		*d;
 
-// void arg_as_numbers(int argc, char *str, t_stacks stacks);
-// void arg_as_string(char *str, t_stacks stacks);
-#endif
+	i = 0;
+	if (!src && !dest)
+		return (NULL);
+	s = (unsigned const char *)src;
+	d = (unsigned char *)dest;
+	if (d > s)
+	{
+		while (n-- > 0)
+			d[n] = s[n];
+	}
+	else
+	{
+		while (i < n)
+		{
+			d[i] = s[i];
+			i++;
+		}
+	}
+	return (d);
+}

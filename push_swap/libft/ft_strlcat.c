@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/06 17:17:01 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/01 15:18:10 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:37:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+#include "libft.h"
+#include <string.h>
 
-#include "libft/libft.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-typedef struct s_stacks
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	int counter;
-	int	*stacka;
-	int	*stachb;
-}			t_stacks;
+	size_t	i;
+	size_t	j;
 
-// void arg_as_numbers(int argc, char *str, t_stacks stacks);
-// void arg_as_string(char *str, t_stacks stacks);
-#endif
+	i = 0;
+	j = 0;
+	while (i < dstsize && dst[i])
+		i++;
+	while ((i + j + 1) < dstsize && src[j])
+	{
+		dst[i + j] = src[j];
+		j++;
+	}
+	if (i != dstsize)
+		dst[i + j] = '\0';
+	return (i + ft_strlen(src));
+}

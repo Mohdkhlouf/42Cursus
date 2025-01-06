@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/06 17:17:01 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/06 11:26:26 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:36:13 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+#include "libft.h"
 
-#include "libft/libft.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-typedef struct s_stacks
+void	ft_putnbr_fd(int n, int fd)
 {
-	int counter;
-	int	*stacka;
-	int	*stachb;
-}			t_stacks;
+	int	digit;
 
-// void arg_as_numbers(int argc, char *str, t_stacks stacks);
-// void arg_as_string(char *str, t_stacks stacks);
-#endif
+	digit = 0;
+	if (n == -2147483648)
+		write(fd, "-2147483648", 11);
+	else if (n < 0)
+	{
+		write(fd, "-", 1);
+		n = n * -1;
+		ft_putnbr_fd(n, fd);
+	}
+	else
+	{
+		if (n > 9)
+		{
+			ft_putnbr_fd(n / 10, fd);
+			ft_putnbr_fd(n % 10, fd);
+		}
+		else
+		{
+			digit = n + 48;
+			write(fd, &digit, 1);
+		}
+	}
+}

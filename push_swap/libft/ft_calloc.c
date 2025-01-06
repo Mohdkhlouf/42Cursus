@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/06 17:17:01 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/04 09:24:58 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:33:15 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+#include "libft.h"
+#include <stdint.h>
 
-#include "libft/libft.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-typedef struct s_stacks
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	int counter;
-	int	*stacka;
-	int	*stachb;
-}			t_stacks;
+	size_t			i;
+	unsigned char	*ptr;
 
-// void arg_as_numbers(int argc, char *str, t_stacks stacks);
-// void arg_as_string(char *str, t_stacks stacks);
-#endif
+	i = 0;
+	if (nmemb == 0 || size == 0)
+		return (malloc(1));
+	if (nmemb > SIZE_MAX / size)
+		return (NULL);
+	if (!nmemb || !size)
+	{
+		ptr = malloc(1);
+		return (ptr);
+	}
+	ptr = malloc(nmemb * size);
+	if (!ptr)
+		return (NULL);
+	while (i < size * nmemb)
+		ptr[i++] = 0;
+	return (ptr);
+}
