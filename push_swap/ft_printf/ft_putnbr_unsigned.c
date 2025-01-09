@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr_unsigned.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 15:15:39 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/08 17:02:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/18 12:37:40 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/21 15:31:58 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-long	ft_atoi(char *str)
+void	ft_putnbr_unsigned(unsigned long long n, int *count)
 {
-	long	sign;
-	int	i;
-	long	num;
-
-	i = 0;
-	sign = 1;
-	num = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if (n == 0)
 	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
+		ft_putchar('0', count);
 	}
-	while (str[i] >= 48 && str[i] <= 57)
+	else
 	{
-		num = num * 10 + (str[i] - 48);
-		i++;
+		if (n > 9)
+		{
+			ft_putnbr(n / 10, count);
+			ft_putnbr(n % 10, count);
+		}
+		else
+		{
+			n = n + 48;
+			ft_putchar(n, count);
+		}
 	}
-	return (num * sign);
 }

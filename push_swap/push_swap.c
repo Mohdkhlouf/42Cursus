@@ -6,53 +6,54 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/06 20:01:32 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/09 16:27:37 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void arg_as_numbers(int argc, char **str, t_stacks *stacks)
+void push_swap(t_stacks *stacks)
 {
-	int i;
 	int j;
-	char *all_str;
-	
-	i = 1;
+
 	j = 0;
-	j = argc;	
-	while ((i < argc ) && (j >= 0))
-		{
-		if(ft_atoi(str[i]))
-		{	
-			stacks->counter += 1;
-			i++;
-			j--;
-		}
-		else
-		{
-			printf("error not all arguments are numbers!\n");
-			// free(stacks->stacka);
-			exit (-1);
-		}
+	// print it for test
+	ft_printf("Welcome to push swap\n");
+	while(j < stacks->counter)
+	{
+		ft_printf("%d\n", stacks->arr[j]);
+		j++;
 	}
 }
-void arg_as_string(char *str, t_stacks *stacks)
+
+void check_arguments(int argc, char *argv[], t_stacks *stacks)
 {
-	printf("Test");
+if (argc== 1)
+	{
+		ft_printf("No arguments");
+		exit(-1);
+	}
+else if (argc == 2)
+	one_arg(argv[1], stacks);
+else if (argc > 2)
+	multi_args(argc, argv, stacks);
 }
+
 int main(int argc, char *argv[])
 {
 	t_stacks stacks;
-	
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
 	stacks.counter = 0;
-	
-	if (argc == 2)
-		arg_as_string(argv[2], &stacks);
-	if (argc > 2)
-	{
-		arg_as_numbers(argc, argv, &stacks);
-	}
-	printf("Main Counter is:#%d#\n", stacks.counter);
+	check_arguments(argc, argv, &stacks);
+	check_duplicated(&stacks);
+	if(check_sorted(&stacks))
+		print_free_exit(&stacks, "Sorted");
+	else
+		push_swap(&stacks);
+	free(stacks.arr);	
 	return (0);
 }

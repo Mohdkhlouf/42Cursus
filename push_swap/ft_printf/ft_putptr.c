@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 15:15:39 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/08 17:02:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/18 16:34:17 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/21 15:32:06 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-long	ft_atoi(char *str)
+void	ft_putptr(void *n, int *count)
 {
-	long	sign;
-	int	i;
-	long	num;
+	uint64_t	ptr;
 
-	i = 0;
-	sign = 1;
-	num = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	ptr = (uint64_t)n;
+	if (!n)
+		ft_putstr("(nil)", count);
+	else
 	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
+		ft_putchar('0', count);
+		ft_putchar('x', count);
+		ft_putnbr_hex(ptr, count, 'x');
 	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		num = num * 10 + (str[i] - 48);
-		i++;
-	}
-	return (num * sign);
 }

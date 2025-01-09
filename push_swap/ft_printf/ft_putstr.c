@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 15:15:39 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/08 17:02:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/20 13:24:54 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/21 15:35:15 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-long	ft_atoi(char *str)
+void	ft_putstr(char *s, int *count)
 {
-	long	sign;
 	int	i;
-	long	num;
 
 	i = 0;
-	sign = 1;
-	num = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if (!s)
 	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
+		ft_putstr("(null)", count);
 	}
-	while (str[i] >= 48 && str[i] <= 57)
+	else
 	{
-		num = num * 10 + (str[i] - 48);
-		i++;
+		while (s[i])
+		{
+			ft_putchar(s[i], count);
+			i++;
+		}
 	}
-	return (num * sign);
 }
