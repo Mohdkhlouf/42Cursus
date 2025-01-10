@@ -6,38 +6,49 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/09 16:27:37 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/10 18:09:54 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void sort3(t_stacks *stack)
+{
+	if(stack->stacka[0] > stack->stacka[1] && stack->stacka[1] > stack->stacka[2])
+		{
+			swap_a(stack);
+			rotate_a(stack);
+			rotate_a(stack);
+		}
+	else if (stack->stacka[0] > stack->stacka[1] && stack->stacka[0] > stack->stacka[2]) 
+		{
+			rotate_a(stack);
+			rotate_a(stack);
+		}
+	else if (stack->stacka[0] > stack->stacka[1] && stack->stacka[0] < stack->stacka[2])
+		{
+			swap_a(stack);
+			rotate_a(stack);	
+		}
+	else if (stack->stacka[0] < stack->stacka[1] && stack->stacka[0] > stack->stacka[2])
+		rotate_a(stack);
+	else
+		swap_a(stack);
+	}
 
 void push_swap(t_stacks *stacks)
 {
 	int j;
 
 	j = 0;
-	// print it for test
-	ft_printf("Welcome to push swap\n");
-	while(j < stacks->counter)
-	{
-		ft_printf("%d\n", stacks->arr[j]);
-		j++;
-	}
+	print_stack(stacks);
+	if (stacks->counter == 3)
+		sort3(stacks);
+	print_stack(stacks);
+
 }
 
-void check_arguments(int argc, char *argv[], t_stacks *stacks)
-{
-if (argc== 1)
-	{
-		ft_printf("No arguments");
-		exit(-1);
-	}
-else if (argc == 2)
-	one_arg(argv[1], stacks);
-else if (argc > 2)
-	multi_args(argc, argv, stacks);
-}
+
 
 int main(int argc, char *argv[])
 {
@@ -54,6 +65,6 @@ int main(int argc, char *argv[])
 		print_free_exit(&stacks, "Sorted");
 	else
 		push_swap(&stacks);
-	free(stacks.arr);	
+	free(stacks.stacka);	
 	return (0);
 }

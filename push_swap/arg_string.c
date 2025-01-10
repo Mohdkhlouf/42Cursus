@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:31:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/09 16:23:26 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/10 15:06:38 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void print_free_exit_str(t_stacks *stacks, char **str, char *msg)
 {
 	ft_printf("Error\n%s", msg);
-    if (stacks->arr)
-        free(stacks->arr);
+    if (stacks->stacka)
+        free(stacks->stacka);
     ft_free(str);
     exit(-1);
 }
@@ -33,8 +33,8 @@ void multi_args_one(int len, char **str, t_stacks *stacks)
 	int i;
 	
 	i = 0;
-	stacks->arr = malloc (len *sizeof (int));
-	if (!stacks->arr)
+	stacks->stacka = malloc (len *sizeof (int));
+	if (!stacks->stacka)
 		print_free_exit_str(stacks, str,"Malloc Failed");
 	while (str[i])
 	{
@@ -46,7 +46,7 @@ void multi_args_one(int len, char **str, t_stacks *stacks)
 	i = 0;
 	while (str[i])
 		{
-			stacks->arr[i] = is_not_oflow_str(ft_atoi(str[i]), stacks, str);
+			stacks->stacka[i] = is_not_oflow_str(ft_atoi(str[i]), stacks, str);
 			stacks->counter += 1;
 			i++;
 		}
