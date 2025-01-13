@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/10 15:47:35 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/13 11:24:17 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_stacks
 	int	*stachb;
 	int top_a;
 	int top_b;
+	int max_int;
+	int digits_number;
 }			t_stacks;
 
 int ft_number(char *str);
@@ -44,6 +46,8 @@ void check_arguments(int argc, char *argv[], t_stacks *stacks);
 void print_stack(t_stacks *stack);
 void swap_a(t_stacks *stack);
 void rotate_a(t_stacks *stack);
+void reverse_rotate_a(t_stacks *stack);
+void max_number_digits(t_stacks *stack);
 
 
 #endif
