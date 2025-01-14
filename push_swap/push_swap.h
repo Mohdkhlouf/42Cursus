@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/13 11:24:17 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/14 14:40:50 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_stacks
 {
 	int counter;
 	int *stacka;
-	int	*stachb;
+	int	*stackb;
 	int top_a;
 	int top_b;
 	int max_int;
@@ -48,6 +48,9 @@ void swap_a(t_stacks *stack);
 void rotate_a(t_stacks *stack);
 void reverse_rotate_a(t_stacks *stack);
 void max_number_digits(t_stacks *stack);
-
+void push_b(t_stacks *stack);
+void reverse_rotate_b(t_stacks *stack);
+void push_a(t_stacks *stack);
+int get_bit_digit(int n, int dive_base);
 
 #endif

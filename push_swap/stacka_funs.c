@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:37:55 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/13 08:25:39 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/14 10:31:24 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,24 @@ void reverse_rotate_a(t_stacks *stack)
 	int temp;
 	int top;
 	
-	top = stack->counter-1;
+	top = stack->top_a;
 	temp = stack->stacka[top];
 	ft_memmove(stack->stacka + 1,stack->stacka,  top * sizeof(int));
 	stack->stacka[0] = temp;
 	ft_printf("rra\n");
+}
+
+void push_b(t_stacks *stack)
+{
+	if (stack->top_a == 0)
+	{
+		stack->stackb[++stack->top_b] = stack->stacka[stack->top_a];
+	}
+	else
+	{
+		stack->stackb[++stack->top_b] = stack->stacka[stack->top_a];
+		ft_memmove(stack->stacka, stack->stacka,  ((stack->top_a - 1) * sizeof(int)));
+	}
+	stack->top_a -= 1;
+	ft_printf("pb\n");
 }

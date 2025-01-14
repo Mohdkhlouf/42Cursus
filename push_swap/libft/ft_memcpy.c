@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:17:43 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/13 16:35:48 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/13 16:54:47 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	*ft_memcpy(void *s1, const void *s2, size_t n)
 	size_t	i;
 
 	i = 0;
-	if (!s1 && !s2)
+	if (!s1 || !s2)
 		return (NULL);
 	while (i < n)
 	{
-		((char *)s1)[i] = ((char *)s2)[i];
+		((int *)s1)[i] = ((const int*)s2)[i];
 		i++;
 	}
 	return (s1);

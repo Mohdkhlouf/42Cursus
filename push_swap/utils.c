@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:25:21 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/10 18:06:46 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/14 15:47:31 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,40 @@ void print_stack(t_stacks *stack)
     int j;
 
     j = 0;
-	while(j < stack->counter)
+    ft_printf("******************************\n");
+    ft_printf("stack a:#");
+	while(j <= stack->top_a)
 	{
 		ft_printf("%d ", stack->stacka[j]);
 		j++;
 	}
+    ft_printf("#\n");
+    j = 0;
+    ft_printf("stack b:#");
+    while(j <= stack->top_b)
+	{
+		ft_printf("%d ", stack->stackb[j]);
+		j++;
+	}
+    ft_printf("#\n");
+     ft_printf("******************************\n");
+}
+int get_bit_digit(int n, int dive_base)
+{
+   
+	if (dive_base < 0)
+		exit(-1);
+	if (dive_base == 0)
+		return (n % 10);
+	while(dive_base > 0)
+		{
+			n = n/10;
+            if ( n == 0)
+                {
+                    return (n);
+                }
+			dive_base--;
+		}
+		n = n % 10;
+	return (n);
 }
