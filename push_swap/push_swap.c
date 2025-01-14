@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/14 15:49:20 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/14 23:19:19 by mohammad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,14 @@ void pass_radix_b(t_stacks *stack, int div_base)
 	j = 0;
 	sign = 1;
 	i = stack->top_b;
-	printf("I am on stacl B radix pass\n");
+	// printf("I am on stacl B radix pass\n");
 	while (j <= 9 && stack->top_b != -1)
 	{
 		i = stack->top_b;
 		print_stack(stack);
 		if(have_values(stack->stackb, i, j, div_base))
 		{
-			printf(" B radix pass Test %d,%d,%d\n", div_base, j, i);
+			// printf(" B radix pass Test %d,%d,%d\n", div_base, j, i);
 			while (i >= 0)
 			{
 				if (stack->stackb[stack->top_b] < 0)
@@ -124,7 +124,29 @@ void pass_radix_b(t_stacks *stack, int div_base)
 	}
 }
 
+void push_all_b(t_stacks *stack)
+{
+	int i;
 
+	i = stack->top_b;
+	while (i >= 0)
+	{
+		push_a(stack);
+		i--;
+	}
+}
+
+void rotate_all_a(t_stacks *stack)
+{
+	int i;
+
+	i = stack->top_a;
+	while (i >= 0)
+	{
+		rotate_a(stack);
+		i--;
+	}
+}
 void pass_radix_a(t_stacks *stack, int div_base)
 {
 	int j;
@@ -134,8 +156,8 @@ void pass_radix_a(t_stacks *stack, int div_base)
 	j = 0;
 	sign = 1;
 	i = stack->top_a;
-	printf("I am on stacl A radix pass\n");
-	printf("digit %d\n", (((stack->stacka[stack->top_a] * sign) >> div_base) & 1));
+	// printf("I am on stacl A radix pass\n");
+	// printf("digit %d\n", (((stack->stacka[stack->top_a] * sign) >> div_base) & 1));
 	while (j <= 9 && stack->top_a != -1)
 	{
 		i = stack->top_a;
@@ -155,24 +177,107 @@ void pass_radix_a(t_stacks *stack, int div_base)
 		}
 		j++;
 	}
+	
 }
+
+void set_positions(t_stacks *stack)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	stack->orginal = malloc(stack->counter * sizeof (int));
+	ft_memcpy(stack->orginal, stack->stacka, stack->counter);
+
+	while (i < stack->counter)
+	{
+		j = 0;
+		while (j < stack->counter)
+		{
+			if (stack->stacka[i] == stack->sorted_stack[j])
+			{
+				stack->stacka[i] = j;
+				break;
+			}
+			j++;
+		}
+	i++;
+	}
+
+
+}
+
+void sort_array(t_stacks *stack)
+{
+    int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	stack->sorted_stack = malloc(stack->counter * sizeof (int));
+	ft_memcpy(stack->sorted_stack, stack->stacka, stack->counter);
+
+    while (i < stack->counter)
+	{
+        j = i + 1;
+        while (j < stack->counter)
+		{
+            if (stack->sorted_stack[i] > stack->sorted_stack[j])
+			{
+                // Swap arr[i] and arr[j]
+                int temp = stack->sorted_stack[i];
+                stack->sorted_stack[i] = stack->sorted_stack[j];
+                stack->sorted_stack[j] = temp;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
+void push_negative(t_stacks *stack)
+{
+	int i;
+
+	i = stack->top_a;
+	while(i >= 0)
+	{
+		if (stack->stacka[stack->top_a] < 0)
+		{
+				push_b(stack);
+		}
+		reverse_rotate_a(stack);
+		i--;
+	}
+
+	
+}
+
+
 void big_stack(t_stacks *stack)
 {
 	int i;
 
 	i = 0;
+	
+	sort_array(stack);
+	// print_any_stack(stack->sorted_stack, stack->counter,"Sorted stack");
+	set_positions(stack);
 	max_number_digits(stack);
+	// print_any_stack(stack->stacka, stack->counter,"positioned stack");
 	while (i < stack->digits_number)
 	{
-		ft_printf("top a = %d | top b = %d\n", stack->top_a, stack->top_b );
-		print_stack(stack);
-		if (i % 2 == 0)
-			pass_radix_a(stack, i);
-		else
-			pass_radix_b(stack, i);
-		print_stack(stack);	
+		// ft_printf("top a = %d | top b = %d\n", stack->top_a, stack->top_b );
+		// print_stack(stack);
+		pass_radix_a(stack, i);
+		// print_stack(stack);	
+		push_all_b(stack);
+		// print_stack(stack);	
 		i++;	
 	}
+	rotate_all_a(stack);
+	// print_stack(stack);	
 }
 
 void sort3(t_stacks *stack)
@@ -197,9 +302,7 @@ void sort3(t_stacks *stack)
 
 void push_swap(t_stacks *stacks)
 {
-	int j;
-	
-	j = 0;
+
 	stacks->stackb = malloc (stacks->counter * sizeof(int));
 	if (!stacks->stackb)
 		print_free_exit(stacks, "malloc stack b faild");
@@ -213,11 +316,7 @@ void push_swap(t_stacks *stacks)
 int main(int argc, char *argv[])
 {
 	t_stacks stacks;
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
+	
 	stacks.counter = 0;
 	stacks.top_b = -1;
 	stacks.top_a = -1;

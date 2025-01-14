@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:25:21 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/14 15:47:31 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/14 21:43:08 by mohammad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,21 @@ void print_free_exit(t_stacks *stacks, char *sms)
     if (stacks->stacka)
         free(stacks->stacka);
     exit(-1);
+}
+
+void print_any_stack(int *stack, int len, char *msg)
+{
+    int j;
+
+    j = 0;
+    ft_printf("******************************\n");
+    ft_printf("%s#", msg);
+	while(j < len)
+	{
+		ft_printf("%d ", stack[j]);
+		j++;
+	}
+    ft_printf("#\n");
 }
 
 void print_stack(t_stacks *stack)

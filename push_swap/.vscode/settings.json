@@ -4,6 +4,7 @@
 		"limits.h": "c",
 		"chrono": "c",
 		"random": "c",
-		"limits": "c"
+		"limits": "c",
+		"initializer_list": "c"
 	}
 }

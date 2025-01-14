@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/14 14:40:50 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/14 23:10:58 by mohammad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct s_stacks
 	int counter;
 	int *stacka;
 	int	*stackb;
+	int *sorted_stack;
+	int *orginal;
 	int top_a;
 	int top_b;
 	int max_int;
@@ -52,5 +54,7 @@ void push_b(t_stacks *stack);
 void reverse_rotate_b(t_stacks *stack);
 void push_a(t_stacks *stack);
 int get_bit_digit(int n, int dive_base);
-
+void push_all_b(t_stacks *stack);
+void print_any_stack(int *stack, int len, char *msg);
+void rotate_all_a(t_stacks *stack);
 #endif
