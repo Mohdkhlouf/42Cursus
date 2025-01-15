@@ -6,7 +6,7 @@
 /*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/14 23:19:19 by mohammad         ###   ########.fr       */
+/*   Updated: 2025/01/15 09:21:37 by mohammad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,8 +250,6 @@ void push_negative(t_stacks *stack)
 		reverse_rotate_a(stack);
 		i--;
 	}
-
-	
 }
 
 
