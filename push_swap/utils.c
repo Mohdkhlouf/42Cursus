@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:25:21 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 09:28:48 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/15 16:53:28 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void ft_free(char **arr)
     }
 }
 
-void print_free_exit(t_stacks *stacks, char *sms)
+void print_free_exit(t_stacks *stacks)
 {
-    ft_printf("Error\n%s", sms);
+    ft_putstr_fd("Error\n", 2);
     if (stacks->stacka)
         free(stacks->stacka);
     exit(-1);

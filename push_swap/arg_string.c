@@ -6,15 +6,15 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:31:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/10 15:06:38 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/15 10:28:08 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void print_free_exit_str(t_stacks *stacks, char **str, char *msg)
+void print_free_exit_str(t_stacks *stacks, char **str)
 {
-	ft_printf("Error\n%s", msg);
+	ft_putstr_fd("Error\n", 2);
     if (stacks->stacka)
         free(stacks->stacka);
     ft_free(str);
@@ -24,7 +24,7 @@ void print_free_exit_str(t_stacks *stacks, char **str, char *msg)
 long is_not_oflow_str(long n, t_stacks *stacks, char **str)
 {
 	if(n > INT_MAX || n < INT_MIN)
-		print_free_exit_str(stacks,str,"Number is overflow");
+		print_free_exit_str(stacks,str);
 	return (n);
 }
 
@@ -35,13 +35,13 @@ void multi_args_one(int len, char **str, t_stacks *stacks)
 	i = 0;
 	stacks->stacka = malloc (len *sizeof (int));
 	if (!stacks->stacka)
-		print_free_exit_str(stacks, str,"Malloc Failed");
+		print_free_exit_str(stacks, str);
 	while (str[i])
 	{
 		if(ft_number(str[i]))
 			i++;
 		else
-			print_free_exit_str(stacks, str,"Not a valid umber");
+			print_free_exit_str(stacks, str);
 	}
 	i = 0;
 	while (str[i])

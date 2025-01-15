@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:50:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/10 15:05:48 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/15 10:31:52 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void check_arguments(int argc, char *argv[], t_stacks *stacks)
 {
 if (argc== 1)
 	{
-		ft_printf("No arguments");
+		ft_putstr_fd("Error\n", 2);
 		exit(-1);
 	}
 else if (argc == 2)
@@ -79,7 +79,7 @@ void check_duplicated(t_stacks *stacks)
 		{
 			if (stacks->stacka[i] == stacks->stacka[j])
 				{
-					print_free_exit(stacks, "there are dupllicated numbers");
+					print_free_exit(stacks);
 					exit(-1);
 				}
 			j++;

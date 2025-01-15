@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:36:17 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/10 15:06:19 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/15 16:51:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ long is_not_oflow(long n, t_stacks *stacks)
 {
 	if(n > INT_MAX || n < INT_MIN)
 		{
-			ft_printf("Number is overflow");
+			ft_putstr_fd("Error\n",2);
 			free(stacks->stacka);
 			exit(-1);
 		}
@@ -33,13 +33,13 @@ void multi_args(int argc, char **str, t_stacks *stacks)
 	j = 0;
 	stacks->stacka = malloc (argc *sizeof (int));
 	if (!stacks->stacka)
-		print_free_exit(stacks,"Malloc Faild");
+		print_free_exit(stacks);
 	while (str[i])
 	{
 		if(ft_number(str[i]))
 			i++;
 		else
-			print_free_exit(stacks,"Not a valid Number");
+			print_free_exit(stacks);
 	}
 	i = 1;
 	while (str[i])

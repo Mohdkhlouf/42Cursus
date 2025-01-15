@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 09:21:37 by mohammad         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:11:21 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void how_many_digits(t_stacks *stack)
 			digits++;
 		}
 	stack->digits_number = digits;
-	ft_printf("how many digits  %d\n", digits);
+	// ft_printf("how many digits  %d\n", digits);
 }
 
 void max_number_digits(t_stacks *stack)
@@ -39,7 +39,7 @@ void max_number_digits(t_stacks *stack)
 	max = 0;
 	new_stack = malloc(sizeof(stack->stacka) * stack->counter);
 	if (!new_stack)
-		print_free_exit(stack, "malloc new arr is faild");
+		print_free_exit(stack);
 	ft_memcpy(new_stack, stack->stacka, stack->counter);
 	while (i < stack->counter)
 	{
@@ -50,7 +50,7 @@ void max_number_digits(t_stacks *stack)
 		i++;
 	}
 	stack->max_int = max;
-	ft_printf("Max digits number %d\n", stack->max_int);
+	// ft_printf("Max digits number %d\n", stack->max_int);
 	how_many_digits(stack);
 }
 
@@ -66,26 +66,40 @@ int base(int n)
 	}
 	return (result);
 }
-
-int have_values(int *stack, int top, int j , int div_base)
+int have_values_in(int *stack, int top, int j , int div_base)
 {
 	int i;
-	int sign;
 	int have_value;
 	
-	sign = 1;
 	i = top;
 	have_value = 0;
 	while (i >= 0)
 	{
-		if (stack[i] < 0)
-			sign *= -1;
-		if (get_bit_digit((stack[i] * sign), div_base) == j)
+		if (get_bit_digit((stack[i]), div_base) == j)
 			{
 				have_value = 1;
 				break;
 			}
-		sign = 1;
+		i--;
+	}
+	return (have_value);
+}
+
+int have_values(int *stack, int top, int j , int div_base)
+{
+	int i;
+	int have_value;
+	
+	i = top;
+	have_value = 0;
+	while (i >= 0)
+	{
+		
+		if (get_bit_digit((stack[i]), div_base) == j)
+			{
+				have_value = 1;
+				break;
+			}
 		i--;
 	}
 	return (have_value);
@@ -165,12 +179,21 @@ void pass_radix_a(t_stacks *stack, int div_base)
 		{
 			while (i >= 0)
 			{
-				if (stack->stacka[stack->top_a] < 0)
-					sign *= -1;
 				if(get_bit_digit((stack->stacka[stack->top_a] * sign),div_base) == j)
 					push_b(stack);
+				
 				else
-					reverse_rotate_a(stack);
+				{
+					// Check if there are any more values for the current digit `j`
+					if (have_values(stack->stacka, stack->top_a - 1, j, div_base))
+					{
+						reverse_rotate_a(stack);  // Rotate only if there are more valid values
+					}
+					else
+					{
+						break;  // Exit loop if no valid values remain
+					}
+				}
 				sign = 1;
 				i--;
 			}
@@ -260,22 +283,16 @@ void big_stack(t_stacks *stack)
 	i = 0;
 	
 	sort_array(stack);
-	// print_any_stack(stack->sorted_stack, stack->counter,"Sorted stack");
 	set_positions(stack);
 	max_number_digits(stack);
-	// print_any_stack(stack->stacka, stack->counter,"positioned stack");
 	while (i < stack->digits_number)
 	{
-		// ft_printf("top a = %d | top b = %d\n", stack->top_a, stack->top_b );
-		// print_stack(stack);
 		pass_radix_a(stack, i);
-		// print_stack(stack);	
 		push_all_b(stack);
-		// print_stack(stack);	
 		i++;	
 	}
-	rotate_all_a(stack);
-	// print_stack(stack);	
+	// rotate_all_a(stack);
+	print_stack(stack);	
 }
 
 void sort3(t_stacks *stack)
@@ -303,7 +320,7 @@ void push_swap(t_stacks *stacks)
 
 	stacks->stackb = malloc (stacks->counter * sizeof(int));
 	if (!stacks->stackb)
-		print_free_exit(stacks, "malloc stack b faild");
+		print_free_exit(stacks);
 	stacks->top_a = stacks->counter - 1;
 	if (stacks->counter == 3)
 		sort3(stacks);
@@ -321,7 +338,7 @@ int main(int argc, char *argv[])
 	check_arguments(argc, argv, &stacks);
 	check_duplicated(&stacks);
 	if(check_sorted(&stacks))
-		print_free_exit(&stacks, "Sorted");
+		print_free_exit(&stacks);
 	else
 		push_swap(&stacks);
 	free(stacks.stacka);	

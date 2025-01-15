@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohammad <mohammad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/14 23:10:58 by mohammad         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:27:27 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ typedef struct s_stacks
 }			t_stacks;
 
 int ft_number(char *str);
-void print_free_exit(t_stacks *stacks, char *sms);
+void print_free_exit(t_stacks *stacks);
 void ft_free(char **arr);
 long is_not_oflow(long n, t_stacks *stacks);
-void print_free_exit_str(t_stacks *stacks, char **str, char *sms);
+void print_free_exit_str(t_stacks *stacks, char **str);
 long is_not_oflow_str(long n, t_stacks *stacks, char **str);
 void multi_args_one(int len, char **str, t_stacks *stacks);
 void one_arg(char *str, t_stacks *stacks);
