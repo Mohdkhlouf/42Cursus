@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 17:11:21 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/15 21:25:46 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,20 +113,20 @@ void pass_radix_b(t_stacks *stack, int div_base)
 
 	j = 0;
 	sign = 1;
-	i = stack->top_b;
+	i = stack->bottom_b;
 	// printf("I am on stacl B radix pass\n");
-	while (j <= 9 && stack->top_b != -1)
+	while (j <= 9 && stack->bottom_b != -1)
 	{
-		i = stack->top_b;
+		i = stack->bottom_b;
 		print_stack(stack);
 		if(have_values(stack->stackb, i, j, div_base))
 		{
 			// printf(" B radix pass Test %d,%d,%d\n", div_base, j, i);
 			while (i >= 0)
 			{
-				if (stack->stackb[stack->top_b] < 0)
+				if (stack->stackb[stack->bottom_b] < 0)
 					sign *= -1;
-				if(get_bit_digit((stack->stackb[stack->top_b] * sign),div_base) == j)
+				if(get_bit_digit((stack->stackb[stack->bottom_b] * sign),div_base) == j)
 					push_a(stack);
 				else
 					reverse_rotate_b(stack);
@@ -142,7 +142,7 @@ void push_all_b(t_stacks *stack)
 {
 	int i;
 
-	i = stack->top_b;
+	i = stack->bottom_b;
 	while (i >= 0)
 	{
 		push_a(stack);
@@ -154,7 +154,7 @@ void rotate_all_a(t_stacks *stack)
 {
 	int i;
 
-	i = stack->top_a;
+	i = stack->bottom_a;
 	while (i >= 0)
 	{
 		rotate_a(stack);
@@ -169,30 +169,24 @@ void pass_radix_a(t_stacks *stack, int div_base)
 
 	j = 0;
 	sign = 1;
-	i = stack->top_a;
+	i = stack->bottom_a;
 	// printf("I am on stacl A radix pass\n");
-	// printf("digit %d\n", (((stack->stacka[stack->top_a] * sign) >> div_base) & 1));
-	while (j <= 9 && stack->top_a != -1)
+	// printf("digit %d\n", (((stack->stacka[stack->bottom_a] * sign) >> div_base) & 1));
+	while (j <= 9 && stack->bottom_a != -1)
 	{
-		i = stack->top_a;
+		i = stack->bottom_a;
 		if(have_values(stack->stacka, i, j, div_base))
 		{
 			while (i >= 0)
 			{
-				if(get_bit_digit((stack->stacka[stack->top_a] * sign),div_base) == j)
+				if(get_bit_digit((stack->stacka[stack->bottom_a] * sign),div_base) == j)
 					push_b(stack);
 				
 				else
 				{
-					// Check if there are any more values for the current digit `j`
-					if (have_values(stack->stacka, stack->top_a - 1, j, div_base))
-					{
+		
 						reverse_rotate_a(stack);  // Rotate only if there are more valid values
-					}
-					else
-					{
-						break;  // Exit loop if no valid values remain
-					}
+	
 				}
 				sign = 1;
 				i--;
@@ -263,10 +257,10 @@ void push_negative(t_stacks *stack)
 {
 	int i;
 
-	i = stack->top_a;
+	i = stack->bottom_a;
 	while(i >= 0)
 	{
-		if (stack->stacka[stack->top_a] < 0)
+		if (stack->stacka[stack->bottom_a] < 0)
 		{
 				push_b(stack);
 		}
@@ -292,7 +286,7 @@ void big_stack(t_stacks *stack)
 		i++;	
 	}
 	// rotate_all_a(stack);
-	print_stack(stack);	
+	// print_stack(stack);	
 }
 
 void sort3(t_stacks *stack)
@@ -300,18 +294,24 @@ void sort3(t_stacks *stack)
 	if (stack->stacka[0] > stack->stacka[1] && stack->stacka[0] > stack->stacka[2]) 
 		{
 			if (stack->stacka[1] > stack->stacka[2])
+			{
 				swap_a(stack);
-			rotate_a(stack);
+				reverse_rotate_a(stack);
+			}
+			else
+				rotate_a(stack);
 		}
 	else if (stack->stacka[0] > stack->stacka[1] && stack->stacka[0] < stack->stacka[2])
 		{
-			swap_a(stack);
-			reverse_rotate_a(stack);	
+			swap_a(stack);	
 		}
 	else if (stack->stacka[0] < stack->stacka[1] && stack->stacka[0] > stack->stacka[2])
 		reverse_rotate_a(stack);
 	else
+	{
 		swap_a(stack);
+		rotate_a(stack);
+	}
 }
 
 
@@ -321,7 +321,7 @@ void push_swap(t_stacks *stacks)
 	stacks->stackb = malloc (stacks->counter * sizeof(int));
 	if (!stacks->stackb)
 		print_free_exit(stacks);
-	stacks->top_a = stacks->counter - 1;
+	stacks->bottom_a = 0;
 	if (stacks->counter == 3)
 		sort3(stacks);
 	if (stacks->counter > 3)
@@ -333,12 +333,16 @@ int main(int argc, char *argv[])
 	t_stacks stacks;
 	
 	stacks.counter = 0;
-	stacks.top_b = -1;
-	stacks.top_a = -1;
+	stacks.bottom_a = -1;
+	stacks.bottom_b = -1;
 	check_arguments(argc, argv, &stacks);
 	check_duplicated(&stacks);
 	if(check_sorted(&stacks))
-		print_free_exit(&stacks);
+		{
+			if (stacks.stacka)
+				free(stacks.stacka);
+			exit(-1);
+		}
 	else
 		push_swap(&stacks);
 	free(stacks.stacka);	

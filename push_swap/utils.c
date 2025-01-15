@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:25:21 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 16:53:28 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/15 20:44:33 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void print_stack(t_stacks *stack)
     j = 0;
     ft_printf("******************************\n");
     ft_printf("stack a:#");
-	while(j <= stack->top_a)
+	while(j <= stack->bottom_a)
 	{
 		ft_printf("%d ", stack->stacka[j]);
 		j++;
@@ -65,7 +65,7 @@ void print_stack(t_stacks *stack)
     ft_printf("#\n");
     j = 0;
     ft_printf("stack b:#");
-    while(j <= stack->top_b)
+    while(j <= stack->bottom_b)
 	{
 		ft_printf("%d ", stack->stackb[j]);
 		j++;

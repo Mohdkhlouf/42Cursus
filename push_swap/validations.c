@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:50:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 10:31:52 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/15 18:38:17 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int ft_number(char *str)
 		else
 			return (0);
 	}
-	
 	return (1);
 }
 
@@ -54,7 +53,6 @@ i = 0;
 j = 1;
 while (j < stacks->counter)
 {
-	
 	if(stacks->stacka[i] < stacks->stacka[j])
 			i++;
 	else
@@ -71,7 +69,6 @@ void check_duplicated(t_stacks *stacks)
 
 	i = 0;
 	j = 1;
-
 	while(i < stacks->counter)
 	{
 		j = i + 1;

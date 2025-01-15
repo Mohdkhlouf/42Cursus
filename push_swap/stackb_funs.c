@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stackb_funs.c.c                                    :+:      :+:    :+:   */
+/*   stackb_funs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:35:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/14 15:52:18 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/15 20:44:33 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void swap_b(t_stacks *stack)
 	int top;
 	
 	temp = 0;
-	top = stack->top_b;
+	top = stack->bottom_b;
 	temp = stack->stacka[top];
 	stack->stacka[top] = stack->stacka[top - 1];
 	stack->stacka[top - 1] = temp;
@@ -30,7 +30,7 @@ void rotate_b(t_stacks *stack)
 	int temp;
 	int top;
 	
-	top = stack->top_b;
+	top = stack->bottom_b;
 	temp = stack->stacka[top];
 	ft_memmove(stack->stacka + 1,stack->stacka,  top * sizeof(int));
 	stack->stacka[0] = temp;
@@ -42,7 +42,7 @@ void reverse_rotate_b(t_stacks *stack)
 	int temp;
 	int top;
 	
-	top = stack->top_b;
+	top = stack->bottom_b;
 	temp = stack->stackb[top];
 	ft_memmove(stack->stackb + 1,stack->stackb,  top * sizeof(int));
 	stack->stackb[0] = temp;
@@ -51,15 +51,15 @@ void reverse_rotate_b(t_stacks *stack)
 
 void push_a(t_stacks *stack)
 {
-	if (stack->top_b == 0)
+	if (stack->bottom_b == 0)
 	{
-		stack->stacka[++stack->top_a] = stack->stackb[stack->top_b];
+		stack->stacka[++stack->bottom_a] = stack->stackb[stack->bottom_b];
 	}
 	else
 	{
-		stack->stacka[++stack->top_a] = stack->stackb[stack->top_b];
-		ft_memmove(stack->stackb, stack->stackb,  ((stack->top_b - 1) * sizeof(int)));
+		stack->stacka[++stack->bottom_a] = stack->stackb[stack->bottom_b];
+		ft_memmove(stack->stackb, stack->stackb,  ((stack->bottom_b - 1) * sizeof(int)));
 	}
-	stack->top_b -= 1;
+	stack->bottom_b -= 1;
 	ft_printf("pa\n");
 }

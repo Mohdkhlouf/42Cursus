@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 10:27:27 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/15 20:44:54 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef struct s_stacks
 	int	*stackb;
 	int *sorted_stack;
 	int *orginal;
-	int top_a;
-	int top_b;
+	int bottom_a;
+	int bottom_b;
 	int max_int;
 	int digits_number;
 }			t_stacks;
