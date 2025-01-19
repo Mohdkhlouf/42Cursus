@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:37:55 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 21:15:58 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/17 01:25:55 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void rotate_a(t_stacks *stack)
 	int temp;
 	int top;
 	
-	top = stack->counter-1;
+	top = stack->bottom_a;
 	temp = stack->stacka[0];
 	ft_memmove(stack->stacka,stack->stacka + 1,  top * sizeof(int));
 	stack->stacka[top] = temp;
@@ -50,13 +50,17 @@ void reverse_rotate_a(t_stacks *stack)
 void push_b(t_stacks *stack)
 {
 	if (stack->bottom_a == 0)
-	{
-		stack->stackb[++stack->bottom_b] = stack->stacka[stack->bottom_a];
+	{	
+		ft_memmove(stack->stackb + 1, stack->stackb,  ((stack->bottom_b + 1) * sizeof(int)));
+		stack->stackb[0] = stack->stacka[0];
+		stack->bottom_b++;
 	}
-	else
+	else if(stack->bottom_a > 0)
 	{
-		stack->stackb[++stack->bottom_b] = stack->stacka[stack->bottom_a];
-		ft_memmove(stack->stacka, stack->stacka,  ((stack->bottom_a - 1) * sizeof(int)));
+		ft_memmove(stack->stackb + 1, stack->stackb,  ((stack->bottom_b +1) * sizeof(int)));
+		stack->stackb[0] = stack->stacka[0];
+		ft_memmove(stack->stacka, stack->stacka + 1,  ((stack->bottom_a) * sizeof(int)));
+		stack->bottom_b++;	
 	}
 	stack->bottom_a -= 1;
 	ft_printf("pb\n");

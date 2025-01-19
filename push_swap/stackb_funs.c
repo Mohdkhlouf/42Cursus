@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:35:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 20:44:33 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/18 21:15:37 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,17 @@ void reverse_rotate_b(t_stacks *stack)
 void push_a(t_stacks *stack)
 {
 	if (stack->bottom_b == 0)
-	{
-		stack->stacka[++stack->bottom_a] = stack->stackb[stack->bottom_b];
+	{	
+		ft_memmove(stack->stacka + 1, stack->stacka,  ((stack->bottom_a + 1) * sizeof(int)));
+		stack->stacka[0] = stack->stackb[0];
+		stack->bottom_a++;
 	}
-	else
+	else if(stack->bottom_b > 0)
 	{
-		stack->stacka[++stack->bottom_a] = stack->stackb[stack->bottom_b];
-		ft_memmove(stack->stackb, stack->stackb,  ((stack->bottom_b - 1) * sizeof(int)));
+		ft_memmove(stack->stacka + 1, stack->stacka,  ((stack->bottom_a +1) * sizeof(int)));
+		stack->stacka[0] = stack->stackb[0];
+		ft_memmove(stack->stackb, stack->stackb + 1,  ((stack->bottom_b) * sizeof(int)));
+		stack->bottom_a++;	
 	}
 	stack->bottom_b -= 1;
 	ft_printf("pa\n");

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 20:44:54 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/18 23:59:46 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,15 @@ int get_bit_digit(int n, int dive_base);
 void push_all_b(t_stacks *stack);
 void print_any_stack(int *stack, int len, char *msg);
 void rotate_all_a(t_stacks *stack);
+int have_values(int *stack, int top, int j , int div_base);
+int have_values_in(int *stack, int top, int j , int div_base);
+int base(int n);
+void max_number_digits(t_stacks *stack);
+void how_many_digits(t_stacks *stack);
+int value_position(int *stack, int top, int j , int div_base);
+void sort3(t_stacks *stack);
+void up_to_10(t_stacks *stack);
+void sort_array(t_stacks *stack);
+void set_positions(t_stacks *stack);
+
 #endif
