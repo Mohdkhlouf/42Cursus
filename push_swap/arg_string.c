@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:31:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 10:28:08 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 01:01:19 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ void one_arg(char *str, t_stacks *stacks)
 	
 	i = 0;
 	str_len = 0;
+	if(ft_strlen(str) == 0 || str == NULL)
+	{
+		ft_putstr_fd("Error\n", 2);
+		exit(-1);
+	}
 	arr = ft_split(str, ' ');
 	if(!arr)
 	{

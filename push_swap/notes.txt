@@ -1,4 +1,0 @@
-#1 you have to handle 3 things:
-- first is all numbers are from an arguments.
-- all numbers are from an array in one argument.
-- some people do both checks. so you have array and many arguments at the same time.

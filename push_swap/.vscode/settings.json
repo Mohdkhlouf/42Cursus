@@ -5,6 +5,9 @@
 		"chrono": "c",
 		"random": "c",
 		"limits": "c",
-		"initializer_list": "c"
+		"initializer_list": "c",
+		"editor.defaultFormatter": "keyhr.42-c-format",
+		"push_swap.h": "c"
 	}
+
 }

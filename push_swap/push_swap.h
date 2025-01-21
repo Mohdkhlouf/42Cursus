@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/18 23:59:46 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 02:41:49 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_stacks
 	int bottom_b;
 	int max_int;
 	int digits_number;
+	int digits_number_bitwise;
+	int sorted;
 }			t_stacks;
 
 int ft_number(char *str);
@@ -59,13 +61,16 @@ void print_any_stack(int *stack, int len, char *msg);
 void rotate_all_a(t_stacks *stack);
 int have_values(int *stack, int top, int j , int div_base);
 int have_values_in(int *stack, int top, int j , int div_base);
-int base(int n);
 void max_number_digits(t_stacks *stack);
 void how_many_digits(t_stacks *stack);
 int value_position(int *stack, int top, int j , int div_base);
 void sort3(t_stacks *stack);
-void up_to_10(t_stacks *stack);
 void sort_array(t_stacks *stack);
 void set_positions(t_stacks *stack);
+bool check_sorted_radix(t_stacks *stacks, int i);
+void pass_radix_a(t_stacks *stack, int div_base);
+void radix_bitwise(t_stacks *stack);
+void pass_radix_bitwise(t_stacks *stack, int div_base);
+int get_bit_digit_bitwise(int n, int dive_base);
 
 #endif

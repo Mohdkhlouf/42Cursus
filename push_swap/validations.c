@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:50:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/15 18:38:17 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 00:21:17 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int ft_number(char *str)
 		return (0);
 	while(str[i])
 	{			
-		if ((str[i] == '-' || str[i] == '+') && ft_isdigit(str[i+1]))
+		if ((str[i] == '-' || str[i] == '+') && ft_isdigit(str[i+1]) && !ft_isdigit(str[i-1]) )
 			i++;
 		if (ft_isdigit(str[i]))
 			i++;
@@ -43,6 +43,27 @@ int ft_number(char *str)
 	}
 	return (1);
 }
+
+bool check_sorted_radix(t_stacks *stacks, int i)
+{
+int j;
+
+j = 1;
+while (i < stacks->bottom_a)
+{
+	if(stacks->stacka[i] < stacks->stacka[j])
+	{
+		i++;
+	}	
+	else
+	{
+		return (false);
+	}
+	j = i + 1;
+}
+return (true);
+}
+
 
 bool check_sorted(t_stacks *stacks)
 {

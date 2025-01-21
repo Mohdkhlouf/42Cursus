@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/17 22:40:51 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 01:57:55 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void how_many_digits(t_stacks *stack)
 			digits++;
 		}
 	stack->digits_number = digits;
-	// ft_printf("how many digits  %d\n", digits);
 }
 
 void max_number_digits(t_stacks *stack)
@@ -49,21 +48,13 @@ void max_number_digits(t_stacks *stack)
 		i++;
 	}
 	stack->max_int = max;
-	// ft_printf("Max digits number %d\n", stack->max_int);
-	how_many_digits(stack);
-}
 
-int base(int n)
-{
-	int result;
-	
-	result = 1;
-	while (n > 0)
-	{
-		result = result * 10;
-		n--;
-	}
-	return (result);
+	int bits = 0;
+    while (max >> bits != 0)
+        bits++;
+    stack->digits_number_bitwise = bits;
+	free(new_stack);
+	how_many_digits(stack);
 }
 
 int have_values_in(int *stack, int top, int j , int div_base)

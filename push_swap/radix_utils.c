@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/18 23:58:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 00:52:34 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void set_positions(t_stacks *stack)
 	j = 0;
 	stack->orginal = malloc(stack->counter * sizeof (int));
 	ft_memcpy(stack->orginal, stack->stacka, stack->counter);
-
 	while (i < stack->counter)
 	{
 		j = 0;
@@ -36,8 +35,6 @@ void set_positions(t_stacks *stack)
 		}
 	i++;
 	}
-
-
 }
 
 void sort_array(t_stacks *stack)
@@ -49,7 +46,6 @@ void sort_array(t_stacks *stack)
 	j = 0;
 	stack->sorted_stack = malloc(stack->counter * sizeof (int));
 	ft_memcpy(stack->sorted_stack, stack->stacka, stack->counter);
-
     while (i < stack->counter)
 	{
         j = i + 1;
@@ -57,7 +53,6 @@ void sort_array(t_stacks *stack)
 		{
             if (stack->sorted_stack[i] > stack->sorted_stack[j])
 			{
-                // Swap arr[i] and arr[j]
                 int temp = stack->sorted_stack[i];
                 stack->sorted_stack[i] = stack->sorted_stack[j];
                 stack->sorted_stack[j] = temp;

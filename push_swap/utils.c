@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:25:21 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/17 21:39:27 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 02:18:19 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,29 @@ void print_stack(t_stacks *stack)
 		j++;
 	}
     ft_printf("#\n");
-     ft_printf("******************************\n");
+    ft_printf("******************************\n");
 }
 int get_bit_digit(int n, int dive_base)
 {
-    if (dive_base < 0)  // Invalid input for dive_base
+    int i;
+
+    i = 0;
+    if (dive_base < 0)
         return -1;
 
-    // Loop to remove the last `dive_base` digits
-    for (int i = 0; i < dive_base; i++)
+    while (i < dive_base)
     {
-        if (n == 0)  // If n becomes 0, return 0 as there are no more digits
+        if (n == 0)
             return 0;
-        n /= 10;  // Remove the last digit
+        n /= 10;
+        i++;
     }
+    return n % 10;
+}
 
-    return n % 10;  // Return the current last digit
+int get_bit_digit_bitwise(int n, int dive_base)
+{
+
+    return (n >> dive_base) & 1; // Isolates the bit at `bit_position`
+
 }
