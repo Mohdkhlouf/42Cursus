@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/21 01:57:55 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 14:21:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,11 @@ void max_number_digits(t_stacks *stack)
 	ft_memcpy(new_stack, stack->stacka, stack->counter);
 	while (i < stack->counter)
 	{
-		if (new_stack[i] < 0)
-			new_stack[i]*= -1;
 		if (new_stack[i] > max)
 			max = new_stack[i];
 		i++;
 	}
 	stack->max_int = max;
-
 	int bits = 0;
     while (max >> bits != 0)
         bits++;

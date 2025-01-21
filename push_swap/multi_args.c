@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:36:17 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/20 13:35:41 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 23:43:17 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ long is_not_oflow(long n, t_stacks *stacks)
 	if(n > INT_MAX || n < INT_MIN)
 		{
 			ft_putstr_fd("Error\n",2);
-			free(stacks->stacka);
+			free_stacks(stacks);
 			exit(-1);
 		}
 	return (n);
@@ -49,5 +49,6 @@ void multi_args(int argc, char **str, t_stacks *stacks)
 			i++;
 			j++;
 		}
+	ft_free(str);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:46:23 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/13 16:37:28 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 15:52:20 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	ft_putstr_fd(char *s, int fd)
 	i = 0;
 	while (s[i])
 	{
-		write(fd, &s[i], 1);
+		if(write(fd, &s[i], 1) == -1)
+			{
+				return ;
+			}
 		i++;
 	}
 }

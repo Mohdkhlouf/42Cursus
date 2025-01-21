@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/21 02:41:49 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/22 00:42:02 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ int value_position(int *stack, int top, int j , int div_base);
 void sort3(t_stacks *stack);
 void sort_array(t_stacks *stack);
 void set_positions(t_stacks *stack);
-bool check_sorted_radix(t_stacks *stacks, int i);
-void pass_radix_a(t_stacks *stack, int div_base);
 void radix_bitwise(t_stacks *stack);
 void pass_radix_bitwise(t_stacks *stack, int div_base);
 int get_bit_digit_bitwise(int n, int dive_base);
+void free_stacks(t_stacks *stacks);
+void exit_free(t_stacks *stacks, char **arr);
+
 
 #endif

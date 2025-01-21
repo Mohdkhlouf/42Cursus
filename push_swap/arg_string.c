@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:31:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/21 01:01:19 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/22 01:12:24 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 void print_free_exit_str(t_stacks *stacks, char **str)
 {
 	ft_putstr_fd("Error\n", 2);
-    if (stacks->stacka)
-        free(stacks->stacka);
     ft_free(str);
+	free_stacks(stacks);
     exit(-1);
 }
 
@@ -64,18 +63,18 @@ void one_arg(char *str, t_stacks *stacks)
 	if(ft_strlen(str) == 0 || str == NULL)
 	{
 		ft_putstr_fd("Error\n", 2);
+		free_stacks(stacks);
 		exit(-1);
 	}
 	arr = ft_split(str, ' ');
 	if(!arr)
-	{
-		ft_free(arr);
-		exit(-1);
-	}
+		exit_free(stacks, arr);
 	while (arr[i])
 		{
 			str_len++;
 			i++;
 		}
+	if(str_len == 1)
+		exit_free(stacks, arr);
 	multi_args_one(str_len,arr, stacks);
 }

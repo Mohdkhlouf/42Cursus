@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/21 00:52:34 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 14:10:08 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,9 @@ void rotate_all_a(t_stacks *stack)
 		rotate_a(stack);
 		i--;
 	}
+}
+
+int get_bit_digit_bitwise(int n, int dive_base)
+{
+    return (n >> dive_base) & 1;
 }

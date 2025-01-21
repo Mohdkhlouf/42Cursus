@@ -1,13 +1,6 @@
 {
-	"files.associations": {
-		"libft.h": "c",
-		"limits.h": "c",
-		"chrono": "c",
-		"random": "c",
-		"limits": "c",
-		"initializer_list": "c",
-		"editor.defaultFormatter": "keyhr.42-c-format",
-		"push_swap.h": "c"
-	}
-
+    "[c]": {
+        "editor.defaultFormatter": "keyhr.42-c-format",
+        "python.defaultInterpreterPath": "/home/mohammad/.venvs/42-c-format/bin/python"
+    },
 }

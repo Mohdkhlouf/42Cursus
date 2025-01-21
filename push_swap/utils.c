@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:25:21 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/21 02:18:19 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 23:42:41 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void ft_free(char **arr)
 void print_free_exit(t_stacks *stacks)
 {
     ft_putstr_fd("Error\n", 2);
-    if (stacks->stacka)
-        free(stacks->stacka);
+    free_stacks(stacks);
     exit(-1);
 }
 
@@ -73,6 +72,7 @@ void print_stack(t_stacks *stack)
     ft_printf("#\n");
     ft_printf("******************************\n");
 }
+
 int get_bit_digit(int n, int dive_base)
 {
     int i;
@@ -89,11 +89,4 @@ int get_bit_digit(int n, int dive_base)
         i++;
     }
     return n % 10;
-}
-
-int get_bit_digit_bitwise(int n, int dive_base)
-{
-
-    return (n >> dive_base) & 1; // Isolates the bit at `bit_position`
-
 }

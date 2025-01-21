@@ -6,13 +6,11 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/21 02:41:12 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/21 23:27:40 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-
 
 void bigger_than_3(t_stacks *stacks)
 {
@@ -40,29 +38,29 @@ void push_swap(t_stacks *stacks)
 
 int main(int argc, char *argv[])
 {
-	t_stacks stacks;
+	t_stacks *stacks;
 	
-	stacks.counter = 0;
-	stacks.bottom_a = -1;
-	stacks.bottom_b = -1;
-	stacks.sorted = 0;
-	check_arguments(argc, argv, &stacks);
-	check_duplicated(&stacks);
-	if(check_sorted(&stacks))
+	stacks = malloc(sizeof(t_stacks));
+	if (!stacks)
+		exit(-1);
+	stacks->stacka = NULL;
+	stacks->stackb = NULL;
+	stacks->sorted_stack = NULL;
+	stacks->orginal = NULL;
+	stacks->counter = 0;
+	stacks->bottom_a = -1;
+	stacks->bottom_b = -1;
+	stacks->sorted = 0;
+	check_arguments(argc, argv, stacks);
+	check_duplicated(stacks);
+	if(check_sorted(stacks))
 		{
-			if (stacks.stacka)
-				free(stacks.stacka);
+			if (stacks->stacka)
+				free(stacks->stacka);
 			exit(-1);
 		}
 	else
-		push_swap(&stacks);
-	if(stacks.stacka)
-		free(stacks.stacka);
-	if(stacks.stackb)
-		free(stacks.stackb);
-	if(stacks.sorted_stack)
-		free(stacks.sorted_stack);
-	if(stacks.orginal)
-		free(stacks.orginal);
+		push_swap(stacks);
+	free_stacks(stacks);
 	return (0);
 }
