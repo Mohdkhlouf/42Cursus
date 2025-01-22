@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:36:17 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/22 13:41:35 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/22 18:45:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void	multi_args(int argc, char **str, t_stacks *stacks)
 		print_free_exit(stacks);
 	while (str[i])
 	{
+		if (ft_strlen(str[i]) > 15 || !ft_number(str[i]))
+			print_free_exit(stacks);
 		if (ft_number(str[i]))
 			i++;
-		else
-			print_free_exit(stacks);
 	}
 	i = 1;
 	while (str[i])
@@ -48,5 +48,4 @@ void	multi_args(int argc, char **str, t_stacks *stacks)
 		i++;
 		j++;
 	}
-	ft_free(str);
 }

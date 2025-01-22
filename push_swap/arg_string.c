@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:31:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/22 13:41:07 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/22 18:44:57 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	multi_args_one(int len, char **str, t_stacks *stacks)
 		print_free_exit_str(stacks, str);
 	while (str[i])
 	{
+		if (ft_strlen(str[i]) > 15)
+			print_free_exit_str(stacks, str);
 		if (ft_number(str[i]))
 			i++;
 		else

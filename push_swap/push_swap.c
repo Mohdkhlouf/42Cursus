@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/22 13:41:49 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/22 18:45:08 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char *argv[])
 	if (check_sorted(stacks))
 	{
 		if (stacks->stacka)
-			free(stacks->stacka);
+			free_stacks(stacks);
 		exit(-1);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/22 13:45:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/22 20:04:00 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,13 @@ void	pass_radix_bitwise(t_stacks *stack, int div_base)
 			push_b(stack);
 		else
 			rotate_a(stack);
+		if(stack->bottom_a == 3)
+			{
+				break;
+			}
 		i++;
 	}
+	sort3(stack);
 }
 
 void	radix_bitwise(t_stacks *stack)
@@ -37,6 +42,7 @@ void	radix_bitwise(t_stacks *stack)
 	while (i < stack->digits_number_bitwise)
 	{
 		pass_radix_bitwise(stack, i);
+
 		push_all_b(stack);
 		i++;
 	}
