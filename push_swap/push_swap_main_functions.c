@@ -6,27 +6,30 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/21 14:21:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/22 13:41:40 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void sort3(t_stacks *stack)
+void	sort3(t_stacks *stack)
 {
-	if (stack->stacka[0] > stack->stacka[1] && stack->stacka[0] > stack->stacka[2]) 
+	if (stack->stacka[0] > stack->stacka[1]
+		&& stack->stacka[0] > stack->stacka[2])
+	{
+		if (stack->stacka[1] > stack->stacka[2])
 		{
-			if (stack->stacka[1] > stack->stacka[2])
-			{
-				swap_a(stack);
-				reverse_rotate_a(stack);
-			}
-			else
-				rotate_a(stack);
+			swap_a(stack);
+			reverse_rotate_a(stack);
 		}
-	else if (stack->stacka[0] > stack->stacka[1] && stack->stacka[0] < stack->stacka[2])
-			swap_a(stack);	
-	else if (stack->stacka[0] < stack->stacka[1] && stack->stacka[0] > stack->stacka[2])
+		else
+			rotate_a(stack);
+	}
+	else if (stack->stacka[0] > stack->stacka[1]
+		&& stack->stacka[0] < stack->stacka[2])
+		swap_a(stack);
+	else if (stack->stacka[0] < stack->stacka[1]
+		&& stack->stacka[0] > stack->stacka[2])
 		reverse_rotate_a(stack);
 	else
 	{

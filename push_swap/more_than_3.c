@@ -6,32 +6,32 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/22 00:43:39 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/22 13:45:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void pass_radix_bitwise(t_stacks *stack, int div_base)
+void	pass_radix_bitwise(t_stacks *stack, int div_base)
 {
-	int i;
-	int bottom;
+	int	i;
+	int	bottom;
 
 	i = 0;
 	bottom = stack->bottom_a;
-			while (i <= bottom)
-			{				
-				if((get_bit_digit_bitwise((stack->stacka[0]), div_base) & 1) == 0)
-					push_b(stack);		
-				else
-					rotate_a(stack);
-				i++;
-			}
+	while (i <= bottom)
+	{
+		if ((get_bit_digit_bitwise((stack->stacka[0]), div_base) & 1) == 0)
+			push_b(stack);
+		else
+			rotate_a(stack);
+		i++;
+	}
 }
 
-void radix_bitwise(t_stacks *stack)
+void	radix_bitwise(t_stacks *stack)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < stack->digits_number_bitwise)
@@ -41,21 +41,21 @@ void radix_bitwise(t_stacks *stack)
 		i++;
 	}
 }
-void free_stacks(t_stacks *stacks)
-{
 
-	if(stacks->stacka)
+void	free_stacks(t_stacks *stacks)
+{
+	if (stacks->stacka)
 		free(stacks->stacka);
-	if(stacks->stackb)
+	if (stacks->stackb)
 		free(stacks->stackb);
-	if(stacks->sorted_stack)
+	if (stacks->sorted_stack)
 		free(stacks->sorted_stack);
-	if(stacks->orginal)
+	if (stacks->orginal)
 		free(stacks->orginal);
 	free(stacks);
 }
 
-void exit_free(t_stacks *stacks, char **arr)
+void	exit_free(t_stacks *stacks, char **arr)
 {
 	ft_free(arr);
 	free_stacks(stacks);

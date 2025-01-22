@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:15:39 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/08 17:02:55 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/22 13:47:32 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 long	ft_atoi(char *str)
 {
 	long	sign;
-	int	i;
+	int		i;
 	long	num;
 
 	i = 0;

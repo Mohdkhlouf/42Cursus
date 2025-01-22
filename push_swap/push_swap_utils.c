@@ -6,33 +6,34 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/21 14:21:18 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/22 13:41:45 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void how_many_digits(t_stacks *stack)
+void	how_many_digits(t_stacks *stack)
 {
-	int digits;
+	int	digits;
 
 	digits = 0;
 	if (stack->max_int == 0)
 		digits = 1;
 	while (stack->max_int != 0)
-		{
-			stack->max_int = stack->max_int / 10;
-			digits++;
-		}
+	{
+		stack->max_int = stack->max_int / 10;
+		digits++;
+	}
 	stack->digits_number = digits;
 }
 
-void max_number_digits(t_stacks *stack)
+void	max_number_digits(t_stacks *stack)
 {
-	int i;
-	int max;
-	int *new_stack;
-	
+	int	i;
+	int	max;
+	int	*new_stack;
+	int	bits;
+
 	i = 0;
 	max = 0;
 	new_stack = malloc(sizeof(int) * stack->counter);
@@ -46,63 +47,63 @@ void max_number_digits(t_stacks *stack)
 		i++;
 	}
 	stack->max_int = max;
-	int bits = 0;
-    while (max >> bits != 0)
-        bits++;
-    stack->digits_number_bitwise = bits;
+	bits = 0;
+	while (max >> bits != 0)
+		bits++;
+	stack->digits_number_bitwise = bits;
 	free(new_stack);
 	how_many_digits(stack);
 }
 
-int have_values_in(int *stack, int top, int j , int div_base)
+int	have_values_in(int *stack, int top, int j, int div_base)
 {
-	int i;
-	int have_value;
-	
+	int	i;
+	int	have_value;
+
 	i = top;
 	have_value = 0;
 	while (i >= 0)
 	{
 		if (get_bit_digit((stack[i]), div_base) == j)
-			{
-				have_value = 1;
-				break;
-			}
+		{
+			have_value = 1;
+			break ;
+		}
 		i--;
 	}
 	return (have_value);
 }
 
-int have_values(int *stack, int top, int j , int div_base)
+int	have_values(int *stack, int top, int j, int div_base)
 {
-	int i;
-	int have_value;
-	
+	int	i;
+	int	have_value;
+
 	i = 0;
 	have_value = 0;
 	while (i <= top)
 	{
-		if (get_bit_digit(stack[i], div_base)== j)
-			{
-				have_value = 1;
-				break;
-			}
+		if (get_bit_digit(stack[i], div_base) == j)
+		{
+			have_value = 1;
+			break ;
+		}
 		i++;
 	}
 	return (have_value);
 }
 
-int value_position(int *stack, int top, int j , int div_base)
+int	value_position(int *stack, int top, int j, int div_base)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i <= top)
 	{
-		if (get_bit_digit(stack[i], div_base)== j)
-			{
-				return (i);
-			}
+		if (get_bit_digit(stack[i], div_base) == j)
+		{
+			return (i);
+		}
 		i++;
 	}
 	return (-1);
