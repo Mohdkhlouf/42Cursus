@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 10:50:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/22 18:45:16 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/23 23:42:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	check_arguments(int argc, char *argv[], t_stacks *stacks)
 {
 	if (argc == 1)
 	{
-		ft_putstr_fd("Error\n", 2);
 		free_stacks(stacks);
 		exit(-1);
 	}

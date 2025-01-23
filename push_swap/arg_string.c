@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 10:31:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/22 18:44:57 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/23 22:48:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,30 @@ void	multi_args_one(int len, char **str, t_stacks *stacks)
 	ft_free(str);
 }
 
+void check_empty(char *str, t_stacks *stacks)
+{
+	long unsigned i;
+	int have_spaces;
+
+	i = 0;
+	have_spaces = 1;
+	while(i < ft_strlen(str))
+	{
+		if(str[i] != ' ')
+		{
+			have_spaces = 0;
+			break;
+		}
+		i++;
+	}
+	if(have_spaces == 1)
+	{
+		ft_putstr_fd("Error\n", 2);
+		free_stacks(stacks);
+		exit(-1);
+	}
+}
+
 void	one_arg(char *str, t_stacks *stacks)
 {
 	int		i;
@@ -62,21 +86,19 @@ void	one_arg(char *str, t_stacks *stacks)
 
 	i = 0;
 	str_len = 0;
-	if (ft_strlen(str) == 0 || str == NULL)
+	if (ft_strlen(str) == 0 || str == NULL ) 
 	{
-		ft_putstr_fd("Error\n", 2);
 		free_stacks(stacks);
 		exit(-1);
 	}
+	check_empty(str, stacks);
 	arr = ft_split(str, ' ');
 	if (!arr)
-		exit_free(stacks, arr);
+		exit_free(stacks, arr);	
 	while (arr[i])
 	{
 		str_len++;
 		i++;
 	}
-	if (str_len == 1)
-		exit_free(stacks, arr);
 	multi_args_one(str_len, arr, stacks);
 }

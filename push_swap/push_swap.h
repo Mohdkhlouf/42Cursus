@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/22 13:45:04 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/23 17:41:36 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_stacks
 	int	digits_number;
 	int	digits_number_bitwise;
 	int	sorted;
+	int	position;
 }		t_stacks;
 
 int		ft_number(char *str);
@@ -71,5 +72,8 @@ void	pass_radix_bitwise(t_stacks *stack, int div_base);
 int		get_bit_digit_bitwise(int n, int dive_base);
 void	free_stacks(t_stacks *stacks);
 void	exit_free(t_stacks *stacks, char **arr);
+void	pass_radix_5(t_stacks *stack, int div_base);
+void	up_to_10(t_stacks *stack);
+void	radix_5(int bottom, t_stacks *stack, int div_base, int *j);
 
 #endif

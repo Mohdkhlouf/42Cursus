@@ -6,7 +6,7 @@
 #    By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 10:36:17 by mkhlouf           #+#    #+#              #
-#    Updated: 2025/01/22 18:44:52 by mkhlouf          ###   ########.fr        #
+#    Updated: 2025/01/23 14:22:40 by mkhlouf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ LIBFT   := ./libft
 NAME    = push_swap
 SRC     = stacka_funs.c validations.c arg_string.c push_swap.c \
           stackb_funs.c multi_args.c utils.c push_swap_utils.c \
-		  more_than_3.c radix_utils.c push_swap_main_functions.c
+		  more_than_3.c radix_utils.c push_swap_main_functions.c \
+		  up_to_10.c
 
 OBJS    = $(SRC:.c=.o)
 LIBFT_A = $(LIBFT)/libft.a
