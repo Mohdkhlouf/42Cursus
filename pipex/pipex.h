@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/25 23:46:10 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/28 23:52:16 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ typedef struct s_pipes
 {
 	char	*infile;
 	char	*outfile;
-	char	**cmd1;
-	char	**cmd2;
+	char	*cmd1;
+	char	*cmd2;
 }			t_pipex;
 
 #endif
