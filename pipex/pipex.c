@@ -6,38 +6,42 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/30 18:07:14 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/30 18:38:39 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	Exit_print_Error(void)
+void	Exit_print_Error(t_pipex *pipex)
 {
 	ft_putstr_fd("Error\n", 2);
+    free_stack(pipex);
 	exit(-1);
 }
 // check commands functions
-// void free_2d_arr(char **arr)
-// {
-//     while (*arr)
-//     {
-//         free(*arr);
-//         arr++;
-//     }
-//     free(arr);
-// }
+void free_2d_arr(char **arr)
+{
+int i;
 
-void	check_commands_exisit_mode(char *filename, int mode)
+i = 0;
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}
+
+void	check_commands_exisit_mode(char *filename, int mode, t_pipex *pipex)
 {
 	printf("%s , %d \n", filename, mode);
 	if (access(filename, F_OK | mode) == 0)
 		return ;
 	else
-		Exit_print_Error();
+		Exit_print_Error(pipex);
 }
 
-char	**parse_path(char *env[])
+char	**parse_path(char *env[], t_pipex *pipex)
 {
 	int		i;
 	char	**path;
@@ -49,7 +53,7 @@ char	**parse_path(char *env[])
 		{
 			path = ft_split(ft_strdup(env[i] + 5), ':');
 			if (!path)
-				Exit_print_Error();
+				Exit_print_Error(pipex);
 			return (path);
 		}
 		i++;
@@ -75,13 +79,16 @@ void	compare_commands(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 			accessed = 1 ;
 		i++;
 	}
+    free(file_name1);
+    free(file_name2);
     if(accessed)
     {
         pipex->cmd1 = ft_strdup(file_name1);
         pipex->cmd2 = ft_strdup(file_name2);
     }
     else
-        Exit_print_Error();
+        Exit_print_Error(pipex);
+        
 }
 void	check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[])
 {
@@ -90,37 +97,33 @@ void	check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[])
 	int		i;
 	char	**path;
 
-	// char *path_cmd1;
-	// char *path_cmd2;
 	i = 0;
 	path_cmd1_arr = ft_split(cmd1, ' ');
 	path_cmd2_arr = ft_split(cmd2, ' ');
-	pipex->cmd1 = path_cmd1_arr[0];
-	path = parse_path(env);
+	path = parse_path(env, pipex);
 	if (path)
 		compare_commands(path, path_cmd1_arr[0], path_cmd2_arr[0],pipex);
     ft_printf("cmd1:%s\ncmd2:%s\n", pipex->cmd1, pipex->cmd2);
-	// free_2d_arr(path_cmd1_arr);
-	// free_2d_arr(path_cmd2_arr);
-	// free(path_cmd1);
-	// free(path_cmd2);
+	free_2d_arr(path_cmd1_arr);
+    free_2d_arr(path_cmd2_arr);
+    free_2d_arr(path);
 }
 //--end of check commands functions
 
 //++check files functions
-void	check_file_exisit_mode(char *filename, int mode)
+void	check_file_exisit_mode(char *filename, int mode, t_pipex *pipex)
 {
 	if (access(filename, F_OK | mode) == 0)
 		return ;
 	else
-		Exit_print_Error();
+		Exit_print_Error(pipex);
 }
 
 void	check_files(char *infile, char *outfile, t_pipex *pipex)
 {
-	check_file_exisit_mode(infile, R_OK);
+	check_file_exisit_mode(infile, R_OK, pipex);
 	pipex->infile = ft_strdup(infile);
-	check_file_exisit_mode(outfile, W_OK);
+	check_file_exisit_mode(outfile, W_OK, pipex);
 	pipex->outfile = ft_strdup(outfile);
 	ft_printf("infile:%s\noutfile:%s\n", pipex->infile, pipex->outfile);
 }
@@ -136,7 +139,19 @@ void	check_arguments(int argc, char **argv, t_pipex *pipex, char *env[])
 		check_commands(argv[2], argv[3], pipex, env);
 	}
 }
-
+void free_stack(t_pipex *pipex)
+{
+    
+    // if(pipex->infile)
+    //     free(pipex->infile);
+    // if(pipex->outfile)
+    //    free(pipex->outfile);
+    // if(pipex->cmd1)
+    //     free(pipex->cmd1);
+    // if(pipex->cmd2)
+    //     free(pipex->cmd2);
+    free(pipex);
+}
 int	main(int argc, char **argv, char *env[])
 {
 	t_pipex	*pipex;
@@ -144,8 +159,13 @@ int	main(int argc, char **argv, char *env[])
 	pid_t	pid;
 
 	pipex = malloc(sizeof pipex);
+    printf("%s", env[0]);
+    printf("%d", argc);
+    printf("%s", argv[0]);
 	check_arguments(argc, argv, pipex, env);
 	pipe(pipefd);
 	pid = pipe(pipefd);
+
+    free_stack(pipex);
 	return (0);
 }

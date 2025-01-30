@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/29 15:18:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/30 18:28:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,8 @@ typedef struct s_pipes
 	char	*cmd1;
 	char	*cmd2;
 }			t_pipex;
+
+void free_stack(t_pipex *pipex);
+void	Exit_print_Error(t_pipex *pipex);
 
 #endif
