@@ -1,0 +1,8 @@
+you have to read the path from the args, then search for the path if it is there or not in the env file wich is array of arrays by main file.
+so you can search for it and then check.
+
+do pipe first
+do fork
+the dup2 change the fd for file, because usually it be 3 or 4 or any thing, then you have to chaneg it to be 0 as read or to stdout..
+
+

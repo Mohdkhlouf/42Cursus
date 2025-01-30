@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/28 23:52:16 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/29 15:18:01 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "ft_printf/ft_printf.h"
 # include "libft/libft.h"
+#include <sched.h> // for pid_t
+
 
 typedef struct s_pipes
 {

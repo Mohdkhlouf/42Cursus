@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/29 00:25:04 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/29 15:27:27 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,13 @@ void check_arguments(int argc, char **argv, t_pipex *pipex)
     }
 }
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char *env[] )
 {
     t_pipex *pipex;
     int pipefd[2];
 
+    pid_t pid;
+    
     pipex = malloc(sizeof pipex);
     check_arguments(argc, argv, pipex);
 
