@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 13:24:54 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/21 15:35:15 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/06 10:33:20 by mkhlouf           #+#    #+#             */
+/*   Updated: 2025/02/01 01:08:43 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	ft_putstr(char *s, int *count)
+void	ft_putchar(char c, int *count)
 {
-	int	i;
+	ssize_t	result;
 
-	i = 0;
-	if (!s)
+	result = write(1, &c, 1);
+	if (result == -1)
 	{
-		ft_putstr("(null)", count);
+		(*count) = -1;
+		return ;
 	}
-	else
-	{
-		while (s[i])
-		{
-			ft_putchar(s[i], count);
-			i++;
-		}
-	}
+	(*count)++;
 }

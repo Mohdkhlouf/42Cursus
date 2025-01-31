@@ -6,14 +6,13 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/01 01:01:54 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/01 01:08:48 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "ft_printf/ft_printf.h"
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <sched.h> // for pid_t

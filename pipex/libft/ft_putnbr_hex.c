@@ -6,11 +6,11 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 12:53:14 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/21 15:31:54 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/01 01:08:43 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 void	print_letters(uint64_t n, int *count, unsigned char x)
 {

@@ -6,11 +6,11 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 10:47:59 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/22 10:01:05 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/01 01:08:43 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 static void	after_specifier(unsigned char c, va_list args, int *count)
 {

@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_unsigned.c                               :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 12:37:40 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/21 15:31:58 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/20 13:24:54 by mkhlouf           #+#    #+#             */
+/*   Updated: 2025/02/01 01:08:43 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	ft_putnbr_unsigned(unsigned long long n, int *count)
+void	ft_putstr(char *s, int *count)
 {
-	if (n == 0)
+	int	i;
+
+	i = 0;
+	if (!s)
 	{
-		ft_putchar('0', count);
+		ft_putstr("(null)", count);
 	}
 	else
 	{
-		if (n > 9)
+		while (s[i])
 		{
-			ft_putnbr(n / 10, count);
-			ft_putnbr(n % 10, count);
-		}
-		else
-		{
-			n = n + 48;
-			ft_putchar(n, count);
+			ft_putchar(s[i], count);
+			i++;
 		}
 	}
 }

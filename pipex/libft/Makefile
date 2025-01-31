@@ -6,7 +6,7 @@
 #    By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 11:48:10 by mkhlouf           #+#    #+#              #
-#    Updated: 2024/11/14 11:02:58 by mkhlouf          ###   ########.fr        #
+#    Updated: 2025/02/01 01:06:01 by mkhlouf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SOURCES = \
 	ft_strrchr.c ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c ft_atoi.c \
 	ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c \
 	ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c \
-	ft_putendl_fd.c ft_putnbr_fd.c 
+	ft_putendl_fd.c ft_putnbr_fd.c ft_printf.c	ft_putchar.c ft_putnbr_hex.c \
+	ft_putptr.c ft_putnbr.c	ft_putnbr_unsigned.c	ft_putstr.c
 
 BSOURCES = \
 	ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bonus.c \
