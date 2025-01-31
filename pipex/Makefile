@@ -6,7 +6,7 @@
 #    By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 10:36:17 by mkhlouf           #+#    #+#              #
-#    Updated: 2025/01/24 19:57:43 by mkhlouf          ###   ########.fr        #
+#    Updated: 2025/02/01 00:58:57 by mkhlouf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT   := ./libft
 
 # Files
 NAME    = pipex
-SRC     = pipex.c
+SRC     = pipex.c check_files.c check_commands.c utils.c
 
 OBJS    = $(SRC:.c=.o)
 LIBFT_A = $(LIBFT)/libft.a
