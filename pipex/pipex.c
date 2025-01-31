@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/31 15:01:42 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/31 15:47:57 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 	while (path[i])
 	{
 		if (i != 0)
-		free_multi(file_name1, file_name2, NULL, NULL);
+			free_multi(file_name1, file_name2, NULL, NULL);
 		file_name1 = ft_strjoin(path[i], cmd1);
 		file_name2 = ft_strjoin(path[i], cmd2);
 		if ((access(file_name1, F_OK | X_OK) == 0) && (access(file_name2,
@@ -94,7 +94,6 @@ void	check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 		{
 			pipex->cmd1 = ft_strdup(file_name1);
 			pipex->cmd2 = ft_strdup(file_name2);
-			free_multi(file_name1, file_name2, NULL, NULL);
 			break;
 		}
 		i++;
@@ -145,10 +144,24 @@ void	check_file_exisit_mode(char *filename, int mode, t_pipex *pipex)
 
 void	check_files(char *infile, char *outfile, t_pipex *pipex)
 {
+	int fd;
+
 	check_file_exisit_mode(infile, R_OK, pipex);
 	pipex->infile = ft_strdup(infile);
-	check_file_exisit_mode(outfile, W_OK, pipex);
-	pipex->outfile = ft_strdup(outfile);
+	// second file must be created if it is not exist.
+	if (access(outfile, F_OK) == 0)
+		{
+			if (access(outfile, W_OK) == 0)
+				pipex->outfile = ft_strdup(outfile);
+			else
+				Exit_print_Error(pipex);
+		}
+	else
+	{
+		fd = open(outfile, O_CREAT, 0777);
+		if (fd > -1)
+			pipex->outfile = ft_strdup(outfile);
+	}
 	ft_printf("infile:%s\noutfile:%s\n", pipex->infile, pipex->outfile);
 }
 //--end of check files functions
