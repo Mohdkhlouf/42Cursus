@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/31 14:55:06 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/31 15:01:42 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,10 @@ void	check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 			pipex->cmd2 = ft_strdup(file_name2);
 			free_multi(file_name1, file_name2, NULL, NULL);
 			break;
-		}	
+		}
 		i++;
 	}
+	free_multi(file_name1, file_name2, NULL, NULL);
 }
 void	compare_commands(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 {
