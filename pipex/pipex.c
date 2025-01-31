@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/31 15:47:57 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/31 19:13:48 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,41 +64,44 @@ char	**parse_path(char *env[], t_pipex *pipex)
 	return (NULL);
 }
 
-void free_multi(char *str1, char *str2, char *str3, char *str4)
+void	free_multi(char *str1, char *str2, char *str3, char *str4)
 {
-	if(str1)
+	if (str1)
 		free(str1);
-	if(str2)
+	if (str2)
 		free(str2);
-	if(str3)
+	if (str3)
 		free(str3);
-	if(str4)
+	if (str4)
 		free(str4);
 }
 
-void	check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
+char* find_path(char **path, char *cmd)
 {
 	int		i;
-	char	*file_name1;
-	char	*file_name2;
+	char	*file_name;
 
 	i = 0;
 	while (path[i])
 	{
 		if (i != 0)
-			free_multi(file_name1, file_name2, NULL, NULL);
-		file_name1 = ft_strjoin(path[i], cmd1);
-		file_name2 = ft_strjoin(path[i], cmd2);
-		if ((access(file_name1, F_OK | X_OK) == 0) && (access(file_name2,
-					F_OK | X_OK) == 0))
-		{
-			pipex->cmd1 = ft_strdup(file_name1);
-			pipex->cmd2 = ft_strdup(file_name2);
-			break;
-		}
+			free(file_name);
+		file_name = ft_strjoin(path[i], cmd);
+		if ((access(file_name, F_OK | X_OK) == 0))
+			return(file_name);
 		i++;
 	}
-	free_multi(file_name1, file_name2, NULL, NULL);
+	return (NULL);
+}
+
+void	check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
+{
+	pipex->path1 = find_path(path, cmd1);
+	if(!pipex->path1)
+		Exit_print_Error(pipex);
+	pipex->path2 = find_path(path, cmd2);
+	if(!pipex->path1)
+		Exit_print_Error(pipex);
 }
 void	compare_commands(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 {
@@ -108,27 +111,24 @@ void	compare_commands(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 	cmd1 = ft_strjoin("/", cmd1);
 	cmd2 = ft_strjoin("/", cmd2);
 	check_accessed(path, cmd1, cmd2, pipex);
-	if(!pipex->cmd1 && !pipex->cmd1)
+	if (!pipex->path1 && !pipex->path2)
 		Exit_print_Error(pipex);
 	free(cmd1);
 	free(cmd2);
 }
 void	check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[])
 {
-	char	**path_cmd1_arr;
-	char	**path_cmd2_arr;
-	int		i;
 	char	**path;
 
-	i = 0;
-	path_cmd1_arr = ft_split(cmd1, ' ');
-	path_cmd2_arr = ft_split(cmd2, ' ');
+	cmd1 = ft_strjoin("/", cmd1);
+	cmd2 = ft_strjoin("/", cmd2);
+	pipex->cmd1 = ft_split(cmd1, ' ');
+	pipex->cmd2 = ft_split(cmd2, ' ');
 	path = parse_path(env, pipex);
 	if (path)
-		compare_commands(path, path_cmd1_arr[0], path_cmd2_arr[0], pipex);
-	ft_printf("cmd1:%s\ncmd2:%s\n", pipex->cmd1, pipex->cmd2);
-	free_2d_arr(path_cmd1_arr);
-	free_2d_arr(path_cmd2_arr);
+		compare_commands(path, pipex->cmd1[0], pipex->cmd2[0], pipex);
+	ft_printf("path1:%s\npath2:%s\n", pipex->path1, pipex->path2);
+	ft_printf("cmd1:%s\ncmd2:%s\n", pipex->cmd1[0], pipex->cmd2[0]);
 	free_2d_arr(path);
 }
 //--end of check commands functions
@@ -144,18 +144,17 @@ void	check_file_exisit_mode(char *filename, int mode, t_pipex *pipex)
 
 void	check_files(char *infile, char *outfile, t_pipex *pipex)
 {
-	int fd;
+	int	fd;
 
 	check_file_exisit_mode(infile, R_OK, pipex);
 	pipex->infile = ft_strdup(infile);
-	// second file must be created if it is not exist.
 	if (access(outfile, F_OK) == 0)
-		{
-			if (access(outfile, W_OK) == 0)
-				pipex->outfile = ft_strdup(outfile);
-			else
-				Exit_print_Error(pipex);
-		}
+	{
+		if (access(outfile, W_OK) == 0)
+			pipex->outfile = ft_strdup(outfile);
+		else
+			Exit_print_Error(pipex);
+	}
 	else
 	{
 		fd = open(outfile, O_CREAT, 0777);
@@ -195,6 +194,32 @@ void	initialize_values(t_pipex *pipex)
 	pipex->outfile = NULL;
 	pipex->cmd1 = NULL;
 	pipex->cmd2 = NULL;
+	pipex->path1 = NULL;
+	pipex->path2 = NULL;
+	
+}
+
+
+
+void child_process(t_pipex *pipex, int *pipefd)
+{
+	close(pipefd[1]);
+	
+	printf("Hi!, child process %s \n" , pipex->infile);
+	int i;
+	i = 0;
+	while (pipex->cmd1[i]) 
+		i++;
+	execve(pipex->path1, pipex->cmd1, NULL);
+	printf("counter is: %d\n", i);
+	exit(EXIT_SUCCESS);
+}
+
+void parent_process(t_pipex *pipex, int *pipefd)
+{
+	close(pipefd[0]);
+	wait(NULL);
+	printf("Hi!, Parent process %s \n" , pipex->outfile);
 }
 
 int	main(int argc, char **argv, char *env[])
@@ -209,7 +234,15 @@ int	main(int argc, char **argv, char *env[])
 	initialize_values(pipex);
 	check_arguments(argc, argv, pipex, env);
 	pipe(pipefd);
-	pid = pipe(pipefd);
+	if(pipe(pipefd) == -1)
+		Exit_print_Error(pipex);
+	pid = fork();
+	if (pid == -1)
+		Exit_print_Error(pipex);
+	if(pid == 0)
+		child_process(pipex, pipefd);
+	else
+		parent_process(pipex, pipefd);
 	free_stack(pipex);
 	return (0);
 }
