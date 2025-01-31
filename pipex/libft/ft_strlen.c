@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 15:18:42 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/22 13:47:20 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/31 14:18:15 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,8 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
-	if (!str)
-		return (0);
 	i = 0;
-	while (*str)
-	{
-		str++;
+	while (str[i])
 		i++;
-	}
 	return (i);
 }
