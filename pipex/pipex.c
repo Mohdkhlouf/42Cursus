@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/01 01:00:35 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/01 02:04:16 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,21 @@
 //--end of check commands functions
 void	child_process(t_pipex *pipex, int *pipefd)
 {
-	int	i;
-
-	close(pipefd[1]);
+	close(1);
+	pipefd[0] = open(pipex->infile, O_RDONLY);
+	dup2(pipefd[0], 1);
 	printf("Hi!, child process %s \n", pipex->infile);
-	i = 0;
-	while (pipex->cmd1[i])
-		i++;
 	execve(pipex->path1, pipex->cmd1, NULL);
-	printf("counter is: %d\n", i);
 	exit(EXIT_SUCCESS);
 }
 
 void	parent_process(t_pipex *pipex, int *pipefd)
 {
 	close(pipefd[0]);
+	pipefd[1] = open(pipex->outfile, O_WRONLY);
+	dup2(pipefd[1],1);
 	wait(NULL);
+	execve(pipex->path2, pipex->cmd2, NULL);
 	printf("Hi!, Parent process %s \n", pipex->outfile);
 }
 
