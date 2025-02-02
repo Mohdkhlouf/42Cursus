@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/02 21:28:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/03 00:41:27 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,24 @@ void	initialize_values(t_pipex *pipex)
 {
 	pipex->infile = NULL;
 	pipex->outfile = NULL;
-	pipex->cmds = malloc(sizeof(t_cmd)); 
-	pipex->counter = 120;
+	pipex->cmds = malloc(sizeof(t_cmd) * 2);
+	pipex->counter = 0;
 }
 void	free_stack(t_pipex *pipex)
 {
-	// if (pipex->infile)
-	// 	free(pipex->infile);
-	// if (pipex->outfile)
-	// 	free(pipex->outfile);
-	// if (pipex->cmds[0])
-	// 	free_2d_arr(pipex->cmds[0]);
-	// if (pipex->paths)
-	// 	free_2d_arr(pipex->paths);
+	if (pipex->infile)
+		free(pipex->infile);
+	if (pipex->outfile)
+		free(pipex->outfile);
+	if (pipex->cmds[0].cmd)
+		free_2d_arr(pipex->cmds[0].cmd);
+	if (pipex->cmds[0].path)
+		free(pipex->cmds[0].path);
+	if (pipex->cmds[1].cmd)
+		free_2d_arr(pipex->cmds[1].cmd);
+	if (pipex->cmds[1].path)
+		free(pipex->cmds[1].path);
+	free(pipex->cmds);
 	free(pipex);
 }
 
@@ -62,4 +67,3 @@ void	free_2d_arr(char **arr)
 	}
 	free(arr);
 }
-
