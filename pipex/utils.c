@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/01 01:01:44 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/02 21:28:01 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,19 @@ void	initialize_values(t_pipex *pipex)
 {
 	pipex->infile = NULL;
 	pipex->outfile = NULL;
-	pipex->cmd1 = NULL;
-	pipex->cmd2 = NULL;
-	pipex->path1 = NULL;
-	pipex->path2 = NULL;
-	
+	pipex->cmds = malloc(sizeof(t_cmd)); 
+	pipex->counter = 120;
 }
 void	free_stack(t_pipex *pipex)
 {
-	if (pipex->infile)
-		free(pipex->infile);
-	if (pipex->outfile)
-		free(pipex->outfile);
-	if (pipex->cmd1)
-		free(pipex->cmd1);
-	if (pipex->cmd2)
-		free(pipex->cmd2);
+	// if (pipex->infile)
+	// 	free(pipex->infile);
+	// if (pipex->outfile)
+	// 	free(pipex->outfile);
+	// if (pipex->cmds[0])
+	// 	free_2d_arr(pipex->cmds[0]);
+	// if (pipex->paths)
+	// 	free_2d_arr(pipex->paths);
 	free(pipex);
 }
 
@@ -65,3 +62,4 @@ void	free_2d_arr(char **arr)
 	}
 	free(arr);
 }
+

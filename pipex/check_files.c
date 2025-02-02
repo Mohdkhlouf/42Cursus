@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/01 01:00:40 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/02 21:22:24 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	check_arguments(int argc, char **argv, t_pipex *pipex, char *env[])
 		check_files(argv[1], argv[4], pipex);
 		check_commands(argv[2], argv[3], pipex, env);
 	}
+
 }
 void	check_file_exisit_mode(char *filename, int mode, t_pipex *pipex)
 {

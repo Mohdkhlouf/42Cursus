@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/01 02:04:16 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/02 21:58:24 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	child_process(t_pipex *pipex, int *pipefd)
 	pipefd[0] = open(pipex->infile, O_RDONLY);
 	dup2(pipefd[0], 1);
 	printf("Hi!, child process %s \n", pipex->infile);
-	execve(pipex->path1, pipex->cmd1, NULL);
+	execve(pipex->cmds[0].path, pipex->cmds[0].cmd, NULL);
 	exit(EXIT_SUCCESS);
 }
 
@@ -28,8 +28,7 @@ void	parent_process(t_pipex *pipex, int *pipefd)
 	close(pipefd[0]);
 	pipefd[1] = open(pipex->outfile, O_WRONLY);
 	dup2(pipefd[1],1);
-	wait(NULL);
-	execve(pipex->path2, pipex->cmd2, NULL);
+	wait(NULL);	
 	printf("Hi!, Parent process %s \n", pipex->outfile);
 }
 

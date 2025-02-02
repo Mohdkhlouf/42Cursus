@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/01 01:08:48 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/02 21:24:32 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,18 @@
 # include <sched.h> // for pid_t
 # include <sys/wait.h>
 
+typedef struct s_cmd
+{
+	char	**cmd;
+	char	*path;
+}			t_cmd;
+
 typedef struct s_pipes
 {
 	char	*infile;
 	char	*outfile;
-	char	**cmd1;
-	char	*path1;
-	char	**cmd2;
-	char	*path2;
+	t_cmd 	*cmds;
+	int		counter;
 }			t_pipex;
 
 void		free_stack(t_pipex *pipex);
