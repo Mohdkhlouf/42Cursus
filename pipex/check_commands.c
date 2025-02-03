@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/03 02:53:13 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/03 17:47:09 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	check_commands_exisit_mode(char *filename, int mode, t_pipex *pipex)
 {
-	// printf("%s , %d \n", filename, mode);
 	if (access(filename, F_OK | mode) == 0)
 		return ;
 	else
@@ -47,14 +46,20 @@ void	check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[])
 	cmd2 = ft_strjoin("/", cmd2);
 	pipex->cmds[0].cmd = ft_split(cmd1, ' ');
 	pipex->cmds[1].cmd = ft_split(cmd2, ' ');
-	ft_printf("cmd1:%s %s %s\n", pipex->cmds[0].cmd[0],
-		pipex->cmds[0].cmd[1],pipex->cmds[0].cmd[2]);
-	ft_printf("cmd2:%s %s % s\n", pipex->cmds[1].cmd[0],
-		pipex->cmds[1].cmd[1], pipex->cmds[1].cmd[2]);
+	ft_printf("cmd1:%s %s %s\n", pipex->cmds[0].cmd[0], pipex->cmds[0].cmd[1],
+		pipex->cmds[0].cmd[2]);
+	ft_printf("cmd2:%s %s % s\n", pipex->cmds[1].cmd[0], pipex->cmds[1].cmd[1],
+		pipex->cmds[1].cmd[2]);
 	path = parse_path(env, pipex);
 	if (path)
 		compare_commands(path, pipex->cmds[0].cmd[0], pipex->cmds[1].cmd[0],
 			pipex);
+	else
+	{
+		free_multi(cmd1, cmd2, NULL, NULL);  // Free cmd1 and cmd2
+        free_2d_arr(path);  // Free parsed path
+        exit_print_error(pipex);  // Exit with error
+	}
 	ft_printf("path1:%s\npath2:%s\n", pipex->cmds[0].path, pipex->cmds[1].path);
 	free_multi(cmd1, cmd2, NULL, NULL);
 	free_2d_arr(path);

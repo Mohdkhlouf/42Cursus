@@ -6,17 +6,23 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/03 03:06:34 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/03 16:45:42 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	initialize_values(t_pipex *pipex)
+void	initialize_values(t_pipex *pipex, int *i, int *status)
 {
+	*status = 0;
+	*i = 0;
 	pipex->infile = NULL;
 	pipex->outfile = NULL;
 	pipex->cmds = malloc(sizeof(t_cmd) * 2);
+	pipex->cmds[0].cmd = NULL;
+	pipex->cmds[0].path = NULL;
+	pipex->cmds[1].cmd = NULL;
+	pipex->cmds[1].path = NULL;
 	pipex->counter = 0;
 }
 

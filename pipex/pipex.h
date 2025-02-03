@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/03 01:01:50 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/03 15:13:49 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "libft/libft.h"
 # include <fcntl.h>
-# include <sched.h> // for pid_t
+# include <sched.h>
 # include <sys/wait.h>
 
 typedef struct s_cmd
@@ -45,7 +45,7 @@ void		compare_commands(char **path, char *cmd1, char *cmd2,
 void		check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex);
 void		check_commands_exisit_mode(char *filename, int mode,
 				t_pipex *pipex);
-void		initialize_values(t_pipex *pipex);
+void		initialize_values(t_pipex *pipex, int *i, int *status);
 void		free_stack(t_pipex *pipex);
 void		free_multi(char *str1, char *str2, char *str3, char *str4);
 void		free_2d_arr(char **arr);
