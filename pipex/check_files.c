@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/03 00:35:11 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/03 02:52:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	check_files(char *infile, char *outfile, t_pipex *pipex)
 		if (access(outfile, W_OK) == 0)
 			pipex->outfile = ft_strdup(outfile);
 		else
-			Exit_print_Error(pipex);
+			exit_print_error(pipex);
 	}
 	else
 	{
@@ -33,7 +33,6 @@ void	check_files(char *infile, char *outfile, t_pipex *pipex)
 	}
 	ft_printf("infile:%s\noutfile:%s\n", pipex->infile, pipex->outfile);
 }
-//--end of check files functions
 
 void	check_arguments(int argc, char **argv, t_pipex *pipex, char *env[])
 {
@@ -45,12 +44,13 @@ void	check_arguments(int argc, char **argv, t_pipex *pipex, char *env[])
 		check_commands(argv[2], argv[3], pipex, env);
 	}
 }
+
 void	check_file_exisit_mode(char *filename, int mode, t_pipex *pipex)
 {
 	if (access(filename, F_OK | mode) == 0)
 		return ;
 	else
-		Exit_print_Error(pipex);
+		exit_print_error(pipex);
 }
 
 char	**parse_path(char *env[], t_pipex *pipex)
@@ -68,7 +68,7 @@ char	**parse_path(char *env[], t_pipex *pipex)
 			path = ft_split(temp, ':');
 			free(temp);
 			if (!path)
-				Exit_print_Error(pipex);
+				exit_print_error(pipex);
 			return (path);
 		}
 		i++;

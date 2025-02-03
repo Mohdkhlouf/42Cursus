@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/03 00:41:27 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/03 03:06:34 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	initialize_values(t_pipex *pipex)
 	pipex->cmds = malloc(sizeof(t_cmd) * 2);
 	pipex->counter = 0;
 }
+
 void	free_stack(t_pipex *pipex)
 {
 	if (pipex->infile)
@@ -49,12 +50,13 @@ void	free_multi(char *str1, char *str2, char *str3, char *str4)
 		free(str4);
 }
 
-void	Exit_print_Error(t_pipex *pipex)
+void	exit_print_error(t_pipex *pipex)
 {
 	ft_putstr_fd("Error\n", 2);
 	free_stack(pipex);
-	exit(-1);
+	exit(1);
 }
+
 void	free_2d_arr(char **arr)
 {
 	int	i;

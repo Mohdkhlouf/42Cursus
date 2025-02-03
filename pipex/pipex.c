@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/03 00:38:44 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/03 03:01:22 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,14 @@ void	close_pipfd_exec(int *pipefd, t_pipex *pipex, int i)
 {
 	close(pipefd[0]);
 	close(pipefd[1]);
-	execve(pipex->cmds[i].path, pipex->cmds[i].cmd, NULL);
+	// execve(pipex->cmds[i].path, pipex->cmds[i].cmd, NULL);
+	if (execve(pipex->cmds[i].path, pipex->cmds[i].cmd, NULL) == -1)
+	{
+		perror("execve failed");
+		exit(127);
+	}
 }
+
 void	ft_exec(t_pipex *pipex, int *pipefd, int i)
 {
 	pid_t	pid;
@@ -26,7 +32,7 @@ void	ft_exec(t_pipex *pipex, int *pipefd, int i)
 
 	pid = fork();
 	if (pid == -1)
-		Exit_print_Error(pipex);
+		exit_print_error(pipex);
 	if (pid == 0)
 	{
 		if (i == 0)
@@ -34,13 +40,15 @@ void	ft_exec(t_pipex *pipex, int *pipefd, int i)
 			fd_in = open(pipex->infile, O_RDONLY);
 			dup2(fd_in, 0);
 			dup2(pipefd[1], 1);
+			close(fd_in);
 			close_pipfd_exec(pipefd, pipex, i);
 		}
 		else if (i == 1)
 		{
-			fd_out = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			fd_out = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 			dup2(pipefd[0], 0);
 			dup2(fd_out, 1);
+			close(fd_out);
 			close_pipfd_exec(pipefd, pipex, i);
 		}
 	}
@@ -59,7 +67,7 @@ int	main(int argc, char **argv, char *env[])
 	initialize_values(pipex);
 	check_arguments(argc, argv, pipex, env);
 	if (pipe(pipefd) == -1)
-		Exit_print_Error(pipex);
+		exit_print_error(pipex);
 	while (i < pipex->counter)
 	{
 		ft_exec(pipex, pipefd, i);
@@ -70,5 +78,5 @@ int	main(int argc, char **argv, char *env[])
 	wait(NULL);
 	wait(NULL);
 	free_stack(pipex);
-	return (0);
+	exit (0);
 }

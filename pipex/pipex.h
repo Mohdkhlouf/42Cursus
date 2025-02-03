@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/02 21:24:32 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/03 01:01:50 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ typedef struct s_pipes
 {
 	char	*infile;
 	char	*outfile;
-	t_cmd 	*cmds;
+	t_cmd	*cmds;
 	int		counter;
 }			t_pipex;
 
 void		free_stack(t_pipex *pipex);
-void		Exit_print_Error(t_pipex *pipex);
+void		exit_print_error(t_pipex *pipex);
 void		check_arguments(int argc, char **argv, t_pipex *pipex, char *env[]);
 void		check_files(char *infile, char *outfile, t_pipex *pipex);
 void		check_file_exisit_mode(char *filename, int mode, t_pipex *pipex);
