@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/03 16:45:42 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/04 12:07:03 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	initialize_values(t_pipex *pipex, int *i, int *status)
 	*i = 0;
 	pipex->infile = NULL;
 	pipex->outfile = NULL;
-	pipex->cmds = malloc(sizeof(t_cmd) * 2);
+	pipex->cmds = malloc(sizeof(t_cmd) * 3);
 	pipex->cmds[0].cmd = NULL;
 	pipex->cmds[0].path = NULL;
 	pipex->cmds[1].cmd = NULL;

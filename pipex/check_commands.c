@@ -6,11 +6,31 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/03 17:47:09 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/04 18:29:58 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+char	*find_path(char **path, char *cmd)
+{
+	int		i;
+	char	*file_name;
+
+	i = 0;
+	file_name = NULL;
+	while (path[i])
+	{
+		if (i != 0)
+			free(file_name);
+		file_name = ft_strjoin(path[i], cmd);
+		if ((access(file_name, F_OK | X_OK) == 0))
+			return (file_name);
+		i++;
+	}
+	free(file_name);
+	return (NULL);
+}
 
 void	check_commands_exisit_mode(char *filename, int mode, t_pipex *pipex)
 {
@@ -20,14 +40,36 @@ void	check_commands_exisit_mode(char *filename, int mode, t_pipex *pipex)
 		exit_print_error(pipex);
 }
 
+void handle_2nd_cmd()
+{
+	printf("Do ls\n");
+}
 void	check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 {
+	int result;
+	
 	pipex->cmds[0].path = find_path(path, cmd1);
-	if (!pipex->cmds[0].path)
-		exit_print_error(pipex);
 	pipex->cmds[1].path = find_path(path, cmd2);
-	if (!pipex->cmds[1].path)
-		exit_print_error(pipex);
+	
+	if (!pipex->cmds[0].path)
+	{
+		if (!pipex->cmds[1].path)
+		{
+			free_2d_arr(path);
+			exit_print_error(pipex);
+		}	
+		else
+		{
+			result = ft_strcmp("ls", pipex->cmds[1].cmd[0] + 1);
+			if(result == 0)
+				handle_2nd_cmd();
+			else
+			{
+				free_2d_arr(path);
+				exit_print_error(pipex);
+			}
+		}
+	}
 }
 
 void	compare_commands(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
@@ -35,7 +77,10 @@ void	compare_commands(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 	check_accessed(path, cmd1, cmd2, pipex);
 	pipex->counter = 2;
 	if (!pipex->cmds[0].path || !pipex->cmds[1].path)
+	{
+		free_2d_arr(path);
 		exit_print_error(pipex);
+	}	
 }
 
 void	check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[])
@@ -46,21 +91,15 @@ void	check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[])
 	cmd2 = ft_strjoin("/", cmd2);
 	pipex->cmds[0].cmd = ft_split(cmd1, ' ');
 	pipex->cmds[1].cmd = ft_split(cmd2, ' ');
-	ft_printf("cmd1:%s %s %s\n", pipex->cmds[0].cmd[0], pipex->cmds[0].cmd[1],
-		pipex->cmds[0].cmd[2]);
-	ft_printf("cmd2:%s %s % s\n", pipex->cmds[1].cmd[0], pipex->cmds[1].cmd[1],
-		pipex->cmds[1].cmd[2]);
+	free_multi(cmd1, cmd2, NULL, NULL); 
 	path = parse_path(env, pipex);
 	if (path)
 		compare_commands(path, pipex->cmds[0].cmd[0], pipex->cmds[1].cmd[0],
 			pipex);
 	else
 	{
-		free_multi(cmd1, cmd2, NULL, NULL);  // Free cmd1 and cmd2
-        free_2d_arr(path);  // Free parsed path
-        exit_print_error(pipex);  // Exit with error
+        free_2d_arr(path);
+        exit_print_error(pipex);
 	}
-	ft_printf("path1:%s\npath2:%s\n", pipex->cmds[0].path, pipex->cmds[1].path);
-	free_multi(cmd1, cmd2, NULL, NULL);
 	free_2d_arr(path);
 }
