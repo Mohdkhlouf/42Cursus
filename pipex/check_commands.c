@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/04 18:29:58 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/05 16:50:35 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,23 @@ void	check_commands_exisit_mode(char *filename, int mode, t_pipex *pipex)
 		exit_print_error(pipex);
 }
 
-void handle_2nd_cmd()
+void handle_2nd_cmd(char **temp, char *outline)
 {
-	printf("Do ls\n");
+	int fd_out;
+	
+	fd_out = open(outline, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	dup2(fd_out, 1);
+	close(fd_out);
+	if (execve("/usr/bin/ls", temp, NULL) == -1)
+	{
+		perror("execve failed");
+		exit(127);
+	}
 }
 void	check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 {
-	int result;
-	
 	pipex->cmds[0].path = find_path(path, cmd1);
 	pipex->cmds[1].path = find_path(path, cmd2);
-	
 	if (!pipex->cmds[0].path)
 	{
 		if (!pipex->cmds[1].path)
@@ -60,14 +66,8 @@ void	check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 		}	
 		else
 		{
-			result = ft_strcmp("ls", pipex->cmds[1].cmd[0] + 1);
-			if(result == 0)
-				handle_2nd_cmd();
-			else
-			{
-				free_2d_arr(path);
-				exit_print_error(pipex);
-			}
+			free_2d_arr(path);
+			exit_print_error(pipex);
 		}
 	}
 }

@@ -6,13 +6,13 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/04 12:07:03 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/05 16:37:37 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	initialize_values(t_pipex *pipex, int *i, int *status)
+void	initialize_values(t_pipex *pipex, int *i, int *status, char *argv[])
 {
 	*status = 0;
 	*i = 0;
@@ -23,6 +23,10 @@ void	initialize_values(t_pipex *pipex, int *i, int *status)
 	pipex->cmds[0].path = NULL;
 	pipex->cmds[1].cmd = NULL;
 	pipex->cmds[1].path = NULL;
+	pipex->t_infile = argv[1];
+	pipex->t_outfile = argv[4];
+	pipex->t_cmd1 = argv[2];
+	pipex->t_cmd2 = argv[3];
 	pipex->counter = 0;
 }
 
