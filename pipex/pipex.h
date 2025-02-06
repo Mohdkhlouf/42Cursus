@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/05 16:49:11 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:39:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ typedef struct s_pipes
 
 void		free_stack(t_pipex *pipex);
 void		exit_print_error(t_pipex *pipex);
-void		check_arguments(int argc);
-void		check_files(char *outfile, t_pipex *pipex);
-void		check_file_exisit_mode(char *filename, int mode);
+void		check_arguments(int argc, t_pipex *pipex);
+void		check_file_exisit_mode(char *filename, t_pipex *pipex);
 char		*find_path(char **path, char *cmd);
 char		**parse_path(char *env[], t_pipex *pipex);
 void		check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[]);
@@ -53,6 +52,6 @@ void		initialize_values(t_pipex *pipex, int *i, int *status, char **argv);
 void		free_stack(t_pipex *pipex);
 void		free_multi(char *str1, char *str2, char *str3, char *str4);
 void		free_2d_arr(char **arr);
-void 		handle_2nd_cmd(char **temp, char *outline);
+void		handle_2nd_cmd(char **temp, char *outline);
 
 #endif

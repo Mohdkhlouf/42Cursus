@@ -6,11 +6,25 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/05 16:50:35 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:33:45 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	handle_2nd_cmd(char **temp, char *outline)
+{
+	int	fd_out;
+
+	fd_out = open(outline, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	dup2(fd_out, 1);
+	close(fd_out);
+	if (execve("/usr/bin/ls", temp, NULL) == -1)
+	{
+		perror("execve failed");
+		exit(127);
+	}
+}
 
 char	*find_path(char **path, char *cmd)
 {
@@ -32,55 +46,16 @@ char	*find_path(char **path, char *cmd)
 	return (NULL);
 }
 
-void	check_commands_exisit_mode(char *filename, int mode, t_pipex *pipex)
-{
-	if (access(filename, F_OK | mode) == 0)
-		return ;
-	else
-		exit_print_error(pipex);
-}
-
-void handle_2nd_cmd(char **temp, char *outline)
-{
-	int fd_out;
-	
-	fd_out = open(outline, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	dup2(fd_out, 1);
-	close(fd_out);
-	if (execve("/usr/bin/ls", temp, NULL) == -1)
-	{
-		perror("execve failed");
-		exit(127);
-	}
-}
 void	check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 {
 	pipex->cmds[0].path = find_path(path, cmd1);
 	pipex->cmds[1].path = find_path(path, cmd2);
-	if (!pipex->cmds[0].path)
-	{
-		if (!pipex->cmds[1].path)
-		{
-			free_2d_arr(path);
-			exit_print_error(pipex);
-		}	
-		else
-		{
-			free_2d_arr(path);
-			exit_print_error(pipex);
-		}
-	}
 }
 
 void	compare_commands(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 {
 	check_accessed(path, cmd1, cmd2, pipex);
 	pipex->counter = 2;
-	if (!pipex->cmds[0].path || !pipex->cmds[1].path)
-	{
-		free_2d_arr(path);
-		exit_print_error(pipex);
-	}	
 }
 
 void	check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[])
@@ -91,15 +66,15 @@ void	check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[])
 	cmd2 = ft_strjoin("/", cmd2);
 	pipex->cmds[0].cmd = ft_split(cmd1, ' ');
 	pipex->cmds[1].cmd = ft_split(cmd2, ' ');
-	free_multi(cmd1, cmd2, NULL, NULL); 
+	free_multi(cmd1, cmd2, NULL, NULL);
 	path = parse_path(env, pipex);
 	if (path)
 		compare_commands(path, pipex->cmds[0].cmd[0], pipex->cmds[1].cmd[0],
 			pipex);
 	else
 	{
-        free_2d_arr(path);
-        exit_print_error(pipex);
+		free_2d_arr(path);
+		exit_print_error(pipex);
 	}
 	free_2d_arr(path);
 }

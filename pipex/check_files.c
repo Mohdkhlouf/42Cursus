@@ -6,19 +6,29 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/05 16:50:16 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:39:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	check_file_exisit_mode(char *filename, int mode)
+void	check_file_exisit_mode(char *filename, t_pipex *pipex)
 {
-	if (access(filename, F_OK | mode) == 0)
-		return ;
+	if (access(filename, F_OK) == 0)
+	{
+		if (access(filename, R_OK) == 0)
+		{
+			pipex->infile = filename;
+		}
+		else
+		{
+			ft_putstr_fd("Error: No permission to access file\n", 2);
+		}
+	}
 	else
 	{
-		ft_putstr_fd("Error\n", 2);
+		pipex->infile = NULL;
+		ft_putstr_fd("Error: File does not exist\n", 2);
 	}
 }
 
@@ -51,35 +61,12 @@ char	**parse_path(char *env[], t_pipex *pipex)
 	return (NULL);
 }
 
-void	check_files(char *outfile, t_pipex *pipex)
-{
-	int	fd;
-	
-	if (access(outfile, F_OK) == 0)
-	{
-		if (access(outfile, W_OK) == 0)
-			pipex->outfile = ft_strdup(outfile);
-		else
-			exit_print_error(pipex);
-	}
-	else
-	{
-		fd = open(outfile, O_CREAT | O_TRUNC, 0777);
-		if (fd > -1)
-			pipex->outfile = ft_strdup(outfile);
-		close(fd);
-	}
-}
-
-void	check_arguments(int argc)
+void	check_arguments(int argc,t_pipex *pipex)
 {
 	if (argc != 5)
 	{
-		ft_putstr_fd("Error\n", 2);
-		// free(pipex->cmds);
-		// free(pipex);
-		exit(1);
+		exit_print_error(pipex);
 	}
 	else
-		return;
+		return ;
 }

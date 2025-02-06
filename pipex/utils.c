@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/05 16:37:37 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/06 03:42:06 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ void	initialize_values(t_pipex *pipex, int *i, int *status, char *argv[])
 
 void	free_stack(t_pipex *pipex)
 {
-	if (pipex->infile)
-		free(pipex->infile);
-	if (pipex->outfile)
-		free(pipex->outfile);
 	if (pipex->cmds[0].cmd)
 		free_2d_arr(pipex->cmds[0].cmd);
 	if (pipex->cmds[0].path)
