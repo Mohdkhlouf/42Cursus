@@ -1,0 +1,22 @@
+total 456
+drwxr-xr-x 5 mohammad mohammad   4096 Feb  7 01:29 42_pipex_tester
+-rw-rw-r-- 1 mohammad mohammad   2140 Feb  6 22:35 arcchived_check_commands.c
+-rw-rw-r-- 1 mohammad mohammad 366199 Feb  3 00:50 big_text
+-rw-rw-r-- 1 mohammad mohammad   1614 Feb  7 00:35 check_command.c
+-rw-r--r-- 1 mohammad mohammad   2552 Feb  7 01:29 check_command.o
+-rw-rw-r-- 1 mohammad mohammad   3072 Feb  6 22:35 check_commands.o
+-rw-rw-r-- 1 mohammad mohammad   1648 Feb  7 01:22 check_files.c
+-rw-r--r-- 1 mohammad mohammad   2392 Feb  7 01:29 check_files.o
+drwxrwxr-x 2 mohammad mohammad   4096 Feb  6 00:55 libft
+-rw-rw-r-- 1 mohammad mohammad   1685 Feb  6 22:35 Makefile
+-rw-r--r-- 1 mohammad mohammad   1013 Feb  7 01:28 outfile2.txt
+-rw-r--r-- 1 mohammad mohammad      0 Feb  7 01:36 outfile.txt
+-rwxr-xr-x 1 mohammad mohammad  21864 Feb  7 01:36 pipex
+-rw-rw-r-- 1 mohammad mohammad   3227 Feb  7 01:36 pipex.c
+-rw-rw-r-- 1 mohammad mohammad   2107 Feb  7 01:01 pipex.h
+-rw-r--r-- 1 mohammad mohammad   4072 Feb  7 01:36 pipex.o
+-rw-rw-r-- 1 mohammad mohammad      3 Feb  6 22:35 pitfile1.txt
+-rw-r--r-- 1 mohammad mohammad   1136 Feb  7 01:16 test588.txt
+-rw-rw-r-- 1 mohammad mohammad     15 Feb  6 23:03 test.txt
+-rw-rw-r-- 1 mohammad mohammad   2579 Feb  7 01:01 utils.c
+-rw-r--r-- 1 mohammad mohammad   3928 Feb  7 01:29 utils.o

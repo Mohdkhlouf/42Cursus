@@ -6,72 +6,64 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/07 01:01:25 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/07 01:36:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	check_outfile(t_pipex *pipex, int *pipefd)
+// void	check_outfile(t_pipex *pipex, int *pipefd)
+// {
+// 	int	fd_out;
+
+// 	fd_out = 0;
+// 	if (access(pipex->t_outfile, F_OK) == 0)
+// 	{
+// 		if (access(pipex->t_outfile, W_OK) == 0)
+// 		{
+// 			pipex->outfile = pipex->t_outfile;
+// 			fd_out = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
+// 		}
+// 		else
+// 			exit_print_error(pipex);
+// 	}
+// 	else
+// 	{
+// 		pipex->outfile = pipex->t_outfile;
+// 		fd_out = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
+// 	}
+
+// }
+
+void	second_command(t_pipex *pipex, int *pipefd, char *env[])
 {
-	int fd_out;
-	
-	fd_out = 0;
-	if (access(pipex->t_outfile, F_OK) == 0)
-	{
-		if (access(pipex->t_outfile, W_OK) == 0)
-		{
-			pipex->outfile = pipex->t_outfile;
-			fd_out = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		}
-		else
-			exit_print_error(pipex);
-	}
-	else
-	{
-		pipex->outfile = pipex->t_outfile;
-		fd_out = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	}
-	dup2(pipefd[0], STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
-	close(fd_out);
-	close(pipefd[0]);
 	close(pipefd[1]);
-}
-
-
-void	second_command(t_pipex *pipex,int *pipefd)
-{
-	check_outfile(pipex, pipefd);
+	dup2(pipefd[0], STDIN_FILENO);
+	dup2(pipex->fd_out, STDOUT_FILENO);
+	close(pipefd[0]);
+	// check_outfile(pipex, pipefd);
+	pipex->outfile = pipex->t_outfile;
 	check_command(pipex->t_cmd2, pipex, 1);
-	if (execve(pipex->cmds[1].path, pipex->cmds[1].cmd, NULL) == -1)
-	{
-		perror("execve failed");
-		exit(127);
-	}
+	if (!pipex->cmds[1].path)
+		print_error_exit("Command 1 is not valid");
+	execve(pipex->cmds[1].path, pipex->cmds[1].cmd, env);
 }
 
-void	first_command(t_pipex *pipex,int *pipefd)
+void	first_command(t_pipex *pipex, int *pipefd, char *env[])
 {
-	int fd_in;
-	
-	check_file_exisit_mode(pipex->t_infile, pipex );
+	close(pipefd[0]);
+	dup2(pipex->fd_in, STDIN_FILENO);
+	dup2(pipefd[1], STDOUT_FILENO);
+	close(pipefd[1]);
+	pipex->infile = pipex->t_infile;
+	// check_file_exisit_mode(pipex->t_infile, pipex);
 	check_command(pipex->t_cmd1, pipex, 0);
-	if (pipex->infile)
-	{
-		fd_in = open(pipex->infile, O_RDONLY);
-		dup2(fd_in, STDIN_FILENO);
-		dup2(pipefd[1], STDOUT_FILENO);
-		close(fd_in);
-		close(pipefd[1]);
-		close(pipefd[0]);
-		if (pipex->cmds[0].path)
-			execve(pipex->cmds[0].path, pipex->cmds[0].cmd, NULL);
-		else
-			return ;
-	}
+	if (!pipex->cmds[0].path)
+		print_error_exit("Command 1 is not valid");
+	execve(pipex->cmds[0].path, pipex->cmds[0].cmd, env);
 }
-int	ft_exec_cmd2(t_pipex *pipex, int *pipefd)
+
+int	ft_exec_cmd2(t_pipex *pipex, int *pipefd, char *env[])
 {
 	pid_t	pid;
 
@@ -79,12 +71,11 @@ int	ft_exec_cmd2(t_pipex *pipex, int *pipefd)
 	if (pid == -1)
 		exit_print_error(pipex);
 	if (pid == 0)
-		second_command(pipex, pipefd);
+		second_command(pipex, pipefd, env);
 	return (pid);
 }
 
-
-int	ft_exec_cmd1(t_pipex *pipex, int *pipefd)
+int	ft_exec_cmd1(t_pipex *pipex, int *pipefd, char *env[])
 {
 	pid_t	pid;
 
@@ -92,7 +83,7 @@ int	ft_exec_cmd1(t_pipex *pipex, int *pipefd)
 	if (pid == -1)
 		exit_print_error(pipex);
 	if (pid == 0)
-		first_command(pipex, pipefd);
+		first_command(pipex, pipefd, env);
 	return (pid);
 }
 
@@ -111,8 +102,8 @@ int	main(int argc, char **argv, char *env[])
 	pipex->env_path = parse_path(env, pipex);
 	if (pipe(pipefd) == -1)
 		exit_print_error(pipex);
-	pid[0] = ft_exec_cmd1(pipex, pipefd);
-	pid[1] = ft_exec_cmd2(pipex, pipefd);
+	pid[0] = ft_exec_cmd1(pipex, pipefd, env);
+	pid[1] = ft_exec_cmd2(pipex, pipefd, env);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	waitpid(pid[0], &status, 0);
