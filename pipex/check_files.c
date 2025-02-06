@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/06 15:59:54 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/07 00:46:54 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	check_arguments(int argc,t_pipex *pipex)
 	{
 		exit_print_error(pipex);
 	}
-	else
-		return ;
+	pipex->fd_in = open(pipex->t_infile, O_RDONLY);
+	pipex->fd_out = open(pipex->t_outfile, O_TRUNC | O_CREAT | O_RDWR, 0644);//TRUNC - if file exsist, clear it.
+	if (pipex->fd_in== -1)
+		print_error_exit("infile is not exist");
+	if (pipex->fd_out == -1)
+		print_error_exit("outfile is not exist");
+
 }

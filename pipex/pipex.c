@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/06 16:52:29 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/07 01:01:25 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	check_outfile(t_pipex *pipex, int *pipefd)
 }
 
 
-void	second_command(t_pipex *pipex,int *pipefd, char *env[], int i)
+void	second_command(t_pipex *pipex,int *pipefd)
 {
 	check_outfile(pipex, pipefd);
-	check_command(pipex->t_cmd2, pipex, env, i);
+	check_command(pipex->t_cmd2, pipex, 1);
 	if (execve(pipex->cmds[1].path, pipex->cmds[1].cmd, NULL) == -1)
 	{
 		perror("execve failed");
@@ -51,12 +51,12 @@ void	second_command(t_pipex *pipex,int *pipefd, char *env[], int i)
 	}
 }
 
-void	first_command(t_pipex *pipex,int *pipefd, char *env[], int i)
+void	first_command(t_pipex *pipex,int *pipefd)
 {
 	int fd_in;
 	
 	check_file_exisit_mode(pipex->t_infile, pipex );
-	check_command(pipex->t_cmd1, pipex, env, i);
+	check_command(pipex->t_cmd1, pipex, 0);
 	if (pipex->infile)
 	{
 		fd_in = open(pipex->infile, O_RDONLY);
@@ -71,8 +71,7 @@ void	first_command(t_pipex *pipex,int *pipefd, char *env[], int i)
 			return ;
 	}
 }
-
-int	ft_exec(t_pipex *pipex, int *pipefd, int i, char *env[])
+int	ft_exec_cmd2(t_pipex *pipex, int *pipefd)
 {
 	pid_t	pid;
 
@@ -80,11 +79,20 @@ int	ft_exec(t_pipex *pipex, int *pipefd, int i, char *env[])
 	if (pid == -1)
 		exit_print_error(pipex);
 	if (pid == 0)
-	{
-		if (i == 0)
-			first_command(pipex, pipefd, env, i);	
-	}
-	second_command(pipex, pipefd, env, 1);
+		second_command(pipex, pipefd);
+	return (pid);
+}
+
+
+int	ft_exec_cmd1(t_pipex *pipex, int *pipefd)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		exit_print_error(pipex);
+	if (pid == 0)
+		first_command(pipex, pipefd);
 	return (pid);
 }
 
@@ -93,20 +101,18 @@ int	main(int argc, char **argv, char *env[])
 	t_pipex	*pipex;
 	int		pipefd[2];
 	int		pid[2];
-	int		i;
 	int		status;
 
-	pid[0] = 0;
-	pid[1] = 0;
 	pipex = malloc(sizeof(t_pipex));
 	if (!pipex)
 		exit(-1);
-	initialize_values(pipex, &i, &status, argv);
+	initialize_values(pipex, &status, argv);
 	check_arguments(argc, pipex);
+	pipex->env_path = parse_path(env, pipex);
 	if (pipe(pipefd) == -1)
 		exit_print_error(pipex);
-	pid[0] = ft_exec(pipex, pipefd, 0, env);
-	pid[1] = ft_exec(pipex, pipefd, 1, env);
+	pid[0] = ft_exec_cmd1(pipex, pipefd);
+	pid[1] = ft_exec_cmd2(pipex, pipefd);
 	close(pipefd[0]);
 	close(pipefd[1]);
 	waitpid(pid[0], &status, 0);
