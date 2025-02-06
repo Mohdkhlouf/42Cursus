@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_commands.c                                   :+:      :+:    :+:   */
+/*   arcchived_check_commands.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/06 03:33:45 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:39:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	handle_2nd_cmd(char **temp, char *outline)
-{
-	int	fd_out;
-
-	fd_out = open(outline, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	dup2(fd_out, 1);
-	close(fd_out);
-	if (execve("/usr/bin/ls", temp, NULL) == -1)
-	{
-		perror("execve failed");
-		exit(127);
-	}
-}
 
 char	*find_path(char **path, char *cmd)
 {
@@ -33,22 +19,34 @@ char	*find_path(char **path, char *cmd)
 
 	i = 0;
 	file_name = NULL;
+	perror("My testing code error :\n");
 	while (path[i])
 	{
 		if (i != 0)
 			free(file_name);
 		file_name = ft_strjoin(path[i], cmd);
-		if ((access(file_name, F_OK | X_OK) == 0))
+		if ((access(file_name, F_OK) == 0))
+		{
+			printf("%s\n", cmd);
+
 			return (file_name);
-		i++;
+		}
+		else
+		{
+			i++;
+		}
+			
 	}
 	free(file_name);
+
+
 	return (NULL);
 }
 
 void	check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex)
 {
 	pipex->cmds[0].path = find_path(path, cmd1);
+	perror("My testing code error 2:\n");
 	pipex->cmds[1].path = find_path(path, cmd2);
 }
 
@@ -76,5 +74,6 @@ void	check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[])
 		free_2d_arr(path);
 		exit_print_error(pipex);
 	}
+	
 	free_2d_arr(path);
 }

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/06 03:39:29 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:40:58 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,10 @@ void		check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[]);
 void		compare_commands(char **path, char *cmd1, char *cmd2,
 				t_pipex *pipex);
 void		check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex);
-void		check_commands_exisit_mode(char *filename, int mode,
-				t_pipex *pipex);
-void		initialize_values(t_pipex *pipex, int *i, int *status, char **argv);
+void		check_command(char *cmd, t_pipex *pipex, char *env[], int i);
+void		initialize_values(t_pipex *pipex, int *i, int *status, char *argv[]);
 void		free_stack(t_pipex *pipex);
 void		free_multi(char *str1, char *str2, char *str3, char *str4);
 void		free_2d_arr(char **arr);
-void		handle_2nd_cmd(char **temp, char *outline);
 
 #endif
