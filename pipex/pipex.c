@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/06 15:56:40 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/06 16:52:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,9 @@ int	ft_exec(t_pipex *pipex, int *pipefd, int i, char *env[])
 	if (pid == 0)
 	{
 		if (i == 0)
-			first_command(pipex, pipefd, env, i);
-		else if (i == 1)
-			second_command(pipex, pipefd, env, i);
+			first_command(pipex, pipefd, env, i);	
 	}
+	second_command(pipex, pipefd, env, 1);
 	return (pid);
 }
 
