@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/06 16:15:03 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/07 16:43:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ char	*find_path(char **path, char *cmd)
 {
 	int		i;
 	char	*file_name;
+	int		not_found;
 
+	not_found = 0;
 	i = 0;
 	file_name = NULL;
 	while (path[i])
@@ -26,9 +28,17 @@ char	*find_path(char **path, char *cmd)
 		file_name = ft_strjoin(path[i], cmd);
 		if ((access(file_name, F_OK) == 0))
 			return (file_name);
+		else
+			not_found = 1;
 		i++;
 	}
-	free(file_name);
+	if (not_found == 1)
+	{
+		ft_putstr_fd("pipex: command not found: ", 2);
+		ft_putstr_fd(cmd + 1, 2);
+		ft_putstr_fd("\n", 2);
+		free(file_name);
+	}
 	return (NULL);
 }
 
@@ -64,7 +74,7 @@ char	**parse_path(char *env[], t_pipex *pipex)
 void	check_command(char *cmd, t_pipex *pipex, char *env[], int i)
 {
 	char	**path;
-	
+
 	path = NULL;
 	if (ft_strchr(cmd, '/'))
 	{
@@ -83,6 +93,6 @@ void	check_command(char *cmd, t_pipex *pipex, char *env[], int i)
 			free_2d_arr(path);
 			exit_print_error(pipex);
 		}
-	}	
+	}
 	free_2d_arr(path);
 }

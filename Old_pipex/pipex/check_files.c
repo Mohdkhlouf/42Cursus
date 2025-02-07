@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/06 15:59:54 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/07 14:48:23 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@ void	check_file_exisit_mode(char *filename, t_pipex *pipex)
 		}
 		else
 		{
-			ft_putstr_fd("Error: No permission to access file\n", 2);
+			ft_putstr_fd("pipex: permission denied: ", 2);
+			ft_putstr_fd(pipex->infile, 2);
+			ft_putstr_fd("\n", 2);
 		}
 	}
 	else
 	{
 		pipex->infile = NULL;
-		ft_putstr_fd("Error: File does not exist\n", 2);
+		ft_putstr_fd("pipex: no such file or directory: ", 2);
+		ft_putstr_fd(pipex->t_infile, 2);
+		ft_putstr_fd("\n", 2);
 	}
 }
 

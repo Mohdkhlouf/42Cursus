@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/06 03:42:06 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/07 14:23:17 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	exit_print_error(t_pipex *pipex)
 	free_stack(pipex);
 	exit(1);
 }
+
 
 void	free_2d_arr(char **arr)
 {
