@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/07 01:01:43 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:40:58 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PIPEX_H
 
 # include "libft/libft.h"
-# include <errno.h>
 # include <fcntl.h>
 # include <sched.h>
 # include <sys/wait.h>
@@ -35,9 +34,6 @@ typedef struct s_pipes
 	char	*t_outfile;
 	char	*t_cmd1;
 	char	*t_cmd2;
-	char	**env_path;
-	int		fd_in;
-	int		fd_out;
 }			t_pipex;
 
 void		free_stack(t_pipex *pipex);
@@ -50,11 +46,10 @@ void		check_commands(char *cmd1, char *cmd2, t_pipex *pipex, char *env[]);
 void		compare_commands(char **path, char *cmd1, char *cmd2,
 				t_pipex *pipex);
 void		check_accessed(char **path, char *cmd1, char *cmd2, t_pipex *pipex);
-void		check_command(char *cmd, t_pipex *pipex, int i);
-void		initialize_values(t_pipex *pipex, int *status, char *argv[]);
+void		check_command(char *cmd, t_pipex *pipex, char *env[], int i);
+void		initialize_values(t_pipex *pipex, int *i, int *status, char *argv[]);
 void		free_stack(t_pipex *pipex);
 void		free_multi(char *str1, char *str2, char *str3, char *str4);
 void		free_2d_arr(char **arr);
-void		print_error_exit(char *s);
 
 #endif
