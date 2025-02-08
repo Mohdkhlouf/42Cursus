@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/07 14:48:23 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/08 00:40:15 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	check_file_exisit_mode(char *filename, t_pipex *pipex)
 		else
 		{
 			ft_putstr_fd("pipex: permission denied: ", 2);
-			ft_putstr_fd(pipex->infile, 2);
+			ft_putstr_fd(pipex->t_infile, 2);
 			ft_putstr_fd("\n", 2);
 		}
 	}
