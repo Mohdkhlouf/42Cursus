@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/10 17:06:23 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/10 17:15:28 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,29 +85,21 @@ void	check_command(char *cmd, t_pipex *pipex, int i)
 		inword = 0;
 		temp = malloc(sizeof(char) * ft_strlen(cmd));
 		j = 0;
+		
 		cmd = ft_strjoin("/", cmd);
 		if (!cmd)
-		while( cmd[j])
+	
+		printf("str:%s\n", cmd);
+		while(cmd[y] != '\0')
 		{
-
-			if ((cmd[j] == 39 || cmd[j] == 34) )
+			if (cmd[y] == ' ')
 			{
-				j++;
-				while ((cmd[j] != 39 && cmd[j] != 34) && cmd[j])
-				{
-					printf("%c\n", cmd[j]);
-					temp[y] = cmd[j];
-					j++;
-					y++;
-				}
+				break;
 			}
-			else
-			{
-				j++;
-			}
-			
+				y++;
+	
 		}
-		printf("Solved str:%s\n", temp);
+		printf("Solved str:%d\n", y);
 		
 		pipex->cmds[i].cmd = ft_split(cmd, ' ');
 		free(cmd);
