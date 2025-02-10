@@ -6,16 +6,15 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/08 01:37:22 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/10 10:30:52 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	initialize_values(t_pipex *pipex, int *i, int *status, char *argv[])
+void	initialize_values(t_pipex *pipex, int *status, char *argv[], int *pid)
 {
 	*status = 0;
-	*i = 0;
 	pipex->infile = NULL;
 	pipex->outfile = NULL;
 	pipex->cmds = malloc(sizeof(t_cmd) * 3);
@@ -29,6 +28,8 @@ void	initialize_values(t_pipex *pipex, int *i, int *status, char *argv[])
 	pipex->t_cmd2 = argv[3];
 	pipex->env_path = NULL;
 	pipex->counter = 0;
+	pid[0] = 0;
+	pid[1] = 0;
 }
 
 void	free_stack(t_pipex *pipex)
@@ -66,7 +67,6 @@ void	exit_print_error(t_pipex *pipex)
 	exit(1);
 }
 
-
 void	free_2d_arr(char **arr)
 {
 	int	i;
@@ -78,32 +78,4 @@ void	free_2d_arr(char **arr)
 		i++;
 	}
 	free(arr);
-}
-
-char	**parse_path(char *env[], t_pipex *pipex)
-{
-	int		i;
-	char	**parse_path;
-	char	*result;
-
-	i = 0;
-	parse_path = NULL;
-	result = NULL;
-	while (env[i])
-	{
-		result = ft_strnstr(env[i], "PATH=", 5);
-		if (result)
-		{
-			parse_path = ft_split(result + 5, ':');
-			if (!parse_path)
-			{
-				ft_putstr_fd("Error\n", 2);
-				free_stack(pipex);
-				exit(1);
-			}
-			return (parse_path);
-		}
-		i++;
-	}
-	return (NULL);
 }

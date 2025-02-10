@@ -6,11 +6,21 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/08 03:56:57 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/10 10:31:06 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	path_nfnound_error(t_pipex *pipex, char *file_name, char *cmd)
+{
+	ft_putstr_fd("pipex: command not found: ", 2);
+	ft_putstr_fd(cmd + 1, 2);
+	ft_putstr_fd("\n", 2);
+	free(file_name);
+	free_stack(pipex);
+	exit(127);
+}
 
 char	*find_path(t_pipex *pipex, char *cmd)
 {
@@ -26,6 +36,8 @@ char	*find_path(t_pipex *pipex, char *cmd)
 		if (i != 0)
 			free(file_name);
 		file_name = ft_strjoin(pipex->env_path[i], cmd);
+		if (!file_name)
+			exit_print_error(pipex);
 		if ((access(file_name, F_OK) == 0))
 			return (file_name);
 		else
@@ -33,14 +45,7 @@ char	*find_path(t_pipex *pipex, char *cmd)
 		i++;
 	}
 	if (not_found == 1)
-	{
-		ft_putstr_fd("pipex: command not found: ", 2);
-		ft_putstr_fd(cmd + 1, 2);
-		ft_putstr_fd("\n", 2);
-		free(file_name);
-		free_stack(pipex);
-		exit(127);
-	}
+		path_nfnound_error(pipex, file_name, cmd);
 	return (NULL);
 }
 
@@ -63,8 +68,6 @@ void	check_cmd_with_path(char *cmd, t_pipex *pipex, int x)
 	pipex->cmds[x].path = temp[0];
 	pipex->cmds[x].cmd = temp;
 	pipex->cmds[x].cmd[0] = ft_strjoin("/", temp2[len - 1]);
-	// free_2d_arr(temp);
-	// free_2d_arr(temp2);
 }
 
 void	check_command(char *cmd, t_pipex *pipex, int i)
@@ -79,14 +82,9 @@ void	check_command(char *cmd, t_pipex *pipex, int i)
 		pipex->cmds[i].cmd = ft_split(cmd, ' ');
 		free(cmd);
 		if (!pipex->cmds[i].cmd)
-		{
 			exit_print_error(pipex);
-		}
 		if (pipex->env_path)
-		{
 			pipex->cmds[i].path = find_path(pipex, pipex->cmds[i].cmd[0]);
-			printf(" real cmd%s\n", pipex->cmds[i].path);
-		}
 		else
 			exit_print_error(pipex);
 	}

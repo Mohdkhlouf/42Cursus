@@ -6,44 +6,11 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/08 02:53:55 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/10 10:30:55 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	check_outfile(t_pipex *pipex, int *pipefd)
-{
-	int	fd_out;
-
-	fd_out = 0;
-	if (access(pipex->t_outfile, F_OK) == 0)
-	{
-		if (access(pipex->t_outfile, W_OK) == 0)
-		{
-			pipex->outfile = pipex->t_outfile;
-			fd_out = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		}
-		else
-		{
-			ft_putstr_fd("pipex: permission denied: ", 2);
-			ft_putstr_fd(pipex->t_outfile, 2);
-			ft_putstr_fd("\n", 2);
-			free_stack(pipex);
-			exit(1);
-		}
-	}
-	else
-	{
-		pipex->outfile = pipex->t_outfile;
-		fd_out = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	}
-	dup2(pipefd[0], STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
-	close(fd_out);
-	close(pipefd[0]);
-	close(pipefd[1]);
-}
 
 void	second_command(t_pipex *pipex, int *pipefd, char *env[], int i)
 {
@@ -54,11 +21,7 @@ void	second_command(t_pipex *pipex, int *pipefd, char *env[], int i)
 		if (pipex->cmds[1].path)
 		{
 			if (execve(pipex->cmds[1].path, pipex->cmds[1].cmd, env) == -1)
-			{
-				perror("execve failed: ");
-				free_stack(pipex);
-				exit(127);
-			}
+				execve_error_close(pipex);
 		}
 		else
 			exit(1);
@@ -76,17 +39,15 @@ void	first_command(t_pipex *pipex, int *pipefd, char *env[], int i)
 		if (pipex->cmds[i].path)
 		{
 			fd_in = open(pipex->infile, O_RDONLY);
+			if (fd_in == -1)
+				exit_print_error(pipex);
 			dup2(fd_in, STDIN_FILENO);
 			dup2(pipefd[1], STDOUT_FILENO);
 			close(fd_in);
 			close(pipefd[1]);
 			close(pipefd[0]);
 			if (execve(pipex->cmds[0].path, pipex->cmds[0].cmd, env) == -1)
-			{
-				perror("execve failed: ");
-				free_stack(pipex);
-				exit(127);
-			}
+				execve_error_close(pipex);
 		}
 		else
 			exit(1);
@@ -124,15 +85,12 @@ int	main(int argc, char **argv, char *env[])
 	t_pipex	*pipex;
 	int		pipefd[2];
 	int		pid[2];
-	int		i;
 	int		status;
 
-	pid[0] = 0;
-	pid[1] = 0;
 	pipex = malloc(sizeof(t_pipex));
 	if (!pipex)
 		exit(-1);
-	initialize_values(pipex, &i, &status, argv);
+	initialize_values(pipex, &status, argv, pid);
 	check_arguments(argc, pipex);
 	pipex->env_path = parse_path(env, pipex);
 	if (pipe(pipefd) == -1)
