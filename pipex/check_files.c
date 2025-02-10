@@ -6,46 +6,31 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/10 11:18:47 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/10 14:56:44 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	permission_denide_error(t_pipex *pipex)
+void	open_outfile(t_pipex *pipex, int *fd_out)
 {
-	ft_putstr_fd("pipex: permission denied: ", 2);
-	ft_putstr_fd(pipex->t_outfile, 2);
-	ft_putstr_fd("\n", 2);
-	free_stack(pipex);
-	exit(1);
+	pipex->outfile = pipex->t_outfile;
+	*fd_out = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (*fd_out == -1)
+		exit_print_error(pipex);
 }
 
-void	check_outfile(t_pipex *pipex, int *pipefd)
+void	check_outfile(t_pipex *pipex, int *fd_out)
 {
-	int	fd_out;
-
-	fd_out = 0;
 	if (access(pipex->t_outfile, F_OK) == 0)
 	{
 		if (access(pipex->t_outfile, W_OK) == 0)
-		{
-			pipex->outfile = pipex->t_outfile;
-			fd_out = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		}
+			open_outfile(pipex, fd_out);
 		else
 			permission_denide_error(pipex);
 	}
 	else
-	{
-		pipex->outfile = pipex->t_outfile;
-		fd_out = open(pipex->outfile, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	}
-	dup2(pipefd[0], STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
-	close(fd_out);
-	close(pipefd[0]);
-	close(pipefd[1]);
+		open_outfile(pipex, fd_out);
 }
 
 char	**parse_path(char *env[], t_pipex *pipex)
@@ -81,9 +66,7 @@ void	check_file_exisit_mode(char *filename, t_pipex *pipex)
 	if (access(filename, F_OK) == 0)
 	{
 		if (access(filename, R_OK) == 0)
-		{
 			pipex->infile = filename;
-		}
 		else
 		{
 			ft_putstr_fd("pipex: permission denied: ", 2);

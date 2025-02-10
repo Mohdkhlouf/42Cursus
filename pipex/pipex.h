@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/10 10:26:50 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/10 14:56:38 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void		free_stack(t_pipex *pipex);
 void		free_multi(char *str1, char *str2, char *str3, char *str4);
 void		free_2d_arr(char **arr);
 void		execve_error_close(t_pipex *pipex);
-void		check_outfile(t_pipex *pipex, int *pipefd);
+void		check_outfile(t_pipex *pipex, int *fd_out);
 void		path_nfnound_error(t_pipex *pipex, char *file_name, char *cmd);
 void		permission_denide_error(t_pipex *pipex);
+void		check_grep(t_pipex *pipex, int i);
 
 #endif
