@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/10 14:56:47 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/10 17:06:23 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,43 @@ void	check_cmd_with_path(char *cmd, t_pipex *pipex, int x)
 
 void	check_command(char *cmd, t_pipex *pipex, int i)
 {
-	if (ft_strchr(cmd, '/'))
+	if (cmd[0] == '/')
 		check_cmd_with_path(cmd, pipex, i);
 	else
 	{
+		int j;
+		char *temp;
+		int inword;
+		int y;
+		
+		y = 0;
+		inword = 0;
+		temp = malloc(sizeof(char) * ft_strlen(cmd));
+		j = 0;
 		cmd = ft_strjoin("/", cmd);
 		if (!cmd)
-			exit_print_error(pipex);
+		while( cmd[j])
+		{
+
+			if ((cmd[j] == 39 || cmd[j] == 34) )
+			{
+				j++;
+				while ((cmd[j] != 39 && cmd[j] != 34) && cmd[j])
+				{
+					printf("%c\n", cmd[j]);
+					temp[y] = cmd[j];
+					j++;
+					y++;
+				}
+			}
+			else
+			{
+				j++;
+			}
+			
+		}
+		printf("Solved str:%s\n", temp);
+		
 		pipex->cmds[i].cmd = ft_split(cmd, ' ');
 		free(cmd);
 		if (!pipex->cmds[i].cmd)
