@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/10 10:30:55 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/10 11:39:13 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,12 @@ int	ft_exec2(t_pipex *pipex, int *pipefd, char *env[])
 int	ft_exec1(t_pipex *pipex, int *pipefd, char *env[])
 {
 	pid_t	pid;
-	int		status;
 
 	pid = fork();
 	if (pid == -1)
 		exit_print_error(pipex);
 	if (pid == 0)
 		first_command(pipex, pipefd, env, 0);
-	waitpid(pid, &status, 0);
 	return (pid);
 }
 
@@ -97,13 +95,10 @@ int	main(int argc, char **argv, char *env[])
 		exit_print_error(pipex);
 	pid[0] = ft_exec1(pipex, pipefd, env);
 	close(pipefd[1]);
-	if (pid[0] > 0)
-	{
-		pid[1] = ft_exec2(pipex, pipefd, env);
-		close(pipefd[0]);
-		waitpid(pid[0], &status, WNOHANG);
-		waitpid(pid[1], &status, 0);
-	}
+	pid[1] = ft_exec2(pipex, pipefd, env);
+	close(pipefd[0]);
+	waitpid(pid[0], &status, 0);
+	waitpid(pid[1], &status, 0);
 	free_stack(pipex);
 	exit(WEXITSTATUS(status));
 }
