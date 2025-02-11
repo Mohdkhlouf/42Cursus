@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/11 10:35:17 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/11 16:31:12 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	second_command(t_pipex *pipex, int *pipefd, char *env[], int i)
 		check_command(pipex->t_cmd2, pipex, i);
 		if (pipex->cmds[1].path)
 		{
-			check_grep(pipex, 1);
 			dup2(pipefd[0], STDIN_FILENO);
 			dup2(fd_out, STDOUT_FILENO);
 			close(fd_out);
@@ -46,7 +45,6 @@ void	first_command(t_pipex *pipex, int *pipefd, char *env[], int i)
 		check_command(pipex->t_cmd1, pipex, i);
 		if (pipex->cmds[i].path)
 		{
-			check_grep(pipex, 0);
 			fd_in = open(pipex->infile, O_RDONLY);
 			if (fd_in == -1)
 				exit_print_error(pipex);

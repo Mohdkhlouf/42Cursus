@@ -6,21 +6,11 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/11 10:40:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/11 16:37:35 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	path_nfnound_error(t_pipex *pipex, char *file_name, char *cmd)
-{
-	ft_putstr_fd("pipex: command not found: ", 2);
-	ft_putstr_fd(cmd + 1, 2);
-	ft_putstr_fd("\n", 2);
-	free(file_name);
-	free_stack(pipex);
-	exit(127);
-}
 
 char	*find_path(t_pipex *pipex, char *cmd)
 {
@@ -70,12 +60,38 @@ void	check_cmd_with_path(char *cmd, t_pipex *pipex, int x)
 	pipex->cmds[x].cmd[0] = ft_strjoin("/", temp2[len - 1]);
 }
 
+void	do_quotes(char *cmd, t_pipex *pipex, int i)
+{
+	int		y;
+	char	*temp_cmd1;
+	char	*temp_cmd2;
+	int		len1;
+
+	y = 0;
+	len1 = 0;
+	while (cmd[y] != '\0')
+	{
+		if (cmd[y] == ' ')
+		{
+			len1 = y;
+			break ;
+		}
+		y++;
+	}
+	temp_cmd1 = malloc(len1 + 1);
+	temp_cmd2 = malloc(ft_strlen(cmd) - len1 + 1);
+	ft_strlcpy(temp_cmd1, cmd, len1 + 1);
+	ft_strlcpy(temp_cmd2, cmd + len1 + 2, ft_strlen(cmd) - len1 - 2);
+	pipex->cmds[i].cmd[0] = temp_cmd1;
+	pipex->cmds[i].cmd[1] = temp_cmd2;
+	pipex->cmds[i].cmd[2] = 0;
+}
+
 int	qoute_check(char *cmd)
 {
 	int	j;
 
 	j = 0;
-	printf("Command:%s\n", cmd);
 	while (cmd[j])
 	{
 		if (cmd[j] == 34 || cmd[j] == 39)
@@ -87,50 +103,18 @@ int	qoute_check(char *cmd)
 
 void	check_command(char *cmd, t_pipex *pipex, int i)
 {
-	char	*temp_cmd1;
-	char	*temp_cmd2;
-	int		len1;
-	int		y;
+	int	len1;
 
 	if (cmd[0] == '/')
 		check_cmd_with_path(cmd, pipex, i);
 	else
 	{
-		y = 0;
 		len1 = 0;
 		cmd = ft_strjoin("/", cmd);
 		if (!cmd)
 			exit_print_error(pipex);
-		if (qoute_check(cmd))
-		{
-			printf("quote found\n");
-			printf("str:%s\n", cmd);
-			while (cmd[y] != '\0')
-			{
-				if (cmd[y] == ' ')
-				{
-					len1 = y;
-					break ;
-				}
-				y++;
-			}
-			printf("len:#%d#\n", len1);
-			temp_cmd1 = malloc(len1 + 1);
-			temp_cmd2 = malloc(ft_strlen(cmd) - len1 + 1);
-			
-			ft_strlcpy(temp_cmd1, cmd, len1 + 1);
-			ft_strlcpy(temp_cmd2, cmd + len1 + 2, ft_strlen(cmd) - len1 - 2);
-			printf("cmd1:#%s#\n", temp_cmd1);
-			printf("cmd2:#%s#\n", temp_cmd2);
-			pipex->cmds[i].cmd[0] = temp_cmd1;
-			pipex->cmds[i].cmd[1] = temp_cmd2;
-			
-		}
-		else
-		{
-			pipex->cmds[i].cmd = ft_split(cmd, ' ');
-			free(cmd);
-		}
+		pipex->cmds[i].cmd = ft_split(cmd, ' ');
+		free(cmd);
 		if (!pipex->cmds[i].cmd)
 			exit_print_error(pipex);
 		if (pipex->env_path)
