@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 09:53:30 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/10 16:33:59 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/11 10:29:09 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	check_grep(t_pipex *pipex, int i)
 	int		y;
 	char	*temp;
 
-	j = 0;
 	y = 0;
 	if (ft_strnstr(pipex->cmds[i].cmd[0], "grep", 5)
 		&& pipex->cmds[i].cmd[1][0] == 39)
@@ -54,5 +53,6 @@ void	check_grep(t_pipex *pipex, int i)
 		}
 		free(pipex->cmds[i].cmd[1]);
 		pipex->cmds[i].cmd[1] = temp;
+		printf("CMD from grep #%s#\n", pipex->cmds[i].cmd[1]);
 	}
 }

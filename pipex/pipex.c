@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/10 16:35:07 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/11 10:35:17 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ void	second_command(t_pipex *pipex, int *pipefd, char *env[], int i)
 	if (pipex->outfile)
 	{
 		check_command(pipex->t_cmd2, pipex, i);
-		printf("%s\n", pipex->cmds[1].cmd[0]);
-		printf("%s\n", pipex->cmds[1].cmd[1]);
-		printf("%s\n", pipex->cmds[1].cmd[2]);
-		printf("%s\n", pipex->cmds[1].cmd[3]);
-		printf("%s\n", pipex->cmds[1].cmd[4]);
 		if (pipex->cmds[1].path)
 		{
 			check_grep(pipex, 1);

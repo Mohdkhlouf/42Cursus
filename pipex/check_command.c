@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:45 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/10 17:15:28 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/11 10:40:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,39 +70,67 @@ void	check_cmd_with_path(char *cmd, t_pipex *pipex, int x)
 	pipex->cmds[x].cmd[0] = ft_strjoin("/", temp2[len - 1]);
 }
 
+int	qoute_check(char *cmd)
+{
+	int	j;
+
+	j = 0;
+	printf("Command:%s\n", cmd);
+	while (cmd[j])
+	{
+		if (cmd[j] == 34 || cmd[j] == 39)
+			return (1);
+		j++;
+	}
+	return (0);
+}
+
 void	check_command(char *cmd, t_pipex *pipex, int i)
 {
+	char	*temp_cmd1;
+	char	*temp_cmd2;
+	int		len1;
+	int		y;
+
 	if (cmd[0] == '/')
 		check_cmd_with_path(cmd, pipex, i);
 	else
 	{
-		int j;
-		char *temp;
-		int inword;
-		int y;
-		
 		y = 0;
-		inword = 0;
-		temp = malloc(sizeof(char) * ft_strlen(cmd));
-		j = 0;
-		
+		len1 = 0;
 		cmd = ft_strjoin("/", cmd);
 		if (!cmd)
-	
-		printf("str:%s\n", cmd);
-		while(cmd[y] != '\0')
+			exit_print_error(pipex);
+		if (qoute_check(cmd))
 		{
-			if (cmd[y] == ' ')
+			printf("quote found\n");
+			printf("str:%s\n", cmd);
+			while (cmd[y] != '\0')
 			{
-				break;
-			}
+				if (cmd[y] == ' ')
+				{
+					len1 = y;
+					break ;
+				}
 				y++;
-	
+			}
+			printf("len:#%d#\n", len1);
+			temp_cmd1 = malloc(len1 + 1);
+			temp_cmd2 = malloc(ft_strlen(cmd) - len1 + 1);
+			
+			ft_strlcpy(temp_cmd1, cmd, len1 + 1);
+			ft_strlcpy(temp_cmd2, cmd + len1 + 2, ft_strlen(cmd) - len1 - 2);
+			printf("cmd1:#%s#\n", temp_cmd1);
+			printf("cmd2:#%s#\n", temp_cmd2);
+			pipex->cmds[i].cmd[0] = temp_cmd1;
+			pipex->cmds[i].cmd[1] = temp_cmd2;
+			
 		}
-		printf("Solved str:%d\n", y);
-		
-		pipex->cmds[i].cmd = ft_split(cmd, ' ');
-		free(cmd);
+		else
+		{
+			pipex->cmds[i].cmd = ft_split(cmd, ' ');
+			free(cmd);
+		}
 		if (!pipex->cmds[i].cmd)
 			exit_print_error(pipex);
 		if (pipex->env_path)
