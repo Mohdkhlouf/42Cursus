@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/14 16:31:24 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/14 17:20:19 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ typedef struct s_thread
 {
 	pthread_t		thread_id;
 	int				thread_num;
+	time_t			time_to_die;
+	time_t			time_to_eat;
+	time_t			time_to_sleep;
+	time_t			started_time;
+	int				eating_rounds;
+	struct timeval	current_time;
+	pthread_mutex_t	fork;
 
 }					t_thread;
 
@@ -31,12 +38,6 @@ typedef struct s_philo
 {
 	int				philos_number;
 	int				forks_number;
-	time_t			time_to_die;
-	time_t			time_to_eat;
-	time_t			time_to_sleep;
-	time_t			started_time;
-	int				eating_rounds;
-	struct timeval	current_time;
 	t_thread		*threads;
 
 }					t_philo;
