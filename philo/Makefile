@@ -6,7 +6,7 @@
 #    By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 10:36:17 by mkhlouf           #+#    #+#              #
-#    Updated: 2025/02/13 14:32:26 by mkhlouf          ###   ########.fr        #
+#    Updated: 2025/02/14 11:07:05 by mkhlouf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ AR      = ar rcs
 
 # Files
 NAME    = philo
-SRC     = philo.c ft_atoi.c
+SRC     = philo.c philo_utils.c
 
 OBJS    = $(SRC:.c=.o)
 

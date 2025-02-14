@@ -6,67 +6,62 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/13 15:52:53 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/14 16:31:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_init(char **argv, t_philo *philo)
+void	*philo_routine(void *arg)
 {
-	philo->philos_number = ft_atoi(argv[1]);
-	philo->forks_number = ft_atoi(argv[1]);
-	philo->time_to_die = ft_atoi(argv[2]);
-	philo->time_to_die = ft_atoi(argv[3]);
-	philo->time_to_die = ft_atoi(argv[4]);
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	gettimeofday(&philo->current_time, NULL);
+	printf("philo Current time: %ld\n", philo->current_time.tv_sec);
+	sleep(3);
+	return (0);
 }
 
-int	check_ints(char *str)
+void set_started_time(t_philo *philo)
 {
-	int	i;
+	gettimeofday(&philo->current_time, NULL);
+	philo->started_time = philo->current_time.tv_sec;
+	printf("startd the simulaton at: %ld\n", philo->started_time);
+}
+void	create_philos(t_philo *philo)
+{
+	int			i;
 
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] >= '0' && str[i] <= '9')
-			i++;
-		else
-			return (0);
-	}
-	return (1);
-}
-
-int	check_arguments(int argc, char **argv, t_philo *philo)
-{
-	int	i;
-
-	i = 1;
-	if (argc == 5)
-	{
-		while (i < argc)
+	philo->threads = malloc(sizeof(t_thread) * philo->philos_number);
+	if(!philo->threads)
 		{
-			if (check_ints(argv[i]))
-				philo_init(argv, philo);
-			else
-			{
-				printf("arguments are not digits \n");
-				return (0);
-			}
-			i++;
+			return;
 		}
+	set_started_time(philo);
+	while (i < philo->philos_number)
+	{
+		philo->threads[i].thread_num = i;
+		if (pthread_create(&philo->threads[i].thread_id, NULL, philo_routine, (void *)philo) != 0)
+		{
+			perror("Error: ");
+			free(philo->threads);
+			break;
+		}
+		pthread_join(philo->threads[i].thread_id, NULL);
+		i++;
 	}
-	return (1);
 }
 
 int	main(int argc, char **argv)
 {
 	t_philo philo;
-	struct timeval current_time;
-	
+
 	if (check_arguments(argc, argv, &philo))
-	{	
-		gettimeofday(&current_time, NULL);
-		philo.current_time = current_time.tv_sec;
+	{
+		create_philos(&philo);
+		printf("after creating phio");
 	}
 	else
 	{
