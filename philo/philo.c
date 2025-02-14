@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/14 17:30:38 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/14 17:32:36 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	philo_eat(t_thread *thread)
 {
 	pthread_mutex_lock(&thread->fork);
-	printf("Philo %d isEatting", thread->thread_num);
+	printf("Philo %d isEatting \n", thread->thread_num);
 	usleep(thread->time_to_eat * 1000);
 	pthread_mutex_unlock(&thread->fork);
 }
