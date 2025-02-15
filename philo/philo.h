@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/15 14:12:13 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/15 14:48:25 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ typedef struct s_philo t_philo;
 typedef struct s_thread
 {
 	pthread_t		thread_id;
-	int				thread_num;
+	int				philo_num;
 	time_t			started_time;
-
-	struct timeval	current_time;
 	pthread_mutex_t	fork;
 	bool			is_eating;
 	bool			is_sleeping;
@@ -46,6 +44,7 @@ typedef struct s_philo
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
 	int				eating_rounds;
+	// struct timeval	current_time;
 	t_thread		*threads;
 
 }					t_philo;
@@ -54,5 +53,6 @@ int					ft_atoi(const char *str);
 void				philo_init(char **argv, t_philo *philo);
 int					check_ints(char *str);
 int					check_arguments(int argc, char **argv, t_philo *philo);
+time_t current_time();
 
 #endif
