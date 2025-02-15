@@ -6,39 +6,43 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/14 17:32:36 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/15 14:14:16 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_eat(t_thread *thread)
+void	philo_sleep(t_thread *philo)
 {
-	pthread_mutex_lock(&thread->fork);
-	printf("Philo %d isEatting \n", thread->thread_num);
-	usleep(thread->time_to_eat * 1000);
-	pthread_mutex_unlock(&thread->fork);
+	philo->is_sleeping = 1;
+	printf("Philo %d is Sleeping \n", philo->thread_num);
+	usleep(philo->philos->time_to_sleep * 1000);
+	philo->is_sleeping = 0;
+}
+
+void	philo_eat(t_thread *philo)
+{
+	pthread_mutex_lock(&philo->fork);
+	printf("Philo %d is Eatting \n", philo->thread_num);
+	usleep(philo->philos->time_to_eat * 1000);
+	pthread_mutex_unlock(&philo->fork);
 }
 
 void	*philo_routine(void *arg)
 {
 	t_thread	*philo;
-
+	
 	philo = (t_thread *)arg;
-	pthread_mutex_init(&philo->fork, NULL);
-	philo_eat(philo);
+	printf("philo #%d:\n", philo->thread_num);
 	gettimeofday(&philo->current_time, NULL);
 	printf("philo Current time: %ld\n", philo->current_time.tv_sec);
+	pthread_mutex_init(&philo->fork, NULL);
+	philo_eat(philo);
+	philo_sleep(philo);
 	sleep(3);
 	return (0);
 }
 
-// void set_started_time(t_philo *philo)
-// {
-// 	gettimeofday(&philo->.current_time, NULL);
-// 	philo->started_time = philo->current_time.tv_sec;
-// 	printf("startd the simulaton at: %ld\n", philo->started_time);
-// }
 void	create_philos(t_philo *philo)
 {
 	int	i;
@@ -49,7 +53,6 @@ void	create_philos(t_philo *philo)
 	{
 		return ;
 	}
-	// set_started_time(philo);
 	while (i < philo->philos_number)
 	{
 		philo->threads[i].thread_num = i;
@@ -60,9 +63,15 @@ void	create_philos(t_philo *philo)
 			free(philo->threads);
 			break ;
 		}
+		i++;
+	}
+	i = 0;
+	while (i < philo->philos_number)
+	{
 		pthread_join(philo->threads[i].thread_id, NULL);
 		i++;
 	}
+
 }
 
 int	main(int argc, char **argv)
