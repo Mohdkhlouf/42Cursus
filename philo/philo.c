@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/17 14:52:32 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/17 15:00:03 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,17 @@ void	dead_lock_avoid(t_thread *philo)
 	if (philo->philo_num % 2 == 0)
 	{
 		pthread_mutex_lock(philo->right_fork);
-		print_message("has taken the right fork", philo);
+		print_message("has taken a fork", philo);
 		pthread_mutex_lock(&philo->left_fork);
-		print_message("has taken the left fork", philo);
+		print_message("has taken a fork", philo);
 	}
 	else
 	{
 		
 			pthread_mutex_lock(&philo->left_fork);
-			print_message("has taken the left fork", philo);
+			print_message("has taken a fork", philo);
 			pthread_mutex_lock(philo->right_fork);
-			print_message("has taken the right fork", philo);
+			print_message("has taken a fork", philo);
 		
 	}
 }
@@ -110,10 +110,11 @@ void	philo_var_init(t_philo *philo)
 	int	i;
 
 	i = 0;
+	pthread_mutex_init(&philo->print_lock, NULL);
 	while (i < philo->philos_number)
 	{
 		pthread_mutex_init(&philo->threads[i].left_fork, NULL);
-		pthread_mutex_init(&philo->print_lock, NULL);
+		
 		philo->threads[i].philo_num = i + 1;
 		philo->threads[i].philos = philo;
 		if (i == philo->philos_number - 1)
