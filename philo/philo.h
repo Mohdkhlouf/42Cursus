@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/15 14:48:25 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/16 13:55:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,39 @@
 # include <time.h>
 # include <unistd.h>
 
-typedef struct s_philo t_philo;
+typedef struct s_philo	t_philo;
 
 typedef struct s_thread
 {
-	pthread_t		thread_id;
-	int				philo_num;
-	time_t			started_time;
-	pthread_mutex_t	fork;
-	bool			is_eating;
-	bool			is_sleeping;
-	bool			is_thinking;
-	t_philo			*philos;
-
-}					t_thread;
+	pthread_t			thread_id;
+	int					philo_num;
+	long long			start_time;
+	pthread_mutex_t		left_fork;
+	pthread_mutex_t		*right_fork;
+	bool				is_eating;
+	bool				is_sleeping;
+	bool				is_thinking;
+	long long			last_meal_time;
+	t_philo				*philos;
+}						t_thread;
 
 typedef struct s_philo
 {
-	int				philos_number;
-	int				forks_number;
-	time_t			time_to_die;
-	time_t			time_to_eat;
-	time_t			time_to_sleep;
-	int				eating_rounds;
+	int					philos_number;
+	int					forks_number;
+	long long			time_to_die;
+	long long			time_to_eat;
+	long long			time_to_sleep;
+	int					eating_rounds;
 	// struct timeval	current_time;
-	t_thread		*threads;
+	t_thread			*threads;
 
-}					t_philo;
+}						t_philo;
 
-int					ft_atoi(const char *str);
-void				philo_init(char **argv, t_philo *philo);
-int					check_ints(char *str);
-int					check_arguments(int argc, char **argv, t_philo *philo);
-time_t current_time();
+int						ft_atoi(const char *str);
+void					philo_init(char **argv, t_philo *philo);
+int						check_ints(char *str);
+int						check_arguments(int argc, char **argv, t_philo *philo);
+long long				current_time(void);
 
 #endif
