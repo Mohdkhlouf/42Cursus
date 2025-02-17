@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/16 13:55:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/17 10:52:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_philo
 	long long			time_to_eat;
 	long long			time_to_sleep;
 	int					eating_rounds;
-	// struct timeval	current_time;
 	t_thread			*threads;
 
 }						t_philo;
@@ -55,5 +54,6 @@ void					philo_init(char **argv, t_philo *philo);
 int						check_ints(char *str);
 int						check_arguments(int argc, char **argv, t_philo *philo);
 long long				current_time(void);
+void					print_message(char *msg, t_thread *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/16 17:58:00 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/17 13:17:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,58 +15,63 @@
 void	philo_think(t_thread *philo)
 {
 	philo->is_thinking = 1;
-	printf("%lld %d is thinking \n", current_time() - philo->start_time,
-		philo->philo_num);
+	print_message("is thinking", philo);
 	philo->is_thinking = 0;
+}
+void	print_message(char *msg, t_thread *philo)
+{
+	pthread_mutex_t	print_lock;
+
+	pthread_mutex_init(&print_lock, NULL);
+	pthread_mutex_lock(&print_lock);
+	printf("%lld %d %s\n", (current_time() - philo->start_time),
+		philo->philo_num, msg);
+	pthread_mutex_unlock(&print_lock);
+	pthread_mutex_destroy(&print_lock);
 }
 
 void	philo_sleep(t_thread *philo)
 {
 	philo->is_sleeping = 1;
-	printf("%lld %d is sleeping \n", current_time() - philo->start_time,
-		philo->philo_num);
+	print_message("is sleeping", philo);
 	usleep(philo->philos->time_to_sleep * 1000);
 	philo->is_sleeping = 0;
 }
 
 void	philo_eat(t_thread *philo)
 {
-	if (philo->philo_num % 2 == 0)
-	{
-		if (pthread_mutex_lock(philo->right_fork) == 0)
-		{
-			printf("%lld %d has taken the right fork\n", current_time()
-				- philo->start_time, philo->philo_num);
-			if(pthread_mutex_lock(&philo->left_fork) == 0)
-			{
-				printf("%lld %d has taken the left fork\n", current_time()
-					- philo->start_time, philo->philo_num);
-				philo->last_meal_time = current_time() - philo->start_time;
-			}
-				
-		}
-	}
-	else
-	{
-		if (pthread_mutex_lock(&philo->left_fork) == 0)
-		{
-			printf("%lld %d has taken the left fork\n", current_time()
-				- philo->start_time, philo->philo_num);
-			if (pthread_mutex_lock(philo->right_fork) == 0)
-			{
-				printf("%lld %d has taken the right fork\n", current_time()
-					- philo->start_time, philo->philo_num);
-			philo->last_meal_time = current_time() - philo->start_time;
-			}
-				
-		}
-	}
-	printf("%lld %d is eating \n", current_time() - philo->start_time,
-		philo->philo_num);
+	philo->last_meal_time = current_time() - philo->start_time;
+	print_message("is eating", philo);
 	usleep(philo->philos->time_to_eat * 1000);
 	pthread_mutex_unlock(&philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	philo_sleep(philo);
+}
+void	dead_lock_avoid(t_thread *philo)
+{
+	if (philo->philo_num % 2 == 0)
+	{
+		if (pthread_mutex_lock(philo->right_fork) == 0 && pthread_mutex_lock(&philo->left_fork) == 0)
+		{
+			print_message("has taken the right fork", philo);
+			print_message("has taken the left fork", philo);
+			philo_eat(philo);
+			philo_think(philo);			
+		}
+	}
+	else
+	{
+		if (philo->right_fork)
+		{
+			if (pthread_mutex_lock(&philo->left_fork) == 0 && pthread_mutex_lock(philo->right_fork) == 0)
+			{
+				print_message("has taken the left fork", philo);
+				print_message("has taken the right fork", philo);
+				philo_eat(philo);
+				philo_think(philo);
+			}
+		}
+	}
 }
 
 void	*philo_routine(void *arg)
@@ -76,15 +81,14 @@ void	*philo_routine(void *arg)
 
 	i = 0;
 	philo = (t_thread *)arg;
-	philo->start_time = current_time();
+	philo->start_time = current_time() - philo->start_time;
+	print_message("is thinking", philo);
 	while (i < 5)
 	{
-		philo_eat(philo);
-		philo_think(philo);
+		dead_lock_avoid(philo);
 		if (philo->last_meal_time == philo->philos->time_to_die)
 		{
-			printf("%lld %d has died\n", current_time() - philo->start_time,
-				philo->philo_num);
+			print_message("has died", philo);
 			break ;
 		}
 		i++;
@@ -124,6 +128,11 @@ void	philo_var_init(t_philo *philo)
 			philo->threads[i].right_fork = &philo->threads[i + 1].left_fork;
 		i++;
 	}
+	if (philo->philos_number == 1)
+	{
+		// pthread_mutex_init(philo->threads[0].right_fork, NULL);
+		philo->threads[0].right_fork = NULL;
+	}
 }
 void	*philos_monitor(void *arg)
 {
@@ -138,12 +147,12 @@ void	*philos_monitor(void *arg)
 		{
 			if (philos->threads[i].last_meal_time == philos->time_to_die)
 			{
-				printf("Philosopher %d is dead", philos->threads[i].philo_num);
+				print_message("has died", &philos->threads[i]);
+				exit(-1);
 			}
 			i++;
 		}
-		printf("monitor is working,%lld \n", philos->time_to_die);
-		usleep(500000);
+		i = 0;
 	}
 }
 void	create_philos(t_philo *philo)
@@ -178,7 +187,6 @@ int	main(int argc, char **argv)
 	if (check_arguments(argc, argv, &philo))
 	{
 		create_philos(&philo);
-		printf("after creating phio");
 	}
 	else
 	{
