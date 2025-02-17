@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/17 13:17:05 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/17 14:13:36 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,11 @@ void	philo_think(t_thread *philo)
 }
 void	print_message(char *msg, t_thread *philo)
 {
-	pthread_mutex_t	print_lock;
-
-	pthread_mutex_init(&print_lock, NULL);
-	pthread_mutex_lock(&print_lock);
+	// if some body has died, then dont print.
+	pthread_mutex_lock(&philo->philos->print_lock);
 	printf("%lld %d %s\n", (current_time() - philo->start_time),
 		philo->philo_num, msg);
-	pthread_mutex_unlock(&print_lock);
-	pthread_mutex_destroy(&print_lock);
+	pthread_mutex_unlock(&philo->philos->print_lock);
 }
 
 void	philo_sleep(t_thread *philo)
@@ -49,26 +46,31 @@ void	philo_eat(t_thread *philo)
 }
 void	dead_lock_avoid(t_thread *philo)
 {
+	// ate last + time to die is larger that time now + time to eat, so wait 2 ms as example;
 	if (philo->philo_num % 2 == 0)
 	{
-		if (pthread_mutex_lock(philo->right_fork) == 0 && pthread_mutex_lock(&philo->left_fork) == 0)
+		if (pthread_mutex_lock(philo->right_fork) == 0
+			&& pthread_mutex_lock(&philo->left_fork) == 0)
 		{
 			print_message("has taken the right fork", philo);
 			print_message("has taken the left fork", philo);
+			philo_think(philo);
 			philo_eat(philo);
-			philo_think(philo);			
+
 		}
 	}
 	else
 	{
 		if (philo->right_fork)
 		{
-			if (pthread_mutex_lock(&philo->left_fork) == 0 && pthread_mutex_lock(philo->right_fork) == 0)
+			if (pthread_mutex_lock(&philo->left_fork) == 0
+				&& pthread_mutex_lock(philo->right_fork) == 0)
 			{
 				print_message("has taken the left fork", philo);
 				print_message("has taken the right fork", philo);
-				philo_eat(philo);
 				philo_think(philo);
+				philo_eat(philo);
+				
 			}
 		}
 	}
@@ -120,6 +122,7 @@ void	philo_var_init(t_philo *philo)
 	while (i < philo->philos_number)
 	{
 		pthread_mutex_init(&philo->threads[i].left_fork, NULL);
+		pthread_mutex_init(&philo->print_lock, NULL);
 		philo->threads[i].philo_num = i + 1;
 		philo->threads[i].philos = philo;
 		if (i == philo->philos_number - 1)

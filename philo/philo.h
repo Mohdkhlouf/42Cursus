@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/17 10:52:04 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/17 13:58:23 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_thread
 	bool				is_thinking;
 	long long			last_meal_time;
 	t_philo				*philos;
+	// _Atomic int			has_died;
 }						t_thread;
 
 typedef struct s_philo
@@ -45,6 +46,8 @@ typedef struct s_philo
 	long long			time_to_eat;
 	long long			time_to_sleep;
 	int					eating_rounds;
+	pthread_mutex_t		print_lock;
+	
 	t_thread			*threads;
 
 }						t_philo;
