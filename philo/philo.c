@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/18 16:34:03 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:14:32 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ void	*philo_routine(void *arg)
 
 	i = 0;
 	philo = (t_thread *)arg;
-	philo->start_time = current_time() - philo->start_time;
 	
 	while (i < 5)
 	{
@@ -176,6 +175,11 @@ void	philo_create(t_philo *philo)
 			free(philo->threads);
 			return ;
 		}
+		i++;
+	}
+	while (i < philo->philos_number)
+	{
+		philo->threads[i].start_time= current_time() - philo->threads[i].start_time;
 		i++;
 	}
 }
