@@ -1,0 +1,3 @@
+after creating a thread, we need a waiting till this thread being finished.
+so we use thread_join.
+and all of htese functions must be checked in failer by returninng anu value not 0;

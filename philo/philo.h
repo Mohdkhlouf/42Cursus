@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/17 13:58:23 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/18 16:26:56 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@
 
 typedef struct s_philo	t_philo;
 
+typedef enum a_status
+{
+	GET_FORK,
+	EATING,
+	THINKING,
+	SLEEPING,
+	DEAD,
+	ENOUGH_ROUNDS,
+}						t_status;
+
 typedef struct s_thread
 {
 	pthread_t			thread_id;
@@ -34,6 +44,7 @@ typedef struct s_thread
 	bool				is_sleeping;
 	bool				is_thinking;
 	long long			last_meal_time;
+	int			next_status;
 	t_philo				*philos;
 	// _Atomic int			has_died;
 }						t_thread;
@@ -47,7 +58,7 @@ typedef struct s_philo
 	long long			time_to_sleep;
 	int					eating_rounds;
 	pthread_mutex_t		print_lock;
-	
+
 	t_thread			*threads;
 
 }						t_philo;
@@ -58,5 +69,6 @@ int						check_ints(char *str);
 int						check_arguments(int argc, char **argv, t_philo *philo);
 long long				current_time(void);
 void					print_message(char *msg, t_thread *philo);
+int						dead_lock_avoid(t_thread *philo);
 
 #endif

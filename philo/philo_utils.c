@@ -6,12 +6,11 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/17 11:17:54 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/18 15:59:45 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 void	philo_init(char **argv, t_philo *philo)
 {
@@ -86,13 +85,15 @@ int	ft_atoi(const char *str)
 	return (num * sign);
 }
 
-long long current_time()
+long long	current_time(void)
 {
-    struct timeval tv;
-	long long milliseconds;
-	
+	struct timeval	tv;
+	long long		milliseconds;
+
 	milliseconds = 0;
-    gettimeofday(&tv, NULL);
+	gettimeofday(&tv, NULL);
 	milliseconds = (tv.tv_sec * (long long)1000) + tv.tv_usec / 1000;
-    return (milliseconds);
+	return (milliseconds);
 }
+
+
