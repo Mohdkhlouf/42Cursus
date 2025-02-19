@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/18 16:26:56 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:09:09 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_philo
 	long long			time_to_eat;
 	long long			time_to_sleep;
 	int					eating_rounds;
+	bool				one_death;
 	pthread_mutex_t		print_lock;
 
 	t_thread			*threads;

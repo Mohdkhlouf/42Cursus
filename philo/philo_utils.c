@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/18 15:59:45 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:46:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	philo_init(char **argv, t_philo *philo)
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	philo->eating_rounds = ft_atoi(argv[5]);
+	philo->one_death = false;
 }
 
 int	check_ints(char *str)
@@ -85,7 +86,7 @@ int	ft_atoi(const char *str)
 	return (num * sign);
 }
 
-long long	current_time(void)
+long long	current_time()
 {
 	struct timeval	tv;
 	long long		milliseconds;
