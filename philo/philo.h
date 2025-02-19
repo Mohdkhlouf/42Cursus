@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/19 13:09:09 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/20 01:20:20 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_thread
 	bool				is_sleeping;
 	bool				is_thinking;
 	long long			last_meal_time;
-	int			next_status;
+	int					next_status;
 	t_philo				*philos;
 	// _Atomic int			has_died;
 }						t_thread;
@@ -69,7 +69,21 @@ void					philo_init(char **argv, t_philo *philo);
 int						check_ints(char *str);
 int						check_arguments(int argc, char **argv, t_philo *philo);
 long long				current_time(void);
-void					print_message(char *msg, t_thread *philo);
+void					print_message(char *msg, t_thread *philo, int skip);
 int						dead_lock_avoid(t_thread *philo);
+void					*philo_routine(void *arg);
+void					philo_create(t_philo *philo);
+void					philo_var_init(t_philo *philo);
+void					create_philos(t_philo *philo);
+void					*philos_monitor(void *arg);
+void					drop_left_fork(t_thread *philo);
+void					drop_right_fork(t_thread *philo);
+int						take_right_fork(t_thread *philo);
+int						take_left_fork(t_thread *philo);
+void					philo_think(t_thread *philo);
+void					philo_sleep(t_thread *philo);
+void					philo_eat(t_thread *philo);
+int						dead_lock_avoid(t_thread *philo);
+void					philosopher_status_set(t_thread *philo, int i);
 
 #endif
