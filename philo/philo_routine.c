@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/20 01:20:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:40:37 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,17 @@
 void	philo_think(t_thread *philo)
 {
 	print_message("is thinking", philo, 0);
-	pthread_mutex_lock(&philo->philos->print_lock);
 	if (philo->philos->one_death == true)
-	{
 		philo->next_status = DEAD;
-	}
-	philo->next_status = EATING;
-	pthread_mutex_unlock(&philo->philos->print_lock);
+	else
+		philo->next_status = EATING;
 }
 
 void	philo_sleep(t_thread *philo)
 {
 	print_message("is sleeping", philo, 0);
 	usleep(philo->philos->time_to_sleep * 1000);
-	pthread_mutex_lock(&philo->philos->print_lock);
 	philo->next_status = THINKING;
-	pthread_mutex_unlock(&philo->philos->print_lock);
 }
 
 void	philo_eat(t_thread *philo)
@@ -51,8 +46,6 @@ void	philo_eat(t_thread *philo)
 
 int	dead_lock_avoid(t_thread *philo)
 {
-	if (philo->philos->one_death == false)
-	{
 		if (philo->philo_num % 2 == 0)
 		{
 			if (take_right_fork(philo) != 0)
@@ -75,38 +68,32 @@ int	dead_lock_avoid(t_thread *philo)
 			}
 			return (0);
 		}
-	}
-	else
-	{
-		printf("Exiting\n");
-		exit(1);
-	}
+
 	return (0);
 }
 
-
 void	*philo_routine(void *arg)
 {
-	t_thread	*philo;
-	int			i;
+	t_thread *philo;
+	int i;
 
 	i = 0;
 	philo = (t_thread *)arg;
 	pthread_mutex_lock(&philo->philos->print_lock);
 	pthread_mutex_unlock(&philo->philos->print_lock);
-	while (i < 10 && !philo->philos->one_death)
+	// while (i < 10 && !philo->philos->one_death)
+	while (true)
 	{
 		// if (philo->next_status == DEAD || philo->philos->one_death == true)
 		// {
 		// 	print_message("died", philo);
 		// 	exit(1);
 		// }
-		print_message("is thinking", philo, 0);
 		if (philo->next_status == THINKING)
 			philo_think(philo);
-		if (philo->next_status == EATING)
+		else if (philo->next_status == EATING)
 			philo_eat(philo);
-		if (philo->next_status == SLEEPING)
+		else if (philo->next_status == SLEEPING)
 			philo_sleep(philo);
 		i++;
 	}

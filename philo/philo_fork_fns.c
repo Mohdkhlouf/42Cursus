@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/20 01:19:46 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/21 00:58:57 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,22 @@ int	take_left_fork(t_thread *philo)
 }
 void	philosopher_status_set(t_thread *philo, int i)
 {
+	int flag;
+
+	flag = 0;
+	
+	
 	if ((i % 2) == 0)
 	{
+		if (flag == 0)
+		{
+			flag = 1;
+			usleep(2000);
+		}
 		philo[i].next_status = THINKING;
 	}
 	else
 	{
-		philo[i].next_status = EATING;
+		philo[i].next_status = THINKING;
 	}
 }

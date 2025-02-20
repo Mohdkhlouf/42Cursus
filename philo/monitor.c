@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/20 01:34:08 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:34:21 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 void	print_message(char *msg, t_thread *philo, int skip)
 {
 	// if some body has died, then dont print.
-	pthread_mutex_lock(&philo->philos->print_lock);
 	if (!philo->philos->one_death || skip == 1)
 	{
+		pthread_mutex_lock(&philo->philos->print_lock);
 		printf("%lld %d %s\n", (current_time() - philo->start_time),
 			philo->philo_num, msg);
+		pthread_mutex_unlock(&philo->philos->print_lock);
 	}
-	pthread_mutex_unlock(&philo->philos->print_lock);
-
 }
 
 void	*philos_monitor(void *arg)
@@ -40,7 +39,8 @@ void	*philos_monitor(void *arg)
 					- philos->threads[i].last_meal_time) > philos->time_to_die)
 			{
 				philos->one_death = true;
-				printf("last meal time %lld:\n",(current_time() - philos->threads[i].last_meal_time));
+				printf("last meal time %lld:\n", (current_time()
+						- philos->threads[i].last_meal_time));
 				print_message("dead", &philos->threads[i], 1);
 				break ;
 			}
