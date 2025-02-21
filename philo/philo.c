@@ -6,12 +6,11 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/21 01:35:05 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/21 16:10:21 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 void	philo_create(t_philo *philo)
 {
@@ -23,7 +22,6 @@ void	philo_create(t_philo *philo)
 	pthread_mutex_lock(&philo->print_lock);
 	while (i < philo->philos_number)
 	{
-		philosopher_status_set(philo->threads, i);
 		if (pthread_create(&philo->threads[i].thread_id, NULL, philo_routine,
 				(void *)&philo->threads[i]) != 0)
 		{
@@ -34,11 +32,16 @@ void	philo_create(t_philo *philo)
 		i++;
 	}
 	i = 0;
-	temp = current_time();
 	while (i < philo->philos_number)
 	{
-		philo->threads[i].start_time = temp;
-		philo->threads[i].last_meal_time = temp;
+		philo->threads[i].start_time = current_time();
+		philo->threads[i].last_meal_time = current_time();
+		if (philo->philos_number % 2 == 0)
+		{
+			if (i % 2 == 0)
+				philo->threads[i].next_status = EATING;
+		}
+		printf("next status %d:\n", philo->threads[i].next_status);
 		i++;
 	}
 	pthread_mutex_unlock(&philo->print_lock);
@@ -56,6 +59,7 @@ void	philo_var_init(t_philo *philo)
 		philo->threads[i].philos = philo;
 		philo->threads[i].start_time = 0;
 		philo->threads[i].last_meal_time = 0;
+		philo->threads[i].next_status = THINKING;
 		if (i == philo->philos_number - 1)
 			philo->threads[i].right_fork = &philo->threads[0].left_fork;
 		else
@@ -69,10 +73,32 @@ void	philo_var_init(t_philo *philo)
 	}
 }
 
+void	exit_destroy(t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < philo->philos_number)
+	{
+		pthread_join(philo->threads[i].thread_id, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < philo->philos_number)
+	{
+		pthread_mutex_destroy(&philo->threads[i].left_fork);
+		pthread_mutex_destroy(philo->threads[i].right_fork);
+		i++;
+	}
+	pthread_mutex_destroy(&philo->print_lock);
+	i = 0;
+	free(philo->threads);
+}
+
 void	create_philos(t_philo *philo)
 {
 	int			i;
-	// pthread_t	monitor;
+	pthread_t	monitor;
 
 	i = 0;
 	philo->threads = malloc(sizeof(t_thread) * philo->philos_number);
@@ -80,21 +106,14 @@ void	create_philos(t_philo *philo)
 		return ;
 	philo_var_init(philo);
 	philo_create(philo);
-	
-	// if ((pthread_create(&monitor, NULL, philos_monitor, (void *)philo)) != 0)
-	// {
-	// 	perror("Error: ");
-	// 	free(philo->threads);
-	// 	return ;
-	// }
-	// pthread_join(monitor, NULL);
-	i = 0;
-	while (i < philo->philos_number)
+	if ((pthread_create(&monitor, NULL, philos_monitor, (void *)philo)) != 0)
 	{
-		pthread_join(philo->threads[i].thread_id, NULL);
-		i++;
+		perror("Error: ");
+		free(philo->threads);
+		return ;
 	}
-	
+	pthread_join(monitor, NULL);
+	exit_destroy(philo);
 }
 
 int	main(int argc, char **argv)

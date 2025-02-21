@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/19 16:46:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/21 14:50:48 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,43 +48,46 @@ int	check_arguments(int argc, char **argv, t_philo *philo)
 		while (i < argc)
 		{
 			if (check_ints(argv[i]))
-				philo_init(argv, philo);
+				i++;
 			else
 			{
 				printf("arguments are not digits \n");
 				return (0);
 			}
-			i++;
 		}
+		philo_init(argv, philo);
 	}
 	return (1);
 }
-
-int	ft_atoi(const char *str)
+int ft_atoi(const char *str)
 {
-	int	sign;
-	int	i;
-	int	num;
+    int sign = 1;
+    int i = 0;
+    int num = 0;
+    int max_int = 2147483647; // Max int value for checking overflow
 
-	i = 0;
-	sign = 1;
-	num = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
-	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		num = num * 10 + (str[i] - 48);
-		i++;
-	}
-	return (num * sign);
+    while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
+        || str[i] == '\f' || str[i] == '\r')
+        i++;
+    if (str[i] == '-' || str[i] == '+')
+    {
+        if (str[i] == '-')
+            sign *= -1;
+        i++;
+    }
+    while (str[i] >= '0' && str[i] <= '9')
+    {
+        if (num > (max_int - (str[i] - '0')) / 10)
+        {
+            // Overflow, handle it
+            return (sign == 1 ? max_int : -max_int - 1);
+        }
+        num = num * 10 + (str[i] - '0');
+        i++;
+    }
+    return (num * sign);
 }
+
 
 long long	current_time()
 {
