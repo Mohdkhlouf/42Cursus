@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/21 16:12:07 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:35:07 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,13 @@ void	philo_eat(t_thread *philo)
 		print_message("is eating", philo, 0);
 		pthread_mutex_lock(&philo->philos->print_lock);
 		philo->last_meal_time = current_time();
+		philo->eating_conter += 1;
 		pthread_mutex_unlock(&philo->philos->print_lock);
 		usleep(philo->philos->time_to_eat * 1000);
 		drop_left_fork(philo);
 		drop_right_fork(philo);
+		// if (philo->philos->all_eating_counter == philo->philos->philos_number)
+		// 	philo->philos->all_eat= true;
 		philo->next_status = SLEEPING;
 	}
 	
@@ -92,8 +95,10 @@ void	*philo_routine(void *arg)
 	pthread_mutex_lock(&philo->philos->print_lock);
 	pthread_mutex_unlock(&philo->philos->print_lock);
 	// while (i < 10 && !philo->philos->one_death)
-	while (true)
+	
+	while (!(philo->philos->all_eat))
 	{
+		printf("************%d\n", philo->philos->all_eat);
 		if (philo->next_status == DEAD)
 		{
 			print_message("form routine died", philo, 1);
@@ -112,5 +117,7 @@ void	*philo_routine(void *arg)
 		}
 		i++;
 	}
+	printf("Hi, status is %d\n", philo->next_status);
+	exit(-1);
 	return (NULL);
 }

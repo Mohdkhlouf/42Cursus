@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/21 14:50:48 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:12:37 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	philo_init(char **argv, t_philo *philo)
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	philo->eating_rounds = ft_atoi(argv[5]);
 	philo->one_death = false;
+	philo->all_eat = false;
 }
 
 int	check_ints(char *str)

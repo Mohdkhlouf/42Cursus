@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/21 15:54:38 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/21 17:34:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void *philos_monitor(void *arg)
 {
     t_philo *philos;
     int i;
-
+	
     i = 0;
     philos = (t_philo *)arg;
     while (!philos->one_death)
@@ -36,7 +36,7 @@ void *philos_monitor(void *arg)
         pthread_mutex_lock(&philos->print_lock);  // Lock the print mutex
 
         // Check if any philosopher has died
-        for (i = 0; i < philos->philos_number; i++)
+        while ( i < philos->philos_number)
         {
             if ((current_time() - philos->threads[i].last_meal_time) > philos->time_to_die)
             {
@@ -50,8 +50,12 @@ void *philos_monitor(void *arg)
                 pthread_mutex_unlock(&philos->print_lock);  // Unlock after the check
                 return (0);  // Exit the monitor thread, which will stop all philosophers
             }
+			
+			i++;
         }
-
+		if(philos->all_eating_counter == philos->philos_number)
+				philos->all_eat = true;
+		printf("**************: %d\n", philos->philos_number);
         pthread_mutex_unlock(&philos->print_lock);  // Unlock the mutex after checking all philosophers
 
         usleep(1000);  // Sleep for a while before checking again (to reduce CPU load)
