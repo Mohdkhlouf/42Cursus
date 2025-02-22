@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/22 20:37:57 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/23 00:54:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 void	drop_left_fork(t_thread *philo)
 {
 	pthread_mutex_unlock(&philo->left_fork);
-	// print_message("has drop a fork", philo, 0);
 }
 
 void	drop_right_fork(t_thread *philo)
 {
 	pthread_mutex_unlock(philo->right_fork);
-	// print_message("has drop a fork", philo, 0);
 }
 
 int	take_right_fork(t_thread *philo)
@@ -37,4 +35,3 @@ int	take_left_fork(t_thread *philo)
 	print_message("has taken a fork", philo, 0);
 	return (0);
 }
-

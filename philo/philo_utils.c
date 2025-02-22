@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/23 00:34:40 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/23 00:54:16 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	philo_init(char **argv, t_philo *philo, int argc)
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		philo->eating_rounds = ft_atoi(argv[5]);
-	else if(argc == 5)
+	else if (argc == 5)
 		philo->eating_rounds = 10000;
 	philo->one_death = false;
 	philo->all_eat = false;
@@ -65,40 +65,40 @@ int	check_arguments(int argc, char **argv, t_philo *philo)
 		printf("Error\n");
 		return (0);
 	}
-		
 	return (1);
 }
-int ft_atoi(const char *str)
-{
-    int sign = 1;
-    int i = 0;
-    int num = 0;
-    int max_int = 2147483647; // Max int value for checking overflow
 
-    while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-        || str[i] == '\f' || str[i] == '\r')
-        i++;
-    if (str[i] == '-' || str[i] == '+')
-    {
-        if (str[i] == '-')
-            sign *= -1;
-        i++;
-    }
-    while (str[i] >= '0' && str[i] <= '9')
-    {
-        if (num > (max_int - (str[i] - '0')) / 10)
-        {
-            // Overflow, handle it
-            return (sign == 1 ? max_int : -max_int - 1);
-        }
-        num = num * 10 + (str[i] - '0');
-        i++;
-    }
-    return (num * sign);
+int	ft_atoi(const char *str)
+{
+	int	sign;
+	int	i;
+	int	num;
+	int	max_int;
+
+	sign = 1;
+	i = 0;
+	num = 0;
+	max_int = 2147483647;
+	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\r')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		if (num > (max_int - (str[i] - '0')) / 10)
+			return (sign == 1 ? max_int : -max_int - 1);
+		num = num * 10 + (str[i] - '0');
+		i++;
+	}
+	return (num * sign);
 }
 
-
-long long	current_time()
+long long	current_time(void)
 {
 	struct timeval	tv;
 	long long		milliseconds;
@@ -108,5 +108,3 @@ long long	current_time()
 	milliseconds = (tv.tv_sec * (long long)1000) + tv.tv_usec / 1000;
 	return (milliseconds);
 }
-
-
