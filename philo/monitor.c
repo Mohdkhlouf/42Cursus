@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/23 01:03:07 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/23 01:04:00 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	print_message(char *msg, t_thread *philo, int skip)
 		pthread_mutex_unlock(&philo->philos->print_lock);
 	}
 }
+
 void	check_eating_rounds(t_philo *philos, int *i)
 {
 	if ((philos->threads[*i].eating_conter >= philos->eating_rounds)

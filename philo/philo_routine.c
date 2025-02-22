@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/23 00:54:20 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/23 01:07:32 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,14 @@ int	dead_lock_avoid(t_thread *philo)
 void	*philo_routine(void *arg)
 {
 	t_thread	*philo;
-	int			i;
-
-	i = 0;
+	
 	philo = (t_thread *)arg;
 	pthread_mutex_lock(&philo->philos->print_lock);
 	pthread_mutex_unlock(&philo->philos->print_lock);
 	while (true)
 	{
 		if (philo->next_status == DEAD)
-		{
-			print_message("form routine died", philo, 1);
 			break ;
-		}
 		else if (philo->next_status == ENOUGH_ROUNDS)
 			break ;
 		else if (philo->next_status == THINKING)
@@ -108,15 +103,10 @@ void	*philo_routine(void *arg)
 		else if (philo->next_status == SLEEPING)
 			philo_sleep(philo);
 		else
-		{
-			print_message("Warning: Unknown status ", philo, 0);
 			philo->next_status = THINKING;
-		}
-		i++;
 	}
-	usleep(200 * 1000);
-	printf("Hi, philo %d , and eating %d times.\n", philo->philo_num,
-		philo->eating_conter);
+	// usleep(200 * 1000);
 	exit(-1);
 	return (NULL);
 }
+
