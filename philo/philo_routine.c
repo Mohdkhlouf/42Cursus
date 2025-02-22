@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/22 20:43:43 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/23 00:41:46 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,25 @@ void	philo_think(t_thread *philo)
 {
 	usleep(20);
 	print_message("is thinking", philo, 0);
-	// if (philo->philos->one_death == true)
-	// 	philo->next_status = DEAD;
-	// else
+	if (philo->philos->one_death == true)
+		philo->next_status = DEAD;
+	else
 	philo->next_status = EATING;
 }
 
 void	philo_sleep(t_thread *philo)
 {
-	
 	print_message("is sleeping", philo, 0);
-	// if (philo->philos->one_death == true)
-	// 	philo->next_status = DEAD;
-	// else
-	// {
-		usleep(philo->philos->time_to_sleep * 1000);
-
-		if(philo->philos->all_eat)
-			philo->next_status = ENOUGH_ROUNDS;
-		else
-			philo->next_status = THINKING;
-	// }
+	if (philo->philos->one_death == true)
+		philo->next_status = DEAD;
+	else
+	{
+	usleep(philo->philos->time_to_sleep * 1000);
+	if (philo->philos->all_eat)
+		philo->next_status = ENOUGH_ROUNDS;
+	else
+		philo->next_status = THINKING;
+	}
 }
 
 void	philo_eat(t_thread *philo)
@@ -51,12 +49,13 @@ void	philo_eat(t_thread *philo)
 		print_message("is eating", philo, 0);
 		philo->last_meal_time = current_time();
 		usleep(philo->philos->time_to_eat * 1000);
-		philo->eating_conter += 1;
+		pthread_mutex_lock(&philo->philos->print_lock);
+		philo->eating_conter++;
+		pthread_mutex_unlock(&philo->philos->print_lock);
 		drop_left_fork(philo);
 		drop_right_fork(philo);
 		philo->next_status = SLEEPING;
 	}
-	
 }
 
 int	dead_lock_avoid(t_thread *philo)
@@ -94,16 +93,16 @@ void	*philo_routine(void *arg)
 	pthread_mutex_lock(&philo->philos->print_lock);
 	pthread_mutex_unlock(&philo->philos->print_lock);
 	// while (i < 10 && !philo->philos->one_death)
-	
+
 	while (true)
 	{
 		if (philo->next_status == DEAD)
 		{
 			print_message("form routine died", philo, 1);
-			break;
+			break ;
 		}
 		else if (philo->next_status == ENOUGH_ROUNDS)
-			break;
+			break ;
 		else if (philo->next_status == THINKING)
 			philo_think(philo);
 		else if (philo->next_status == EATING)
@@ -112,13 +111,14 @@ void	*philo_routine(void *arg)
 			philo_sleep(philo);
 		else
 		{
-			printf("else, status is %d\n", philo->next_status);
-			exit(-1);
+			print_message("Warning: Unknown status ", philo, 0);
+			philo->next_status = THINKING;
 		}
 		i++;
 	}
-	usleep(200*1000);
-	printf("Hi, philo %d , and eating %d times.\n",philo->philo_num, philo->eating_conter);
+	usleep(200 * 1000);
+	printf("Hi, philo %d , and eating %d times.\n", philo->philo_num,
+		philo->eating_conter);
 	exit(-1);
 	return (NULL);
 }

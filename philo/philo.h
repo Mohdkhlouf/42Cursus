@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/21 17:12:41 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/23 00:35:27 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_philo
 }						t_philo;
 
 int						ft_atoi(const char *str);
-void					philo_init(char **argv, t_philo *philo);
+void					philo_init(char **argv, t_philo *philo, int argc);
 int						check_ints(char *str);
 int						check_arguments(int argc, char **argv, t_philo *philo);
 long long				current_time(void);

@@ -6,20 +6,23 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/21 17:12:37 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/23 00:34:40 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_init(char **argv, t_philo *philo)
+void	philo_init(char **argv, t_philo *philo, int argc)
 {
 	philo->philos_number = ft_atoi(argv[1]);
 	philo->forks_number = ft_atoi(argv[1]);
 	philo->time_to_die = ft_atoi(argv[2]);
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
-	philo->eating_rounds = ft_atoi(argv[5]);
+	if (argc == 6)
+		philo->eating_rounds = ft_atoi(argv[5]);
+	else if(argc == 5)
+		philo->eating_rounds = 10000;
 	philo->one_death = false;
 	philo->all_eat = false;
 }
@@ -44,7 +47,7 @@ int	check_arguments(int argc, char **argv, t_philo *philo)
 	int	i;
 
 	i = 1;
-	if (argc == 6)
+	if (argc == 6 || argc == 5)
 	{
 		while (i < argc)
 		{
@@ -52,12 +55,17 @@ int	check_arguments(int argc, char **argv, t_philo *philo)
 				i++;
 			else
 			{
-				printf("arguments are not digits \n");
 				return (0);
 			}
 		}
-		philo_init(argv, philo);
+		philo_init(argv, philo, argc);
 	}
+	else
+	{
+		printf("Error\n");
+		return (0);
+	}
+		
 	return (1);
 }
 int ft_atoi(const char *str)
