@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/22 14:08:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/22 20:43:43 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	philo_sleep(t_thread *philo)
 	// else
 	// {
 		usleep(philo->philos->time_to_sleep * 1000);
-		philo->eating_conter += 1;
+
 		if(philo->philos->all_eat)
 			philo->next_status = ENOUGH_ROUNDS;
 		else
@@ -49,14 +49,11 @@ void	philo_eat(t_thread *philo)
 	dead_lock_avoid(philo);
 	{
 		print_message("is eating", philo, 0);
-		pthread_mutex_lock(&philo->philos->print_lock);
 		philo->last_meal_time = current_time();
-		pthread_mutex_unlock(&philo->philos->print_lock);
 		usleep(philo->philos->time_to_eat * 1000);
+		philo->eating_conter += 1;
 		drop_left_fork(philo);
 		drop_right_fork(philo);
-		// if (philo->philos->all_eating_counter == philo->philos->philos_number)
-		// 	philo->philos->all_eat= true;
 		philo->next_status = SLEEPING;
 	}
 	
@@ -71,7 +68,6 @@ int	dead_lock_avoid(t_thread *philo)
 		if (take_left_fork(philo) != 0)
 		{
 			drop_right_fork(philo);
-			print_message(" has put it back", philo, 0);
 			return (1);
 		}
 	}
@@ -82,7 +78,6 @@ int	dead_lock_avoid(t_thread *philo)
 		if (take_right_fork(philo) != 0)
 		{
 			drop_left_fork(philo);
-			print_message(" has put it back", philo, 0);
 			return (1);
 		}
 	}
