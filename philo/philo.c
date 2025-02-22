@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/21 16:10:21 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/22 13:24:50 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	philo_create(t_philo *philo)
 {
 	int			i;
-	long long	temp;
 
 	i = 0;
-	temp = 0;
 	pthread_mutex_lock(&philo->print_lock);
 	while (i < philo->philos_number)
 	{
@@ -41,7 +39,6 @@ void	philo_create(t_philo *philo)
 			if (i % 2 == 0)
 				philo->threads[i].next_status = EATING;
 		}
-		printf("next status %d:\n", philo->threads[i].next_status);
 		i++;
 	}
 	pthread_mutex_unlock(&philo->print_lock);
@@ -97,10 +94,8 @@ void	exit_destroy(t_philo *philo)
 
 void	create_philos(t_philo *philo)
 {
-	int			i;
 	pthread_t	monitor;
 
-	i = 0;
 	philo->threads = malloc(sizeof(t_thread) * philo->philos_number);
 	if (!philo->threads)
 		return ;

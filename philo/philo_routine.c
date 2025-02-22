@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/21 17:35:07 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/22 14:08:01 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,18 @@ void	philo_think(t_thread *philo)
 
 void	philo_sleep(t_thread *philo)
 {
+	
 	print_message("is sleeping", philo, 0);
 	// if (philo->philos->one_death == true)
 	// 	philo->next_status = DEAD;
 	// else
 	// {
 		usleep(philo->philos->time_to_sleep * 1000);
-		philo->next_status = THINKING;
+		philo->eating_conter += 1;
+		if(philo->philos->all_eat)
+			philo->next_status = ENOUGH_ROUNDS;
+		else
+			philo->next_status = THINKING;
 	// }
 }
 
@@ -46,7 +51,6 @@ void	philo_eat(t_thread *philo)
 		print_message("is eating", philo, 0);
 		pthread_mutex_lock(&philo->philos->print_lock);
 		philo->last_meal_time = current_time();
-		philo->eating_conter += 1;
 		pthread_mutex_unlock(&philo->philos->print_lock);
 		usleep(philo->philos->time_to_eat * 1000);
 		drop_left_fork(philo);
@@ -96,14 +100,15 @@ void	*philo_routine(void *arg)
 	pthread_mutex_unlock(&philo->philos->print_lock);
 	// while (i < 10 && !philo->philos->one_death)
 	
-	while (!(philo->philos->all_eat))
+	while (true)
 	{
-		printf("************%d\n", philo->philos->all_eat);
 		if (philo->next_status == DEAD)
 		{
 			print_message("form routine died", philo, 1);
 			break;
 		}
+		else if (philo->next_status == ENOUGH_ROUNDS)
+			break;
 		else if (philo->next_status == THINKING)
 			philo_think(philo);
 		else if (philo->next_status == EATING)
@@ -112,12 +117,13 @@ void	*philo_routine(void *arg)
 			philo_sleep(philo);
 		else
 		{
-			printf("Hi, status is %d\n", philo->next_status);
+			printf("else, status is %d\n", philo->next_status);
 			exit(-1);
 		}
 		i++;
 	}
-	printf("Hi, status is %d\n", philo->next_status);
+	usleep(200*1000);
+	printf("Hi, philo %d , and eating %d times.\n",philo->philo_num, philo->eating_conter);
 	exit(-1);
 	return (NULL);
 }

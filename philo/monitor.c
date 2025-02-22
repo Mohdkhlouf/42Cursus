@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/21 17:34:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/22 13:52:58 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,38 @@ void *philos_monitor(void *arg)
 	
     i = 0;
     philos = (t_philo *)arg;
-    while (!philos->one_death)
+    while (1)
     {
         pthread_mutex_lock(&philos->print_lock);  // Lock the print mutex
 
         // Check if any philosopher has died
+        i = 0;
         while ( i < philos->philos_number)
         {
-            if ((current_time() - philos->threads[i].last_meal_time) > philos->time_to_die)
+            
+            // if ((current_time() - philos->threads[i].last_meal_time) > philos->time_to_die)
+            // {
+            //     philos->one_death = true;
+            //     // print_message("died", &philos->threads[i], 1);  // Print death message
+
+            //     // Update philosopher status to DEAD (important if you have further checks)
+            //     // philos->threads[i].next_status = DEAD;  // Set the philosopher's status to DEAD
+
+            //     // Optionally, print more information about the philosopher’s death
+            //     pthread_mutex_unlock(&philos->print_lock);  // Unlock after the check
+            //     return (0);  // Exit the monitor thread, which will stop all philosophers
+            // }
+			if ((philos->threads[i].eating_conter >= philos->eating_rounds) && !philos->all_eat)
             {
-                philos->one_death = true;
-                // print_message("died", &philos->threads[i], 1);  // Print death message
-
-                // Update philosopher status to DEAD (important if you have further checks)
-                // philos->threads[i].next_status = DEAD;  // Set the philosopher's status to DEAD
-
-                // Optionally, print more information about the philosopher’s death
-                pthread_mutex_unlock(&philos->print_lock);  // Unlock after the check
-                return (0);  // Exit the monitor thread, which will stop all philosophers
+                philos->all_eating_counter++;
+                if(philos->all_eating_counter == philos->philos_number)
+				    philos->all_eat = true;
             }
-			
+                
 			i++;
         }
-		if(philos->all_eating_counter == philos->philos_number)
-				philos->all_eat = true;
-		printf("**************: %d\n", philos->philos_number);
+		
+		// printf("******%d********: %d\n",philos->all_eating_counter, philos->philos_number);
         pthread_mutex_unlock(&philos->print_lock);  // Unlock the mutex after checking all philosophers
 
         usleep(1000);  // Sleep for a while before checking again (to reduce CPU load)
