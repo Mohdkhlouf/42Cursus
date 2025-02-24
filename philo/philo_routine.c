@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/23 01:07:32 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/24 23:54:49 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ void	*philo_routine(void *arg)
 	while (true)
 	{
 		if (philo->next_status == DEAD)
-			break ;
+		{
+			break;
+		}
 		else if (philo->next_status == ENOUGH_ROUNDS)
 			break ;
 		else if (philo->next_status == THINKING)
@@ -106,7 +108,6 @@ void	*philo_routine(void *arg)
 			philo->next_status = THINKING;
 	}
 	// usleep(200 * 1000);
-	exit(-1);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/23 01:04:00 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/25 00:10:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	check_deth(t_philo *philos)
 			philos->one_death = true;
 			philos->threads[i].next_status = DEAD;
 			pthread_mutex_unlock(&philos->print_lock);
-			// return (0);
+			print_message("is dead", &philos->threads[i], 1);
+			break;
 		}
 		check_eating_rounds(philos, &i);
 		i++;
@@ -59,7 +60,7 @@ void	*philos_monitor(void *arg)
 	t_philo	*philos;
 
 	philos = (t_philo *)arg;
-	while (1)
+	while (1 && !philos->one_death)
 	{
 		pthread_mutex_lock(&philos->print_lock);
         check_deth(philos);
