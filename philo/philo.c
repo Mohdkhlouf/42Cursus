@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/23 00:54:11 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/25 20:01:02 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	philo_var_init(t_philo *philo)
 
 	i = 0;
 	pthread_mutex_init(&philo->print_lock, NULL);
+	pthread_mutex_init(&philo->general_lock, NULL);
 	while (i < philo->philos_number)
 	{
 		pthread_mutex_init(&philo->threads[i].left_fork, NULL);

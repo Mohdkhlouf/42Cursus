@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/23 01:10:31 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/25 19:39:13 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,11 @@ int	ft_atoi(const char *str)
 	return (num * sign);
 }
 
-long long	current_time(void)
+uint64_t	current_time(void)
 {
 	struct timeval	tv;
-	long long		milliseconds;
-
-	milliseconds = 0;
-	gettimeofday(&tv, NULL);
-	milliseconds = (tv.tv_sec * (long long)1000) + tv.tv_usec / 1000;
-	return (milliseconds);
+	
+	if (gettimeofday(&tv, NULL))
+		return (1);
+	return ((tv.tv_sec * (uint64_t)1000) + (tv.tv_usec / 1000));
 }

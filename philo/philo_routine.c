@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/24 23:54:49 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/25 21:10:12 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	*philo_routine(void *arg)
 	{
 		if (philo->next_status == DEAD)
 		{
+			print_message("from routine is dead", philo, 1);
 			break;
 		}
 		else if (philo->next_status == ENOUGH_ROUNDS)

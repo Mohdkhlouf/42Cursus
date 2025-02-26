@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/25 00:10:05 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/25 21:10:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_message(char *msg, t_thread *philo, int skip)
 	if (!philo->philos->one_death || skip == 1)
 	{
 		pthread_mutex_lock(&philo->philos->print_lock);
-		printf("%lld %d %s\n", (current_time() - philo->start_time),
+		printf("%ld %d %s\n", (current_time() - philo->start_time),
 			philo->philo_num, msg);
 		pthread_mutex_unlock(&philo->philos->print_lock);
 	}
@@ -34,7 +34,7 @@ void	check_eating_rounds(t_philo *philos, int *i)
 	}
 }
 
-void	check_deth(t_philo *philos)
+void	check_death(t_philo *philos)
 {
     int i;
 
@@ -46,7 +46,7 @@ void	check_deth(t_philo *philos)
 		{
 			philos->one_death = true;
 			philos->threads[i].next_status = DEAD;
-			pthread_mutex_unlock(&philos->print_lock);
+			// pthread_mutex_unlock(&philos->general_lock);
 			print_message("is dead", &philos->threads[i], 1);
 			break;
 		}
@@ -62,9 +62,9 @@ void	*philos_monitor(void *arg)
 	philos = (t_philo *)arg;
 	while (1 && !philos->one_death)
 	{
-		pthread_mutex_lock(&philos->print_lock);
-        check_deth(philos);
-		pthread_mutex_unlock(&philos->print_lock);
+		pthread_mutex_lock(&philos->general_lock);
+        check_death(philos);
+		pthread_mutex_unlock(&philos->general_lock);
 		usleep(1000);
 	}
 	return (0);
