@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/25 21:10:12 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/26 16:33:02 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ void	philo_sleep(t_thread *philo)
 	else
 	{
 		usleep(philo->philos->time_to_sleep * 1000);
+		pthread_mutex_lock(&philo->philos->general_lock);
 		if (philo->philos->all_eat)
 			philo->next_status = ENOUGH_ROUNDS;
 		else
 			philo->next_status = THINKING;
+		pthread_mutex_unlock(&philo->philos->general_lock);
 	}
 }
 
@@ -47,11 +49,13 @@ void	philo_eat(t_thread *philo)
 	dead_lock_avoid(philo);
 	{
 		print_message("is eating", philo, 0);
+		pthread_mutex_lock(&philo->philos->general_lock);
 		philo->last_meal_time = current_time();
+		pthread_mutex_unlock(&philo->philos->general_lock);
 		usleep(philo->philos->time_to_eat * 1000);
-		pthread_mutex_lock(&philo->philos->print_lock);
+		pthread_mutex_lock(&philo->philos->general_lock);
 		philo->eating_conter++;
-		pthread_mutex_unlock(&philo->philos->print_lock);
+		pthread_mutex_unlock(&philo->philos->general_lock);
 		drop_left_fork(philo);
 		drop_right_fork(philo);
 		philo->next_status = SLEEPING;
@@ -86,7 +90,7 @@ int	dead_lock_avoid(t_thread *philo)
 void	*philo_routine(void *arg)
 {
 	t_thread	*philo;
-	
+
 	philo = (t_thread *)arg;
 	pthread_mutex_lock(&philo->philos->print_lock);
 	pthread_mutex_unlock(&philo->philos->print_lock);
@@ -95,7 +99,7 @@ void	*philo_routine(void *arg)
 		if (philo->next_status == DEAD)
 		{
 			print_message("from routine is dead", philo, 1);
-			break;
+			break ;
 		}
 		else if (philo->next_status == ENOUGH_ROUNDS)
 			break ;
@@ -111,4 +115,3 @@ void	*philo_routine(void *arg)
 	// usleep(200 * 1000);
 	return (NULL);
 }
-
