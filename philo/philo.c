@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/25 20:01:02 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/26 16:15:57 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	philo_var_init(t_philo *philo)
 		philo->threads[i].start_time = 0;
 		philo->threads[i].last_meal_time = 0;
 		philo->threads[i].next_status = THINKING;
+		philo->threads[i].eating_conter = 0;
 		if (i == philo->philos_number - 1)
 			philo->threads[i].right_fork = &philo->threads[0].left_fork;
 		else
