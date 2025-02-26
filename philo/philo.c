@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/26 16:15:57 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:05:03 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	philo_create(t_philo *philo)
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&philo->print_lock);
 	while (i < philo->philos_number)
 	{
 		if (pthread_create(&philo->threads[i].thread_id, NULL, philo_routine,
@@ -32,16 +31,23 @@ void	philo_create(t_philo *philo)
 	i = 0;
 	while (i < philo->philos_number)
 	{
+		pthread_mutex_lock(&philo->general_lock);
 		philo->threads[i].start_time = current_time();
+		pthread_mutex_unlock(&philo->general_lock);
+		pthread_mutex_lock(&philo->general_lock);
 		philo->threads[i].last_meal_time = current_time();
+		pthread_mutex_unlock(&philo->general_lock);
 		if (philo->philos_number % 2 == 0)
 		{
 			if (i % 2 == 0)
+			{
+				pthread_mutex_lock(&philo->general_lock);
 				philo->threads[i].next_status = EATING;
+				pthread_mutex_unlock(&philo->general_lock);
+			}
 		}
 		i++;
 	}
-	pthread_mutex_unlock(&philo->print_lock);
 }
 void	philo_var_init(t_philo *philo)
 {
@@ -87,7 +93,6 @@ void	exit_destroy(t_philo *philo)
 	while (i < philo->philos_number)
 	{
 		pthread_mutex_destroy(&philo->threads[i].left_fork);
-		pthread_mutex_destroy(philo->threads[i].right_fork);
 		i++;
 	}
 	pthread_mutex_destroy(&philo->print_lock);

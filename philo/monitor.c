@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/26 16:31:34 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:20:03 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,46 @@ void	check_eating_rounds(t_philo *philos, int *i)
 	}
 }
 
-void	check_death(t_philo *philos)
-{
-    int i;
-
-    i = 0;
-	while (i < philos->philos_number)
-	{
-		if ((current_time()
-				- philos->threads[i].last_meal_time) > philos->time_to_die)
-		{
-			philos->one_death = true;
-			philos->threads[i].next_status = DEAD;
-			// pthread_mutex_unlock(&philos->general_lock);
-			print_message("is dead", &philos->threads[i], 1);
-			break;
-		}
-		check_eating_rounds(philos, &i);
-		i++;
-	}
+void check_death(t_philo *philos) {
+    int i = 0;
+    while (i < philos->philos_number) {
+        pthread_mutex_lock(&philos->general_lock);  // Lock for each check
+        if ((current_time() - philos->threads[i].last_meal_time) > philos->time_to_die) {
+            philos->one_death = true;
+            philos->threads[i].next_status = DEAD;
+            print_message("is dead", &philos->threads[i], 1);
+            pthread_mutex_unlock(&philos->general_lock);  // Unlock after death check
+            break;
+        }
+        check_eating_rounds(philos, &i);  // Ensure this is also thread-safe if accessing shared data
+        pthread_mutex_unlock(&philos->general_lock);
+        i++;
+    }
 }
+
+
+// void	check_death(t_philo *philos)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	pthread_mutex_lock(&philos->general_lock);
+// 	while (i < philos->philos_number)
+// 	{
+// 		if ((current_time()
+// 				- philos->threads[i].last_meal_time) > philos->time_to_die)
+// 		{
+// 			philos->one_death = true;
+// 			philos->threads[i].next_status = DEAD;
+// 			// pthread_mutex_unlock(&philos->general_lock);
+// 			print_message("is dead", &philos->threads[i], 1);
+// 			break ;
+// 		}
+// 		check_eating_rounds(philos, &i);
+// 		i++;
+// 	}
+// 	pthread_mutex_unlock(&philos->general_lock);
+// }
 
 void	*philos_monitor(void *arg)
 {
@@ -62,9 +82,7 @@ void	*philos_monitor(void *arg)
 	philos = (t_philo *)arg;
 	while (1 && !philos->one_death)
 	{
-		pthread_mutex_lock(&philos->general_lock);
-        check_death(philos);
-		pthread_mutex_unlock(&philos->general_lock);
+		check_death(philos);
 		usleep(1000);
 	}
 	return (0);

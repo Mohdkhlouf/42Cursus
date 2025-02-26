@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/26 16:33:02 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:28:08 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,23 @@ void	philo_think(t_thread *philo)
 {
 	usleep(20);
 	print_message("is thinking", philo, 0);
+	pthread_mutex_lock(&philo->philos->general_lock);
 	if (philo->philos->one_death == true)
 		philo->next_status = DEAD;
 	else
 		philo->next_status = EATING;
+	pthread_mutex_unlock(&philo->philos->general_lock);
 }
 
 void	philo_sleep(t_thread *philo)
 {
 	print_message("is sleeping", philo, 0);
 	if (philo->philos->one_death == true)
+	{
+		pthread_mutex_lock(&philo->philos->general_lock);
 		philo->next_status = DEAD;
+		pthread_mutex_unlock(&philo->philos->general_lock);
+	}
 	else
 	{
 		usleep(philo->philos->time_to_sleep * 1000);
@@ -58,7 +64,9 @@ void	philo_eat(t_thread *philo)
 		pthread_mutex_unlock(&philo->philos->general_lock);
 		drop_left_fork(philo);
 		drop_right_fork(philo);
+		pthread_mutex_lock(&philo->philos->general_lock);
 		philo->next_status = SLEEPING;
+		pthread_mutex_unlock(&philo->philos->general_lock);
 	}
 }
 
@@ -92,8 +100,8 @@ void	*philo_routine(void *arg)
 	t_thread	*philo;
 
 	philo = (t_thread *)arg;
-	pthread_mutex_lock(&philo->philos->print_lock);
-	pthread_mutex_unlock(&philo->philos->print_lock);
+	pthread_mutex_lock(&philo->philos->general_lock);
+	pthread_mutex_unlock(&philo->philos->general_lock);
 	while (true)
 	{
 		if (philo->next_status == DEAD)
