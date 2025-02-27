@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/27 14:04:06 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/27 14:45:43 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,21 @@ void	philo_think(t_thread *philo)
 void	philo_sleep(t_thread *philo)
 {
 	print_message("is sleeping", philo, 0);
+	pthread_mutex_lock(&philo->philos->general_lock);
 	if (philo->philos->one_death == true)
 	{
-		pthread_mutex_lock(&philo->philos->general_lock);
 		philo->next_status = DEAD;
 		pthread_mutex_unlock(&philo->philos->general_lock);
 	}
 	else
 	{
-		usleep(philo->philos->time_to_sleep * 1000);
-		pthread_mutex_lock(&philo->philos->general_lock);
 		if (philo->philos->all_eat)
 			philo->next_status = ENOUGH_ROUNDS;
 		else
 			philo->next_status = THINKING;
 		pthread_mutex_unlock(&philo->philos->general_lock);
 	}
+	usleep(philo->philos->time_to_sleep * 1000);
 }
 
 void	philo_eat(t_thread *philo)
@@ -59,9 +58,7 @@ void	philo_eat(t_thread *philo)
 		philo->last_meal_time = current_time();
 		pthread_mutex_unlock(&philo->philos->general_lock);
 		usleep(philo->philos->time_to_eat * 1000);
-		pthread_mutex_lock(&philo->philos->general_lock);
 		philo->eating_conter++;
-		pthread_mutex_unlock(&philo->philos->general_lock);
 		drop_left_fork(philo);
 		drop_right_fork(philo);
 		pthread_mutex_lock(&philo->philos->general_lock);

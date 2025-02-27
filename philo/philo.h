@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/27 11:00:03 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/27 14:56:06 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 
 # include <pthread.h>
+# include <stdatomic.h>
 # include <stdbool.h>
 # include <stdint.h>
 # include <stdio.h>
@@ -42,23 +43,22 @@ typedef struct s_thread
 	pthread_mutex_t		left_fork;
 	pthread_mutex_t		*right_fork;
 	uint64_t			last_meal_time;
-	int					next_status;
-	int					eating_conter;
+	atomic_int			next_status;
+	atomic_int			eating_conter;
 	t_philo				*philos;
-	// _Atomic int			has_died;
 }						t_thread;
 
 typedef struct s_philo
 {
-	int					philos_number;
-	int					forks_number;
+	atomic_int			philos_number;
+	atomic_int			forks_number;
 	uint64_t			time_to_die;
 	uint64_t			time_to_eat;
 	uint64_t			time_to_sleep;
-	int					eating_rounds;
-	int					all_eating_counter;
-	bool				one_death;
-	bool				all_eat;
+	atomic_int			eating_rounds;
+	atomic_int			all_eating_counter;
+	_Atomic bool 		one_death;
+	_Atomic bool 		all_eat;
 	pthread_mutex_t		print_lock;
 	pthread_mutex_t		general_lock;
 
@@ -86,7 +86,6 @@ void					philo_think(t_thread *philo);
 void					philo_sleep(t_thread *philo);
 void					philo_eat(t_thread *philo);
 int						dead_lock_avoid(t_thread *philo);
-void					philosopher_status_set(t_thread *philo, int i);
 int						check_death(t_philo *philos);
 
 #endif
