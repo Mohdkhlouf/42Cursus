@@ -6,16 +6,12 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/27 14:15:25 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/27 16:46:10 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*i hhave deleted the monitor, and now i am using the print instead, so when i
-print i test and do the monitor job,
-	these function dont return any thing on success,
-and handeld in the routine file*/
 int	check_eating_rounds(t_philo *philos)
 {
 	int	i;
@@ -31,7 +27,6 @@ int	check_eating_rounds(t_philo *philos)
 			if (philos->all_eating_counter == philos->philos_number)
 			{
 				philos->all_eat = true;
-				// return (1);
 			}
 		}
 		i++;
@@ -80,15 +75,23 @@ void	print_message(char *msg, t_thread *philo, int skip)
 	pthread_mutex_unlock(&philo->philos->general_lock);
 }
 
-// void	*philos_monitor(void *arg)
-// {
-// 	t_philo	*philos;
+void	exit_destroy(t_philo *philo)
+{
+	int	i;
 
-// 	philos = (t_philo *)arg;
-// 	while (1 && !philos->one_death)
-// 	{
-// 		check_death(philos);
-// 		usleep(1000);
-// 	}
-// 	return (0);
-// }
+	i = 0;
+	while (i < philo->philos_number)
+	{
+		pthread_join(philo->threads[i].thread_id, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < philo->philos_number)
+	{
+		pthread_mutex_destroy(&philo->threads[i].left_fork);
+		i++;
+	}
+	pthread_mutex_destroy(&philo->print_lock);
+	i = 0;
+	free(philo->threads);
+}

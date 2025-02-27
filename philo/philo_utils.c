@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/26 16:26:20 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/27 16:45:13 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,13 @@ int	check_arguments(int argc, char **argv, t_philo *philo)
 
 int	ft_atoi(const char *str)
 {
-	int	sign;
-	int	i;
-	int	num;
-	int	max_int;
+	int		sign;
+	int		i;
+	long	num;
 
-	sign = 1;
 	i = 0;
+	sign = 1;
 	num = 0;
-	max_int = 2147483647;
 	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
 		|| str[i] == '\f' || str[i] == '\r')
 		i++;
@@ -90,20 +88,20 @@ int	ft_atoi(const char *str)
 			sign *= -1;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	while (str[i] >= 48 && str[i] <= 57)
 	{
-		if (num > (max_int - (str[i] - '0')) / 10)
-			return (sign == 1 ? max_int : -max_int - 1);
-		num = num * 10 + (str[i] - '0');
+		num = num * 10 + (str[i] - 48);
 		i++;
 	}
+	if ((num > INT_MAX) || (num < INT_MIN))
+		return (-1);
 	return (num * sign);
 }
 
 uint64_t	current_time(void)
 {
 	struct timeval	tv;
-	
+
 	if (gettimeofday(&tv, NULL))
 		return (1);
 	return ((tv.tv_sec * (uint64_t)1000) + (tv.tv_usec / 1000));

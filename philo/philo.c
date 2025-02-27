@@ -6,16 +6,16 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/27 12:16:39 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/27 16:45:17 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void philo_init_after(t_philo *philo)
+void	philo_init_after(t_philo *philo)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < philo->philos_number)
 	{
@@ -37,6 +37,7 @@ void philo_init_after(t_philo *philo)
 		i++;
 	}
 }
+
 void	philo_create(t_philo *philo)
 {
 	int	i;
@@ -54,8 +55,8 @@ void	philo_create(t_philo *philo)
 		}
 		i++;
 	}
-	
 }
+
 void	philo_var_init(t_philo *philo)
 {
 	int	i;
@@ -78,7 +79,6 @@ void	philo_var_init(t_philo *philo)
 			philo->threads[i].right_fork = &philo->threads[i + 1].left_fork;
 		i++;
 	}
-	i = 0;
 	if (philo->philos_number == 1)
 	{
 		pthread_mutex_init(philo->threads[0].right_fork, NULL);
@@ -86,43 +86,13 @@ void	philo_var_init(t_philo *philo)
 	}
 }
 
-void	exit_destroy(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->philos_number)
-	{
-		pthread_join(philo->threads[i].thread_id, NULL);
-		i++;
-	}
-	i = 0;
-	while (i < philo->philos_number)
-	{
-		pthread_mutex_destroy(&philo->threads[i].left_fork);
-		i++;
-	}
-	pthread_mutex_destroy(&philo->print_lock);
-	i = 0;
-	free(philo->threads);
-}
-
 void	create_philos(t_philo *philo)
 {
-	// pthread_t	monitor;
-
 	philo->threads = malloc(sizeof(t_thread) * philo->philos_number);
 	if (!philo->threads)
 		return ;
 	philo_var_init(philo);
 	philo_create(philo);
-	// if ((pthread_create(&monitor, NULL, philos_monitor, (void *)philo)) != 0)
-	// {
-	// 	perror("Error: ");
-	// 	free(philo->threads);
-	// 	return ;
-	// }
-	// pthread_join(monitor, NULL);
 	exit_destroy(philo);
 }
 

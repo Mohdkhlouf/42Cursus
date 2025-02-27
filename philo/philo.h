@@ -6,13 +6,14 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/27 14:56:06 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/27 16:48:31 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <limits.h>
 # include <pthread.h>
 # include <stdatomic.h>
 # include <stdbool.h>
@@ -50,19 +51,19 @@ typedef struct s_thread
 
 typedef struct s_philo
 {
-	atomic_int			philos_number;
-	atomic_int			forks_number;
-	uint64_t			time_to_die;
-	uint64_t			time_to_eat;
-	uint64_t			time_to_sleep;
-	atomic_int			eating_rounds;
-	atomic_int			all_eating_counter;
-	_Atomic bool 		one_death;
-	_Atomic bool 		all_eat;
-	pthread_mutex_t		print_lock;
-	pthread_mutex_t		general_lock;
+	atomic_int		philos_number;
+	atomic_int		forks_number;
+	uint64_t		time_to_die;
+	uint64_t		time_to_eat;
+	uint64_t		time_to_sleep;
+	atomic_int		eating_rounds;
+	atomic_int		all_eating_counter;
+	_Atomic bool	one_death;
+	_Atomic bool	all_eat;
+	pthread_mutex_t	print_lock;
+	pthread_mutex_t	general_lock;
 
-	t_thread			*threads;
+	t_thread		*threads;
 
 }						t_philo;
 
@@ -77,7 +78,6 @@ void					*philo_routine(void *arg);
 void					philo_create(t_philo *philo);
 void					philo_var_init(t_philo *philo);
 void					create_philos(t_philo *philo);
-void					*philos_monitor(void *arg);
 void					drop_left_fork(t_thread *philo);
 void					drop_right_fork(t_thread *philo);
 int						take_right_fork(t_thread *philo);
@@ -87,5 +87,6 @@ void					philo_sleep(t_thread *philo);
 void					philo_eat(t_thread *philo);
 int						dead_lock_avoid(t_thread *philo);
 int						check_death(t_philo *philos);
+void					exit_destroy(t_philo *philo);
 
 #endif
