@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/25 20:00:17 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/27 11:00:03 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include <pthread.h>
 # include <stdbool.h>
+# include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <time.h>
 # include <unistd.h>
-# include <stdint.h>
 
 typedef struct s_philo	t_philo;
 
@@ -87,5 +87,6 @@ void					philo_sleep(t_thread *philo);
 void					philo_eat(t_thread *philo);
 int						dead_lock_avoid(t_thread *philo);
 void					philosopher_status_set(t_thread *philo, int i);
+int						check_death(t_philo *philos);
 
 #endif

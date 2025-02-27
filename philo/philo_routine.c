@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/26 17:28:08 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/27 12:05:00 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,14 @@ int	dead_lock_avoid(t_thread *philo)
 void	*philo_routine(void *arg)
 {
 	t_thread	*philo;
-
+	
 	philo = (t_thread *)arg;
 	pthread_mutex_lock(&philo->philos->general_lock);
 	pthread_mutex_unlock(&philo->philos->general_lock);
-	while (true)
+	while (true && !philo->philos->one_death)
 	{
 		if (philo->next_status == DEAD)
 		{
-			print_message("from routine is dead", philo, 1);
 			break ;
 		}
 		else if (philo->next_status == ENOUGH_ROUNDS)
@@ -120,6 +119,10 @@ void	*philo_routine(void *arg)
 		else
 			philo->next_status = THINKING;
 	}
+	// if (philo->philos->one_death)
+	// {
+	// 	print_message("is dead", philo, 1);
+	// }
 	// usleep(200 * 1000);
 	return (NULL);
 }
