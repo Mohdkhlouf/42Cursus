@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 17:16:51 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/11 19:14:18 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/23 23:31:23 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	initial_values(t_stacks *stacks)
 int	main(int argc, char *argv[])
 {
 	t_stacks	*stacks;
-	static t_stacks stacks;
-	static t_stacks stacks[1];
 
 	stacks = malloc(sizeof(t_stacks));
 	if (!stacks)
@@ -76,5 +74,3 @@ int	main(int argc, char *argv[])
 	free_stacks(stacks);
 	return (0);
 }
-1 2 3 4 5
-0 1 2 3 4

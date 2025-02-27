@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 16:31:19 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/01 15:48:39 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/06 15:55:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,8 @@
 
 # include "MLX42/MLX42.h"
 # include "ft_printf.h"
-# include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
 
 # define TILE_SIZE 64
 # define BUFFER_SIZE 1
@@ -55,7 +51,7 @@ typedef struct s_textures
 	mlx_texture_t	*ground;
 	mlx_texture_t	*player;
 	mlx_texture_t	*player_left_t;
-	mlx_texture_t	*player_to_right_texture;
+	mlx_texture_t	*player_right_tex;
 }					t_textures;
 
 typedef struct s_game
@@ -92,11 +88,11 @@ void				draw_map(t_game *game);
 void				set_points(t_game *game, int new_location_x,
 						int new_location_y);
 int					open_file(char *file_name);
-void				game_counters(char buffer, t_game *game);
+void				game_counters(char *buffer, t_game *game);
 void				print_error_and_exit(char *str, t_game *game);
 void				map_validation(t_game *game);
 char				*ft_strdup(const char *s);
-void				check_filen_name(char *file_name);
+void				check_file_name(int argc, char *argv[]);
 void				reading_validation(t_game *game);
 void				create_map_arr(t_game *game);
 char				**fill_in_maze(char **maze, t_game *game);
@@ -117,5 +113,7 @@ char				*ft_strcpy(char *dest, char *src);
 void				free_faild_arr(t_game *game, int fd, char *row,
 						unsigned int i);
 char				*ft_strstr(const char *big, const char *little);
+void				print_exit_after_mlx(char *str, t_game *game);
+void				free_mlx(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 19:00:39 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/12/31 19:26:04 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/02 18:27:52 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	change_player_direction(t_game *game)
 	else if (game->player_direction == -1)
 	{
 		game->img = mlx_texture_to_image(game->mlx,
-				game->textures.player_to_right_texture);
+				game->textures.player_right_tex);
 		game->player_direction = 1;
 	}
 	if (!game->img)
-		perror("Errror loadng player to left image");
+		print_exit_after_mlx("Errror loadng player to left image", game);
 	mlx_image_to_window(game->mlx, game->img, game->player_place_x
 		* game->tile_size, game->player_place_y * game->tile_size);
 }
@@ -77,15 +77,18 @@ void	close_button(void *param)
 	mlx_close_window(game->mlx);
 }
 
-void	game_counters(char buffer, t_game *game)
+void	game_counters(char *buffer, t_game *game)
 {
-	if ((buffer != 'C') && (buffer != 'P') && (buffer != '1') && (buffer != '0')
-		&& (buffer != '\n') && (buffer != 'E'))
+	if ((*buffer != 'C') && (*buffer != 'P') && (*buffer != '1')
+		&& (*buffer != '0') && (*buffer != '\n') && (*buffer != 'E'))
+	{
+		free(buffer);
 		print_error_and_exit("Map Error: has unsupported letters.\n", game);
-	if (buffer == 'C')
+	}
+	if (*buffer == 'C')
 		game->assets.babies_to_collect += 1;
-	if (buffer == 'P')
+	if (*buffer == 'P')
 		game->assets.player_counter += 1;
-	if (buffer == 'E')
+	if (*buffer == 'E')
 		game->assets.exit_counter += 1;
 }

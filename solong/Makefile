@@ -6,18 +6,19 @@
 #    By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/31 19:40:47 by mkhlouf           #+#    #+#              #
-#    Updated: 2025/01/01 16:43:14 by mkhlouf          ###   ########.fr        #
+#    Updated: 2025/01/03 12:16:19 by mkhlouf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -Wunreachable-code -Ofast -fPIC \
+CFLAGS := -Wall -Wextra -Werror -g -Wunreachable-code -Ofast -fPIC \
 	-I ./include -I ./mlx/include -I ./ft_printf
 LIBMLX := ./mlx
 PRINTF := ./ft_printf
 HEADERS = -I $(LIBMLX)/include/mlx
 LIBS := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
+PRINTF_LIB := $(PRINTF)/libftprintf.a
 
 SRCS := draw_map.c game_utils.c map_validation.c path_validation.c \
 	read_map.c read_map_utils2.c read_map_utils.c solong.c solong_utils.c \
@@ -59,11 +60,12 @@ clean:
 	@rm -rf $(OBJS)
 	@rm -rf $(LIBMLX)/build
 	${MAKE} -C ${PRINTF} clean
-	@rm -rf $(REPO_DIR)
+	@rm -rf $(PRINTF_LIB)
 
 # Clean everything (including executable)
 fclean: clean
 	@rm -rf $(NAME)
+	@rm -rf $(REPO_DIR)
 
 # Rebuild everything (clean and then build)
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:29:16 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/01 15:35:52 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/31 16:09:39 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,49 @@ void	initialize_struct_variable(t_game *game)
 	game->exit_point.y = 0;
 	game->tile_size = TILE_SIZE;
 	game->move_counter = 0;
+	game->textures.baby_boy = NULL;
+	game->textures.ground = NULL;
+	game->textures.home = NULL;
+	game->textures.player = NULL;
+	game->textures.player_left_t = NULL;
+	game->textures.player_right_tex = NULL;
+	game->textures.wall = NULL;
+}
+
+size_t	ft_strlen(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (*str)
+	{
+		str++;
+		i++;
+	}
+	return (i);
 }
 
 void	check_file_name(int argc, char *argv[])
 {
-	char *file_name;
+	char	*file_name;
+	size_t	file_name_len;
 
-	if ( argc == 1)
+	file_name_len = 0;
+	if (argc == 1)
 	{
-		ft_printf("Error\n%s\n","No file!, No map!");
+		ft_printf("Error\n%s\n", "No file!, No map!");
 		exit(-1);
 	}
 	if (argc > 2)
 	{
-		ft_printf("Error\n%s\n","Only one file is accepted");
+		ft_printf("Error\n%s\n", "Only one file is accepted");
 		exit(-1);
 	}
 	file_name = argv[1];
-	if (!ft_strstr(file_name, ".ber"))
+	file_name_len = ft_strlen(file_name);
+	if (ft_strstr(file_name + (file_name_len - 4), ".ber") == 0)
 	{
-		ft_printf("Error\n%s\n","No file!, No map!");
+		ft_printf("Error\n%s\n", "File extinsion is not correct!");
 		exit(-1);
 	}
 }
@@ -94,10 +117,7 @@ int	main(int argc, char *argv[])
 		game.mlx = mlx_init(game.map_orginal.map_width * game.tile_size,
 				game.map_orginal.map_height * game.tile_size, "MLX42", true);
 		if (!game.mlx)
-		{
-			free_2d_map(&game);
-			exit(EXIT_FAILURE);
-		}
+			free_mlx(&game);
 		create_assets(&game);
 		draw_map(&game);
 		mlx_key_hook(game.mlx, handle_keys, &game);
@@ -105,6 +125,7 @@ int	main(int argc, char *argv[])
 		mlx_loop(game.mlx);
 		free_2d_map(&game);
 		delete_textures_exit(&game);
+		mlx_terminate(game.mlx);
 	}
 	return (0);
 }

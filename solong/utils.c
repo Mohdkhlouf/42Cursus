@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 10:29:16 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/01/01 14:17:47 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/01/02 18:27:52 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ void	create_map_arr(t_game *game)
 
 void	delete_textures_exit(t_game *game)
 {
-	if(game->textures.player_left_t || game->textures.player_to_right_texture)
+	if (game->textures.player_left_t || game->textures.player_right_tex)
 	{
 		mlx_delete_texture(game->textures.player_left_t);
-		mlx_delete_texture(game->textures.player_to_right_texture);
+		mlx_delete_texture(game->textures.player_right_tex);
 	}
 }
 
