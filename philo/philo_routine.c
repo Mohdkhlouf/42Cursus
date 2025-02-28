@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/27 16:45:45 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/28 14:36:14 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,50 +46,46 @@ void	philo_sleep(t_thread *philo)
 
 void	philo_eat(t_thread *philo)
 {
+	// if (philo->philos->philos_number == 1)
+	// 	return;
 	if (philo->philos->time_to_die + philo->last_meal_time > current_time()
 		+ philo->philos->time_to_eat)
 	{
 		usleep(200);
 	}
 	dead_lock_avoid(philo);
-	{
-		print_message("is eating", philo, 0);
-		pthread_mutex_lock(&philo->philos->general_lock);
-		philo->last_meal_time = current_time();
-		pthread_mutex_unlock(&philo->philos->general_lock);
-		usleep(philo->philos->time_to_eat * 1000);
-		philo->eating_conter++;
-		drop_left_fork(philo);
-		drop_right_fork(philo);
-		pthread_mutex_lock(&philo->philos->general_lock);
-		philo->next_status = SLEEPING;
-		pthread_mutex_unlock(&philo->philos->general_lock);
-	}
+	print_message("is eating", philo, 0);
+	pthread_mutex_lock(&philo->philos->general_lock);
+	philo->last_meal_time = current_time();
+	pthread_mutex_unlock(&philo->philos->general_lock);
+	usleep(philo->philos->time_to_eat * 1000);
+	philo->eating_conter++;
+	drop_left_fork(philo);
+	drop_right_fork(philo);
+	pthread_mutex_lock(&philo->philos->general_lock);
+	philo->next_status = SLEEPING;
+	pthread_mutex_unlock(&philo->philos->general_lock);
 }
 
-int	dead_lock_avoid(t_thread *philo)
+void	dead_lock_avoid(t_thread *philo)
 {
+	if (philo->philos->philos_number == 1)
+	{
+		take_left_fork(philo);
+		usleep(philo->philos->time_to_die * 1000);
+		drop_left_fork(philo);
+		return;
+	}
 	if (philo->philo_num % 2 == 0)
 	{
-		if (take_right_fork(philo) != 0)
-			return (1);
-		if (take_left_fork(philo) != 0)
-		{
-			drop_right_fork(philo);
-			return (1);
-		}
+		take_right_fork(philo);
+		take_left_fork(philo);
 	}
 	else
 	{
-		if (take_left_fork(philo) != 0)
-			return (1);
-		if (take_right_fork(philo) != 0)
-		{
-			drop_left_fork(philo);
-			return (1);
-		}
+		take_left_fork(philo);
+		take_right_fork(philo);
 	}
-	return (0);
 }
 
 void	*philo_routine(void *arg)

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/27 16:46:10 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/02/28 17:31:45 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_death(t_philo *philos)
 	while (i < philos->philos_number && !philos->one_death)
 	{
 		if ((current_time()
-				- philos->threads[i].last_meal_time) > philos->time_to_die)
+				- philos->threads[i].last_meal_time) >= philos->time_to_die)
 		{
 			philos->one_death = true;
 			pthread_mutex_lock(&philos->print_lock);
