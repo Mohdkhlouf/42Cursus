@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/28 16:09:40 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/02 01:53:36 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ typedef struct s_thread
 {
 	pthread_t			thread_id;
 	int					philo_num;
-	uint64_t			start_time;
+	uintmax_t			start_time;
 	pthread_mutex_t		left_fork;
 	pthread_mutex_t		*right_fork;
-	uint64_t			last_meal_time;
+	uintmax_t			last_meal_time;
 	atomic_int			next_status;
 	atomic_int			eating_conter;
 	t_philo				*philos;
@@ -53,9 +53,9 @@ typedef struct s_philo
 {
 	atomic_int		philos_number;
 	atomic_int		forks_number;
-	uint64_t		time_to_die;
-	uint64_t		time_to_eat;
-	uint64_t		time_to_sleep;
+	uintmax_t		time_to_die;
+	uintmax_t		time_to_eat;
+	uintmax_t		time_to_sleep;
 	atomic_int		eating_rounds;
 	atomic_int		all_eating_counter;
 	_Atomic bool	one_death;
@@ -70,7 +70,7 @@ int						ft_atoi(const char *str);
 void					philo_init(char **argv, t_philo *philo, int argc);
 int						check_ints(char *str);
 int						check_arguments(int argc, char **argv, t_philo *philo);
-uint64_t				current_time(void);
+uintmax_t				current_time(void);
 void					print_message(char *msg, t_thread *philo, int skip);
 void					*philo_routine(void *arg);
 void					philo_create(t_philo *philo);
@@ -86,5 +86,6 @@ void					philo_eat(t_thread *philo);
 void					dead_lock_avoid(t_thread *philo);
 int						check_death(t_philo *philos);
 void					exit_destroy(t_philo *philo);
+void 					ft_usleep(uintmax_t  usec);
 
 #endif

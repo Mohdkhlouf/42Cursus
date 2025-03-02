@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/02/27 16:45:41 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/02 01:46:55 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,13 @@ int	take_left_fork(t_thread *philo)
 	pthread_mutex_lock(&philo->left_fork);
 	print_message("has taken a fork", philo, 0);
 	return (0);
+}
+
+void	ft_usleep(uintmax_t usec)
+{
+	uintmax_t	start;
+
+	start = current_time();
+	while (current_time() - start < usec)
+		usleep(100);
 }
