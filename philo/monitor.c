@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/02 02:43:47 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/02 23:10:39 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	check_death(t_philo *philos)
 
 void	print_message(char *msg, t_thread *philo, int skip)
 {
-	check_death(philo->philos);
+	// check_death(philo->philos);
 	check_eating_rounds(philo->philos);
 	pthread_mutex_lock(&philo->philos->general_lock);
 	if (!philo->philos->one_death || skip == 1)

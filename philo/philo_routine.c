@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/02 11:13:23 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/02 23:08:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	philo_sleep(t_thread *philo)
 	else
 		philo->next_status = THINKING;
 	pthread_mutex_unlock(&philo->philos->general_lock);
-	ft_usleep(philo->philos->time_to_sleep);
+	ft_usleep(philo->philos->time_to_sleep, philo->philos);
 }
 
 void	philo_eat(t_thread *philo)
@@ -52,7 +52,7 @@ void	philo_eat(t_thread *philo)
 	pthread_mutex_lock(&philo->philos->general_lock);
 	philo->last_meal_time = current_time();
 	pthread_mutex_unlock(&philo->philos->general_lock);
-	ft_usleep(philo->philos->time_to_eat);
+	ft_usleep(philo->philos->time_to_eat, philo->philos);
 	philo->eating_conter++;
 	drop_left_fork(philo);
 	drop_right_fork(philo);
@@ -66,7 +66,7 @@ void	dead_lock_avoid(t_thread *philo)
 	if (philo->philos->philos_number == 1)
 	{
 		take_left_fork(philo);
-		ft_usleep(philo->philos->time_to_die);
+		ft_usleep(philo->philos->time_to_die, philo->philos);
 		drop_left_fork(philo);
 		return ;
 	}

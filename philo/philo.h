@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/02 01:53:36 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/02 23:07:55 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ typedef struct s_thread
 
 typedef struct s_philo
 {
-	atomic_int		philos_number;
-	atomic_int		forks_number;
-	uintmax_t		time_to_die;
-	uintmax_t		time_to_eat;
-	uintmax_t		time_to_sleep;
-	atomic_int		eating_rounds;
-	atomic_int		all_eating_counter;
-	_Atomic bool	one_death;
-	_Atomic bool	all_eat;
-	pthread_mutex_t	print_lock;
-	pthread_mutex_t	general_lock;
-	t_thread		*threads;
+	atomic_int			philos_number;
+	atomic_int			forks_number;
+	uintmax_t			time_to_die;
+	uintmax_t			time_to_eat;
+	uintmax_t			time_to_sleep;
+	atomic_int			eating_rounds;
+	atomic_int			all_eating_counter;
+	_Atomic bool one_death;
+	_Atomic bool all_eat;
+	pthread_mutex_t		print_lock;
+	pthread_mutex_t		general_lock;
+	t_thread			*threads;
 
 }						t_philo;
 
@@ -86,6 +86,6 @@ void					philo_eat(t_thread *philo);
 void					dead_lock_avoid(t_thread *philo);
 int						check_death(t_philo *philos);
 void					exit_destroy(t_philo *philo);
-void 					ft_usleep(uintmax_t  usec);
+void					ft_usleep(uintmax_t usec, t_philo *philos);
 
 #endif
