@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/03 13:19:48 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/03 16:28:54 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,6 @@ void					philo_eat(t_thread *philo);
 void					dead_lock_avoid(t_thread *philo);
 int						check_death(t_philo *philos);
 void					exit_destroy(t_philo *philo);
-void					ft_usleep(uintmax_t usec, t_philo *philos);
+void	ft_usleep(uintmax_t usec, uintmax_t from_time, t_philo *philos );
 
 #endif
