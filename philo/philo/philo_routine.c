@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/02 23:08:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:40:00 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	philo_think(t_thread *philo)
 {
 	print_message("is thinking", philo, 0);
-	// ft_usleep(philo->philos->time_to_eat);
+	if (philo->eating_conter == 0)
+		ft_usleep(philo->philos->time_to_eat / 2, philo->philos);
 	pthread_mutex_lock(&philo->philos->general_lock);
 	if (philo->philos->one_death == true)
 		philo->next_status = DEAD;
@@ -63,13 +64,6 @@ void	philo_eat(t_thread *philo)
 
 void	dead_lock_avoid(t_thread *philo)
 {
-	if (philo->philos->philos_number == 1)
-	{
-		take_left_fork(philo);
-		ft_usleep(philo->philos->time_to_die, philo->philos);
-		drop_left_fork(philo);
-		return ;
-	}
 	if (philo->philo_num % 2 == 0)
 	{
 		take_left_fork(philo);
@@ -87,8 +81,15 @@ void	*philo_routine(void *arg)
 	t_thread	*philo;
 
 	philo = (t_thread *)arg;
-	// pthread_mutex_lock(&philo->philos->general_lock);
-	// pthread_mutex_unlock(&philo->philos->general_lock);
+	while (philo->philos->all_started == 0)
+		usleep(10);
+	if (philo->philos->philos_number == 1)
+	{
+		take_left_fork(philo);
+		usleep(philo->philos->time_to_die * 1000);
+		ft_usleep(philo->philos->time_to_die, philo->philos);
+		return (NULL);
+	}
 	while (true && !philo->philos->all_eat)
 	{
 		if (philo->next_status == DEAD)
@@ -104,10 +105,8 @@ void	*philo_routine(void *arg)
 		else
 		{
 			printf("no stsuts\n");
-			break;
+			break ;
 		}
-		usleep(1000);
-		// philo->next_status = THINKING;
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/02 10:59:07 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:30:16 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ void	philo_init_after(t_philo *philo)
 		pthread_mutex_lock(&philo->general_lock);
 		philo->threads[i].last_meal_time = current_time();
 		pthread_mutex_unlock(&philo->general_lock);
-		if (philo->philos_number % 2 == 0)
-		{
+
 			if (i % 2 == 0)
 			{
 				philo->threads[i].next_status = EATING;
-			}			
-		}
+			}
+			else
+				philo->threads[i].next_status = THINKING;		
+
 		i++;
 	}
 }
@@ -41,7 +42,8 @@ void	philo_create(t_philo *philo)
 	int	i;
 
 	i = 0;
-	philo_init_after(philo);
+		philo_init_after(philo);
+
 	while (i < philo->philos_number)
 	{
 		if (pthread_create(&philo->threads[i].thread_id, NULL, philo_routine,
@@ -53,6 +55,9 @@ void	philo_create(t_philo *philo)
 		}
 		i++;
 	}
+	philo_init_after(philo);
+	philo->all_started = 1;
+
 }
 
 void	philo_var_init(t_philo *philo)
