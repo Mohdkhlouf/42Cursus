@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/04 10:45:22 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 11:41:09 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	*philo_routine(void *arg)
 		ft_usleep(philo->philos->time_to_die, current_time(), philo->philos);
 		return (NULL);
 	}
-	philo->start_time = current_time();
 	while (true && !philo->philos->all_eat)
 	{
 		if (philo->next_status == DEAD)
