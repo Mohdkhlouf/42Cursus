@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/04 14:27:53 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 16:03:11 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ int	check_arguments(int argc, char **argv, t_philo *philo)
 			if (check_ints(argv[i]))
 				i++;
 			else
-			{
 				return (0);
-			}
 		}
 		philo_init(argv, philo, argc);
 	}

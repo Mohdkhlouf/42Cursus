@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/04 15:31:29 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 16:05:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_eating_rounds(t_philo *philos)
 	pthread_mutex_lock(&philos->general_lock);
 	while (i < philos->philos_number)
 	{
-		if ((philos->threads[i].eating_conter > philos->eating_rounds)
+		if ((philos->threads[i].eating_conter >= philos->eating_rounds)
 			&& !philos->all_eat)
 		{
 			// pthread_mutex_lock(&philos->general_lock);

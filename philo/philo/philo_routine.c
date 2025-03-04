@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/04 15:49:50 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 16:14:14 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	*philo_routine(void *arg)
 		return (NULL);
 	}
 	pthread_mutex_lock(&philo->philos->general_lock);
-	while (true && !philo->philos->all_eat && !philo->philos->one_death)
+	while (true && !philo->philos->all_eat && !philo->philos->one_death )
 	{
 		pthread_mutex_unlock(&philo->philos->general_lock);
 		if (philo->next_status == DEAD)
