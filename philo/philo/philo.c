@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/04 16:16:13 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 16:46:33 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	philo_create(t_philo *philo)
 {
 	int	i;
 	pthread_t monitor;
+	
 	i = 0;
 	if ( philo->eating_rounds == 0)
 		return;
@@ -43,6 +44,7 @@ void	philo_create(t_philo *philo)
 			free(philo->threads);
 			return ;
 		}
+
 		i++;
 	}
 	philo_init_after(philo);
@@ -110,3 +112,5 @@ int	main(int argc, char **argv)
 }
 
 // test when eating rounds is 0
+// when sleeping and eating time so long..
+// when thhread creating faild...
