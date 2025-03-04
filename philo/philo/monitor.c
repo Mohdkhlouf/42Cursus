@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/03 16:51:38 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 14:31:24 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,34 +51,8 @@ int	check_eating_rounds(t_philo *philos)
 	return (0);
 }
 
-int	check_death(t_philo *philos)
-{
-	int	i;
-
-	i = 0;
-	pthread_mutex_lock(&philos->general_lock);
-	while (i < philos->philos_number && !philos->one_death && !philos->all_eat)
-	{
-		if ((current_time()
-				- philos->threads[i].last_meal_time) > philos->time_to_die)
-		{
-			philos->one_death = true;
-			pthread_mutex_lock(&philos->print_lock);
-			printf("%ld %d %s\n", (current_time()
-					- philos->threads[i].start_time),
-				philos->threads[i].philo_num, "is dead");
-			pthread_mutex_unlock(&philos->print_lock);
-			break ;
-		}
-		i++;
-	}
-	pthread_mutex_unlock(&philos->general_lock);
-	return (0);
-}
-
 void	print_message(char *msg, t_thread *philo, int skip)
 {
-	// check_death(philo->philos);
 	check_eating_rounds(philo->philos);
 	pthread_mutex_lock(&philo->philos->general_lock);
 	if (!philo->philos->one_death || skip == 1)
@@ -110,4 +84,45 @@ void	exit_destroy(t_philo *philo)
 	pthread_mutex_destroy(&philo->print_lock);
 	i = 0;
 	free(philo->threads);
+}
+
+void	*monitor_checker(void *arg)
+{
+	t_philo *philos;
+	int i;
+	
+	i = 0;
+	philos = (t_philo *)arg;
+
+	while (!philos->one_death)
+	{
+
+		i = 0;
+		while (i < philos->philos_number)
+		{
+			pthread_mutex_lock(&philos->general_lock);
+			if (philos->one_death)
+			{
+				pthread_mutex_unlock(&philos->general_lock);
+				break;
+			}
+			if ((current_time()
+					- philos->threads[i].last_meal_time) > philos->time_to_die)
+			{
+				
+				philos->one_death = true;
+				// pthread_mutex_lock(&philos->print_lock);
+				printf("%ld %d %s\n", (current_time()
+						- philos->threads[i].start_time),
+					philos->threads[i].philo_num, "is dead");
+				// pthread_mutex_unlock(&philos->print_lock);
+				pthread_mutex_unlock(&philos->general_lock);
+				break ;
+			}
+			pthread_mutex_unlock(&philos->general_lock);
+			i++;
+		}
+		
+	}
+	return (NULL);
 }

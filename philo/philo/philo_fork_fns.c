@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/03 16:50:48 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 14:06:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,12 @@ int	take_left_fork(t_thread *philo)
 	return (0);
 }
 
-void	ft_usleep(uintmax_t usec,uintmax_t from_time, t_philo *philos )
+void	ft_usleep(uintmax_t usec,uintmax_t from_time)
 {
 	uintmax_t	start;
-
 	start = from_time;
 	while (current_time() - start < usec)
 	{
-		check_death(philos);
 		usleep(100);
 	}	
 }

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/03 13:30:08 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 14:27:53 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	philo_init(char **argv, t_philo *philo, int argc)
 {
 	philo->philos_number = ft_atoi(argv[1]);
-	philo->forks_number = ft_atoi(argv[1]);
 	philo->time_to_die = ft_atoi(argv[2]);
 	philo->time_to_eat = ft_atoi(argv[3]);
 	philo->time_to_sleep = ft_atoi(argv[4]);
@@ -99,11 +98,11 @@ int	ft_atoi(const char *str)
 	return (num * sign);
 }
 
-uint64_t	current_time(void)
+uintmax_t	current_time(void)
 {
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL))
 		return (1);
-	return ((tv.tv_sec * (uint64_t)1000) + (tv.tv_usec / 1000));
+	return ((tv.tv_sec * (uintmax_t)1000) + (tv.tv_usec / 1000));
 }
