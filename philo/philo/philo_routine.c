@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/04 14:08:33 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 15:27:00 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	philo_think(t_thread *philo)
 	print_message("is thinking", philo, 0);
 	if (philo->eating_conter == 0)
 		ft_usleep(philo->philos->time_to_eat / 2, time);
-	// pthread_mutex_lock(&philo->philos->general_lock);
+	pthread_mutex_lock(&philo->philos->general_lock);
 	if (philo->philos->one_death == true)
 		philo->next_status = DEAD;
 	else
 		philo->next_status = EATING;
-	// pthread_mutex_unlock(&philo->philos->general_lock);
+	pthread_mutex_unlock(&philo->philos->general_lock);
 }
 
 void	philo_sleep(t_thread *philo)
@@ -49,11 +49,13 @@ void	philo_eat(t_thread *philo)
 {
 	// if (philo->philos->philos_number == 1)
 	// 	return ;
-	if ((philo->philos->philos_number % 2 != 0) && philo->philos->time_to_die + philo->last_meal_time > current_time()
-		+ philo->philos->time_to_eat)
+	pthread_mutex_lock(&philo->philos->general_lock);
+	if ((philo->philos->philos_number % 2 != 0) && philo->philos->time_to_die
+		+ philo->last_meal_time > current_time() + philo->philos->time_to_eat)
 	{
 		usleep(200);
 	}
+	pthread_mutex_unlock(&philo->philos->general_lock);
 
 	dead_lock_avoid(philo);
 	print_message("is eating", philo, 0);
@@ -97,8 +99,10 @@ void	*philo_routine(void *arg)
 		ft_usleep(philo->philos->time_to_die, current_time());
 		return (NULL);
 	}
+	pthread_mutex_lock(&philo->philos->general_lock);
 	while (true && !philo->philos->all_eat && !philo->philos->one_death)
 	{
+		pthread_mutex_unlock(&philo->philos->general_lock);
 		if (philo->next_status == DEAD)
 			break ;
 		else if (philo->next_status == ENOUGH_ROUNDS)
@@ -109,11 +113,9 @@ void	*philo_routine(void *arg)
 			philo_eat(philo);
 		else if (philo->next_status == SLEEPING)
 			philo_sleep(philo);
-		else
-		{
-			printf("no stsuts\n");
-			break ;
-		}
+		pthread_mutex_lock(&philo->philos->general_lock);
 	}
+	pthread_mutex_unlock(&philo->philos->general_lock);
+
 	return (NULL);
 }

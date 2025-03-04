@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/04 14:31:24 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 15:31:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	*monitor_checker(void *arg)
 	i = 0;
 	philos = (t_philo *)arg;
 
-	while (!philos->one_death)
+	while (!philos->one_death && !philos->all_eat)
 	{
 
 		i = 0;
