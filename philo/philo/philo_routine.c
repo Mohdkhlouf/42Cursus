@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/04 15:27:00 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 15:49:50 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ void	philo_eat(t_thread *philo)
 	if ((philo->philos->philos_number % 2 != 0) && philo->philos->time_to_die
 		+ philo->last_meal_time > current_time() + philo->philos->time_to_eat)
 	{
+		pthread_mutex_unlock(&philo->philos->general_lock);
+
 		usleep(200);
+		pthread_mutex_lock(&philo->philos->general_lock);
 	}
 	pthread_mutex_unlock(&philo->philos->general_lock);
 
