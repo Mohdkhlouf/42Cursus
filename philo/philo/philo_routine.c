@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/03 16:48:29 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/04 10:45:22 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ void	philo_eat(t_thread *philo)
 {
 	// if (philo->philos->philos_number == 1)
 	// 	return ;
-	if (philo->philos->time_to_die + philo->last_meal_time > current_time()
+	if (philo->philos->philos_number % 2 != 0 && philo->philos->time_to_die + philo->last_meal_time > current_time()
 		+ philo->philos->time_to_eat)
 	{
-		usleep(50);
+		usleep(200);
 	}
 
 	dead_lock_avoid(philo);
