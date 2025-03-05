@@ -6,35 +6,20 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/04 16:46:33 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/05 13:55:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_init_after(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->philos_number)
-	{
-		pthread_mutex_lock(&philo->general_lock);
-		philo->threads[i].start_time = current_time();
-		philo->threads[i].last_meal_time = current_time();
-		pthread_mutex_unlock(&philo->general_lock);
-		i++;
-	}
-}
-
 void	philo_create(t_philo *philo)
 {
-	int	i;
-	pthread_t monitor;
-	
+	int			i;
+	pthread_t	monitor;
+
 	i = 0;
-	if ( philo->eating_rounds == 0)
-		return;
+	if (philo->eating_rounds == 0)
+		return ;
 	while (i < philo->philos_number)
 	{
 		if (pthread_create(&philo->threads[i].thread_id, NULL, philo_routine,
@@ -44,14 +29,22 @@ void	philo_create(t_philo *philo)
 			free(philo->threads);
 			return ;
 		}
-
+		philo->counter++;
 		i++;
 	}
 	philo_init_after(philo);
 	philo->all_started = 1;
+	pthread_create(&monitor, NULL, monitor_checker, (void *)philo);
+	pthread_join(monitor, NULL);
+}
 
-	pthread_create(&monitor, NULL, monitor_checker,	(void *)philo);
-	pthread_join(monitor,NULL);
+void	phiol_vat_init2(t_philo *philo, int i)
+{
+	philo->threads[i].philo_num = i + 1;
+	philo->threads[i].philos = philo;
+	philo->threads[i].start_time = 0;
+	philo->threads[i].last_meal_time = 0;
+	philo->threads[i].eating_conter = 0;
 }
 
 void	philo_var_init(t_philo *philo)
@@ -64,11 +57,7 @@ void	philo_var_init(t_philo *philo)
 	while (i < philo->philos_number)
 	{
 		pthread_mutex_init(&philo->threads[i].left_fork, NULL);
-		philo->threads[i].philo_num = i + 1;
-		philo->threads[i].philos = philo;
-		philo->threads[i].start_time = 0;
-		philo->threads[i].last_meal_time = 0;
-		philo->threads[i].eating_conter = 0;
+		phiol_vat_init2(philo, i);
 		if (i % 2 == 0)
 			philo->threads[i].next_status = EATING;
 		else

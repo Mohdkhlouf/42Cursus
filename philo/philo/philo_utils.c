@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/04 16:03:11 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/05 13:51:02 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	philo_init(char **argv, t_philo *philo, int argc)
 	philo->all_eat = false;
 	philo->all_eating_counter = 0;
 	philo->all_started = 0;
+	philo->counter = 0;
 }
 
 int	check_ints(char *str)

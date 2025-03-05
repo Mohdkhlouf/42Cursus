@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/05 13:07:51 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/05 13:40:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,22 @@ void	philo_eat(t_thread *philo)
 	pthread_mutex_unlock(&philo->philos->general_lock);
 }
 
-void	dead_lock_avoid(t_thread *philo)
+void	main_routine(t_thread *philo)
 {
-	if (philo->philo_num % 2 == 0)
+	while (true && !philo->philos->all_eat && !philo->philos->one_death)
 	{
-		take_left_fork(philo);
-		take_right_fork(philo);
-	}
-	else
-	{
-		take_right_fork(philo);
-		take_left_fork(philo);
+		pthread_mutex_unlock(&philo->philos->general_lock);
+		if (philo->next_status == DEAD)
+			break ;
+		else if (philo->next_status == ENOUGH_ROUNDS)
+			break ;
+		else if (philo->next_status == THINKING)
+			philo_think(philo);
+		else if (philo->next_status == EATING)
+			philo_eat(philo);
+		else if (philo->next_status == SLEEPING)
+			philo_sleep(philo);
+		pthread_mutex_lock(&philo->philos->general_lock);
 	}
 }
 
@@ -97,21 +102,7 @@ void	*philo_routine(void *arg)
 		return (NULL);
 	}
 	pthread_mutex_lock(&philo->philos->general_lock);
-	while (true && !philo->philos->all_eat && !philo->philos->one_death)
-	{
-		pthread_mutex_unlock(&philo->philos->general_lock);
-		if (philo->next_status == DEAD)
-			break ;
-		else if (philo->next_status == ENOUGH_ROUNDS)
-			break ;
-		else if (philo->next_status == THINKING)
-			philo_think(philo);
-		else if (philo->next_status == EATING)
-			philo_eat(philo);
-		else if (philo->next_status == SLEEPING)
-			philo_sleep(philo);
-		pthread_mutex_lock(&philo->philos->general_lock);
-	}
+	main_routine(philo);
 	pthread_mutex_unlock(&philo->philos->general_lock);
 	return (NULL);
 }

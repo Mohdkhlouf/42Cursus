@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/05 13:16:20 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/05 13:55:24 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,54 +51,16 @@ int	check_eating_rounds(t_philo *philos)
 	return (0);
 }
 
-void	print_message(char *msg, t_thread *philo, int skip)
-{
-	// check_eating_rounds(philo->philos);
-	pthread_mutex_lock(&philo->philos->general_lock);
-	if (!philo->philos->one_death || skip == 1)
-	{
-		pthread_mutex_lock(&philo->philos->print_lock);
-		printf("%ld %d %s\n", (current_time() - philo->start_time),
-			philo->philo_num, msg);
-		pthread_mutex_unlock(&philo->philos->print_lock);
-	}
-	pthread_mutex_unlock(&philo->philos->general_lock);
-}
 
-void	exit_destroy(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->philos_number)
-	{
-		pthread_join(philo->threads[i].thread_id, NULL);
-		i++;
-	}
-	i = 0;
-	while (i < philo->philos_number)
-	{
-		pthread_mutex_destroy(&philo->threads[i].left_fork);
-		i++;
-	}
-	pthread_mutex_destroy(&philo->print_lock);
-	i = 0;
-	free(philo->threads);
-}
 
 void	death_checker(t_philo *philos)
 {
 	int	i;
 
 	i = 0;
-	while (i < philos->philos_number)
+	while (i < philos->philos_number && !philos->one_death)
 	{
 		pthread_mutex_lock(&philos->general_lock);
-		if (philos->one_death)
-		{
-			pthread_mutex_unlock(&philos->general_lock);
-			break ;
-		}
 		if ((current_time()
 				- philos->threads[i].last_meal_time) > philos->time_to_die)
 		{
@@ -115,6 +77,7 @@ void	death_checker(t_philo *philos)
 		i++;
 	}
 }
+
 void	*monitor_checker(void *arg)
 {
 	t_philo	*philos;
@@ -127,5 +90,4 @@ void	*monitor_checker(void *arg)
 		usleep(5000);
 	}
 	return (NULL);
-	
 }
