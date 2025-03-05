@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/05 13:55:24 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/05 14:14:10 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,18 @@ int	check_eating_rounds(t_philo *philos)
 		if ((philos->threads[i].eating_conter >= philos->eating_rounds)
 			&& !philos->all_eat)
 		{
-			// pthread_mutex_lock(&philos->general_lock);
 			philos->all_eating_counter++;
 			if (philos->all_eating_counter == philos->philos_number)
 			{
 				philos->all_eat = true;
 				set_all_eat(philos);
 			}
-			// pthread_mutex_unlock(&philos->general_lock);
 		}
 		i++;
 	}
 	pthread_mutex_unlock(&philos->general_lock);
 	return (0);
 }
-
-
 
 void	death_checker(t_philo *philos)
 {
@@ -65,11 +61,9 @@ void	death_checker(t_philo *philos)
 				- philos->threads[i].last_meal_time) > philos->time_to_die)
 		{
 			philos->one_death = true;
-			// pthread_mutex_lock(&philos->print_lock);
 			printf("%ld %d %s\n", (current_time()
 					- philos->threads[i].start_time),
 				philos->threads[i].philo_num, "is dead");
-			// pthread_mutex_unlock(&philos->print_lock);
 			pthread_mutex_unlock(&philos->general_lock);
 			break ;
 		}

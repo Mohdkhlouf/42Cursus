@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/05 13:40:04 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/05 14:12:15 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	*philo_routine(void *arg)
 		take_left_fork(philo);
 		usleep(philo->philos->time_to_die * 1000);
 		ft_usleep(philo->philos->time_to_die, current_time(), philo->philos);
+		drop_left_fork(philo);
 		return (NULL);
 	}
 	pthread_mutex_lock(&philo->philos->general_lock);

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/05 13:50:35 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/05 14:43:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef struct s_philo
 	atomic_int			eating_rounds;
 	atomic_int			all_eating_counter;
 	atomic_int			all_started;
-	_Atomic bool 		one_death;
-	_Atomic bool 		all_eat;
+	_Atomic bool		one_death;
+	_Atomic bool		all_eat;
 	pthread_mutex_t		print_lock;
 	pthread_mutex_t		general_lock;
 	t_thread			*threads;

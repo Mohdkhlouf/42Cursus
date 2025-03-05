@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/05 13:55:04 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/05 14:27:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ void	philo_var_init(t_philo *philo)
 		i++;
 	}
 	if (philo->philos_number == 1)
-	{
-		pthread_mutex_init(philo->threads[0].right_fork, NULL);
-		// philo->threads[0].right_fork = NULL;
-	}
+		philo->threads[0].right_fork = NULL;
 }
 
 void	create_philos(t_philo *philo)
@@ -90,16 +87,8 @@ int	main(int argc, char **argv)
 	t_philo	philo;
 
 	if (check_arguments(argc, argv, &philo))
-	{
 		create_philos(&philo);
-	}
 	else
-	{
 		printf("Error, check your arguments");
-	}
 	return (0);
 }
-
-// test when eating rounds is 0
-// when sleeping and eating time so long..
-// when thhread creating faild...
