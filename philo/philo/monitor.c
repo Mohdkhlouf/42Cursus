@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/06 12:01:33 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/06 12:12:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	death_checker(t_philo *philos)
 	int	i;
 
 	i = 0;
-	while (i < philos->philos_number && !philos->one_death)
+	while (i < philos->philos_number)
 	{
-		if (philos->threads[i].next_status = ENOUGH_ROUNDS)
+		if (philos->threads[i].next_status == ENOUGH_ROUNDS)
 			return (-1);
 		pthread_mutex_lock(&philos->general_lock);
 		if ((current_time()
@@ -30,7 +30,7 @@ int	death_checker(t_philo *philos)
 					- philos->threads[i].start_time),
 				philos->threads[i].philo_num, "is dead");
 			pthread_mutex_unlock(&philos->general_lock);
-			return (1);
+			break;
 		}
 		pthread_mutex_unlock(&philos->general_lock);
 		i++;
