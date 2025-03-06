@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/05 14:12:15 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/06 11:49:08 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ void	philo_sleep(t_thread *philo)
 
 	time = current_time();
 	print_message("is sleeping", philo, 0);
+	ft_usleep(philo->philos->time_to_sleep, time, philo->philos);
 	if (philo->philos->one_death == true)
 		philo->next_status = DEAD;
-	else if (philo->philos->all_eat)
-		philo->next_status = ENOUGH_ROUNDS;
+	else if(philo->eating_conter == philo->philos->eating_rounds)
+			philo->next_status = ENOUGH_ROUNDS;
 	else
 		philo->next_status = THINKING;
-	ft_usleep(philo->philos->time_to_sleep, time, philo->philos);
 }
 
 void	philo_eat(t_thread *philo)
@@ -70,7 +70,7 @@ void	philo_eat(t_thread *philo)
 
 void	main_routine(t_thread *philo)
 {
-	while (true && !philo->philos->all_eat && !philo->philos->one_death)
+	while (true && !philo->philos->one_death)
 	{
 		pthread_mutex_unlock(&philo->philos->general_lock);
 		if (philo->next_status == DEAD)
