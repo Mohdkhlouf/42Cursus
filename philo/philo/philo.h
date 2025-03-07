@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/07 16:00:55 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/07 16:54:08 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <sys/time.h>
 # include <time.h>
 # include <unistd.h>
-
 
 # define SUCCESS 1
 # define FAILURE 0
@@ -62,8 +61,8 @@ typedef struct s_philo
 	atomic_int			eating_rounds;
 	atomic_int			all_eating_counter;
 	atomic_int			all_started;
-	_Atomic bool		one_death;
-	_Atomic bool		all_eat;
+	_Atomic bool one_death;
+	_Atomic bool all_eat;
 	pthread_mutex_t		print_lock;
 	pthread_mutex_t		general_lock;
 	t_thread			*threads;
@@ -78,7 +77,7 @@ int						check_arguments(int argc, char **argv, t_philo *philo);
 uintmax_t				current_time(void);
 void					print_message(char *msg, t_thread *philo, int skip);
 void					*philo_routine(void *arg);
-int					philo_create(t_philo *philo);
+int						philo_create(t_philo *philo);
 int						philo_var_init(t_philo *philo);
 int						create_philos(t_philo *philo);
 void					drop_left_fork(t_thread *philo);
@@ -88,12 +87,12 @@ int						take_left_fork(t_thread *philo);
 void					philo_think(t_thread *philo);
 void					philo_sleep(t_thread *philo);
 void					philo_eat(t_thread *philo);
-void					dead_lock_avoid(t_thread *philo);
+int						dead_lock_avoid(t_thread *philo);
 void					exit_destroy(t_philo *philo);
 void					ft_usleep(uintmax_t usec, uintmax_t from_time,
 							t_philo *philos);
 void					*monitor_checker(void *arg);
 void					philo_init_after(t_philo *philo);
-void cleanup_mutexes(t_philo *philo,int i);
+void					cleanup_mutexes(t_philo *philo, int i);
 
 #endif

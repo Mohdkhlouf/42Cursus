@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/07 16:18:39 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/07 16:43:34 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	philo_create(t_philo *philo)
 	pthread_t	monitor;
 
 	i = 0;
-	// if (philo->eating_rounds == 0)
-	// 	return ;
 	while (i < philo->philos_number)
 	{
 		if (pthread_create(&philo->threads[i].thread_id, NULL, philo_routine,
@@ -86,7 +84,6 @@ int	create_philos(t_philo *philo)
 		return (FAILURE);
 	if (!philo_var_init(philo))
 		return (FAILURE);
-
 	if (!philo_create(philo))
 		return (exit_destroy(philo), FAILURE);
 	exit_destroy(philo);

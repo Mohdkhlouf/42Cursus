@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/07 16:15:34 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/07 16:51:37 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	*philo_routine(void *arg)
 		usleep(20);
 	if (philo->philos->philos_number == 1)
 	{
-		take_left_fork(philo);
+		if (take_left_fork(philo))
+			return (NULL);
 		usleep(philo->philos->time_to_die * 1000);
 		ft_usleep(philo->philos->time_to_die, current_time(), philo->philos);
 		drop_left_fork(philo);
