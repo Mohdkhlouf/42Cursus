@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/06 11:49:08 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/07 14:44:44 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	philo_think(t_thread *philo)
 
 	time = current_time();
 	print_message("is thinking", philo, 0);
-	if (philo->eating_conter == 0)
+	if (philo->philos->philos_number % 2 == 0 && philo->eating_conter == 0)
 		ft_usleep(philo->philos->time_to_eat / 2, time, philo->philos);
 	pthread_mutex_lock(&philo->philos->general_lock);
 	if (philo->philos->one_death == true)
@@ -37,23 +37,27 @@ void	philo_sleep(t_thread *philo)
 	ft_usleep(philo->philos->time_to_sleep, time, philo->philos);
 	if (philo->philos->one_death == true)
 		philo->next_status = DEAD;
-	else if(philo->eating_conter == philo->philos->eating_rounds)
-			philo->next_status = ENOUGH_ROUNDS;
+	else if (philo->eating_conter == philo->philos->eating_rounds)
+		philo->next_status = ENOUGH_ROUNDS;
 	else
 		philo->next_status = THINKING;
 }
 
 void	philo_eat(t_thread *philo)
 {
+	uintmax_t elapsed_time;
+	
 	pthread_mutex_lock(&philo->philos->general_lock);
-	if (philo->philos->time_to_die + philo->last_meal_time > current_time()
-		+ philo->philos->time_to_eat)
+	elapsed_time = current_time() - philo->last_meal_time;
+	if (philo->philos->philos_number % 2 != 0 && philo->philo_num % 2 != 0
+		&& philo->philos->time_to_die
+		- elapsed_time > philo->philos->time_to_eat)
 	{
 		pthread_mutex_unlock(&philo->philos->general_lock);
-		usleep(200);
-		pthread_mutex_lock(&philo->philos->general_lock);
+		usleep(philo->philos->time_to_eat / 2 * 1000);
 	}
-	pthread_mutex_unlock(&philo->philos->general_lock);
+	else
+		pthread_mutex_unlock(&philo->philos->general_lock);
 	dead_lock_avoid(philo);
 	print_message("is eating", philo, 0);
 	pthread_mutex_lock(&philo->philos->general_lock);
