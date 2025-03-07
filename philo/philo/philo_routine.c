@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/07 14:44:44 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/07 15:08:06 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,16 @@ void	philo_eat(t_thread *philo)
 
 void	main_routine(t_thread *philo)
 {
-	while (true && !philo->philos->one_death)
+	while (true)
 	{
-		pthread_mutex_unlock(&philo->philos->general_lock);
+		pthread_mutex_lock(&philo->philos->general_lock);
+		if (philo->philos->one_death)
+			{
+				pthread_mutex_unlock(&philo->philos->general_lock);
+				break;
+			}
+		else
+			pthread_mutex_unlock(&philo->philos->general_lock);
 		if (philo->next_status == DEAD)
 			break ;
 		else if (philo->next_status == ENOUGH_ROUNDS)
@@ -87,8 +94,8 @@ void	main_routine(t_thread *philo)
 			philo_eat(philo);
 		else if (philo->next_status == SLEEPING)
 			philo_sleep(philo);
-		pthread_mutex_lock(&philo->philos->general_lock);
 	}
+
 }
 
 void	*philo_routine(void *arg)
@@ -106,8 +113,6 @@ void	*philo_routine(void *arg)
 		drop_left_fork(philo);
 		return (NULL);
 	}
-	pthread_mutex_lock(&philo->philos->general_lock);
 	main_routine(philo);
-	pthread_mutex_unlock(&philo->philos->general_lock);
 	return (NULL);
 }
