@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:38:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/07 16:55:00 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/07 16:57:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,20 @@ int	dead_lock_avoid(t_thread *philo)
 		if (!take_left_fork(philo))
 			return (FAILURE);
 		if (take_right_fork(philo))
+		{
+			drop_left_fork(philo);
 			return (FAILURE);
+		}
 	}
 	else
 	{
 		if (take_right_fork(philo))
 			return (FAILURE);
 		if (!take_left_fork(philo))
+		{
+			drop_right_fork(philo);
 			return (FAILURE);
+		}
 	}
 	return (SUCCESS);
 }
@@ -80,7 +86,7 @@ void	exit_destroy(t_philo *philo)
 	free(philo->threads);
 }
 
-void cleanup_mutexes(t_philo *philo,int i)
+void	cleanup_mutexes(t_philo *philo, int i)
 {
 	while (--i >= 0)
 		pthread_mutex_destroy(&philo->threads[i].left_fork);
