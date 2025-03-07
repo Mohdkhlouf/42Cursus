@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:38:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/05 14:12:21 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/07 15:57:06 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,12 @@ void	exit_destroy(t_philo *philo)
 	pthread_mutex_destroy(&philo->print_lock);
 	pthread_mutex_destroy(&philo->general_lock);
 	free(philo->threads);
+}
+
+void cleanup_mutexes(t_philo *philo,int i)
+{
+	while (--i >= 0)
+		pthread_mutex_destroy(&philo->threads[i].left_fork);
+	pthread_mutex_destroy(&philo->print_lock);
+	pthread_mutex_destroy(&philo->general_lock);
 }

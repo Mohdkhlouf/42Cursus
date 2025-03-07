@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 11:04:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/05 13:51:02 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/07 16:09:27 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	philo_init(char **argv, t_philo *philo, int argc)
 	philo->time_to_sleep = ft_atoi(argv[4]);
 	philo->eating_rounds = 0;
 	if (argc == 6)
-		philo->eating_rounds = ft_atoi(argv[5]);
+		philo->eating_rounds = ft_atoi(argv[5]);	
 	else if (argc == 5)
 		philo->eating_rounds = 10000;
 	philo->one_death = false;

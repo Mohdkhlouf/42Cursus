@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/07 15:08:06 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/07 16:15:34 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	philo_sleep(t_thread *philo)
 
 void	philo_eat(t_thread *philo)
 {
-	uintmax_t elapsed_time;
-	
+	uintmax_t	elapsed_time;
+
 	pthread_mutex_lock(&philo->philos->general_lock);
 	elapsed_time = current_time() - philo->last_meal_time;
 	if (philo->philos->philos_number % 2 != 0 && philo->philo_num % 2 != 0
@@ -78,10 +78,10 @@ void	main_routine(t_thread *philo)
 	{
 		pthread_mutex_lock(&philo->philos->general_lock);
 		if (philo->philos->one_death)
-			{
-				pthread_mutex_unlock(&philo->philos->general_lock);
-				break;
-			}
+		{
+			pthread_mutex_unlock(&philo->philos->general_lock);
+			break ;
+		}
 		else
 			pthread_mutex_unlock(&philo->philos->general_lock);
 		if (philo->next_status == DEAD)
@@ -95,7 +95,6 @@ void	main_routine(t_thread *philo)
 		else if (philo->next_status == SLEEPING)
 			philo_sleep(philo);
 	}
-
 }
 
 void	*philo_routine(void *arg)

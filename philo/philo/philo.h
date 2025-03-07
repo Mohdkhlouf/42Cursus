@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/05 14:43:04 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/07 16:00:55 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include <sys/time.h>
 # include <time.h>
 # include <unistd.h>
+
+
+# define SUCCESS 1
+# define FAILURE 0
 
 typedef struct s_philo	t_philo;
 
@@ -74,9 +78,9 @@ int						check_arguments(int argc, char **argv, t_philo *philo);
 uintmax_t				current_time(void);
 void					print_message(char *msg, t_thread *philo, int skip);
 void					*philo_routine(void *arg);
-void					philo_create(t_philo *philo);
-void					philo_var_init(t_philo *philo);
-void					create_philos(t_philo *philo);
+int					philo_create(t_philo *philo);
+int						philo_var_init(t_philo *philo);
+int						create_philos(t_philo *philo);
 void					drop_left_fork(t_thread *philo);
 void					drop_right_fork(t_thread *philo);
 int						take_right_fork(t_thread *philo);
@@ -90,5 +94,6 @@ void					ft_usleep(uintmax_t usec, uintmax_t from_time,
 							t_philo *philos);
 void					*monitor_checker(void *arg);
 void					philo_init_after(t_philo *philo);
+void cleanup_mutexes(t_philo *philo,int i);
 
 #endif
