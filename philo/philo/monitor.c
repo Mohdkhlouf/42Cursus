@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/08 16:28:53 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:11:52 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ int	death_checker(t_philo *philos)
 	i = 0;
 	while (i < philos->philos_number)
 	{
-		if (philos->threads[i].next_status == ENOUGH_ROUNDS)
-			return (-1);
 		pthread_mutex_lock(&philos->general_lock);
+		if (philos->threads[i].next_status == ENOUGH_ROUNDS)
+		{
+			pthread_mutex_unlock(&philos->general_lock);
+			return (-1);
+		}
 		if ((current_time()
 				- philos->threads[i].last_meal_time) > philos->time_to_die)
 		{

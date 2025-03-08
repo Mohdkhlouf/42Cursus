@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/08 16:28:16 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:17:13 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,22 @@ void	ft_usleep(uintmax_t usec, uintmax_t from_time, t_philo *philos)
 	uintmax_t	start;
 
 	start = from_time;
-	while ((current_time() - start) < usec)
+	// while (current_time() - start < usec && (current_time()
+	// 		- start < philos->time_to_die))
+	while (true)
 	{
 		pthread_mutex_lock(&philos->general_lock);
-		if (philos->one_death)  // Stop sleeping if a philosopher has died
+		if(current_time() - start < usec && !philos->one_death)
+		{
+			pthread_mutex_unlock(&philos->general_lock);
+			usleep(100);
+		}
+		else
 		{
 			pthread_mutex_unlock(&philos->general_lock);
 			break;
+			
 		}
-		pthread_mutex_unlock(&philos->general_lock);
-
-		usleep(2000);  // Sleep for 2ms instead of 100µs to reduce CPU usage
+				
 	}
 }
-// void	ft_usleep(uintmax_t usec, uintmax_t from_time, t_philo *philos)
-// {
-// 	uintmax_t	start;
-
-// 	start = from_time;
-// 	// while (current_time() - start < usec && (current_time()
-// 	// 		- start < philos->time_to_die))
-// 	while (true)
-// 	{
-// 		pthread_mutex_lock(&philos->general_lock);
-// 		if(current_time() - start < usec && !philos->one_death)
-// 		{
-// 			pthread_mutex_unlock(&philos->general_lock);
-// 			usleep(100);
-// 			break;
-// 		}
-// 		else
-// 			pthread_mutex_unlock(&philos->general_lock);	
-// 	}
-// }

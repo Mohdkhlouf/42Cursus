@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/08 16:57:59 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:13:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_philo
 	uintmax_t			time_to_sleep;
 	int					eating_rounds;
 	int					all_eating_counter;
-	int					all_started;
+	atomic_int 			all_started;
 	bool				one_death;
 	bool				all_eat;
 	pthread_mutex_t		print_lock;

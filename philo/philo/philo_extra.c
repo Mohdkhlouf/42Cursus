@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:38:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/08 16:53:08 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:14:40 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ void	philo_init_after(t_philo *philo)
 
 int	dead_lock_avoid(t_thread *philo)
 {
-	// if (philo->philo_num % 2 == 0)
-	// {
+	if (philo->philo_num % 2 == 0)
+	{
 		take_left_fork(philo);
 		take_right_fork(philo);
-	// }
-	// else
-	// {
-	// 	take_right_fork(philo);
-	// 	take_left_fork(philo);
-	// }
+	}
+	else
+	{
+		take_right_fork(philo);
+		take_left_fork(philo);
+	}
 	return (SUCCESS);
 }
 

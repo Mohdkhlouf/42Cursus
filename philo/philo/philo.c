@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/08 02:55:50 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:12:36 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	philo_create(t_philo *philo)
 		i++;
 	}
 	philo_init_after(philo);
+	
 	philo->all_started = 1;
 	if (pthread_create(&monitor, NULL, monitor_checker, (void *)philo) != 0)
 		return (FAILURE);
