@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/07 16:54:08 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/08 02:41:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int						philo_var_init(t_philo *philo);
 int						create_philos(t_philo *philo);
 void					drop_left_fork(t_thread *philo);
 void					drop_right_fork(t_thread *philo);
-int						take_right_fork(t_thread *philo);
-int						take_left_fork(t_thread *philo);
+void					take_right_fork(t_thread *philo);
+void					take_left_fork(t_thread *philo);
 void					philo_think(t_thread *philo);
 void					philo_sleep(t_thread *philo);
 void					philo_eat(t_thread *philo);

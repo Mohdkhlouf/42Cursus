@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/07 16:46:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/08 02:40:16 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,16 @@ void	drop_right_fork(t_thread *philo)
 	pthread_mutex_unlock(philo->right_fork);
 }
 
-int	take_right_fork(t_thread *philo)
+void	take_right_fork(t_thread *philo)
 {
-	if (pthread_mutex_lock(philo->right_fork) == -1)
-		return (FAILURE);
+	pthread_mutex_lock(philo->right_fork);
 	print_message("has taken a fork", philo, 0);
-	return (0);
 }
 
-int	take_left_fork(t_thread *philo)
+void	take_left_fork(t_thread *philo)
 {
-	if (pthread_mutex_lock(&philo->left_fork) == -1)
-		return (FAILURE);
+	pthread_mutex_lock(&philo->left_fork);
 	print_message("has taken a fork", philo, 0);
-	return (0);
 }
 
 void	ft_usleep(uintmax_t usec, uintmax_t from_time, t_philo *philos)
