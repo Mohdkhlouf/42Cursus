@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/08 02:41:18 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/08 16:57:59 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ typedef struct s_thread
 	pthread_mutex_t		left_fork;
 	pthread_mutex_t		*right_fork;
 	uintmax_t			last_meal_time;
-	atomic_int			next_status;
-	atomic_int			eating_conter;
+	int					next_status;
+	int					eating_conter;
 	t_philo				*philos;
 }						t_thread;
 
@@ -58,11 +58,11 @@ typedef struct s_philo
 	uintmax_t			time_to_die;
 	uintmax_t			time_to_eat;
 	uintmax_t			time_to_sleep;
-	atomic_int			eating_rounds;
-	atomic_int			all_eating_counter;
-	atomic_int			all_started;
-	_Atomic bool one_death;
-	_Atomic bool all_eat;
+	int					eating_rounds;
+	int					all_eating_counter;
+	int					all_started;
+	bool				one_death;
+	bool				all_eat;
 	pthread_mutex_t		print_lock;
 	pthread_mutex_t		general_lock;
 	t_thread			*threads;
