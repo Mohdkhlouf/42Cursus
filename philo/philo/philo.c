@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/07 16:43:34 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/08 02:55:50 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ void	philo_vat_init2(t_philo *philo, int i)
 	philo->threads[i].start_time = 0;
 	philo->threads[i].last_meal_time = 0;
 	philo->threads[i].eating_conter = 0;
-	if (i % 2 == 0)
-		philo->threads[i].next_status = EATING;
-	else
-		philo->threads[i].next_status = THINKING;
+	// if (i % 2 == 0)
+	// 	philo->threads[i].next_status = EATING;
+	// else
+	philo->threads[i].next_status = THINKING;
 }
 
 int	philo_var_init(t_philo *philo)
