@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/08 17:00:47 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:46:37 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	*philo_routine(void *arg)
 
 	philo = (t_thread *)arg;
 	while (philo->philos->all_started == 0)
-		usleep(20);
+		usleep(50);
 	if (philo->philos->philos_number == 1)
 	{
 		take_left_fork(philo);

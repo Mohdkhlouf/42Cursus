@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/09 00:17:13 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 00:59:26 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_usleep(uintmax_t usec, uintmax_t from_time, t_philo *philos)
 		if(current_time() - start < usec && !philos->one_death)
 		{
 			pthread_mutex_unlock(&philos->general_lock);
-			usleep(100);
+			usleep(usec); // check for better timing
 		}
 		else
 		{
