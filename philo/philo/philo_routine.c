@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/09 22:14:18 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 22:18:00 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,6 @@
 void	philo_think(t_thread *philo)
 {
 	print_message("is thinking", philo, 0);
-	if (philo->eating_conter == 0 && philo->philo_num % 2 != 0
-		&& philo->philos->philos_number % 2 == 0)
-	{
-		ft_usleep(philo->philos->time_to_eat / 2, current_time(),
-			philo->philos);
-	}
 	pthread_mutex_lock(&philo->philos->general_lock);
 	philo->next_status = EATING;
 	pthread_mutex_unlock(&philo->philos->general_lock);
@@ -117,6 +111,8 @@ void	*philo_routine(void *arg)
 		drop_left_fork(philo);
 		return (NULL);
 	}
+	if (philo->philo_num % 2 ==0)
+		usleep(philo->philos->time_to_eat * 1000);
 	main_routine(philo);
 	return (NULL);
 }
