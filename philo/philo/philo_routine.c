@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/09 00:46:37 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 14:11:41 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,26 @@
 
 void	philo_think(t_thread *philo)
 {
-	uintmax_t	time;
-
-	time = current_time();
-	
-	pthread_mutex_lock(&philo->philos->general_lock);
-	if (philo->philos->one_death == true)
-	{
-		philo->next_status = DEAD;
-		pthread_mutex_unlock(&philo->philos->general_lock);
-	}
-	else
-	{
-		pthread_mutex_unlock(&philo->philos->general_lock);
 		print_message("is thinking", philo, 0);
+
 		if (philo->eating_conter == 0 && philo->philo_num % 2 != 0
 			&& philo->philos->philos_number % 2 == 0)
 		{
-			ft_usleep(philo->philos->time_to_eat, time, philo->philos);
+			ft_usleep(philo->philos->time_to_eat / 2, current_time(), philo->philos);
 		}
 		pthread_mutex_lock(&philo->philos->general_lock);
 		philo->next_status = EATING;
 		pthread_mutex_unlock(&philo->philos->general_lock);
 	}
-}
+// }
 
 void	philo_sleep(t_thread *philo)
 {
-	uintmax_t	time;
+	// uintmax_t	time;
 
-	time = current_time();
+	// time = current_time();
+	print_message("is sleeping", philo, 0);
+	usleep(philo->philos->time_to_sleep * 1000);
 	pthread_mutex_lock(&philo->philos->general_lock);
 	if (philo->philos->one_death == true)
 		philo->next_status = DEAD;
@@ -52,15 +42,15 @@ void	philo_sleep(t_thread *philo)
 	else
 		philo->next_status = THINKING;
 	pthread_mutex_unlock(&philo->philos->general_lock);
-	print_message("is sleeping", philo, 0);
-	ft_usleep(philo->philos->time_to_sleep, time, philo->philos);
+
+	// ft_usleep(philo->philos->time_to_sleep, time, philo->philos);
 }
 
 void	philo_eat(t_thread *philo)
 {
 	uintmax_t	elapsed_time;
 
-	// uintmax_t	time;
+	uintmax_t	time;
 	pthread_mutex_lock(&philo->philos->general_lock);
 	elapsed_time = current_time() - philo->last_meal_time;
 	if (philo->philos->philos_number % 2 != 0 && philo->philo_num % 2 != 0
@@ -73,12 +63,12 @@ void	philo_eat(t_thread *philo)
 	else
 		pthread_mutex_unlock(&philo->philos->general_lock);
 	dead_lock_avoid(philo);
-	pthread_mutex_lock(&philo->philos->general_lock);
-	philo->last_meal_time = current_time();
-	// time = current_time();
-	pthread_mutex_unlock(&philo->philos->general_lock);
+	time = current_time();
 	print_message("is eating", philo, 0);
-	ft_usleep(philo->philos->time_to_eat, current_time(), philo->philos);
+	pthread_mutex_lock(&philo->philos->general_lock);
+	philo->last_meal_time = time;
+	pthread_mutex_unlock(&philo->philos->general_lock);
+	ft_usleep(philo->philos->time_to_eat, time, philo->philos);
 	// usleep(philo->philos->time_to_eat * 1000);
 	philo->eating_conter++;
 	drop_left_fork(philo);

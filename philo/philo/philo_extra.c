@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:38:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/09 01:00:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 13:53:50 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	philo_init_after(t_philo *philo)
 	while (i < philo->philos_number)
 	{
 		pthread_mutex_lock(&philo->general_lock);
-		philo->threads[i].start_time = current_time();
 		philo->threads[i].last_meal_time = current_time();
 		pthread_mutex_unlock(&philo->general_lock);
 		i++;
@@ -51,7 +50,7 @@ void	print_message(char *msg, t_thread *philo, int skip)
 	{
 		pthread_mutex_lock(&philo->philos->print_lock);
 		time =  current_time();
-		printf("%ld %d %s\n", (time - philo->start_time),
+		printf("%ld %d %s\n", (time - philo->philos->start_time),
 			philo->philo_num, msg);
 		pthread_mutex_unlock(&philo->philos->print_lock);
 	}

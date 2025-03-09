@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/09 00:12:36 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/09 13:58:48 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	philo_create(t_philo *philo)
 	pthread_t	monitor;
 
 	i = 0;
+	philo->start_time = current_time();
 	while (i < philo->philos_number)
 	{
 		if (pthread_create(&philo->threads[i].thread_id, NULL, philo_routine,
@@ -29,8 +30,9 @@ int	philo_create(t_philo *philo)
 		i++;
 	}
 	philo_init_after(philo);
-	
+
 	philo->all_started = 1;
+	
 	if (pthread_create(&monitor, NULL, monitor_checker, (void *)philo) != 0)
 		return (FAILURE);
 	pthread_join(monitor, NULL);
@@ -41,7 +43,7 @@ void	philo_vat_init2(t_philo *philo, int i)
 {
 	philo->threads[i].philo_num = i + 1;
 	philo->threads[i].philos = philo;
-	philo->threads[i].start_time = 0;
+	philo->start_time = 0;
 	philo->threads[i].last_meal_time = 0;
 	philo->threads[i].eating_conter = 0;
 	// if (i % 2 == 0)
