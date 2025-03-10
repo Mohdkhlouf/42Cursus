@@ -6,13 +6,13 @@
 #    By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 10:36:17 by mkhlouf           #+#    #+#              #
-#    Updated: 2025/03/05 13:42:14 by mkhlouf          ###   ########.fr        #
+#    Updated: 2025/03/10 12:49:39 by mkhlouf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler and flags
 CC      = gcc
-CFLAGS  = -g -Wall -Wextra -Werror -lpthread
+CFLAGS  = -Wall -Wextra -Werror -lpthread
 RM      = rm -f
 AR      = ar rcs
 

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/09 13:10:53 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/10 12:39:23 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_philo
 	uintmax_t			start_time;
 	int					eating_rounds;
 	int					all_eating_counter;
-	atomic_int 			all_started;
+	atomic_int			all_started;
 	bool				one_death;
 	bool				all_eat;
 	pthread_mutex_t		print_lock;
@@ -87,12 +87,13 @@ void					take_left_fork(t_thread *philo);
 void					philo_think(t_thread *philo);
 void					philo_sleep(t_thread *philo);
 void					philo_eat(t_thread *philo);
-int						dead_lock_avoid(t_thread *philo);
+void					dead_lock_avoid(t_thread *philo);
 void					exit_destroy(t_philo *philo);
 void					ft_usleep(uintmax_t usec, uintmax_t from_time,
 							t_philo *philos);
 void					*monitor_checker(void *arg);
 void					philo_init_after(t_philo *philo);
 void					cleanup_mutexes(t_philo *philo, int i);
+void					odd_function(t_thread *philo);
 
 #endif

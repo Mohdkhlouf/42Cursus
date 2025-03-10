@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 13:38:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/09 13:53:50 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/10 12:48:12 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	philo_init_after(t_philo *philo)
 	}
 }
 
-int	dead_lock_avoid(t_thread *philo)
+void	dead_lock_avoid(t_thread *philo)
 {
 	if (philo->philo_num % 2 == 0)
 	{
@@ -38,18 +38,17 @@ int	dead_lock_avoid(t_thread *philo)
 		take_right_fork(philo);
 		take_left_fork(philo);
 	}
-	return (SUCCESS);
 }
 
 void	print_message(char *msg, t_thread *philo, int skip)
 {
-	uintmax_t time;
-	
+	uintmax_t	time;
+
 	pthread_mutex_lock(&philo->philos->general_lock);
 	if (!philo->philos->one_death || skip == 1)
 	{
 		pthread_mutex_lock(&philo->philos->print_lock);
-		time =  current_time();
+		time = current_time();
 		printf("%ld %d %s\n", (time - philo->philos->start_time),
 			philo->philo_num, msg);
 		pthread_mutex_unlock(&philo->philos->print_lock);

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/09 13:58:48 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/10 12:48:32 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int	philo_create(t_philo *philo)
 		i++;
 	}
 	philo_init_after(philo);
-
 	philo->all_started = 1;
-	
 	if (pthread_create(&monitor, NULL, monitor_checker, (void *)philo) != 0)
 		return (FAILURE);
 	pthread_join(monitor, NULL);
@@ -46,9 +44,6 @@ void	philo_vat_init2(t_philo *philo, int i)
 	philo->start_time = 0;
 	philo->threads[i].last_meal_time = 0;
 	philo->threads[i].eating_conter = 0;
-	// if (i % 2 == 0)
-	// 	philo->threads[i].next_status = EATING;
-	// else
 	philo->threads[i].next_status = THINKING;
 }
 
@@ -64,10 +59,7 @@ int	philo_var_init(t_philo *philo)
 	while (i < philo->philos_number)
 	{
 		if (pthread_mutex_init(&philo->threads[i].left_fork, NULL) != 0)
-		{
-			cleanup_mutexes(philo, i);
-			return (FAILURE);
-		}
+			return (cleanup_mutexes(philo, i), FAILURE);
 		philo_vat_init2(philo, i);
 		if (i == philo->philos_number - 1 && i > 0)
 			philo->threads[i].right_fork = &philo->threads[0].left_fork;
