@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:47 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/10 12:39:23 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/10 13:08:57 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_philo
 	pthread_mutex_t		print_lock;
 	pthread_mutex_t		general_lock;
 	t_thread			*threads;
-	int					counter;
+	atomic_int			counter;
 
 }						t_philo;
 

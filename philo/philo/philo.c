@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:38:33 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/10 12:48:32 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/10 14:36:53 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,10 @@ int	main(int argc, char **argv)
 
 	if (check_arguments(argc, argv, &philo))
 	{
-		if (philo.eating_rounds == 0)
-			return (FAILURE);
+		if (philo.eating_rounds == 0 || philo.philos_number == 0
+			|| philo.time_to_die == 0 || philo.time_to_eat == 0
+			|| philo.time_to_sleep == 0)
+			return (printf("Faild, check arguments\n"));
 		if (!create_philos(&philo))
 		{
 			printf("Error, philos cannot be created");
