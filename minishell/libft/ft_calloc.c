@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:07:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/04 09:24:58 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:33:15 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
+#include <stdint.h>
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <stdbool.h>
-
-typedef struct s_data
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	char	*input_line;
-	char 	*cleaned_line;
-}			t_data;
+	size_t			i;
+	unsigned char	*ptr;
 
-void free_data(t_data * data);
-
-#endif
+	i = 0;
+	if (nmemb == 0 || size == 0)
+		return (malloc(1));
+	if (nmemb > SIZE_MAX / size)
+		return (NULL);
+	if (!nmemb || !size)
+	{
+		ptr = malloc(1);
+		return (ptr);
+	}
+	ptr = malloc(nmemb * size);
+	if (!ptr)
+		return (NULL);
+	while (i < size * nmemb)
+		ptr[i++] = 0;
+	return (ptr);
+}

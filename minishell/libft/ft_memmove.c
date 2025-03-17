@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:07:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/01 15:17:50 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 17:57:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <stdbool.h>
-
-typedef struct s_data
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	char	*input_line;
-	char 	*cleaned_line;
-}			t_data;
+	size_t				i;
+	unsigned const char	*s;
+	unsigned char		*d;
 
-void free_data(t_data * data);
-
-#endif
+	i = 0;
+	if (!src && !dest)
+		return (NULL);
+	s = (unsigned const char *)src;
+	d = (unsigned char *)dest;
+	if (d > s)
+	{
+		while (n-- > 0)
+			d[n] = s[n];
+	}
+	else
+	{
+		while (i < n)
+		{
+			d[i] = s[i];
+			i++;
+		}
+	}
+	return (d);
+}

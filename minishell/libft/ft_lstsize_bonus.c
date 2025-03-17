@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:07:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/12 15:11:35 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:35:41 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <stdbool.h>
-
-typedef struct s_data
+int	ft_lstsize(t_list *lst)
 {
-	char	*input_line;
-	char 	*cleaned_line;
-}			t_data;
+	t_list	*ptr;
+	int		counter;
 
-void free_data(t_data * data);
-
-#endif
+	counter = 0;
+	ptr = lst;
+	while (ptr)
+	{
+		ptr = ptr->next;
+		counter++;
+	}
+	return (counter);
+}

@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:07:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/01 15:17:31 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:35:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <stdbool.h>
-
-typedef struct s_data
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	char	*input_line;
-	char 	*cleaned_line;
-}			t_data;
+	size_t				i;
+	const unsigned char	*str1;
+	const unsigned char	*str2;
 
-void free_data(t_data * data);
-
-#endif
+	str1 = (const unsigned char *)s1;
+	str2 = (const unsigned char *)s2;
+	i = 0;
+	while (i < n)
+	{
+		if (str1[i] > str2[i])
+			return (1);
+		else if (str1[i] - str2[i])
+			return (-1);
+		i++;
+	}
+	return (0);
+}

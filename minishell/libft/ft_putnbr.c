@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:07:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/06 11:26:26 by mkhlouf           #+#    #+#             */
+/*   Updated: 2025/02/01 01:08:43 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <stdbool.h>
-
-typedef struct s_data
+void	ft_putnbr(int n, int *count)
 {
-	char	*input_line;
-	char 	*cleaned_line;
-}			t_data;
-
-void free_data(t_data * data);
-
-#endif
+	if (n == -2147483648)
+		ft_putstr("-2147483648", count);
+	else if (n < 0)
+	{
+		ft_putchar('-', count);
+		n = n * -1;
+		ft_putnbr(n, count);
+	}
+	else
+	{
+		if (n > 9)
+		{
+			ft_putnbr(n / 10, count);
+			ft_putnbr(n % 10, count);
+		}
+		else
+			ft_putchar((char){n + '0'}, count);
+	}
+}

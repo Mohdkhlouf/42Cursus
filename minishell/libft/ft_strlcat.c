@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:07:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/01 15:18:10 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:37:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
+#include <string.h>
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <stdbool.h>
-
-typedef struct s_data
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	char	*input_line;
-	char 	*cleaned_line;
-}			t_data;
+	size_t	i;
+	size_t	j;
 
-void free_data(t_data * data);
-
-#endif
+	i = 0;
+	j = 0;
+	while (i < dstsize && dst[i])
+		i++;
+	while ((i + j + 1) < dstsize && src[j])
+	{
+		dst[i + j] = src[j];
+		j++;
+	}
+	if (i != dstsize)
+		dst[i + j] = '\0';
+	return (i + ft_strlen(src));
+}

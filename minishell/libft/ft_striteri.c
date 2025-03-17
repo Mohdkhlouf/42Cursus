@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:07:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/06 10:25:47 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:37:12 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <stdbool.h>
-
-typedef struct s_data
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	char	*input_line;
-	char 	*cleaned_line;
-}			t_data;
+	unsigned int	i;
+	unsigned int	len;
 
-void free_data(t_data * data);
-
-#endif
+	i = 0;
+	len = 0;
+	len = ft_strlen(s);
+	while (i < len)
+	{
+		(*f)(i, &s[i]);
+		i++;
+	}
+}

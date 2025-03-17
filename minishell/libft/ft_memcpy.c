@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:07:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/01 15:17:43 by mkhlouf           #+#    #+#             */
+/*   Updated: 2025/01/22 13:46:09 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <stdbool.h>
-
-typedef struct s_data
+void	*ft_memcpy(void *s1, const void *s2, size_t n)
 {
-	char	*input_line;
-	char 	*cleaned_line;
-}			t_data;
+	size_t	i;
 
-void free_data(t_data * data);
-
-#endif
+	i = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	while (i < n)
+	{
+		((int *)s1)[i] = ((const int *)s2)[i];
+		i++;
+	}
+	return (s1);
+}

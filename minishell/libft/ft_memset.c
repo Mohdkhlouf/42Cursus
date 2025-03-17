@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:07:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/01 15:17:57 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:35:28 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <stdbool.h>
-
-typedef struct s_data
+void	*ft_memset(void *ptr, int x, size_t n)
 {
-	char	*input_line;
-	char 	*cleaned_line;
-}			t_data;
+	size_t	i;
+	char	*str2;
 
-void free_data(t_data * data);
-
-#endif
+	str2 = ptr;
+	i = 0;
+	while (i < n)
+	{
+		str2[i] = x;
+		i++;
+	}
+	return (ptr);
+}

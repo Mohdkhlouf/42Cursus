@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:07:55 by mkhlouf          ###   ########.fr       */
+/*   Created: 2024/11/06 09:56:33 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/11/13 16:37:36 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft/libft.h"
-# include <stdbool.h>
-
-typedef struct s_data
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*input_line;
-	char 	*cleaned_line;
-}			t_data;
+	unsigned int	i;
+	char			*str;
+	unsigned int	len;
 
-void free_data(t_data * data);
-
-#endif
+	i = 0;
+	len = 0;
+	len = ft_strlen(s);
+	if (!s)
+		return (NULL);
+	str = malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (i < len)
+	{
+		str[i] = (*f)(i, s[i]);
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}

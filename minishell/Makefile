@@ -3,56 +3,90 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+         #
+#    By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+         +#+        #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/09 10:36:17 by mkhlouf           #+#    #+#              #
-#    Updated: 2025/03/13 11:50:27 by mkhlouf          ###   ########.fr        #
+#    Updated: 2025/03/15 15:30:00 by mkhlouf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Compiler and flags
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror
+CFLAGS  = -g -Wall -Wextra -Werror
+
+# Valgrind options (kept separate from CFLAGS)
+VALGRIND = valgrind --leak-check=full --track-origins=yes --trace-children-skip='*/bin/*,*/sbin/*,/usr/bin/*' \
+--trace-children=yes --track-fds=yes --show-reachable=yes --suppressions=readline.sup
+
+# Utilities
 RM      = rm -f
 AR      = ar rcs
+MAKEFLAGS += --no-print-directory
 
-# Subdirectories
-LIBFT   := ./libft
+# Directories
+SRC_DIR = src
+OBJ_DIR = obj
+LIBFT   = ./libft
+LIBS = -lreadline
 
 # Files
 NAME    = minishell
-SRC     = minishell.c
-
-OBJS    = $(SRC:.c=.o)
+SRC     = $(wildcard $(SRC_DIR)/*.c)
+OBJS    = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 LIBFT_A = $(LIBFT)/libft.a
+
+# Colors
+GREEN   = \033[1;32m
+YELLOW  = \033[1;33m
+RED     = \033[1;31m
+RESET   = \033[0m
 
 # Default target
 all: $(NAME)
 
 # Create executable
 $(NAME): $(OBJS) $(LIBFT_A)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
+	@echo "$(YELLOW)Compiling $(NAME)...$(RESET)"
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(LIBS) -o $(NAME)
+	@echo "$(GREEN)Build complete!$(RESET)"
 
 # Build libft
 $(LIBFT_A):
+	@echo "$(YELLOW)Building libft...$(RESET)"
 	$(MAKE) -C $(LIBFT)
 
-# Compile source files into object files
-%.o: %.c
+# Ensure obj directory exists, then compile source files into object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+# Create obj directory if it doesn't exist
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+# Run with Valgrind
+run: $(NAME)
+	@echo "$(YELLOW)Running with Valgrind...$(RESET)"
+	$(VALGRIND) ./$(NAME)
+
+# Debug build
+debug: CFLAGS += -DDEBUG -fsanitize=address -g3
+debug: re
 
 # Clean object files only
 clean:
+	@echo "$(RED)Cleaning object files...$(RESET)"
 	$(RM) $(OBJS)
 	$(MAKE) -C $(LIBFT) clean
 
 # Clean all generated files
 fclean: clean
+	@echo "$(RED)Removing $(NAME)...$(RESET)"
 	$(RM) $(NAME)
 	$(MAKE) -C $(LIBFT) fclean
+	@rm -rf $(OBJ_DIR)
 
 # Rebuild everything
 re: fclean all
 
 # Declare that these targets are not files
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re run debug
