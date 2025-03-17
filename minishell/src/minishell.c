@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 18:26:16 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/17 12:11:02 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ void clean_line(t_data *data)
 	data->cleaned_line[j] = '\0';
 }
 
+void tokenizing(t_data *data)
+{
+	clean_line(data);
+	line_split(data);
+}
+
 void reading_loop(t_data *data)
 {
 	while (true)
@@ -50,9 +56,18 @@ void reading_loop(t_data *data)
 			printf("Exit");
 			return;
 		}
-		clean_line(data);
+		add_history(data->input_line);
+		tokenizing(data);
 		free_data(data);
 	}
+}
+
+void data_init(t_data *data)
+{
+	data->cleaned_line = NULL;
+	data->cline_parts = 0;
+	data->input_line = NULL;
+	data->tokens = NULL;
 }
 
 int	main(void)
@@ -60,14 +75,15 @@ int	main(void)
 	t_data *data;
 	
 	data = malloc(sizeof (t_data));
+	data_init(data);
 
 	// cleanup_line(line) // this will remove all spaess and tabs and make the
 	// line more ready to execution.
 	// lexing / will do lexing .
 	// parsing // will parse the inputs.
 	reading_loop(data);
-	free_data(data);
 
+	free_data(data);
 	free(data);
 	return (EXIT_SUCCESS);
 }

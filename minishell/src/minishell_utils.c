@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/15 17:58:34 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/17 12:00:42 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,5 @@ void free_data(t_data * data)
 {
     free(data->input_line);
     free(data->cleaned_line);
-
 }
 
