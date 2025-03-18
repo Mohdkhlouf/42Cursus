@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/18 16:00:26 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/18 16:04:53 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	redirectout_function(t_data *data)
 		data->in_token = false;
 	}
 	data->start = data->end;
-	data->end++;
 	if (data->input_line[data->end] == '>')
 	{
 		data->end++;
@@ -64,7 +63,7 @@ void	redirectout_function(t_data *data)
 	}
 	else
 		append_token(data, TOK_REDIRECT_OUT);
-	data->start = data->end;
+	data->start = data->end + 1;
 }
 
 void	redirectin_function(t_data *data)
@@ -75,15 +74,14 @@ void	redirectin_function(t_data *data)
 		data->in_token = false;
 	}
 	data->start = data->end;
-	data->end++;
 	if (data->input_line[data->end] == '<')
 	{
 		data->end++;
-		append_token(data, TOK_REDIRECT_IN);
+		append_token(data, TOK_REDIRECT_HEREDOC);
 	}
 	else
 		append_token(data, TOK_REDIRECT_IN);
-	data->start = data->end;
+	data->start = data->end + 1;
 }
 
 void	pipe_function(t_data *data)
