@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/17 15:27:32 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/18 12:51:17 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,52 +18,67 @@ then send it as clean ass should be to the tokenising,
 		everthing in the abstract tree*/
 
 /*clean line function to clean the line from spaces, it changes spaces to one */
-void clean_line(t_data *data)
-{
-	int line_length;
-	int i;
-	int j;
 
-	i = 0;
-	j = 0;
-	line_length = ft_strlen(data->input_line);
-	data->cleaned_line = malloc(sizeof (char) * line_length + 1);
-	if (!data->cleaned_line) {
-		// Handle memory allocation error
-		printf("Error allocating memory for tokens\n");
-		exit(EXIT_FAILURE);
-	}
+// void clean_line(t_data *data)
+// {
+// 	int line_length;
+// 	int i;
+// 	int j;
+
+// 	i = 0;
+// 	j = 0;
+// 	line_length = ft_strlen(data->input_line);
+// 	data->cleaned_line = malloc(sizeof (char) * line_length + 1);
+// 	if (!data->cleaned_line) {
+// 		// Handle memory allocation error
+// 		printf("Error allocating memory for tokens\n");
+// 		exit(EXIT_FAILURE);
+// 	}
 	
-	while (data->input_line[i])
-	{
-		while ((data->input_line[i] == ' ' &&  data->input_line[i + 1] == ' ')
-			|| (data->input_line[i] == ' ' &&  data->input_line[i + 1] == '\0'))
-			i++;
-		data->cleaned_line[j] =  data->input_line[i];
-		i++;
-		j++;
-	}
-	data->cleaned_line[j] = '\0';
-}
+// 	while (data->input_line[i])
+// 	{
+// 		while ((data->input_line[i] == ' ' &&  data->input_line[i + 1] == ' ')
+// 			|| (data->input_line[i] == ' ' &&  data->input_line[i + 1] == '\0'))
+// 			i++;
+// 		data->cleaned_line[j] =  data->input_line[i];
+// 		i++;
+// 		j++;
+// 	}
+// 	data->cleaned_line[j] = '\0';
+// }
 
 void tokenizing(t_data *data)
 {
 	int i;
 
 	i = 0;
-	clean_line(data);
+	// clean_line(data);
 	line_split(data);
-	while(data->tokens[i].data)
+	while (i < data->tokens_conter)
 	{
-		printf("token #%s#\n", data->tokens[i].data);
+		printf("%s\n", data->tokens[i].data);
 		i++;
 	}
+
+}
+void data_init(t_data *data)
+{
+	data->cleaned_line = NULL;
+	data->cline_parts = 0;
+	data->input_line = NULL;
+	data->tokens = NULL;
+	data->end = 0;
+	data->start = 0;
+	data->in_token = false;
+	data->tokens_conter = 0;
+	// data->tokens->data = NULL;
 }
 
 void reading_loop(t_data *data)
 {
 	while (true)
 	{
+		data_init(data);
 		data->input_line = readline("Prompt > ");
 		if (!data->input_line)
 		{
@@ -76,22 +91,13 @@ void reading_loop(t_data *data)
 	}
 }
 
-void data_init(t_data *data)
-{
-	data->cleaned_line = NULL;
-	data->cline_parts = 0;
-	data->input_line = NULL;
-	data->tokens = NULL;
-	// data->tokens->data = NULL;
-}
+
 
 int	main(void)
 {
 	t_data *data;
 	
 	data = malloc(sizeof (t_data));
-	data_init(data);
-
 	// cleanup_line(line) // this will remove all spaess and tabs and make the
 	// line more ready to execution.
 	// lexing / will do lexing .

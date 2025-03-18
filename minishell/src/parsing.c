@@ -6,41 +6,15 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/17 15:59:55 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/18 14:15:58 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	how_many_parts(t_data *data)
+void	malloc_tokens_arr(t_data *data)
 {
-	int		counter;
-	size_t	i;
-
-	counter = 0;
-	i = 0;
-	while (i < ft_strlen(data->cleaned_line))
-	{
-		if (data->cleaned_line[i] == ' ' || (i == ft_strlen(data->cleaned_line)
-				- 1))
-			counter++;
-		i++;
-	}
-	return (counter);
-}
-
-void	line_split(t_data *data)
-{
-	size_t	i;
-	int		j;
-	size_t	start;
-	bool	skip;
-
-	i = 0;
-	j = 0;
-	start = 0;
-	skip = false;
-	data->cline_parts = how_many_parts(data);
+	data->cline_parts = ft_strlen(data->input_line) / 2;
 	if (data->cline_parts != 0)
 	{
 		data->tokens = malloc(sizeof(t_token) * data->cline_parts);
@@ -56,44 +30,93 @@ void	line_split(t_data *data)
 		// free
 		exit(EXIT_FAILURE);
 	}
-	if (data->cline_parts == 1)
-	{
-		data->tokens[0].data = data->cleaned_line;
-		return ;
-	}
-	while (i < ft_strlen(data->cleaned_line))
-	{
-		if (data->cleaned_line[i] == '\'' || data->cleaned_line[i] == '\"')
-		{
-			if (skip == false)
-			{
-				start = i;
-				skip = true;
-			}
-			else
-				skip = false;
-			if (skip == false)
-			{
-				data->tokens[j].data = ft_substr(data->cleaned_line, start, i
-						- start + 1);
-				j++;
-				start = i +1;
-			}
-		}
-		else if ((data->cleaned_line[i] == ' ' || data->cleaned_line[i + 1] == '\0') && !skip)
-        {
-            if (i > start)
-            {
-                data->tokens[j].data = ft_substr(data->cleaned_line, start, i - start);
-                j++;
-            }
-            start = i + 1; // Move start to the next non-space character
-        }
-        i++;
-	}
-	if (i > start)
-    {
-        data->tokens[j].data = ft_substr(data->cleaned_line, start, i - start);
-    }
 }
 
+void	normal_function(t_data *data)
+{
+	data->in_token = true;
+}
+
+void	append_token(t_data *data, int type)
+{
+	data->tokens[data->tokens_conter].data = ft_substr(data->input_line,
+			data->start, data->end - data->start);
+	data->tokens[data->tokens_conter].type = type;
+	data->tokens_conter++;
+}
+void	redirectout_function(t_data *data)
+{
+	if (data->in_token)
+	{
+		append_token(data, TOK_COMMAND);
+		data->in_token = false;
+	}
+	data->start = data->end;
+	data->end++;
+	if(data->input_line[data->end] == '>')
+		data->end++;
+	append_token(data, TOK_APPEND);
+	data->start = data->end;
+}
+
+void	redirectin_function(t_data *data)
+{
+	if (data->in_token)
+	{
+		append_token(data, TOK_COMMAND);
+		data->in_token = false;
+	}
+	data->start = data->end;
+	data->end++;
+	append_token(data, TOK_REDIRECT_IN);
+	data->start = data->end;
+}
+
+void	pipe_function(t_data *data)
+{
+	if (data->in_token)
+	{
+		append_token(data, TOK_COMMAND);
+		data->in_token = false;
+	}
+	data->start = data->end;
+	data->end++;
+	append_token(data, TOK_PIPE);
+	data->start = data->end;
+}
+
+void	space_function(t_data *data)
+{
+	if (data->in_token)
+	{
+		append_token(data, TOK_COMMAND);
+		data->in_token = false;
+	}
+	data->start = data->end + 1;
+}
+
+void	line_split(t_data *data)
+{
+	data->end = 0;
+	data->start = 0;
+	malloc_tokens_arr(data);
+	while (data->input_line[data->end])
+	{
+		if (data->input_line[data->end] == ' ')
+			space_function(data);
+		else if (data->input_line[data->end] == '|')
+			pipe_function(data);
+		else if (data->input_line[data->end] == '>')
+			redirectout_function(data);
+		else if (data->input_line[data->end] == '<')
+			redirectin_function(data);
+		else
+			normal_function(data);
+		data->end++;
+	}
+	if (data->in_token)
+    {
+		data->end++;
+        append_token(data, TOK_COMMAND);
+    }
+}

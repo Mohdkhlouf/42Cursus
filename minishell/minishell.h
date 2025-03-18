@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/17 15:08:43 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/18 15:22:29 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,6 @@ typedef enum e_token_type
 	TOK_REDIRECT_OUT,        // Redirect ">" operator
 	TOK_APPEND,              // Append ">>" operator
 	TOK_REDIRECT_HEREDOC,    // Here Document "<<" operator
-	TOK_REDIRECT_HERESTRING, // Here String "<<<" operator
-	TOK_LOGICAL_AND,         // Logical AND "&&" operator
-	TOK_LOGICAL_OR,          // Logical OR "||" operator
-	TOK_BACKGROUND,          // Background "&" operator
-	TOK_GROUP_START,         // Grouping "(" operator
-	TOK_GROUP_END,           // Grouping ")" operator
-	TOK_SEMICOLON,           // Command separator ";" operator
-	TOK_ASSIGNMENT,          // Assignment "=" operator
-	TOK_COMMENT,             // Comment "#" operator
-	TOK_WILDCARD,            // Wildcard "*" operator
 	TOK_SINGLE_QUOTE,        // Single quote "'" character
 	TOK_DOUBLE_QUOTE,        // Double quote "\"" character
 	TOK_ENV_VAR,             // Environment variable (e.g., $HOME)
@@ -49,7 +39,7 @@ typedef enum e_token_type
 typedef struct s_token
 {
 	char			*data;
-	t_token_type	*type;
+	t_token_type	type;
 }					t_token;
 
 typedef struct s_data
@@ -58,6 +48,10 @@ typedef struct s_data
 	char			*cleaned_line;
 	int				cline_parts; // clean line parts number
 	t_token			*tokens;
+	size_t			end;
+	size_t			start;
+	bool	in_token;
+	int tokens_conter;
 }					t_data;
 
 void				free_data(t_data *data);
