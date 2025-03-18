@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/18 14:15:58 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/18 16:00:26 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ void	normal_function(t_data *data)
 
 void	append_token(t_data *data, int type)
 {
-	data->tokens[data->tokens_conter].data = ft_substr(data->input_line,
-			data->start, data->end - data->start);
+	if (data->end == data->start)
+		data->tokens[data->tokens_conter].data = ft_substr(data->input_line,
+				data->start, 1);
+	else
+		data->tokens[data->tokens_conter].data = ft_substr(data->input_line,
+				data->start, data->end - data->start);
 	data->tokens[data->tokens_conter].type = type;
 	data->tokens_conter++;
 }
@@ -53,9 +57,13 @@ void	redirectout_function(t_data *data)
 	}
 	data->start = data->end;
 	data->end++;
-	if(data->input_line[data->end] == '>')
+	if (data->input_line[data->end] == '>')
+	{
 		data->end++;
-	append_token(data, TOK_APPEND);
+		append_token(data, TOK_APPEND);
+	}
+	else
+		append_token(data, TOK_REDIRECT_OUT);
 	data->start = data->end;
 }
 
@@ -68,7 +76,13 @@ void	redirectin_function(t_data *data)
 	}
 	data->start = data->end;
 	data->end++;
-	append_token(data, TOK_REDIRECT_IN);
+	if (data->input_line[data->end] == '<')
+	{
+		data->end++;
+		append_token(data, TOK_REDIRECT_IN);
+	}
+	else
+		append_token(data, TOK_REDIRECT_IN);
 	data->start = data->end;
 }
 
@@ -80,13 +94,13 @@ void	pipe_function(t_data *data)
 		data->in_token = false;
 	}
 	data->start = data->end;
-	data->end++;
 	append_token(data, TOK_PIPE);
-	data->start = data->end;
+	data->start = data->end + 1;
 }
 
 void	space_function(t_data *data)
 {
+	printf("space\n");
 	if (data->in_token)
 	{
 		append_token(data, TOK_COMMAND);
@@ -115,8 +129,8 @@ void	line_split(t_data *data)
 		data->end++;
 	}
 	if (data->in_token)
-    {
+	{
 		data->end++;
-        append_token(data, TOK_COMMAND);
-    }
+		append_token(data, TOK_COMMAND);
+	}
 }

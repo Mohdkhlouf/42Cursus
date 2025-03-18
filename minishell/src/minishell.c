@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/18 12:51:17 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/18 15:27:21 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,6 @@ then send it as clean ass should be to the tokenising,
 		everthing in the abstract tree*/
 
 /*clean line function to clean the line from spaces, it changes spaces to one */
-
-// void clean_line(t_data *data)
-// {
-// 	int line_length;
-// 	int i;
-// 	int j;
-
-// 	i = 0;
-// 	j = 0;
-// 	line_length = ft_strlen(data->input_line);
-// 	data->cleaned_line = malloc(sizeof (char) * line_length + 1);
-// 	if (!data->cleaned_line) {
-// 		// Handle memory allocation error
-// 		printf("Error allocating memory for tokens\n");
-// 		exit(EXIT_FAILURE);
-// 	}
-	
-// 	while (data->input_line[i])
-// 	{
-// 		while ((data->input_line[i] == ' ' &&  data->input_line[i + 1] == ' ')
-// 			|| (data->input_line[i] == ' ' &&  data->input_line[i + 1] == '\0'))
-// 			i++;
-// 		data->cleaned_line[j] =  data->input_line[i];
-// 		i++;
-// 		j++;
-// 	}
-// 	data->cleaned_line[j] = '\0';
-// }
 
 void tokenizing(t_data *data)
 {
