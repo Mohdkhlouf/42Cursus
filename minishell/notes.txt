@@ -5,4 +5,21 @@ it likes printf way.
 
 ft split or another one will be a mess.
 
+
+➜  minishell git:(main) ✗ bash
+mkhlouf@c1r4p8:~/mygithub/minishell$ 'e'c'h'o ""hel"lo"wor"ld"
+helloworld
+mkhlouf@c1r4p8:~/mygithub/minishell$ 'e'c'h'o' '
+Command 'echo ' not found, did you mean:
+  command 'echo' from deb coreutils (8.32-4.1ubuntu1.2)
+Try: apt install <deb name>
+mkhlouf@c1r4p8:~/mygithub/minishell$ "'echo'"
+'echo': command not found
+mkhlouf@c1r4p8:~/mygithub/minishell$ "echo
+>  hello"
+echo
+
+
+
+~ like $home
 */
