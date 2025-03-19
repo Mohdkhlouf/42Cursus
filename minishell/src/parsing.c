@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/18 16:04:53 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/19 11:42:55 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	normal_function(t_data *data)
 {
 	data->in_token = true;
 }
-
+// this one to add the data normally
 void	append_token(t_data *data, int type)
 {
 	if (data->end == data->start)
@@ -48,6 +48,20 @@ void	append_token(t_data *data, int type)
 	data->tokens[data->tokens_conter].type = type;
 	data->tokens_conter++;
 }
+// this one to add the data for double operators,
+// i have to make it + 1 to make it prints the second letter.
+void	append_token_double(t_data *data, int type)
+{
+	if (data->end == data->start)
+		data->tokens[data->tokens_conter].data = ft_substr(data->input_line,
+				data->start, 1);
+	else
+		data->tokens[data->tokens_conter].data = ft_substr(data->input_line,
+				data->start, data->end - data->start + 1);
+	data->tokens[data->tokens_conter].type = type;
+	data->tokens_conter++;
+}
+
 void	redirectout_function(t_data *data)
 {
 	if (data->in_token)
@@ -56,10 +70,10 @@ void	redirectout_function(t_data *data)
 		data->in_token = false;
 	}
 	data->start = data->end;
-	if (data->input_line[data->end] == '>')
+	if (data->input_line[data->end + 1] == '>')
 	{
 		data->end++;
-		append_token(data, TOK_APPEND);
+		append_token_double(data, TOK_APPEND);
 	}
 	else
 		append_token(data, TOK_REDIRECT_OUT);
@@ -74,10 +88,10 @@ void	redirectin_function(t_data *data)
 		data->in_token = false;
 	}
 	data->start = data->end;
-	if (data->input_line[data->end] == '<')
+	if (data->input_line[data->end + 1] == '<')
 	{
 		data->end++;
-		append_token(data, TOK_REDIRECT_HEREDOC);
+		append_token_double(data, TOK_REDIRECT_HEREDOC);
 	}
 	else
 		append_token(data, TOK_REDIRECT_IN);

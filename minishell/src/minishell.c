@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/18 15:27:21 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/19 11:41:18 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void tokenizing(t_data *data)
 	line_split(data);
 	while (i < data->tokens_conter)
 	{
-		printf("%s\n", data->tokens[i].data);
+		printf("#%s#\n", data->tokens[i].data);
 		i++;
 	}
 
@@ -43,7 +43,6 @@ void data_init(t_data *data)
 	data->start = 0;
 	data->in_token = false;
 	data->tokens_conter = 0;
-	// data->tokens->data = NULL;
 }
 
 void reading_loop(t_data *data)
