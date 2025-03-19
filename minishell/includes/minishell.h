@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/19 12:37:38 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/19 13:30:31 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_data
 	size_t			start;
 	bool	in_token;
 	int tokens_conter;
+	bool quote_found;
 }					t_data;
 
 void				free_data(t_data *data);

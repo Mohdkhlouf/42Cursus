@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/19 12:39:56 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/19 14:11:20 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	append_token(t_data *data, int type)
 }
 
 
+
 void	line_split(t_data *data)
 {
 	data->end = 0;
@@ -53,7 +54,9 @@ void	line_split(t_data *data)
 	malloc_tokens_arr(data);
 	while (data->input_line[data->end])
 	{
-		if (data->input_line[data->end] == ' ')
+		if (data->quote_found && data->input_line[data->end] != '\'')
+			normal_function(data);
+		else if (data->input_line[data->end] == ' ')
 			space_function(data);
 		else if (data->input_line[data->end] == '|')
 			pipe_function(data);
@@ -61,6 +64,8 @@ void	line_split(t_data *data)
 			redirectout_function(data);
 		else if (data->input_line[data->end] == '<')
 			redirectin_function(data);
+		else if (data->input_line[data->end] == '\'')
+			single_quote_function(data);
 		else
 			normal_function(data);
 		data->end++;
