@@ -6,33 +6,13 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/19 11:41:18 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/19 12:39:12 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
-/*first ceaning the line from spaces and white spaces and etc.
-then send it as clean ass should be to the tokenising,
-	then after that parsing starts. the parsing will store
-		everthing in the abstract tree*/
 
-/*clean line function to clean the line from spaces, it changes spaces to one */
-
-void tokenizing(t_data *data)
-{
-	int i;
-
-	i = 0;
-	// clean_line(data);
-	line_split(data);
-	while (i < data->tokens_conter)
-	{
-		printf("#%s#\n", data->tokens[i].data);
-		i++;
-	}
-
-}
 void data_init(t_data *data)
 {
 	data->cleaned_line = NULL;

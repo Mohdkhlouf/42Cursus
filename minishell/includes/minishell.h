@@ -6,14 +6,15 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/18 15:22:29 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/19 12:37:38 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft/libft.h"
+# include "../libft/libft.h"
+# include "lexing.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdbool.h>
@@ -36,6 +37,7 @@ typedef enum e_token_type
 	TOK_EOF,                 // End of file or input termination
 }					t_token_type;
 
+
 typedef struct s_token
 {
 	char			*data;
@@ -56,5 +58,6 @@ typedef struct s_data
 
 void				free_data(t_data *data);
 void				line_split(t_data *data);
+void tokenizing(t_data *data);
 
 #endif

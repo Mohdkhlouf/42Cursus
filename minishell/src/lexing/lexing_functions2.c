@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_utils.c                                  :+:      :+:    :+:   */
+/*   lexing_functions2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/19 12:39:17 by mkhlouf          ###   ########.fr       */
+/*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
+/*   Updated: 2025/03/19 12:46:06 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/lexing.h"
 
-void free_data(t_data * data)
+void	normal_function(t_data *data)
 {
-    free(data->input_line);
-    free(data->cleaned_line);
+	data->in_token = true;
 }
-

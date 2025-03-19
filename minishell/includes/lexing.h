@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_utils.c                                  :+:      :+:    :+:   */
+/*   lexing.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/19 12:39:17 by mkhlouf          ###   ########.fr       */
+/*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
+/*   Updated: 2025/03/19 12:45:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#ifndef LEXING_H
+# define LEXING_H
 
-void free_data(t_data * data)
-{
-    free(data->input_line);
-    free(data->cleaned_line);
-}
+# include "minishell.h"
 
+typedef struct s_data t_data;
+
+void	space_function(t_data *data);
+void	pipe_function(t_data *data);
+void	redirectin_function(t_data *data);
+void	redirectout_function(t_data *data);
+void	append_token_double(t_data *data, int type);
+void	normal_function(t_data *data);
+void	append_token(t_data *data, int type);
+
+
+#endif
