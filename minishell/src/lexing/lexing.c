@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/19 14:11:20 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/19 15:55:51 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	append_token(t_data *data, int type)
 	data->tokens_conter++;
 }
 
-
-
 void	line_split(t_data *data)
 {
 	data->end = 0;
@@ -55,6 +53,8 @@ void	line_split(t_data *data)
 	while (data->input_line[data->end])
 	{
 		if (data->quote_found && data->input_line[data->end] != '\'')
+			normal_function(data);
+		else if (data->double_quote_found && data->input_line[data->end] != '\"' && data->input_line[data->end] != '$')
 			normal_function(data);
 		else if (data->input_line[data->end] == ' ')
 			space_function(data);
@@ -66,6 +66,10 @@ void	line_split(t_data *data)
 			redirectin_function(data);
 		else if (data->input_line[data->end] == '\'')
 			single_quote_function(data);
+		else if (data->input_line[data->end] == '\"')
+			double_quote_function(data);
+		else if (data->input_line[data->end] == '$')
+			env_variable_function(data);
 		else
 			normal_function(data);
 		data->end++;
@@ -84,9 +88,9 @@ then send it as clean ass should be to the tokenising,
 
 /*clean line function to clean the line from spaces, it changes spaces to one */
 
-void tokenizing(t_data *data)
+void	tokenizing(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	// clean_line(data);
@@ -96,5 +100,4 @@ void tokenizing(t_data *data)
 		printf("#%s#\n", data->tokens[i].data);
 		i++;
 	}
-
 }

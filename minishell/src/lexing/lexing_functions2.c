@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/19 14:09:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/19 15:16:06 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,33 @@ void single_quote_function(t_data *data)
 	else
 	{
 		data->quote_found = false;
+	}		
+}
+
+void double_quote_function(t_data *data)
+{
+	if (data->in_token)
+	{
+		append_token(data, TOK_COMMAND);
+		data->in_token = false;
+	}
+	data->start = data->end + 1;
+	if (data->double_quote_found == false)	
+		data->double_quote_found = true;
+	else
+	{
+		data->double_quote_found = false;
 	}
 		
 		
+}
+
+void	env_variable_function(t_data *data)
+{
+	if (data->in_token)
+	{
+		append_token(data, TOK_COMMAND);
+		data->in_token = false;
+	}
+	data->start = data->end + 1;
 }
