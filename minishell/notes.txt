@@ -20,6 +20,19 @@ mkhlouf@c1r4p8:~/mygithub/minishell$ "echo
 echo
 
 
+mkhlouf@c1r3p4:~/mygithub/minishell$ echo $HOME/test
+/home/mkhlouf/test
+mkhlouf@c1r3p4:~/mygithub/minishell$ echo $HOME/test
+/home/mkhlouf/test
+mkhlouf@c1r3p4:~/mygithub/minishell$ echo $HOMEtest
+
+mkhlouf@c1r3p4:~/mygithub/minishell$ echo $HOME"test"
+/home/mkhlouftest
+mkhlouf@c1r3p4:~/mygithub/minishell$ echo $HOME'test'
+/home/mkhlouftest
+mkhlouf@c1r3p4:~/mygithub/minishell$ echo $HOME$USER
+/home/mkhloufmkhlouf
+
 
 ~ like $home
 */
