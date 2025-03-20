@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/20 11:55:40 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/20 12:44:19 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ typedef struct s_data
 
 void				free_data(t_data *data);
 void				line_split(t_data *data);
+void				lexing(t_data *data);
 void				tokenizing(t_data *data);
-
 #endif

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/20 12:01:25 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/20 13:12:46 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,12 @@ then send it as clean ass should be to the tokenising,
 
 /*clean line function to clean the line from spaces, it changes spaces to one */
 
-void	tokenizing(t_data *data)
+void	lexing(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	// clean_line(data);
 	line_split(data);
-	while (i < data->tokens_conter)
-	{
-		printf("Token:#%s# Type:%u\n", data->tokens[i].data , data->tokens[i].type);
-		i++;
-	}
+	
+
 }

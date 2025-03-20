@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/20 11:58:13 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/20 12:20:58 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ void	env_variable_function(t_data *data)
 		append_token(data, TOK_ENV_VAR);
 		data->in_token = false;
 	}
-	data->start = data->end + 1;
+	data->start = data->end;
 }
