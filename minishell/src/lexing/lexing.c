@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/19 17:07:34 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/20 12:01:25 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	line_split(t_data *data)
 			redirectout_function(data);
 		else if (data->input_line[data->end] == '<')
 			redirectin_function(data);
-		else if (data->input_line[data->end] == '\'')
-			single_quote_function(data);
-		else if (data->input_line[data->end] == '\"')
-			double_quote_function(data);
-		else if (data->input_line[data->end] == '$')
+		// else if (data->input_line[data->end] == '\'')
+		// 	single_quote_function(data);
+		// else if (data->input_line[data->end] == '\"' && !data->quote_found)
+		// 	double_quote_function(data);
+		else if (data->input_line[data->end] == '$' && !data->quote_found)
 			env_variable_function(data);
 		else
 			normal_function(data);
@@ -77,7 +77,7 @@ void	line_split(t_data *data)
 	if (data->in_token)
 	{
 		data->end++;
-		append_token(data, TOK_COMMAND);
+		append_token(data, TOK_UNKNOWN);
 	}
 }
 
@@ -97,7 +97,7 @@ void	tokenizing(t_data *data)
 	line_split(data);
 	while (i < data->tokens_conter)
 	{
-		printf("#%s#\n", data->tokens[i].data);
+		printf("Token:#%s# Type:%u\n", data->tokens[i].data , data->tokens[i].type);
 		i++;
 	}
 }

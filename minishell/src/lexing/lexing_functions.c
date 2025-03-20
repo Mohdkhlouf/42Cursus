@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/19 14:27:28 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/20 12:00:09 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	redirectout_function(t_data *data)
 {
 	if (data->in_token)
 	{
-		append_token(data, TOK_COMMAND);
+		append_token(data, TOK_UNKNOWN);
 		data->in_token = false;
 	}
 	data->start = data->end;
@@ -48,7 +48,7 @@ void	redirectin_function(t_data *data)
 {
 	if (data->in_token)
 	{
-		append_token(data, TOK_COMMAND);
+		append_token(data, TOK_UNKNOWN);
 		data->in_token = false;
 	}
 	data->start = data->end;
@@ -66,7 +66,7 @@ void	pipe_function(t_data *data)
 {
 	if (data->in_token)
 	{
-		append_token(data, TOK_COMMAND);
+		append_token(data, TOK_UNKNOWN);
 		data->in_token = false;
 	}
 	data->start = data->end;
@@ -76,10 +76,14 @@ void	pipe_function(t_data *data)
 
 void	space_function(t_data *data)
 {
-	printf("space\n");
+	if (data->quote_found)
+	{
+		data->end++;
+		return ;
+	}
 	if (data->in_token)
 	{
-		append_token(data, TOK_COMMAND);
+		append_token(data, TOK_UNKNOWN);
 		data->in_token = false;
 	}
 	data->start = data->end + 1;
