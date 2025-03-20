@@ -6,23 +6,19 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/20 15:30:47 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/20 15:46:49 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lexing.h"
 
-void	quote_fixing(t_data *data, int i)
+void	assign_quotes(t_data *data, int len, int i, char *temp)
 {
-	int		j;
-	int		c;
-	char	*temp;
-	int		len;
+	int	c;
+	int	j;
 
-	j = 0;
 	c = 0;
-	len = ft_strlen(data->tokens[i].data);
-	temp = malloc(sizeof(char) * len + 1);
+	j = 0;
 	if (data->tokens[i].data[0] == '\'' && data->tokens[i].data[len
 		- 1] == '\'')
 		data->quote_type = '\'';
@@ -33,7 +29,7 @@ void	quote_fixing(t_data *data, int i)
 	{
 		if (data->tokens[i].data[j] == data->quote_type
 			|| (data->tokens[i].data[j] == '\'' && data->quote_type == 0)
-			|| (data->tokens[i].data[j] == '\"' && data->quote_type == 0))
+				|| (data->tokens[i].data[j] == '\"' && data->quote_type == 0))
 			j++;
 		else
 		{
@@ -42,6 +38,17 @@ void	quote_fixing(t_data *data, int i)
 			j++;
 		}
 	}
+	temp[c] = '\0';
+}
+
+void	quote_fixing(t_data *data, int i)
+{
+	char	*temp;
+	int		len;
+
+	len = ft_strlen(data->tokens[i].data);
+	temp = malloc(sizeof(char) * len + 1);
+	assign_quotes(data, len, i, temp);
 	free(data->tokens[i].data);
 	data->tokens[i].data = ft_strdup(temp);
 	free(temp);
