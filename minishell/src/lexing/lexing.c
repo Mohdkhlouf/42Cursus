@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/20 13:12:46 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/20 16:05:41 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	append_token(t_data *data, int type)
 				data->start, data->end - data->start);
 	data->tokens[data->tokens_conter].type = type;
 	data->tokens_conter++;
+	
 }
 
 void	line_split(t_data *data)
@@ -64,10 +65,6 @@ void	line_split(t_data *data)
 			redirectout_function(data);
 		else if (data->input_line[data->end] == '<')
 			redirectin_function(data);
-		// else if (data->input_line[data->end] == '\'')
-		// 	single_quote_function(data);
-		// else if (data->input_line[data->end] == '\"' && !data->quote_found)
-		// 	double_quote_function(data);
 		else if (data->input_line[data->end] == '$' && !data->quote_found)
 			env_variable_function(data);
 		else
