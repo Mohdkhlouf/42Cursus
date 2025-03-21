@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/21 13:27:47 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/21 14:33:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef enum e_token_type
 	TOK_DOUBLE_QUOTE,     // Double quote "\"" character
 	TOK_ENV_VAR,          // Environment variable (e.g., $HOME)
 	TOK_EOF,              // End of file or input termination
+
 }					t_token_type;
 
 typedef struct s_token
@@ -55,7 +56,8 @@ typedef struct s_data
 	int				tokens_conter;
 	bool			quote_found;
 	bool			double_quote_found;
-	char quote_type;
+	char			quote_type;
+	bool			file_seperator_found;
 
 }					t_data;
 

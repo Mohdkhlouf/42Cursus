@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/20 16:58:40 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/21 15:16:55 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,43 @@ void	quote_fixing(t_data *data, int i)
 void var_handler(t_data *data, int i)
 {
 	char *path;
-	char *var;
+	char *var; 
+	char *temp;
 	int len;
-
-	len = ft_strlen(data->tokens[i].data);
+	int j;
+	
+	j = 0;
+	temp = NULL;
 	var = NULL;
-	var = data->tokens[i].data;
-	var = ft_memcpy(var, var +1, len -1);
-	printf("var is:%s\n", var);
-
+	path = NULL;
+	len = ft_strlen(data->tokens[i].data);
+	while (i < len)
+	{
+		if(data->tokens[i].data[j] == '/')
+		{
+			data->file_seperator_found = true;
+			break;
+		}
+		j++;
+	}
+	if (data->file_seperator_found)
+	{
+		var = ft_substr(data->tokens[i].data, 0 , j);
+		temp = ft_substr(data->tokens[i].data, j - 1 , len);
+	}
+	else
+	{
+		var = data->tokens[i].data;
+	}
+	ft_memcpy(var, var +1, ft_strlen(var) - 1);
 	path = getenv(var);
 	if (path == NULL)
 		exit(EXIT_FAILURE);
 	else
-		data->tokens[i].data = path;
+	{
+		data->tokens[i].data = ft_strjoin(path,temp);
+	}
+		
 }
 
 void	tokenizing(t_data *data)
