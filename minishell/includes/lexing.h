@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/20 12:44:00 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/21 13:56:25 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "minishell.h"
 
+#define DELEMETERS " \t\n\0"
+#define VAR_DELEMITER "/\'\"$"
 typedef struct s_data t_data;
 
 void	space_function(t_data *data);

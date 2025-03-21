@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/20 16:05:41 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/21 13:30:53 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	line_split(t_data *data)
 			normal_function(data);
 		else if (data->double_quote_found && data->input_line[data->end] != '\"' && data->input_line[data->end] != '$')
 			normal_function(data);
-		else if (data->input_line[data->end] == ' ')
+		else if (ft_strchr(DELEMETERS, data->input_line[data->end]))
 			space_function(data);
 		else if (data->input_line[data->end] == '|')
 			pipe_function(data);
