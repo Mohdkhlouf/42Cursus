@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 12:37:38 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 13:27:19 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ void	assign_quotes(t_data *data, int len, int i, char *temp)
 
 	c = 0;
 	j = 0;
-	if (data->tokens[i].data[0] == '\'' && data->tokens[i].data[len
-		- 1] == '\'')
-		data->quote_type = '\'';
-	if (data->tokens[i].data[j] == '\"' && data->tokens[i].data[len
-		- 1] == '\"')
-		data->quote_type = '\"';
 	while (j < len)
 	{
+		if (data->tokens[i].data[j] == '\'' && data->quote_type == 0)
+			data->quote_type = '\'';
+		if (data->tokens[i].data[j] == '\"' && data->quote_type == 0)
+			data->quote_type = '\"';
 		if (data->tokens[i].data[j] == data->quote_type
 			|| (data->tokens[i].data[j] == '\'' && data->quote_type == 0)
 				|| (data->tokens[i].data[j] == '\"' && data->quote_type == 0))
@@ -115,7 +113,7 @@ void	tokenizing(t_data *data)
 		printf("token %s\n", data->tokens[i].data);
 		if (ft_strchr(data->tokens[i].data, '$'))
 			var_handler(data, i);
-		else if (ft_strchr(data->tokens[i].data, '\'')
+		if (ft_strchr(data->tokens[i].data, '\'')
 				|| ft_strchr(data->tokens[i].data, '\"'))
 		{
 			quote_fixing(data, i);
