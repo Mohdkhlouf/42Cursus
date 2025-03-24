@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 11:25:55 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 11:34:07 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void var_handler(t_data *data, int i)
 			data->tokens[i].data = ft_strjoin(path,temp);
 		else
 			data->tokens[i].data = path;
+		data->tokens->type = TOK_ENV_VAR;
 	}
 }
 
