@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 09:51:09 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 15:13:30 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ void					normal_function(t_data *data);
 void					append_token(t_data *data, int type);
 void					env_variable_function(t_data *data);
 void					eof_function(t_data *data);
+void search_for_file_seperator(t_data *data,int i, int len, int *j);
 
 #endif
