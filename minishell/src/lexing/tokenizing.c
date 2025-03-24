@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 11:34:07 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 11:52:28 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,11 @@ void var_handler(t_data *data, int i)
 		exit(EXIT_FAILURE);
 	else
 	{
-		
 		if (data->file_seperator_found)
 			data->tokens[i].data = ft_strjoin(path,temp);
 		else
 			data->tokens[i].data = path;
-		data->tokens->type = TOK_ENV_VAR;
+		data->tokens[i].type = TOK_ENV_VAR;
 	}
 }
 
@@ -109,7 +108,6 @@ void	tokenizing(t_data *data)
 	i = 0;
 	while (i < data->tokens_conter)
 	{
-		printf("#%s#\n", data->tokens[i].data);
 		if (ft_strchr(data->tokens[i].data, '\'')
 				|| ft_strchr(data->tokens[i].data, '\"'))
 		{
