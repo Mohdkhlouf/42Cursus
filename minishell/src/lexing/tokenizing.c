@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 11:52:28 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 12:37:38 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ void	quote_fixing(t_data *data, int i)
 	assign_quotes(data, len, i, temp);
 	free(data->tokens[i].data);
 	data->tokens[i].data = ft_strdup(temp);
+	if (data->quote_type == '\'')
+		data->tokens[i].type = TOK_SINGLE_QUOTE;
+	else
+		data->tokens[i].type = TOK_DOUBLE_QUOTE;
 	free(temp);
 }
 
@@ -71,7 +75,7 @@ void var_handler(t_data *data, int i)
 	len = ft_strlen(data->tokens[i].data);
 	while (j < len)
 	{
-		if(data->tokens[i].data[j] == '/')
+		if(data->tokens[i].data[j] == '/' || data->tokens[i].data[j] == '\'' || data->tokens[i].data[j] == '\"')
 		{
 			data->file_seperator_found = true;
 			break;
@@ -82,7 +86,7 @@ void var_handler(t_data *data, int i)
 	if (data->file_seperator_found)
 	{
 		var = ft_substr(data->tokens[i].data, 0 , j);
-		temp = ft_substr(data->tokens[i].data, j - 1 , len);
+		temp = ft_substr(data->tokens[i].data, j, len);
 	}
 	else
 		var = data->tokens[i].data;
@@ -108,13 +112,15 @@ void	tokenizing(t_data *data)
 	i = 0;
 	while (i < data->tokens_conter)
 	{
-		if (ft_strchr(data->tokens[i].data, '\'')
+		printf("token %s\n", data->tokens[i].data);
+		if (ft_strchr(data->tokens[i].data, '$'))
+			var_handler(data, i);
+		else if (ft_strchr(data->tokens[i].data, '\'')
 				|| ft_strchr(data->tokens[i].data, '\"'))
 		{
 			quote_fixing(data, i);
 		}
-		else if (ft_strchr(data->tokens[i].data, '$'))
-			var_handler(data, i);
+	
 		i++;
 	}
 	i = 0;
