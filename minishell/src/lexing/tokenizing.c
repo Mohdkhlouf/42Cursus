@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 16:27:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 17:03:43 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,51 @@ void	path_set_and_join(t_data *data, int i, char *temp, char *path)
 		data->tokens[i].type = TOK_ENV_VAR;
 	}
 }
+
+void	var_handler2(t_data *data, int i)
+{
+	char	*path;
+	char	*var;
+	char	*temp2;
+	char	*temp;
+	int		len;
+	int		var_found;
+	int		j;
+	// continue here to expand the variable within double quotes.
+	j = 0;
+	temp = NULL;
+	var = NULL;
+	path = NULL;
+	var_found = 0;
+	len = ft_strlen(data->tokens[i].data);
+	search_for_file_seperator(data, i, len, &j);
+	if (data->file_seperator_found)
+	{
+		var = ft_substr(data->tokens[i].data, 0, j);
+		temp = ft_substr(data->tokens[i].data, j, len);
+	}
+	else
+		var = data->tokens[i].data;
+	var_found = strchr(var, '$') - var;
+	j = var_found;
+	while (j < len)
+	{
+		if (var[j] == ' ')
+			break ;
+		j++;
+	}
+	// var = ft_substr(var, 0, var_found);
+	temp2 = ft_substr(var, var_found, j);
+	temp = ft_substr(var, j, len);
+	printf("var %s\n", var);
+	printf("tmp2 %s\n", temp2);
+	printf("tmp %s\n", temp);
+	
+	// ft_memcpy(temp2, temp2 + 1, ft_strlen(temp2) - 1);
+	path = getenv(temp2);
+	path_set_and_join(data, i, temp, path);
+}
+
 void	var_handler(t_data *data, int i)
 {
 	char	*path;
@@ -129,6 +174,9 @@ void	tokenizing(t_data *data)
 		{
 			quote_fixing(data, i);
 		}
+		if ((data->tokens[i].type == TOK_DOUBLE_QUOTE)
+			&& ft_strchr(data->tokens[i].data, '$'))
+			var_handler2(data, i);
 		i++;
 	}
 	i = 0;
