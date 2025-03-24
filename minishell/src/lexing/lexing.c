@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/21 13:30:53 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 09:57:16 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ void	line_split(t_data *data)
 	data->end = 0;
 	data->start = 0;
 	malloc_tokens_arr(data);
-	while (data->input_line[data->end])
+	while (1)
 	{
+		if (data->input_line[data->end] == '\0')
+			return (eof_function(data));
 		if (data->quote_found && data->input_line[data->end] != '\'')
 			normal_function(data);
 		else if (data->double_quote_found && data->input_line[data->end] != '\"' && data->input_line[data->end] != '$')
@@ -70,11 +72,6 @@ void	line_split(t_data *data)
 		else
 			normal_function(data);
 		data->end++;
-	}
-	if (data->in_token)
-	{
-		data->end++;
-		append_token(data, TOK_UNKNOWN);
 	}
 }
 

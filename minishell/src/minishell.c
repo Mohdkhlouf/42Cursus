@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/21 14:34:05 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 09:34:14 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void data_init(t_data *data)
 	data->double_quote_found = false;
 	data->quote_type = 0;
 	data->file_seperator_found = false;
+	data->tokens_conter = 0;
 }
 
 void reading_loop(t_data *data)

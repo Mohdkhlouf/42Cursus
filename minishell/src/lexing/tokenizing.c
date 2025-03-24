@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/21 15:16:55 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 10:11:49 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void var_handler(t_data *data, int i)
 	var = NULL;
 	path = NULL;
 	len = ft_strlen(data->tokens[i].data);
-	while (i < len)
+	while (j < len)
 	{
 		if(data->tokens[i].data[j] == '/')
 		{
@@ -78,24 +78,23 @@ void var_handler(t_data *data, int i)
 		}
 		j++;
 	}
+	
 	if (data->file_seperator_found)
 	{
 		var = ft_substr(data->tokens[i].data, 0 , j);
 		temp = ft_substr(data->tokens[i].data, j - 1 , len);
 	}
 	else
-	{
 		var = data->tokens[i].data;
-	}
 	ft_memcpy(var, var +1, ft_strlen(var) - 1);
 	path = getenv(var);
+
 	if (path == NULL)
 		exit(EXIT_FAILURE);
 	else
 	{
 		data->tokens[i].data = ft_strjoin(path,temp);
 	}
-		
 }
 
 void	tokenizing(t_data *data)
@@ -105,15 +104,16 @@ void	tokenizing(t_data *data)
 	i = 0;
 	while (data->tokens[i].data)
 	{
+		printf("#%s#\n", data->tokens[i].data);
 		if (ft_strchr(data->tokens[i].data, '\'')
 				|| ft_strchr(data->tokens[i].data, '\"'))
 		{
 			quote_fixing(data, i);
 		}
-		if (ft_strchr(data->tokens[i].data, '$'))
+		else if (ft_strchr(data->tokens[i].data, '$'))
 			var_handler(data, i);
 		i++;
-	}	
+	}
 	i = 0;
 	while (i < data->tokens_conter)
 	{

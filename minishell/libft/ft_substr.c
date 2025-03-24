@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 10:59:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2024/11/13 16:38:18 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 09:38:10 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		sub[i] = s[start + i];
 		i++;
 	}
-	sub[i] = 0;
+	sub[i] = '\0';
 	return (sub);
 }
