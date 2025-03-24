@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 13:27:19 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/24 13:44:27 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	assign_quotes(t_data *data, int len, int i, char *temp)
 
 	c = 0;
 	j = 0;
+	
 	while (j < len)
 	{
 		if (data->tokens[i].data[j] == '\'' && data->quote_type == 0)
@@ -36,6 +37,7 @@ void	assign_quotes(t_data *data, int len, int i, char *temp)
 			j++;
 		}
 	}
+	data->quote_type = 0;
 	temp[c] = '\0';
 }
 
@@ -43,7 +45,10 @@ void	quote_fixing(t_data *data, int i)
 {
 	char	*temp;
 	int		len;
-
+	if ( data->tokens[i].data[0] == '\'')
+		data->tokens[i].type = TOK_SINGLE_QUOTE;
+	else if (data->tokens[i].data[0] == '\"')
+		data->tokens[i].type = TOK_DOUBLE_QUOTE;
 	len = ft_strlen(data->tokens[i].data);
 	temp = malloc(sizeof(char) * len + 1);
 	if (temp == NULL)
@@ -51,10 +56,7 @@ void	quote_fixing(t_data *data, int i)
 	assign_quotes(data, len, i, temp);
 	free(data->tokens[i].data);
 	data->tokens[i].data = ft_strdup(temp);
-	if (data->quote_type == '\'')
-		data->tokens[i].type = TOK_SINGLE_QUOTE;
-	else
-		data->tokens[i].type = TOK_DOUBLE_QUOTE;
+	
 	free(temp);
 }
 
