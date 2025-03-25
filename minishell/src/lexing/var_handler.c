@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:11:15 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/25 14:20:59 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:56:06 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char *expand_vars(char **vars_arr, int len)
 	char *temp;
 	
 	temp = malloc(len);
+	if (!temp)
+		exit(EXIT_FAILURE);
 	c = 0;
 	while (vars_arr[c])
 	{
@@ -76,6 +78,11 @@ char *expand_vars(char **vars_arr, int len)
 	return(temp);
 }
 
+void free_var(t_vars_data *var)
+{
+	free(var->vars_arr);
+	free(var);
+}
 
 void	var_handler2(t_data *data, int i)
 {
@@ -86,13 +93,9 @@ void	var_handler2(t_data *data, int i)
 	c = 0;
 	t_vars_data *var;
 	var = malloc(sizeof(t_vars_data) * 1);
-	var_init(var);
-	var->len = ft_strlen(data->tokens[i].data);
-	var->vars_count = find_vars_count(data, i);
-	var->vars_arr = malloc(sizeof (char *) * var->vars_count + 3);
-	if (!var->vars_arr)
+	if (!var)
 		exit(EXIT_FAILURE);
-	printf("Vars Count:%d\n", var->vars_count);
+	var_init(var, data, i);
 	search_for_file_seperator(data, i, var->len, &j);
 	if (data->file_seperator_found)
 	{
@@ -104,4 +107,5 @@ void	var_handler2(t_data *data, int i)
 	split_vars(var->var_var, var->vars_arr);
 	var->var_var= expand_vars(var->vars_arr, var->len);
 	path_set_and_join(data, i, var->temp, var->var_var);
+	free_var(var);
 }

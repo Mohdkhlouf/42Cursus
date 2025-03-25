@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/25 14:21:07 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:22:01 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void					path_set_and_join(t_data *data, int i, char *temp,
 							char *path);
 void					search_for_file_seperator(t_data *data, int i, int len,
 							int *j);
-void					var_init(t_vars_data *var);
+void					var_init(t_vars_data *var, t_data *data, int i);
 void					var_handler2(t_data *data, int i);
 
 #endif

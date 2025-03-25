@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 11:56:18 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:49:10 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	append_token(t_data *data, int type)
 				data->start, data->end - data->start);
 	data->tokens[data->tokens_conter].type = type;
 	data->tokens_conter++;
-	
 }
 
 void	line_split(t_data *data)
@@ -57,7 +56,8 @@ void	line_split(t_data *data)
 			return (eof_function(data));
 		if (data->quote_found && data->input_line[data->end] != '\'')
 			normal_function(data);
-		else if (data->double_quote_found && data->input_line[data->end] != '\"' && data->input_line[data->end] != '$')
+		else if (data->double_quote_found && data->input_line[data->end] != '\"'
+			&& data->input_line[data->end] != '$')
 			normal_function(data);
 		else if (ft_strchr(DELEMETERS, data->input_line[data->end]))
 			space_function(data);
@@ -88,6 +88,4 @@ void	lexing(t_data *data)
 
 	i = 0;
 	line_split(data);
-	
-
 }

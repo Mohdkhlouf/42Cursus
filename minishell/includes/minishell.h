@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/21 14:33:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/25 16:11:31 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ typedef struct s_token
 typedef struct s_data
 {
 	char			*input_line;
-	char			*cleaned_line;
-	int cline_parts; // clean line parts number
+	int				cline_parts;
 	t_token			*tokens;
 	size_t			end;
 	size_t			start;

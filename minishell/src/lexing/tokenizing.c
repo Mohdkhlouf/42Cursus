@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/25 14:23:08 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:56:20 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	quote_fixing(t_data *data, int i)
 		data->tokens[i].type = TOK_DOUBLE_QUOTE;
 	len = ft_strlen(data->tokens[i].data);
 	temp = malloc(sizeof(char) * len + 1);
-	if (temp == NULL)
+	if (!temp)
 		exit(EXIT_FAILURE);
 	assign_quotes(data, len, i, temp);
 	free(data->tokens[i].data);
@@ -85,6 +85,18 @@ void	var_handler(t_data *data, int i)
 	path_set_and_join(data, i, temp, path);
 }
 
+void print_tokens(t_data *data)
+{
+	int i;
+	
+	i = 0;
+	while (i < data->tokens_conter)
+	{
+		printf("Token:#%s# Type:%u\n", data->tokens[i].data,
+			data->tokens[i].type);
+		i++;
+	}
+}
 void	tokenizing(t_data *data)
 {
 	int	i;
@@ -107,11 +119,5 @@ void	tokenizing(t_data *data)
 			var_handler2(data, i);
 		i++;
 	}
-	i = 0;
-	while (i < data->tokens_conter)
-	{
-		printf("Token:#%s# Type:%u\n", data->tokens[i].data,
-			data->tokens[i].type);
-		i++;
-	}
+	print_tokens(data);
 }

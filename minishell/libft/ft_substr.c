@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 10:59:48 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 09:38:10 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/25 15:56:58 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = slen - start;
 	sub = (char *)malloc(sizeof(char) * (len + 1));
 	if (!sub)
-		return (NULL);
+		exit(EXIT_FAILURE);;
 	i = 0;
 	while (s[start + i] && i < len)
 	{
