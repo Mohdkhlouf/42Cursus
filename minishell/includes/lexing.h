@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 15:13:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/25 14:21:07 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 # define VAR_DELEMITER "/\'\"$"
 typedef struct s_data	t_data;
 
+typedef struct s_vars_data
+{
+	char				**vars_arr;
+	int					vars_count;
+	char				*temp;
+	char				*var_var;
+	int					len;
+}						t_vars_data;
+
 void					space_function(t_data *data);
 void					pipe_function(t_data *data);
 void					redirectin_function(t_data *data);
@@ -28,6 +37,14 @@ void					normal_function(t_data *data);
 void					append_token(t_data *data, int type);
 void					env_variable_function(t_data *data);
 void					eof_function(t_data *data);
-void search_for_file_seperator(t_data *data,int i, int len, int *j);
+void					search_for_file_seperator(t_data *data, int i, int len,
+							int *j);
+int						find_vars_count(t_data *data, int i);
+void					path_set_and_join(t_data *data, int i, char *temp,
+							char *path);
+void					search_for_file_seperator(t_data *data, int i, int len,
+							int *j);
+void					var_init(t_vars_data *var);
+void					var_handler2(t_data *data, int i);
 
 #endif

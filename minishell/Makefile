@@ -35,7 +35,8 @@ LIBS    = -lreadline
 # Files
 NAME    = minishell
 SRC     = $(SRC_DIR)/minishell.c $(SRC_DIR)/minishell_utils.c $(SRC_DIR)/lexing/lexing.c \
-			$(SRC_DIR)/lexing/lexing_functions.c 	$(SRC_DIR)/lexing/lexing_functions2.c $(SRC_DIR)/lexing/tokenizing.c 
+			$(SRC_DIR)/lexing/lexing_functions.c 	$(SRC_DIR)/lexing/lexing_functions2.c $(SRC_DIR)/lexing/tokenizing.c \
+			$(SRC_DIR)/lexing/var_handler.c		$(SRC_DIR)/lexing/var_handler_utils.c
 OBJS    = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 LIBFT_A = $(LIBFT)/libft.a
 
