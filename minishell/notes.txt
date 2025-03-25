@@ -40,3 +40,6 @@ mkhlouf@c1r3p4:~/mygithub/minishell$ echo $HOME$USER
 
 i have to fix also this"
 m'oh"am"ma'd
+
+
+"$HOME$USER"

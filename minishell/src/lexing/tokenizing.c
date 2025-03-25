@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 17:03:43 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/25 13:48:34 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,22 +87,108 @@ void	path_set_and_join(t_data *data, int i, char *temp, char *path)
 	}
 }
 
+int	find_vars_count(t_data *data, int i)
+{
+	int	j;
+	int	vars_count;
+
+	j = 0;
+	vars_count = 0;
+	while (data->tokens[i].data[j])
+	{
+		if (data->tokens[i].data[j] == '$')
+			vars_count++;
+		j++;
+	}
+	return (vars_count);
+}
+void split_vars(char *var, char **vars_arr)
+{
+	int vars_count;
+	int start;
+	int c;
+	bool var_is_found;
+	
+	vars_count = 0;
+	start = 0;
+	c = 0;
+	var_is_found = false;
+	
+	while (1)
+	{
+		if (var[c] == '\0')
+		{
+			vars_arr[vars_count] = ft_substr(var, start, c - start);
+			vars_count++;
+			break ;
+		}
+		if (var[c] == '$')
+		{
+			var_is_found = true;
+			vars_arr[vars_count] = ft_substr(var, start, c - start);
+			vars_count++;
+			start = c;
+		}
+		if (var_is_found && var[c] == ' ')
+		{
+			
+			var_is_found = false;
+			vars_arr[vars_count] = ft_substr(var, start, c - start);
+			vars_count++;
+			start = c;
+		}
+		c++;
+	}
+	vars_arr[vars_count] = 0;
+}
+
+void expand_vars(char **vars_arr, int len)
+{
+	int c;
+	char *temp;
+	
+	temp = malloc(len);
+	c = 0;
+	while (vars_arr[c])
+	{
+		if (vars_arr[c][0] == '$')
+		{
+			vars_arr[c] = getenv(vars_arr[c] + 1);
+		}
+		c++;
+	}
+	c = 0;
+	while (vars_arr[c])
+	{
+		temp = ft_strcat(temp, vars_arr[c]);
+		c++;
+	}
+	printf("Final %s\n",temp);
+}
+
 void	var_handler2(t_data *data, int i)
 {
-	char	*path;
 	char	*var;
-	char	*temp2;
 	char	*temp;
 	int		len;
 	int		var_found;
 	int		j;
-	// continue here to expand the variable within double quotes.
+	int		vars_count;
+	char	**vars_arr;
+	int		c;
+
+
 	j = 0;
-	temp = NULL;
-	var = NULL;
-	path = NULL;
 	var_found = 0;
+	vars_count = 0;
+	c = 0;
+	
 	len = ft_strlen(data->tokens[i].data);
+	vars_count = find_vars_count(data, i);
+	vars_arr = malloc(sizeof (char *) * vars_count * 3);
+	if (!vars_arr)
+		exit(EXIT_FAILURE);
+	printf("Vars Count:%d\n", vars_count);
 	search_for_file_seperator(data, i, len, &j);
 	if (data->file_seperator_found)
 	{
@@ -111,24 +197,18 @@ void	var_handler2(t_data *data, int i)
 	}
 	else
 		var = data->tokens[i].data;
-	var_found = strchr(var, '$') - var;
-	j = var_found;
-	while (j < len)
-	{
-		if (var[j] == ' ')
-			break ;
-		j++;
-	}
-	// var = ft_substr(var, 0, var_found);
-	temp2 = ft_substr(var, var_found, j);
-	temp = ft_substr(var, j, len);
-	printf("var %s\n", var);
-	printf("tmp2 %s\n", temp2);
-	printf("tmp %s\n", temp);
 	
-	// ft_memcpy(temp2, temp2 + 1, ft_strlen(temp2) - 1);
-	path = getenv(temp2);
-	path_set_and_join(data, i, temp, path);
+	split_vars(var, vars_arr);
+	expand_vars(vars_arr, len);
+	
+	c = 0;
+	while (vars_arr[c])
+	{
+		printf("part:%s#\n", vars_arr[c]);
+		c++;
+	}
+	
+	// path_set_and_join(data, i, temp, path);
 }
 
 void	var_handler(t_data *data, int i)
