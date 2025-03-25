@@ -43,3 +43,5 @@ m'oh"am"ma'd
 
 
 "$HOME$USER"
+
+"      $USER $HOME    "
