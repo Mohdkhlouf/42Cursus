@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:11:15 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/26 10:19:21 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 10:32:07 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,11 @@ void	var_handler2(t_data *data, int i)
 	j = 0;
 	c = 0;
 	t_vars_data *var;
+	printf("%s\n", data->tokens[i].data);
 	var = malloc(sizeof(t_vars_data) * 1);
 	if (!var)
 		exit(EXIT_FAILURE);
 	var_init(var, data, i);
-	// search_for_file_seperator(data, i, var->len, &j);
-	// if (data->file_seperator_found)
-	// {
-	// 	var->var_var = ft_substr(data->tokens[i].data, 0, j);
-	// 	var->temp = ft_substr(data->tokens[i].data, j, var->len);
-	// }
-	// else
 	var->var_var = data->tokens[i].data;
 	split_vars(var->var_var, var->vars_arr);
 	var->var_var= expand_vars(var->vars_arr, var->len);
