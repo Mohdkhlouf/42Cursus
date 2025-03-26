@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:11:15 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/26 13:31:32 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 16:37:49 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,54 +23,57 @@ void split_vars(char *var, char **vars_arr)
 	start = 0;
 	c = 0;
 	var_is_found = false;
-	
 	while (1)
 	{
 		if (var[c] == '\0')
 		{
-			vars_arr[vars_count] = ft_substr(var, start, c - start);
+			if (start == c)
+				vars_arr[vars_count] = ft_substr(var, start, 1);
+			else
+				vars_arr[vars_count] = ft_substr(var, start, c - start);
 			vars_count++;
 			break ;
 		}
-		if (var[c] == '$')
+		else if (var[c] == '$')
 		{
 			var_is_found = true;
 			vars_arr[vars_count] = ft_substr(var, start, c - start);
 			vars_count++;
 			start = c;
 		}
-		if ((var_is_found && var[c] == ' ' ) || (var_is_found && var[c] == '/' ) || (var_is_found && var[c] == '\"' ))
+		else if ((var_is_found && var[c] == ' ' ) || (var_is_found && var[c] == '/' ) || (var_is_found && var[c] == '\"' ))
 		{
-			
 			var_is_found = false;
 			vars_arr[vars_count] = ft_substr(var, start, c - start);
 			vars_count++;
 			start = c;
 		}
+		
 		c++;
 	}
-	vars_arr[vars_count] = 0;
+	
+	vars_arr[vars_count] = NULL;
 }
 
-char *expand_vars(char **vars_arr, int len)
+char *expand_vars(char **vars_arr)
 {
 	int c;
 	char *temp;
 	
-	temp = malloc(len);
-	if (!temp)
-		exit(EXIT_FAILURE);
 	c = 0;
 	while (vars_arr[c])
 	{
 		if (vars_arr[c][0] == '$')
 		{
-			vars_arr[c] = getenv(vars_arr[c] + 1);
+			vars_arr[c] = ft_strdup(getenv(vars_arr[c] + 1));
 			if (vars_arr[c] == NULL)
 				vars_arr[c] = ft_strdup("");
 		}
+		printf("value:%s#\n", vars_arr[c]);
 		c++;
 	}
+	temp = ft_strdup("");
+
 	c = 0;
 	while (vars_arr[c])
 	{
@@ -94,14 +97,12 @@ void	var_handler2(t_data *data, int i)
 	j = 0;
 	c = 0;
 	t_vars_data *var;
-	printf("%s\n", data->tokens[i].data);
 	var = malloc(sizeof(t_vars_data) * 1);
 	if (!var)
 		exit(EXIT_FAILURE);
 	var_init(var, data, i);
-	var->var_var = data->tokens[i].data;
-	split_vars(var->var_var, var->vars_arr);
-	var->var_var= expand_vars(var->vars_arr, var->len);
+	split_vars(data->tokens[i].data, var->vars_arr);
+	var->var_var = expand_vars(var->vars_arr);
 	path_set_and_join(data, i, var->temp, var->var_var);
 	free_var(var);
 }

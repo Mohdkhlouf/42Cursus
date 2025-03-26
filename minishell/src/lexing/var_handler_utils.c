@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:12:29 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/26 13:32:07 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 16:26:19 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ void var_init(t_vars_data *var, t_data *data, int i)
 	var->var_var = NULL;
 	var->vars_arr = NULL;
 	var->vars_count = 0;
-
 	var->len = ft_strlen(data->tokens[i].data);
 	var->vars_count = find_vars_count(data, i);
-	var->vars_arr = malloc(sizeof (char *) * var->vars_count + 3);
+	var->vars_arr = (char **)malloc(sizeof (char *) * (var->vars_count * 3));
 	if (!var->vars_arr)
 		exit(EXIT_FAILURE);
 }
