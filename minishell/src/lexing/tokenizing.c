@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/26 11:38:41 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 13:31:58 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,19 @@ void	var_handler(t_data *data, int i)
 	}
 	else
 		var = data->tokens[i].data;
-	ft_memcpy(var, var + 1, ft_strlen(var) - 1);
-	path = getenv(var);
+	path = getenv(var + 1);
+	if (!path)
+		path = ft_strdup("");
 	path_set_and_join(data, i, temp, path);
+	free(var);
+	if (temp)
+		free(temp);
 }
 
-void print_tokens(t_data *data)
+void	print_tokens(t_data *data)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < data->tokens_conter)
 	{
@@ -104,21 +108,17 @@ int	tokenizing(t_data *data)
 	i = 0;
 	while (i < data->tokens_conter)
 	{
-		printf("token %s\n", data->tokens[i].data);
-		if (ft_strchr(data->tokens[i].data, '$')
-			&& data->tokens[i].data[0] != '\''
+		if ((data->tokens[i].data[0] == '$') && data->tokens[i].data[0] != '\''
 			&& data->tokens[i].data[0] != '\"')
 			var_handler(data, i);
-		
-		if ((data->tokens[i].type == TOK_DOUBLE_QUOTE)
-			&& ft_strchr(data->tokens[i].data, '$'))
-			var_handler2(data, i);
-			
 		if (ft_strchr(data->tokens[i].data, '\'')
 				|| ft_strchr(data->tokens[i].data, '\"'))
 		{
 			quote_fixing(data, i);
 		}
+		if ((data->tokens[i].type == TOK_DOUBLE_QUOTE)
+			&& ft_strchr(data->tokens[i].data, '$'))
+			var_handler2(data, i);
 		i++;
 	}
 	print_tokens(data);

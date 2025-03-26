@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:12:29 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/25 15:21:30 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 13:32:07 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	path_set_and_join(t_data *data, int i, char *temp, char *path)
 	else
 	{
 		if (data->file_seperator_found == true)
-			data->tokens[i].data = ft_strjoin(path, temp);
+			data->tokens[i].data = ft_strdup(ft_strcat(path, temp));
 		else
-			data->tokens[i].data = path;
+			data->tokens[i].data = ft_strdup(path);
 		data->tokens[i].type = TOK_ENV_VAR;
 	}
 }

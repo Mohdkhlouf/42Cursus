@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/26 11:36:04 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 13:27:51 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	malloc_tokens_arr(t_data *data)
 {
-	data->cline_parts = ft_strlen(data->input_line) / 2;
+	data->cline_parts = ft_strlen(data->input_line);
 	if (data->cline_parts != 0)
 	{
 		data->tokens = malloc(sizeof(t_token) * data->cline_parts);

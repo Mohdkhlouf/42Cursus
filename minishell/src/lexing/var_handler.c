@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:11:15 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/26 10:32:07 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 13:31:32 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ char *expand_vars(char **vars_arr, int len)
 		{
 			vars_arr[c] = getenv(vars_arr[c] + 1);
 			if (vars_arr[c] == NULL)
-				vars_arr[c] = "";
+				vars_arr[c] = ft_strdup("");
 		}
 		c++;
 	}
 	c = 0;
 	while (vars_arr[c])
 	{
-		temp = ft_strcat(temp, vars_arr[c]);
+		temp = ft_strdup(ft_strcat(temp, vars_arr[c]));
 		c++;
 	}
 	return(temp);

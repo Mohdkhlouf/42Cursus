@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/26 10:46:57 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 13:33:46 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void free_data(t_data * data)
     int i;
 
     i = 0;
-    while(i < data->tokens_conter)
+    while(data->tokens && i < data->tokens_conter)
     {
-        free(data->tokens[i].data);
+        printf("tokens counter:%d\n", i);
+        if (data->tokens[i].data)
+            free(data->tokens[i].data);
         i++;
     }
     free(data->tokens);
