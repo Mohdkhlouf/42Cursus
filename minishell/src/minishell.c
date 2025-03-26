@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/25 16:08:36 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:46:49 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void reading_loop(t_data *data)
 	while (true)
 	{
 		data_init(data);
-		data->input_line = readline("Prompt > ");
+		data->input_line = readline("Prompt> ");
 		if (!data->input_line)
 		{
 			printf("Exit");
+			free(data->input_line);
 			return;
 		}
 		add_history(data->input_line);
@@ -53,7 +54,10 @@ int	main(void)
 	
 	data = malloc(sizeof (t_data));
 	if(!data)
+	{
+		perror("Memory allocation failed");
 		exit(EXIT_FAILURE);
+	}
 	data_init(data);
 	reading_loop(data);
 	free(data);

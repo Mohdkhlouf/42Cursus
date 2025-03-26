@@ -6,13 +6,13 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/25 15:49:10 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:36:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lexing.h"
 
-void	malloc_tokens_arr(t_data *data)
+int	malloc_tokens_arr(t_data *data)
 {
 	data->cline_parts = ft_strlen(data->input_line) / 2;
 	if (data->cline_parts != 0)
@@ -21,20 +21,18 @@ void	malloc_tokens_arr(t_data *data)
 		if (!data->tokens)
 		{
 			printf("Error allocating memory for tokens\n");
+			free(data);
 			exit(EXIT_FAILURE);
 		}
+		return (SUCCESS);
 	}
-	else
-	{
-		printf("Error\n");
-		// free
-		exit(EXIT_FAILURE);
-	}
+	return (FAILIURE);
 }
 
 // this one to add the data normally
 void	append_token(t_data *data, int type)
 {
+	/* you have to add a realloc function */
 	if (data->end == data->start)
 		data->tokens[data->tokens_conter].data = ft_substr(data->input_line,
 				data->start, 1);
@@ -45,15 +43,12 @@ void	append_token(t_data *data, int type)
 	data->tokens_conter++;
 }
 
-void	line_split(t_data *data)
+int	line_split(t_data *data)
 {
-	data->end = 0;
-	data->start = 0;
-	malloc_tokens_arr(data);
-	while (1)
+	while (true)
 	{
 		if (data->input_line[data->end] == '\0')
-			return (eof_function(data));
+			return (eof_function(data), FAILIURE);
 		if (data->quote_found && data->input_line[data->end] != '\'')
 			normal_function(data);
 		else if (data->double_quote_found && data->input_line[data->end] != '\"'
@@ -73,19 +68,17 @@ void	line_split(t_data *data)
 			normal_function(data);
 		data->end++;
 	}
+	return (SUCCESS);
 }
 
-/*first ceaning the line from spaces and white spaces and etc.
-then send it as clean ass should be to the tokenising,
-	then after that parsing starts. the parsing will store
-		everthing in the abstract tree*/
-
-/*clean line function to clean the line from spaces, it changes spaces to one */
-
-void	lexing(t_data *data)
+int	lexing(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	line_split(data);
+	if (malloc_tokens_arr(data) != SUCCESS)
+		return (FAILIURE);
+	if (line_split(data) != SUCCESS)
+		return (FAILIURE);
+	return (SUCCESS);
 }

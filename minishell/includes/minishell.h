@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/25 16:11:31 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 11:39:28 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+
+# define SUCCESS 1
+# define FAILIURE 0
 
 typedef enum e_token_type
 {
@@ -61,7 +64,7 @@ typedef struct s_data
 }					t_data;
 
 void				free_data(t_data *data);
-void				line_split(t_data *data);
-void				lexing(t_data *data);
-void				tokenizing(t_data *data);
+int					line_split(t_data *data);
+int					lexing(t_data *data);
+int					tokenizing(t_data *data);
 #endif
