@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:11:15 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/25 15:56:06 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/26 10:19:21 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void split_vars(char *var, char **vars_arr)
 			vars_count++;
 			start = c;
 		}
-		if (var_is_found && var[c] == ' ')
+		if ((var_is_found && var[c] == ' ' ) || (var_is_found && var[c] == '/' ) || (var_is_found && var[c] == '\"' ))
 		{
 			
 			var_is_found = false;
@@ -66,6 +66,8 @@ char *expand_vars(char **vars_arr, int len)
 		if (vars_arr[c][0] == '$')
 		{
 			vars_arr[c] = getenv(vars_arr[c] + 1);
+			if (vars_arr[c] == NULL)
+				vars_arr[c] = "";
 		}
 		c++;
 	}
@@ -96,14 +98,14 @@ void	var_handler2(t_data *data, int i)
 	if (!var)
 		exit(EXIT_FAILURE);
 	var_init(var, data, i);
-	search_for_file_seperator(data, i, var->len, &j);
-	if (data->file_seperator_found)
-	{
-		var->var_var = ft_substr(data->tokens[i].data, 0, j);
-		var->temp = ft_substr(data->tokens[i].data, j, var->len);
-	}
-	else
-		var->var_var = data->tokens[i].data;
+	// search_for_file_seperator(data, i, var->len, &j);
+	// if (data->file_seperator_found)
+	// {
+	// 	var->var_var = ft_substr(data->tokens[i].data, 0, j);
+	// 	var->temp = ft_substr(data->tokens[i].data, j, var->len);
+	// }
+	// else
+	var->var_var = data->tokens[i].data;
 	split_vars(var->var_var, var->vars_arr);
 	var->var_var= expand_vars(var->vars_arr, var->len);
 	path_set_and_join(data, i, var->temp, var->var_var);
