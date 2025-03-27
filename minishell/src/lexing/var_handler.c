@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:11:15 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/27 14:15:20 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/27 14:41:01 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ void	split_vars(char *token, t_vars_data *var)
 		var->parts_count++;
 		var->vars_arr[var->parts_count] = ft_strdup("\0");
 	}
+	c =0;
+	while (c < var->parts_count)
+	{
+		printf("%d is:#%s#\n", c, var->vars_arr[c]);
+		c++;
+	}
 }
 
 char	*expand_vars(t_vars_data *var)
@@ -67,8 +73,9 @@ char	*expand_vars(t_vars_data *var)
 	{
 		if (var->vars_arr[c][0] == '$')
 		{
-			var->vars_arr[c] = ft_strdup(getenv(var->vars_arr[c] + 1));
-			if (var->vars_arr[c] == NULL)
+			if (getenv(var->vars_arr[c] + 1))
+				var->vars_arr[c] = ft_strdup(getenv(var->vars_arr[c] + 1));	
+			else
 				var->vars_arr[c] = ft_strdup("");
 		}
 		c++;
