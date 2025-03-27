@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:11:15 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/27 13:58:50 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/27 14:15:20 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,15 @@ void	split_vars(char *token, t_vars_data *var)
 	}
 	if (token[c] == '\0')
 	{
-		if (var_is_found )
+		if (var_is_found)
 			var_is_found = false;
 		if (start == c)
 			var->vars_arr[var->parts_count] = ft_substr(token, start, 1);
 		else
 			var->vars_arr[var->parts_count] = ft_substr(token, start, c - start);
+		var->parts_count++;
+		var->vars_arr[var->parts_count] = ft_strdup("\0");
 	}
-	printf("0:#%s#\n",var->vars_arr[0] );
-	// printf("1:#%s#\n",var->vars_arr[1] );
-	// printf("Counter is:#%d#\n",var->parts_count );
-
 }
 
 char	*expand_vars(t_vars_data *var)
