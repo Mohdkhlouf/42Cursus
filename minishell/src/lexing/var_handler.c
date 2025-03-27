@@ -6,84 +6,90 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:11:15 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/26 16:37:49 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/27 13:58:50 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lexing.h"
 
-void split_vars(char *var, char **vars_arr)
+void	split_vars(char *token, t_vars_data *var)
 {
-	int vars_count;
-	int start;
-	int c;
-	bool var_is_found;
-	
-	vars_count = 0;
+	int		start;
+	int		c;
+	bool	var_is_found;
+
 	start = 0;
 	c = 0;
 	var_is_found = false;
-	while (1)
+	while (token[c])
 	{
-		if (var[c] == '\0')
-		{
-			if (start == c)
-				vars_arr[vars_count] = ft_substr(var, start, 1);
-			else
-				vars_arr[vars_count] = ft_substr(var, start, c - start);
-			vars_count++;
-			break ;
-		}
-		else if (var[c] == '$')
+		if (token[c] == '$')
 		{
 			var_is_found = true;
-			vars_arr[vars_count] = ft_substr(var, start, c - start);
-			vars_count++;
+			if (c != 0)
+			{
+				var->vars_arr[var->parts_count] = ft_substr(token, start, c - start);
+				var->parts_count++;
+			}
 			start = c;
 		}
-		else if ((var_is_found && var[c] == ' ' ) || (var_is_found && var[c] == '/' ) || (var_is_found && var[c] == '\"' ))
+		else if ((var_is_found && token[c] == ' ') || (var_is_found
+				&& token[c] == '/') || (var_is_found && token[c] == '\"'))
 		{
 			var_is_found = false;
-			vars_arr[vars_count] = ft_substr(var, start, c - start);
-			vars_count++;
+			var->vars_arr[var->parts_count] = ft_substr(token, start, c - start);
+			var->parts_count++;
 			start = c;
 		}
-		
 		c++;
 	}
-	
-	vars_arr[vars_count] = NULL;
+	if (token[c] == '\0')
+	{
+		if (var_is_found )
+			var_is_found = false;
+		if (start == c)
+			var->vars_arr[var->parts_count] = ft_substr(token, start, 1);
+		else
+			var->vars_arr[var->parts_count] = ft_substr(token, start, c - start);
+	}
+	printf("0:#%s#\n",var->vars_arr[0] );
+	// printf("1:#%s#\n",var->vars_arr[1] );
+	// printf("Counter is:#%d#\n",var->parts_count );
+
 }
 
-char *expand_vars(char **vars_arr)
+char	*expand_vars(t_vars_data *var)
 {
-	int c;
-	char *temp;
-	
-	c = 0;
-	while (vars_arr[c])
-	{
-		if (vars_arr[c][0] == '$')
-		{
-			vars_arr[c] = ft_strdup(getenv(vars_arr[c] + 1));
-			if (vars_arr[c] == NULL)
-				vars_arr[c] = ft_strdup("");
-		}
-		printf("value:%s#\n", vars_arr[c]);
-		c++;
-	}
-	temp = ft_strdup("");
+	int		c;
+	char	*temp;
 
 	c = 0;
-	while (vars_arr[c])
+	temp = NULL;
+	while (c < var->parts_count)
 	{
-		temp = ft_strdup(ft_strcat(temp, vars_arr[c]));
+		if (var->vars_arr[c][0] == '$')
+		{
+			var->vars_arr[c] = ft_strdup(getenv(var->vars_arr[c] + 1));
+			if (var->vars_arr[c] == NULL)
+				var->vars_arr[c] = ft_strdup("");
+		}
 		c++;
 	}
-	return(temp);
+	c = 0;
+	while (c < var->parts_count)
+	{
+		if (c == 0)
+		{
+			temp = var->vars_arr[0];
+			c++;
+		}
+		temp = ft_strdup(ft_strcat(temp, var->vars_arr[c]));
+		c++;
+	}
+	return (temp);
 }
 
-void free_var(t_vars_data *var)
+void	free_var(t_vars_data *var)
 {
 	free(var->vars_arr);
 	free(var);
@@ -91,18 +97,18 @@ void free_var(t_vars_data *var)
 
 void	var_handler2(t_data *data, int i)
 {
-	int		j;	
-	int		c;
+	int			j;
+	int			c;
+	t_vars_data	*var;
 
 	j = 0;
 	c = 0;
-	t_vars_data *var;
 	var = malloc(sizeof(t_vars_data) * 1);
 	if (!var)
 		exit(EXIT_FAILURE);
 	var_init(var, data, i);
-	split_vars(data->tokens[i].data, var->vars_arr);
-	var->var_var = expand_vars(var->vars_arr);
+	split_vars(data->tokens[i].data, var);
+	var->var_var = expand_vars(var);
 	path_set_and_join(data, i, var->temp, var->var_var);
 	free_var(var);
 }

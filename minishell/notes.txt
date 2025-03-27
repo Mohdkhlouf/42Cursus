@@ -45,3 +45,6 @@ m'oh"am"ma'd
 "$HOME$USER"
 
 "      $USER $HOME    "
+
+
+<< $USER must not expand keep as it is.

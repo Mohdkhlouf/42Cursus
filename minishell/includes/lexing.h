@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/25 15:22:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/27 12:49:16 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_data	t_data;
 typedef struct s_vars_data
 {
 	char				**vars_arr;
+	int					parts_count;
 	int					vars_count;
 	char				*temp;
 	char				*var_var;
