@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:11:15 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/27 14:41:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/28 10:47:03 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	var_handler2(t_data *data, int i)
 
 	j = 0;
 	c = 0;
+	printf("var Handlre 2 inner\n");
 	var = malloc(sizeof(t_vars_data) * 1);
 	if (!var)
 		exit(EXIT_FAILURE);

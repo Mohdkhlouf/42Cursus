@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/27 15:04:48 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/28 10:52:03 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,21 +108,18 @@ int	tokenizing(t_data *data)
 	i = 0;
 	while (i < data->tokens_conter)
 	{
-		if ((data->tokens[i].data[0] == '$') && data->tokens[i].data[0] != '\''
-		&& data->tokens[i].data[0] != '\"')
-		var_handler(data, i);
-		
-		if (ft_strchr(data->tokens[i].data, '\'')
+		if (data->tokens[i].data[0] == '$')
+			var_handler(data, i);
+			
+		else if ((data->tokens[i].data[0]== '\"')
+			&& ft_strchr(data->tokens[i].data, '$'))
+			var_handler2(data, i);
+			
+		if(ft_strchr(data->tokens[i].data, '\'')
 				|| ft_strchr(data->tokens[i].data, '\"'))
 		{
 			quote_fixing(data, i);
 		}
-
-		if ((data->tokens[i].type == TOK_DOUBLE_QUOTE)
-			&& ft_strchr(data->tokens[i].data, '$'))
-			var_handler2(data, i);
-
-			
 		i++;
 	}
 	print_tokens(data);
