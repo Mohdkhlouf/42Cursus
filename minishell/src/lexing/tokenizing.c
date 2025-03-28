@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/28 10:52:03 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/28 10:59:45 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,9 @@ void	var_handler(t_data *data, int i)
 	}
 	else
 		var = data->tokens[i].data;
-	path = ft_strdup(getenv(var + 1));
-	if (!path)
+	if (getenv(var + 1))
+		path = ft_strdup(getenv(var + 1));
+	else
 		path = ft_strdup("");
 	path_set_and_join(data, i, temp, path);
 	free(var);
