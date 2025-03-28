@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/28 14:44:20 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/28 14:53:04 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	redirection_setting(t_data *data, int i)
 {
 	if (data->tokens[i].type == TOK_UNKNOWN && i > 0)
 	{
-		printf("testing from inner\n");
 		if (data->tokens[i - 1].type == TOK_REDIRECT_IN)
 			data->tokens[i].type = TOK_REDIRECT_IN;
 		else if (data->tokens[i - 1].type == TOK_REDIRECT_OUT)
