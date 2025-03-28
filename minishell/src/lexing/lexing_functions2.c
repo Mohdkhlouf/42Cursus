@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/24 11:56:09 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/28 11:48:40 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	env_variable_function(t_data *data)
 }
 void eof_function(t_data *data)
 {
+	if (data->double_quote_found || data->quote_found)
+		{
+			printf("quotes are not closed");
+			exit(FAILIURE);
+		}
 	if (data->in_token)
 	{
 		append_token(data, TOK_UNKNOWN);
