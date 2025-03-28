@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/28 11:53:31 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/28 14:44:20 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,21 @@ void	var_handler(t_data *data, int i)
 	free(path);
 }
 
+void	redirection_setting(t_data *data, int i)
+{
+	if (data->tokens[i].type == TOK_UNKNOWN && i > 0)
+	{
+		printf("testing from inner\n");
+		if (data->tokens[i - 1].type == TOK_REDIRECT_IN)
+			data->tokens[i].type = TOK_REDIRECT_IN;
+		else if (data->tokens[i - 1].type == TOK_REDIRECT_OUT)
+			data->tokens[i].type = TOK_REDIRECT_OUT;
+		else if (data->tokens[i - 1].type == TOK_APPEND)
+			data->tokens[i].type = TOK_APPEND;
+		else if (data->tokens[i - 1].type == TOK_REDIRECT_HEREDOC)
+			data->tokens[i].type = TOK_REDIRECT_HEREDOC;
+	}
+}
 
 int	tokenizing(t_data *data)
 {
@@ -108,6 +123,7 @@ int	tokenizing(t_data *data)
 		{
 			quote_fixing(data, i);
 		}
+		redirection_setting(data, i);
 		i++;
 	}
 	print_tokens(data);
