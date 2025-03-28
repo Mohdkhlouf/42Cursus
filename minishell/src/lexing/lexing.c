@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/28 11:04:45 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/28 13:41:24 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	malloc_tokens_arr(t_data *data)
 		data->tokens = malloc(sizeof(t_token) * data->cline_parts);
 		if (!data->tokens)
 		{
-			printf("Error allocating memory for tokens\n");
+			print_error("Error allocating memory for tokens\n");
 			free(data);
 			exit(EXIT_FAILURE);
 		}
@@ -32,7 +32,6 @@ int	malloc_tokens_arr(t_data *data)
 // this one to add the data normally
 void	append_token(t_data *data, int type)
 {
-	/* you have to add a realloc function */
 	if (data->end == data->start)
 		data->tokens[data->tokens_conter].data = ft_substr(data->input_line,
 				data->start, 1);

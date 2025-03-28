@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/28 11:03:55 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/28 11:53:31 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,7 @@ void	var_handler(t_data *data, int i)
 	free(path);
 }
 
-void	print_tokens(t_data *data)
-{
-	int	i;
 
-	i = 0;
-	while (i < data->tokens_conter)
-	{
-		printf("Token:#%s# Type:%u\n", data->tokens[i].data,
-			data->tokens[i].type);
-		i++;
-	}
-}
 int	tokenizing(t_data *data)
 {
 	int	i;
@@ -111,12 +100,10 @@ int	tokenizing(t_data *data)
 	{
 		if (data->tokens[i].data[0] == '$')
 			var_handler(data, i);
-			
-		else if ((data->tokens[i].data[0]== '\"')
+		else if ((data->tokens[i].data[0] == '\"')
 			&& ft_strchr(data->tokens[i].data, '$'))
 			var_handler2(data, i);
-			
-		if(ft_strchr(data->tokens[i].data, '\'')
+		if (ft_strchr(data->tokens[i].data, '\'')
 				|| ft_strchr(data->tokens[i].data, '\"'))
 		{
 			quote_fixing(data, i);

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:12:29 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/27 12:49:02 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/03/28 11:53:49 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,17 @@ int	find_vars_count(t_data *data, int i)
 		j++;
 	}
 	return (vars_count);
+}
+
+void	print_tokens(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->tokens_conter)
+	{
+		printf("Token:#%s# Type:%u\n", data->tokens[i].data,
+			data->tokens[i].type);
+		i++;
+	}
 }
