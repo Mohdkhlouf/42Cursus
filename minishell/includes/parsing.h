@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/04/02 15:51:38 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/04/02 17:07:38 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_cmds
 
 typedef struct s_parsed_data
 {
-	t_cmds				**cmd;
+	t_cmds				*cmds;
 	int cmds_counter;
 	int pipes_counter;
 }						t_parsed_data;
