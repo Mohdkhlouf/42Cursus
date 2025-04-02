@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/28 14:21:13 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/04/02 15:09:41 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LEXING_H
 
 # include "minishell.h"
-
+# include <stdbool.h>
 # define DELEMETERS " \t\n\0"
 # define VAR_DELEMITER "/\'\"$"
 typedef struct s_data	t_data;
@@ -27,6 +27,7 @@ typedef struct s_vars_data
 	char				*temp;
 	char				*var_var;
 	int					len;
+	bool				var_is_found;
 }						t_vars_data;
 
 void					space_function(t_data *data);

@@ -6,47 +6,51 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 14:11:15 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/28 14:20:31 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/04/02 15:31:14 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lexing.h"
 
+void split_vars_var(char *token, int *c, t_vars_data *var,  int *start)
+{
+	while (token[*c])
+	{
+		if (token[*c] == '$')
+		{
+			var->var_is_found = true;
+			if (*c != 0)
+			{
+				var->vars_arr[var->parts_count] = ft_substr(token, *start, *c - *start);
+				var->parts_count++;
+			}
+			*start = *c;
+		}
+		else if ((var->var_is_found && token[*c] == ' ') || (var->var_is_found
+				&& token[*c] == '/') || (var->var_is_found && token[*c] == '\"'))
+		{
+			var->var_is_found = false;
+			var->vars_arr[var->parts_count] = ft_substr(token, *start, *c - *start);
+			var->parts_count++;
+			*start = *c;
+		}
+		(*c)++;
+	}
+}
+
 void	split_vars(char *token, t_vars_data *var)
 {
 	int		start;
 	int		c;
-	bool	var_is_found;
 
 	start = 0;
 	c = 0;
-	var_is_found = false;
-	while (token[c])
-	{
-		if (token[c] == '$')
-		{
-			var_is_found = true;
-			if (c != 0)
-			{
-				var->vars_arr[var->parts_count] = ft_substr(token, start, c - start);
-				var->parts_count++;
-			}
-			start = c;
-		}
-		else if ((var_is_found && token[c] == ' ') || (var_is_found
-				&& token[c] == '/') || (var_is_found && token[c] == '\"'))
-		{
-			var_is_found = false;
-			var->vars_arr[var->parts_count] = ft_substr(token, start, c - start);
-			var->parts_count++;
-			start = c;
-		}
-		c++;
-	}
+	var->var_is_found = false;
+	split_vars_var(token, &c, var, &start);
 	if (token[c] == '\0')
 	{
-		if (var_is_found)
-			var_is_found = false;
+		if (var->var_is_found)
+			var->var_is_found = false;
 		if (start == c)
 			var->vars_arr[var->parts_count] = ft_substr(token, start, 1);
 		else
@@ -54,12 +58,7 @@ void	split_vars(char *token, t_vars_data *var)
 		var->parts_count++;
 		var->vars_arr[var->parts_count] = ft_strdup("\0");
 	}
-	c =0;
-	while (c < var->parts_count)
-	{
-		printf("%d is:#%s#\n", c, var->vars_arr[c]);
-		c++;
-	}
+
 }
 
 char	*expand_vars(t_vars_data *var)
@@ -108,7 +107,6 @@ void	var_handler2(t_data *data, int i)
 
 	j = 0;
 	c = 0;
-	printf("var Handlre 2 inner\n");
 	var = malloc(sizeof(t_vars_data) * 1);
 	if (!var)
 		exit(EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/28 13:46:23 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/04/02 15:19:45 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int					line_split(t_data *data);
 int					lexing(t_data *data);
 int					tokenizing(t_data *data);
 void 				print_error(char *msg);
+void parsing(t_data *data);
 
 #endif

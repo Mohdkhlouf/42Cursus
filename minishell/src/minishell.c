@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:20:09 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/26 13:33:27 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/04/02 15:17:36 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void reading_loop(t_data *data)
 		add_history(data->input_line);
 		lexing(data);
 		tokenizing(data);
+		parsing(data);
 		free_data(data);
 	}
 }
