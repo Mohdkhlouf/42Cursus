@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/03/28 14:53:04 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/04/03 17:01:10 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,13 @@ void	redirection_setting(t_data *data, int i)
 {
 	if (data->tokens[i].type == TOK_UNKNOWN && i > 0)
 	{
-		if (data->tokens[i - 1].type == TOK_REDIRECT_IN)
+		if (data->tokens[i - 1].type == TOK_REDIRECT_IN && data->tokens[i - 1].data[0] == '<')
 			data->tokens[i].type = TOK_REDIRECT_IN;
-		else if (data->tokens[i - 1].type == TOK_REDIRECT_OUT)
+		else if (data->tokens[i - 1].type == TOK_REDIRECT_OUT && data->tokens[i - 1].data[0] == '>')
 			data->tokens[i].type = TOK_REDIRECT_OUT;
-		else if (data->tokens[i - 1].type == TOK_APPEND)
+		else if (data->tokens[i - 1].type == TOK_APPEND && data->tokens[i - 1].data[0] == '>')
 			data->tokens[i].type = TOK_APPEND;
-		else if (data->tokens[i - 1].type == TOK_REDIRECT_HEREDOC)
+		else if (data->tokens[i - 1].type == TOK_REDIRECT_HEREDOC && data->tokens[i - 1].data[0] == '<')
 			data->tokens[i].type = TOK_REDIRECT_HEREDOC;
 	}
 }
