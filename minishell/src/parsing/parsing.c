@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:56:54 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/04/03 16:39:33 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/04/03 17:54:01 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	fill_in_arr(t_parsed_data *cmds_data, t_data *data)
 		i++;
 	}
 	cmds_data->cmds[cmds_ctr].cmd[token_counter] = NULL;
-	cmds_data->cmds[cmds_ctr].redirections[token_counter] = NULL;
+	cmds_data->cmds[cmds_ctr].redirections[redirect_counter] = NULL;
 }
 void	parsing(t_data *data)
 {
@@ -122,7 +122,7 @@ void	parsing(t_data *data)
 		printf("#\n");
 		printf("Final Redirections %d: ", i);
         j = 0;
-        if (cmds_data->cmds[i].redirections[0])  // Check if any redirection exists
+        if (cmds_data->cmds[i].redirections[j])
         {
             while (cmds_data->cmds[i].redirections[j])
             {
@@ -135,10 +135,7 @@ void	parsing(t_data *data)
             printf("No redirections");
         }
         printf("#\n");
+		
 		i++;
 	}
-	// printf("redirect: #%s %s#\n", cmds_data->cmds[0].redirections[0],
-	// 	cmds_data->cmds[0].redirections[1]);
-	// printf("redirect: #%s %s#\n", cmds_data->cmds[1].redirections[0],
-	// 	cmds_data->cmds[1].redirections[1]);
 }
