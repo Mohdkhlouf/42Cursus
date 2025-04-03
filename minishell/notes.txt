@@ -2,3 +2,13 @@
 
 * here-doc:
 << $USER must not expand keep as it is.
+
+
+mkhlouf@c1r4p8:~/mygithub/minishell$ export TEST='cat a'
+mkhlouf@c1r4p8:~/mygithub/minishell$ ./minishell 
+Prompt> $TEST
+Token:#cat a# Type:10
+
+
+
+after you expand a variable if it has spaces it must be splitted to new tokens.

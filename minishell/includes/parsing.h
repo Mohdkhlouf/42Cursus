@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:17:36 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/04/02 17:07:38 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/04/03 14:43:44 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ typedef struct s_cmds
 {
 	char				**cmd;
 	char				**redirections;
+	// int	redirect_counter;
+	// int	token_counter;
+	// int cmds_ctr;
 }						t_cmds;
 
 typedef struct s_parsed_data
