@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizing.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 10:02:18 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/04/03 17:33:23 by mkhlouf          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/lexing.h"
 
 void	assign_quotes(t_data *data, int len, int i, char *temp)
@@ -94,13 +82,17 @@ void	redirection_setting(t_data *data, int i)
 {
 	if (data->tokens[i].type == TOK_UNKNOWN && i > 0)
 	{
-		if (data->tokens[i - 1].type == TOK_REDIRECT_IN && data->tokens[i - 1].data[0] == '<')
+		if (data->tokens[i - 1].type == TOK_REDIRECT_IN && data->tokens[i
+			- 1].data[0] == '<')
 			data->tokens[i].type = TOK_REDIRECT_IN;
-		else if (data->tokens[i - 1].type == TOK_REDIRECT_OUT && data->tokens[i - 1].data[0] == '>')
+		else if (data->tokens[i - 1].type == TOK_REDIRECT_OUT && data->tokens[i
+			- 1].data[0] == '>')
 			data->tokens[i].type = TOK_REDIRECT_OUT;
-		else if (data->tokens[i - 1].type == TOK_APPEND && data->tokens[i - 1].data[0] == '>')
+		else if (data->tokens[i - 1].type == TOK_APPEND && data->tokens[i
+			- 1].data[0] == '>')
 			data->tokens[i].type = TOK_APPEND;
-		else if (data->tokens[i - 1].type == TOK_REDIRECT_HEREDOC && data->tokens[i - 1].data[0] == '<')
+		else if (data->tokens[i - 1].type == TOK_REDIRECT_HEREDOC
+			&& data->tokens[i - 1].data[0] == '<')
 			data->tokens[i].type = TOK_REDIRECT_HEREDOC;
 	}
 }
