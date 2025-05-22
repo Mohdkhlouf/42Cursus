@@ -13,7 +13,7 @@ i = 0;
 va_start(arguments,str);
 counter  = 0;
 while (str[i] || str[i+1])
-
+it
 va_end(arguments);
 return (counter);
 }
