@@ -1,0 +1,7 @@
+#Normalization, to make the vector unit vector.
+- there are 2 types of vectors:
+	1. arbitrary vector.
+	2. unit vector.
+	* to convert, just divide each member by its magnitude and this called normalization.
+
+#Dot Product(scalar product, inner product):
