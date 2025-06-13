@@ -108,33 +108,69 @@ t_projectile	tick(t_environment *env, t_projectile *proj)
 	return (result);
 }
 
+void	draw_in_canvas(void)
+{
+	int	width;
+	int	height;
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	width = 255;
+	height = 255;
+	printf("P3\n");
+	printf("%d %d\n", width, height);
+	printf("255\n");
+	while (x < width)
+	{
+		y = 0;
+		while (y < height)
+		{
+			if (x == y)
+			{
+				printf("%d %d %d", 255, 0, 255);
+				printf(" ");
+			}
+			else
+			{
+				printf("%d %d %d", 0, 0, 0);
+				printf(" ");
+			}
+			y++;
+		}
+		printf("\n");
+		x++;
+	}
+}
+
 int	main(void)
 {
-	t_tuple			position;
-	t_tuple			velocity;
-	t_tuple			gravity;
-	t_tuple			wind;
-	t_projectile	proj;
-	t_environment	env;
-	int				tik_counter;
+	t_tuple	position;
 
-	tik_counter = 0;
-	position = create_tuple(0, 1, 0, 0);
-	velocity = create_tuple(1, 1, 0, 1);
-	gravity = create_tuple(0, -0.1, 0, 1);
-	wind = create_tuple(-0.01, 0, 0, 1);
-	proj.position = position;
-	proj.norm_vec = velocity;
-	env.g_vec = gravity;
-	env.w_vec = wind;
-
-	while (proj.position.y > 0)
-	{
-		proj = tick(&env, &proj);
-		tik_counter++;
-		printf("projectile position is (%f,%f,%f)\n", proj.position.x,  proj.position.y,  proj.position.z);
-		printf("# of ticks is: %d\n", tik_counter);
-
-	}
-		return (0);
+	// t_tuple			velocity;
+	// t_tuple			gravity;
+	// t_tuple			wind;
+	// t_projectile	proj;
+	// t_environment	env;
+	// int				tik_counter;
+	// tik_counter = 0;
+	// position = create_tuple(0, 1, 0, 0);
+	// velocity = create_tuple(1, 1, 0, 1);
+	// gravity = create_tuple(0, -0.1, 0, 1);
+	// wind = create_tuple(-0.01, 0, 0, 1);
+	// proj.position = position;
+	// proj.norm_vec = velocity;
+	// env.g_vec = gravity;
+	// env.w_vec = wind;
+	// while (proj.position.y > 0)
+	// {
+	// 	proj = tick(&env, &proj);
+	// 	tik_counter++;
+	// 	printf("projectile position is (%f,%f,%f)\n", proj.position.x,
+			//  proj.position.y,  proj.position.z);
+	// 	printf("# of ticks is: %d\n", tik_counter);
+	// }
+	draw_in_canvas();
+	return (0);
 }
