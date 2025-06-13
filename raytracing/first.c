@@ -84,43 +84,57 @@ void	print_tuple(t_tuple tuple)
 	printf("x:%f\ny:%f\nz:%f\nw:%f\n", tuple.x, tuple.y, tuple.z, tuple.w);
 }
 
-
-
-t_tuple projectile(t_tuple env, t_tuple proj)
+t_tuple	normalize_vector(t_tuple vector)
 {
-	
+	float	mag;
+	t_tuple	normalized_vec;
+
+	mag = magnitude_vector(vector);
+	normalized_vec.x = vector.y / mag;
+	normalized_vec.y = vector.y / mag;
+	normalized_vec.z = vector.z / mag;
+	return (normalized_vec);
+}
+
+t_projectile	tick(t_environment *env, t_projectile *proj)
+{
+	t_projectile	result;
+	t_tuple			velocity;
+
+	result.position = adding_tuples(proj->position, proj->norm_vec);
+	velocity = adding_tuples(proj->norm_vec, env->g_vec);
+	velocity = adding_tuples(velocity, env->w_vec);
+	result.norm_vec = velocity;
+	return (result);
 }
 
 int	main(void)
 {
-	t_tuple	point;
-	t_tuple	vector;
-	t_tuple	result;
-	t_tuple	result2;
-	float mag1;
-	mag1 = 0;
+	t_tuple			position;
+	t_tuple			velocity;
+	t_tuple			gravity;
+	t_tuple			wind;
+	t_projectile	proj;
+	t_environment	env;
+	int				tik_counter;
 
-	
-	point = create_tuple(3, 2, 1, 1);
-	vector = create_tuple(-1,-2,-3,0);
-	result = adding_tuples(point, vector);
-	print_tuple(result);
-	result2 = subtract_tuples(point, vector);
-	print_tuple(result2);
+	tik_counter = 0;
+	position = create_tuple(0, 1, 0, 0);
+	velocity = create_tuple(1, 1, 0, 1);
+	gravity = create_tuple(0, -0.1, 0, 1);
+	wind = create_tuple(-0.01, 0, 0, 1);
+	proj.position = position;
+	proj.norm_vec = velocity;
+	env.g_vec = gravity;
+	env.w_vec = wind;
 
-	mag1 = magnitude_vector(vector);
-	printf("magnitude for mag1:%f\n", mag1);
+	while (proj.position.y > 0)
+	{
+		proj = tick(&env, &proj);
+		tik_counter++;
+		printf("projectile position is (%f,%f,%f)\n", proj.position.x,  proj.position.y,  proj.position.z);
+		printf("# of ticks is: %d\n", tik_counter);
 
-
-
-
-
-	function tick(env, proj)
-position ← proj.position + proj.velocity
-velocity ← proj.velocity + env.gravity + env.wind
-return projectile(position, velocity)
-end function
-
-
-	return (0);
+	}
+		return (0);
 }

@@ -12,9 +12,19 @@ typedef struct s_tuple
 	float w;
 }	t_tuple;
 
+typedef struct s_projectile
+{
+	t_tuple position;
+	t_tuple norm_vec;
+}	t_projectile;
 
 
 
+typedef struct s_environment
+{
+	t_tuple g_vec;
+	t_tuple w_vec;
+}	t_environment;
 
 
 
