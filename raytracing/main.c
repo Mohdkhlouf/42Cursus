@@ -108,69 +108,65 @@ t_projectile	tick(t_environment *env, t_projectile *proj)
 	return (result);
 }
 
-void	draw_in_canvas(void)
-{
-	int	width;
-	int	height;
-	int	x;
-	int	y;
+// int	main(void)
+// {
 
-	x = 0;
-	y = 0;
-	width = 255;
-	height = 255;
-	printf("P3\n");
-	printf("%d %d\n", width, height);
-	printf("255\n");
-	while (x < width)
-	{
-		y = 0;
-		while (y < height)
-		{
-			if (x == y)
-			{
-				printf("%d %d %d", 255, 0, 255);
-				printf(" ");
-			}
-			else
-			{
-				printf("%d %d %d", 0, 0, 0);
-				printf(" ");
-			}
-			y++;
-		}
-		printf("\n");
-		x++;
-	}
+// 	return (0);
+// }
+
+static void	ft_error(void)
+{
+	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
+	exit(EXIT_FAILURE);
 }
 
-int	main(void)
+int32_t	main(void)
 {
-	t_tuple	position;
 
-	// t_tuple			velocity;
-	// t_tuple			gravity;
-	// t_tuple			wind;
-	// t_projectile	proj;
-	// t_environment	env;
-	// int				tik_counter;
-	// tik_counter = 0;
-	// position = create_tuple(0, 1, 0, 0);
-	// velocity = create_tuple(1, 1, 0, 1);
-	// gravity = create_tuple(0, -0.1, 0, 1);
-	// wind = create_tuple(-0.01, 0, 0, 1);
-	// proj.position = position;
-	// proj.norm_vec = velocity;
-	// env.g_vec = gravity;
-	// env.w_vec = wind;
-	// while (proj.position.y > 0)
-	// {
-	// 	proj = tick(&env, &proj);
-	// 	tik_counter++;
-	// 	printf("projectile position is (%f,%f,%f)\n", proj.position.x,
-			//  proj.position.y,  proj.position.z);
-	// 	printf("# of ticks is: %d\n", tik_counter);
-	// }
-	draw_in_canvas();
-	return (0);
+	t_tuple			velocity;
+	t_tuple			gravity;
+	t_tuple			wind;
+	t_projectile	proj;
+	t_environment	env;
+	int				tik_counter;
+
+	tik_counter = 0;
+mlx_set_setting(MLX_STRETCH_IMAGE, true);
+	mlx_t *mlx = mlx_init(WIDTH, HEIGHT, "Minirt", true);
+	if (!mlx)
+		ft_error();
+
+	/* Do stuff */
+
+	// Create and display the image.
+	mlx_image_t *img = mlx_new_image(mlx, 1500, 550);
+
+	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
+		ft_error();
+
+	// Even after the image is being displayed, we can still modify the buffer.
+		t_tuple	position;
+
+	
+	
+	position = create_tuple(0, 1, 0, 0);
+	velocity = create_tuple(1, 1.8, 0, 1);
+	gravity = create_tuple(0, -0.1, 0, 1);
+	wind = create_tuple(-0.01, 0, 0, 1);
+	proj.position = position;
+	proj.norm_vec = scale_tuples(normalize_vector(velocity), 11.25);
+	env.g_vec = gravity;
+	env.w_vec = wind;
+	while (proj.position.y > 0)
+	{
+		proj = tick(&env, &proj);
+		tik_counter++;
+		mlx_put_pixel(img, (int32_t)(proj.position.x), (int32_t)(550 - proj.position.y), 0xAAAAAAFF);
+	}
+	
+	// Register a hook and pass mlx as an optional param.
+	// NOTE: Do this before calling mlx_loop!
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
+	return (EXIT_SUCCESS);
 }
