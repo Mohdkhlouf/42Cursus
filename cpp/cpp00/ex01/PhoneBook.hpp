@@ -12,11 +12,11 @@ class PhoneBook
 		int total_contacts;
 
 	public:
-		PhoneBook(void);
-		~PhoneBook(void);
-		void add(Contact& value);
-		void phonebook_print(void);
-		void single_contact_print(int index);
+		PhoneBook();
+		~PhoneBook();
+		void add(const Contact& value);
+		void phonebook_print() const;
+		void single_contact_print(int index) const;
 };
 
 #endif

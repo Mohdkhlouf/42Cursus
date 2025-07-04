@@ -1,7 +1,4 @@
-#include <iostream>
-#include "Contact.hpp"
-#include "PhoneBook.hpp"
-#include <cstdlib>
+#include "phonebook.h"
 
 void exit_phonebook(PhoneBook &phonebook)
 {
@@ -30,6 +27,7 @@ void search_contact(PhoneBook &phonebook)
 		}
 	}
 }
+
 void add_contact(PhoneBook &phonebook)
 {
 	std::string first_name;
@@ -39,18 +37,30 @@ void add_contact(PhoneBook &phonebook)
 	std::string secret;
 
 	std::cout << "Please, type in contact First Name:" << std::endl;
-	std::getline(std::cin, first_name);
+	if (!std::getline(std::cin, first_name))
+		handle_failed_getline(first_name);
 	std::cout << "Please, type in contact Last Name:" << std::endl;
-	std::getline(std::cin, last_name);
+	if (!std::getline(std::cin, last_name))
+		handle_failed_getline(last_name);
 	std::cout << "Please, type in contact Nick Name:" << std::endl;
-	std::getline(std::cin, nick_name);
+	if (!std::getline(std::cin, nick_name))
+		handle_failed_getline(nick_name);
 	std::cout << "Please, type in contact Phone Number:" << std::endl;
-	std::getline(std::cin, phone_number);
+	if (!std::getline(std::cin, phone_number))
+		handle_failed_getline(phone_number);
 	std::cout << "Please, type in your secret:" << std::endl;
-	std::getline(std::cin, secret);
+	if (!std::getline(std::cin, secret))
+		handle_failed_getline(secret);
 
 	Contact contact(first_name, last_name, nick_name, phone_number, secret);
 	phonebook.add(contact);
+}
+void handle_failed_getline(std::string &input)
+{
+	std::cin.clear();  // to reset the error to default.
+	std::cin.ignore(); // to remove the leftovers from the function
+	if (!std::getline(std::cin, input))
+		handle_failed_getline(input);
 }
 
 int main(void)
@@ -64,10 +74,7 @@ int main(void)
 		std::cout << "type ADD, SEARCCH and EXIT " << std::endl;
 
 		if (!std::getline(std::cin, input_value))
-			{
-				std::cin.ignore();
-				// needs more protection
-			}
+			handle_failed_getline(input_value);
 		if (input_value.compare("ADD") == 0)
 			add_contact(phonebook);
 		else if (input_value.compare("SEARCH") == 0)
