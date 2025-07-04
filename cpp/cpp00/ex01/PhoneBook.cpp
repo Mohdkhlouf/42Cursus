@@ -10,7 +10,6 @@ PhoneBook::PhoneBook(void)
 }
 PhoneBook::~PhoneBook(void)
 {
-	std::cout << "destructer started" << std::endl;
 	return;
 }
 
@@ -20,13 +19,19 @@ void PhoneBook::add(Contact &contact)
 	this->contacts_counter++;
 	this->total_contacts++;
 	if (this->contacts_counter > 8)
-	{
-		std::cout << "the array is full" << std::endl;
 		this->contacts_counter = 0;
-	}
 	if (this->total_contacts > 8)
 		this->total_contacts = 8;
-	std::cout << "contact is added" << this->contacts_counter << std::endl;
+}
+
+std::string trunc_dot(std::string string)
+{
+	if(string.length() >10)
+		{
+			string = string.substr(0,10);
+			string[9] = '.';
+		}
+	return(string);
 }
 
 void PhoneBook::phonebook_print(void)
@@ -38,9 +43,19 @@ void PhoneBook::phonebook_print(void)
 	while (i < this->total_contacts)
 	{
 		std::cout << std::setw(10) << std::right << i << "|"
-				  << std::setw(10) << std::right << this->contacts[i].get_first_name() << "|"
-				  << std::setw(10) << std::right << this->contacts[i].get_last_name() << "|"
-				  << std::setw(10) << std::right << this->contacts[i].get_nick_name() << std::endl;
+				  << std::setw(10) << std::right << trunc_dot(this->contacts[i].get_first_name()) << "|"
+				  << std::setw(10) << std::right << trunc_dot(this->contacts[i].get_last_name()) << "|"
+				  << std::setw(10) << std::right << trunc_dot(this->contacts[i].get_nick_name()) << std::endl;
 		i++;
 	}
+}
+
+
+void PhoneBook::single_contact_print(int i)
+{
+	std::cout << "Firstname:"<< this->contacts[i].get_first_name() << std::endl;
+	std::cout << "Lastname:"<< this->contacts[i].get_last_name() << std::endl;
+	std::cout << "Nickname:"<< this->contacts[i].get_nick_name() << std::endl;
+	std::cout << "Phone number:"<< this->contacts[i].get_phone_number() << std::endl;
+	std::cout << "Secret:"<< this->contacts[i].get_secret() << std::endl;
 }

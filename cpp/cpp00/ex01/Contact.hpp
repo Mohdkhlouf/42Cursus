@@ -20,6 +20,8 @@ public:
 	std::string const get_first_name(void);
 	std::string const get_last_name(void);
 	std::string const get_nick_name(void);
+	std::string const get_phone_number(void);
+	std::string const get_secret(void);
 };
 
 #endif

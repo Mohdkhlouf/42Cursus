@@ -16,6 +16,7 @@ class PhoneBook
 		~PhoneBook(void);
 		void add(Contact& value);
 		void phonebook_print(void);
+		void single_contact_print(int index);
 };
 
 #endif

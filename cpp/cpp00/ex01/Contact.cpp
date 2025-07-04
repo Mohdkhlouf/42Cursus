@@ -19,29 +19,30 @@ Contact::~Contact(void)
 	return;
 }
 
-
-std::string trunc_dot(std::string string)
-{
-	if(string.length() >10)
-		{
-			string = string.substr(0,10);
-			string[9] = '.';
-		}
-	return(string);
-}
 std::string const Contact::get_first_name(void)
 {
-	return(trunc_dot(this->first_name));	
+	return(this->first_name);	
 }
 
 std::string const Contact::get_last_name(void)
 {
-	return(trunc_dot(this->last_name));	
+	return(this->last_name);	
 }
 
 std::string const Contact::get_nick_name(void)
 {
-	return(trunc_dot(this->nick_name));	
+	return(this->nick_name);	
+}
+
+std::string const Contact::get_phone_number(void)
+{
+	return(this->phone_number);	
+}
+
+
+std::string const Contact::get_secret(void)
+{
+	return(this->secret);	
 }
 std::string Contact::print(void){
 	std::string result;
