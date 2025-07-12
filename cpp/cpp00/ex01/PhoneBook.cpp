@@ -15,7 +15,7 @@ void PhoneBook::add(const Contact &contact)
 	this->contacts[this->contacts_counter] = contact;
 	this->contacts_counter++;
 	this->total_contacts++;
-	if (this->contacts_counter > 8)
+	if (this->contacts_counter >= 8)
 		this->contacts_counter = 0;
 	if (this->total_contacts > 8)
 		this->total_contacts = 8;

@@ -9,6 +9,6 @@
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
 
-void handle_failed_getline(std::string &input);
+void handle_failed_getline();
 
 #endif

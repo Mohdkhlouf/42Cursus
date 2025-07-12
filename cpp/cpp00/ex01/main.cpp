@@ -38,29 +38,28 @@ void add_contact(PhoneBook &phonebook)
 
 	std::cout << "Please, type in contact First Name:" << std::endl;
 	if (!std::getline(std::cin, first_name))
-		handle_failed_getline(first_name);
+		handle_failed_getline();
 	std::cout << "Please, type in contact Last Name:" << std::endl;
 	if (!std::getline(std::cin, last_name))
-		handle_failed_getline(last_name);
+		handle_failed_getline();
 	std::cout << "Please, type in contact Nick Name:" << std::endl;
 	if (!std::getline(std::cin, nick_name))
-		handle_failed_getline(nick_name);
+		handle_failed_getline();
 	std::cout << "Please, type in contact Phone Number:" << std::endl;
 	if (!std::getline(std::cin, phone_number))
-		handle_failed_getline(phone_number);
+		handle_failed_getline();
 	std::cout << "Please, type in your secret:" << std::endl;
 	if (!std::getline(std::cin, secret))
-		handle_failed_getline(secret);
+		handle_failed_getline();
 
-	Contact contact(first_name, last_name, nick_name, phone_number, secret);
+	Contact contact(first_name, last_name, nick_name, phone_number, secret); 
 	phonebook.add(contact);
 }
-void handle_failed_getline(std::string &input)
+void handle_failed_getline()
 {
 	std::cin.clear();  // to reset the error to default.
 	std::cin.ignore(); // to remove the leftovers from the function
-	if (!std::getline(std::cin, input))
-		handle_failed_getline(input);
+	std::exit(1);
 }
 
 int main(void)
@@ -70,21 +69,17 @@ int main(void)
 
 	while (true)
 	{
-		std::cout << "Welcome to PhoneBook:" << std::endl;
-		std::cout << "type ADD, SEARCCH and EXIT " << std::endl;
-
+		std::cout << "Welcome to PhoneBook:" << std::endl<<"type ADD, SEARCH and EXIT " << std::endl;
 		if (!std::getline(std::cin, input_value))
-			handle_failed_getline(input_value);
-		if (input_value.compare("ADD") == 0)
+			handle_failed_getline();
+		if (input_value == "ADD")
 			add_contact(phonebook);
-		else if (input_value.compare("SEARCH") == 0)
+		else if (input_value == "SEARCH")
 			search_contact(phonebook);
-		else if (input_value.compare("EXIT") == 0)
+		else if (input_value == "EXIT")
 			exit_phonebook(phonebook);
 		else
-			std::cout << "Unknown Value,try again" << std::endl
-					  << std::endl
-					  << std::endl;
+			std::cout << "Unknown Value,try again" << std::endl<<std::endl<<std::endl;
 	}
 	return (0);
 }
