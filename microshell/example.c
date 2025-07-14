@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 12:15:17 by shackbei          #+#    #+#             */
-/*   Updated: 2025/06/30 17:05:46 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/07/02 11:18:47 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main(int argc, char *argv[], char *env[])
 		}
 		else if (i != 0 && (argv[i] == NULL || strcmp(argv[i], ";") == 0)) //exec in stdout
 		{
-			if ( fork())
+			if ( fork() == 0)
 				ft_execute(argv, i, tmp_fd, env);
 			else
 			{
@@ -99,7 +99,7 @@ int	main(int argc, char *argv[], char *env[])
 		}
 	}
 	close(tmp_fd);
-	// if (TEST)		// not needed in exam, but necessary if you want to use this tester:
-	// 	while (1);	// https://github.com/Glagan/42-exam-rank-04/blob/master/microshell/test.sh
+	if (TEST)		// not needed in exam, but necessary if you want to use this tester:
+		while (1);	// https://github.com/Glagan/42-exam-rank-04/blob/master/microshell/test.sh
 	return (0);
 }
