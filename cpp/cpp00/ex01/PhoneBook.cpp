@@ -12,12 +12,12 @@ PhoneBook::~PhoneBook()
 
 void PhoneBook::add(const Contact &contact)
 {
+	if (this->contacts_counter == 8)
+		this->contacts_counter = 0;
 	this->contacts[this->contacts_counter] = contact;
 	this->contacts_counter++;
 	this->total_contacts++;
-	if (this->contacts_counter >= 8)
-		this->contacts_counter = 0;
-	if (this->total_contacts > 8)
+	if (this->total_contacts >= 8)
 		this->total_contacts = 8;
 }
 
@@ -54,4 +54,15 @@ void PhoneBook::single_contact_print(int i) const
 	std::cout << "Nickname: " << this->contacts[i].get_nick_name() << std::endl;
 	std::cout << "Phone number: " << this->contacts[i].get_phone_number() << std::endl;
 	std::cout << "Secret: " << this->contacts[i].get_secret() << std::endl;
+}
+
+
+int PhoneBook::get_counter()
+{
+	return this->contacts_counter;
+}
+
+int PhoneBook::get_total()
+{
+	return this->total_contacts;
 }

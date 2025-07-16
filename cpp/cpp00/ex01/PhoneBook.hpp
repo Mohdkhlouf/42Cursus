@@ -17,6 +17,8 @@ class PhoneBook
 		void add(const Contact& value);
 		void phonebook_print() const;
 		void single_contact_print(int index) const;
+		int get_counter();
+		int get_total();
 };
 
 #endif

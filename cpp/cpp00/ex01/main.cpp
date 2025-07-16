@@ -1,4 +1,5 @@
 #include "phonebook.h"
+#include <limits>
 
 void exit_phonebook(PhoneBook &phonebook)
 {
@@ -10,22 +11,47 @@ void exit_phonebook(PhoneBook &phonebook)
 void search_contact(PhoneBook &phonebook)
 {
 	int index = 0;
-	phonebook.phonebook_print();
-	std::cout << "what are you searching for?, please enter a valid indx" << std::endl;
-	std::cin >> index;
-	while (1)
+
+	if (phonebook.get_counter() == 0)
+		std::cerr << "The phonebook is empty\n**********************************************\n";
+	else
 	{
-		if (index >= 0 && index <= 8)
+		phonebook.phonebook_print();
+		while (1)
 		{
-			phonebook.single_contact_print(index);
-			break;
-		}
-		else
-		{
-			std::cout << "please enter a valid index" << std::endl;
+			std::cout << "what are you searching for?, please enter a valid index" << std::endl;
 			std::cin >> index;
+			if (std::cin.fail())
+			{
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cout << "Not a NUMBER\n";
+			}
+
+			else
+			{
+				if (index >= 0 && index <= phonebook.get_total())
+				{
+					phonebook.single_contact_print(index);
+					break;
+				}
+				else
+					std::cout << "please enter a valid index" << std::endl;
+		
+			}
+			
 		}
 	}
+}
+
+bool check_digits(std::string str)
+{
+	for (char i : str)
+	{
+		if (i < 48 || i > 57)
+			return (false);
+	}
+	return (true);
 }
 
 void add_contact(PhoneBook &phonebook)
@@ -36,23 +62,38 @@ void add_contact(PhoneBook &phonebook)
 	std::string phone_number;
 	std::string secret;
 
-	std::cout << "Please, type in contact First Name:" << std::endl;
-	if (!std::getline(std::cin, first_name))
-		handle_failed_getline();
-	std::cout << "Please, type in contact Last Name:" << std::endl;
-	if (!std::getline(std::cin, last_name))
-		handle_failed_getline();
-	std::cout << "Please, type in contact Nick Name:" << std::endl;
-	if (!std::getline(std::cin, nick_name))
-		handle_failed_getline();
-	std::cout << "Please, type in contact Phone Number:" << std::endl;
-	if (!std::getline(std::cin, phone_number))
-		handle_failed_getline();
-	std::cout << "Please, type in your secret:" << std::endl;
-	if (!std::getline(std::cin, secret))
-		handle_failed_getline();
+	while (first_name.empty())
+	{
+		std::cout << "Please, type in contact First Name:" << std::endl;
+		if (!std::getline(std::cin, first_name))
+			handle_failed_getline();
+	}
+	while (last_name.empty())
+	{
+		std::cout << "Please, type in contact Last Name:" << std::endl;
+		if (!std::getline(std::cin, last_name))
+			handle_failed_getline();
+	}
 
-	Contact contact(first_name, last_name, nick_name, phone_number, secret); 
+	while (nick_name.empty())
+	{
+		std::cout << "Please, type in contact Nick Name:" << std::endl;
+		if (!std::getline(std::cin, nick_name))
+			handle_failed_getline();
+	}
+	while (phone_number.empty() || !check_digits(phone_number))
+	{
+		std::cout << "Please, type in Phone Number *Numbers only*:" << std::endl;
+		if (!std::getline(std::cin, phone_number))
+			handle_failed_getline();
+	}
+	while (secret.empty())
+	{
+		std::cout << "Please, type in your secret:" << std::endl;
+		if (!std::getline(std::cin, secret))
+			handle_failed_getline();
+	}
+	Contact contact(first_name, last_name, nick_name, phone_number, secret);
 	phonebook.add(contact);
 }
 void handle_failed_getline()
@@ -69,7 +110,15 @@ int main(void)
 
 	while (true)
 	{
-		std::cout << "Welcome to PhoneBook:" << std::endl<<"type ADD, SEARCH and EXIT " << std::endl;
+		std::cout << R"(
+		|  __ \| |  | |/ __ \| \ | |  ____| __ ) / __ \ / __ \| |/ /
+		| |__) | |__| | |  | |  \| | |__  |  _ \| |  | | |  | | ' / 
+		|  ___/|  __  | |  | | . ` |  __| | |_) | |  | | |  | |  <  
+		| |    | |  | | |__| | |\  | |____|____/| |__| | |__| | . \ 
+		|_|    |_|  |_|\____/|_| \_|______|      \____/ \____/|_|\_\
+		)" << "\n";
+		std::cout << "Welcome to PhoneBook:" << std::endl
+				  << "type ADD, SEARCH and EXIT " << std::endl;
 		if (!std::getline(std::cin, input_value))
 			handle_failed_getline();
 		if (input_value == "ADD")
@@ -79,7 +128,9 @@ int main(void)
 		else if (input_value == "EXIT")
 			exit_phonebook(phonebook);
 		else
-			std::cout << "Unknown Value,try again" << std::endl<<std::endl<<std::endl;
+			std::cout << "Unknown Value,try again" << std::endl
+					  << std::endl
+					  << std::endl;
 	}
 	return (0);
 }
