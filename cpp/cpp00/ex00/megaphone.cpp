@@ -10,7 +10,6 @@ int main(int argc, char **argv)
 			for(int j=0;argv[i][j]; j++)
 				std::cout << (char)std::toupper(argv[i][j]);
 		}
-		//we have to end every output wth newline as said in the subject.
 		std::cout<<std::endl;
 	return (0);
 }

@@ -27,12 +27,12 @@ void search_contact(PhoneBook &phonebook)
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				std::cout << "Not a NUMBER\n";
 			}
-
 			else
 			{
 				if (index >= 0 && index <= phonebook.get_total())
 				{
 					phonebook.single_contact_print(index);
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 					break;
 				}
 				else
@@ -99,7 +99,7 @@ void add_contact(PhoneBook &phonebook)
 void handle_failed_getline()
 {
 	std::cin.clear();  // to reset the error to default.
-	std::cin.ignore(); // to remove the leftovers from the function
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // to remove the leftovers from the function
 	std::exit(1);
 }
 
