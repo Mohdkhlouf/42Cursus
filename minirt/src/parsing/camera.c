@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuusela <vkuusela@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 14:24:39 by vkuusela          #+#    #+#             */
-/*   Updated: 2025/07/08 14:24:41 by vkuusela         ###   ########.fr       */
+/*   Updated: 2025/07/16 11:57:07 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool	validate_coordination(t_vec3 *coords)
 {
-	if ((coords->x > MOL || coords->x < -MOL) || (coords->y > MOL || coords->y
-			< -MOL) || (coords->z > MOL || coords->z < -MOL))
+	if ((coords->x > MOL || coords->x < -MOL) || (coords->y > MOL
+			|| coords->y < -MOL) || (coords->z > MOL || coords->z < -MOL))
 	{
 		return (ft_putstr_fd("Error\ncheck coordinates values\n", 2), false);
 	}
@@ -24,9 +24,8 @@ bool	validate_coordination(t_vec3 *coords)
 
 bool	validate_orientation(t_vec3 *orinets)
 {
-	if ((orinets->x > 1.0f || orinets->x < -1.0f)
-		|| (orinets->y > 1.0f || orinets->y < -1.0f)
-		|| (orinets->z > 1.0f || orinets->z < -1.0f))
+	if ((orinets->x > 1.0f || orinets->x < -1.0f) || (orinets->y > 1.0f
+			|| orinets->y < -1.0f) || (orinets->z > 1.0f || orinets->z < -1.0f))
 	{
 		return (ft_putstr_fd("Error\ncheck Orinetations vales\n", 2), false);
 	}
@@ -42,15 +41,23 @@ bool	fill_in_orientations(t_data *data, int i, t_vec3 *orinets)
 {
 	char	**orientations;
 
+	if (!commas_counter(data->lines[i].line[2]))
+		return (false);
 	orientations = ft_split(data->lines[i].line[2], ',');
 	if (!orientations)
-		exit_free_parsing(data);
+		return (ft_putstr_fd("Error\n Allocating memory failed\n", 2), false);
+	if (!arguments_counter(orientations))
+		return (ft_free_str_arr(orientations), false);
 	orinets->x = ft_atof(orientations[0]);
+	if (isnan(orinets->x))
+		return (ft_free_str_arr(orientations), false);
 	orinets->y = ft_atof(orientations[1]);
+	if (isnan(orinets->y))
+		return (ft_free_str_arr(orientations), false);
 	orinets->z = ft_atof(orientations[2]);
+	if (isnan(orinets->z))
+		return (ft_free_str_arr(orientations), false);
 	ft_free_str_arr(orientations);
-	if (isnan(orinets->x) || isnan(orinets->y) || isnan(orinets->z))
-		return (false);
 	if (!validate_orientation(orinets))
 		return (false);
 	return (true);
@@ -60,15 +67,23 @@ bool	fill_in_coordinates(t_data *data, int i, t_vec3 *coords)
 {
 	char	**coordinates;
 
+	if (!commas_counter(data->lines[i].line[1]))
+		return (false);
 	coordinates = ft_split(data->lines[i].line[1], ',');
 	if (!coordinates)
-		return (false);
+		return (ft_putstr_fd("Error\n Allocating memory failed\n", 2), false);
+	if (!arguments_counter(coordinates))
+		return (ft_free_str_arr(coordinates), false);
 	coords->x = ft_atof(coordinates[0]);
+	if (isnan(coords->x))
+		return (ft_free_str_arr(coordinates), false);
 	coords->y = ft_atof(coordinates[1]);
+	if (isnan(coords->y))
+		return (ft_free_str_arr(coordinates), false);
 	coords->z = ft_atof(coordinates[2]);
+	if (isnan(coords->z))
+		return (ft_free_str_arr(coordinates), false);
 	ft_free_str_arr(coordinates);
-	if (isnan(coords->x) || isnan(coords->y) || isnan(coords->z))
-		return (false);
 	if (!validate_coordination(coords))
 		return (false);
 	return (true);

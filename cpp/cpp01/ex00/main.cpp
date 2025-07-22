@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 11:20:44 by mkhlouf           #+#    #+#             */
+/*   Updated: 2025/07/22 11:20:46 by mkhlouf          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Zombie.hpp"
 
 int main()
@@ -8,8 +20,8 @@ int main()
 		z2->announce();
 		delete z2;
 		randomChump("new Zombie");
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	else
-		return (1);
+		return (EXIT_FAILURE);
 }

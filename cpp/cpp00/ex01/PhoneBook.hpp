@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include "Contact.hpp"
+#include <iomanip>
+
+void handle_failed_getline();
+
 
 class PhoneBook
 {

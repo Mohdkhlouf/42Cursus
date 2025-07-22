@@ -1,4 +1,16 @@
-#include "phonebook.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Contact.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 11:21:16 by mkhlouf           #+#    #+#             */
+/*   Updated: 2025/07/22 11:21:17 by mkhlouf          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "Contact.hpp"
 
 // this is the initiaization list to add the variables directly to the values,
 

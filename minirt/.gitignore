@@ -1,0 +1,5 @@
+MLX42/
+src/test.c
+*.o
+libft/libft.a
+invalid_rt_file_tester/

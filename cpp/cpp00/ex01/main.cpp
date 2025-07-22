@@ -1,4 +1,18 @@
-#include "phonebook.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/22 11:21:12 by mkhlouf           #+#    #+#             */
+/*   Updated: 2025/07/22 11:21:13 by mkhlouf          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "PhoneBook.hpp"
+#include "Contact.hpp"
+
 #include <limits>
 
 void exit_phonebook(PhoneBook &phonebook)

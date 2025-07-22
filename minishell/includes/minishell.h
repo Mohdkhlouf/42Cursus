@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:25:54 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/05/21 14:18:52 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/05/21 15:23:05 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ char							*get_env_key(char *key, t_data *data);
 void							free_split(char **str);
 bool							check_valid_identifier(char *key,
 									char *param_value);
-
+	
 /*---------------------exit-------------------*/
 bool							ft_exit(t_cmds *cmd, t_data *data,
 									int *exit_code);
