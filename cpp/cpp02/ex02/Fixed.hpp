@@ -33,15 +33,16 @@ class Fixed
 		Fixed operator*(const Fixed &obj)const;
 		Fixed operator/(const Fixed &obj)const;
 		//increment and decrement
-		void operator++();
-		void operator--();
-		void operator++(int);
-		void operator--(int);
-
-
-
-
-
+		Fixed& operator++();
+		Fixed&  operator--();
+		Fixed&  operator++(int);
+		Fixed&  operator--(int);
+		//extra functions
+		static Fixed& min(Fixed &obj1, Fixed &obj2);
+		const static Fixed& min(const Fixed &obj1, const Fixed &obj2);
+		static Fixed& max(Fixed &obj1, Fixed &obj2);
+		const static Fixed& max(const Fixed &obj1, const Fixed &obj2);
 };
+
 std::ostream &operator<<(std::ostream &os, const Fixed &obj);
 #endif

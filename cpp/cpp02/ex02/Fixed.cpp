@@ -62,6 +62,7 @@ std::ostream &operator<<(std::ostream &os, const Fixed &obj)
 	return (os);
 }
 
+
 bool Fixed::operator>(const Fixed &obj) const
 {
 	return (this->fpn_value > obj.fpn_value);
@@ -125,19 +126,51 @@ Fixed Fixed::operator/(const Fixed &obj) const
 	return (result);
 }
 
-void Fixed::operator++()
+Fixed&  Fixed::operator++()
 {
 	this->fpn_value++;
+	return(*this);
 }
-void Fixed::operator--()
+Fixed&  Fixed::operator--()
 {
 	this->fpn_value--;
+	return(*this);
 }
-void Fixed::operator++(int)
+Fixed&  Fixed::operator++(int)
 {
 	++this->fpn_value;
+	return(*this);
 }
-void Fixed::operator--(int)
+Fixed&  Fixed::operator--(int)
 {
 	--this->fpn_value;
+	return(*this);
+}
+
+Fixed& Fixed::min( Fixed &obj1, Fixed &obj2){
+	if(obj1<obj2)
+		return(obj1);
+	else
+		return(obj2);
+}
+
+const Fixed& Fixed::min( const Fixed &obj1, const Fixed &obj2){
+	if(obj1<obj2)
+		return(obj1);
+	else
+		return(obj2);
+}
+
+Fixed& Fixed::max( Fixed &obj1, Fixed &obj2){
+	if(obj1<obj2)
+		return(obj2);
+	else
+		return(obj1);
+}
+
+const Fixed& Fixed::max( const Fixed &obj1, const Fixed &obj2){
+	if(obj1<obj2)
+		return(obj2);
+	else
+		return(obj1);
 }
