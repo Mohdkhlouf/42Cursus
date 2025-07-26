@@ -3,7 +3,11 @@
 Fixed::Fixed() : fpn_value(0)
 {
 	std::cout << "Default constructor called" << "\n";
-	// you can add a check here to check the value of the fractional bit.
+	if(fractional_bits < 0)
+		std::cerr<<"Negative values are not allowed"<<"\n";
+	if (sizeof())
+	
+
 }
 Fixed::~Fixed()
 {
@@ -18,8 +22,7 @@ Fixed::Fixed(const int value)
 Fixed::Fixed(const float float_value)
 {
 	std::cout << "Float constructor called" << "\n";
-
-	fpn_value = roundf(float_value * (1 << fractional_bits));
+	fpn_value = static_cast<int>(roundf(float_value * (1 << fractional_bits)));
 };
 
 Fixed::Fixed(const Fixed &obj)
@@ -110,7 +113,7 @@ Fixed Fixed::operator-(const Fixed &obj) const
 Fixed Fixed::operator*(const Fixed &obj) const
 {
 	Fixed result;
-	result.fpn_value = this->fpn_value * obj.fpn_value;
+	result.fpn_value = (this->fpn_value * obj.fpn_value) >> fractional_bits;
 	return (result);
 }
 
@@ -122,29 +125,31 @@ Fixed Fixed::operator/(const Fixed &obj) const
 		exit(EXIT_FAILURE);
 	}
 	Fixed result;
-	result.fpn_value = this->fpn_value / obj.fpn_value;
+	result.fpn_value = (this->fpn_value<<fractional_bits / obj.fpn_value);
 	return (result);
 }
 
-Fixed&  Fixed::operator++()
+Fixed&   Fixed::operator++()
 {
 	this->fpn_value++;
 	return(*this);
 }
-Fixed&  Fixed::operator--()
+Fixed&   Fixed::operator--()
 {
 	this->fpn_value--;
 	return(*this);
 }
 Fixed&  Fixed::operator++(int)
 {
-	++this->fpn_value;
-	return(*this);
+	Fixed *tmp = this;
+	this->fpn_value++;
+	return(*tmp);
 }
 Fixed&  Fixed::operator--(int)
 {
-	--this->fpn_value;
-	return(*this);
+	Fixed *tmp = this;
+	this->fpn_value--;
+	return(*tmp);
 }
 
 Fixed& Fixed::min( Fixed &obj1, Fixed &obj2){

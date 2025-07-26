@@ -34,9 +34,9 @@ class Fixed
 		Fixed operator/(const Fixed &obj)const;
 		//increment and decrement
 		Fixed& operator++();
-		Fixed&  operator--();
-		Fixed&  operator++(int);
-		Fixed&  operator--(int);
+		Fixed& operator--();
+		Fixed& operator++(int);
+		Fixed& operator--(int);
 		//extra functions
 		static Fixed& min(Fixed &obj1, Fixed &obj2);
 		const static Fixed& min(const Fixed &obj1, const Fixed &obj2);
