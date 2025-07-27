@@ -5,7 +5,7 @@ CXX = c++
 # CXXFLAGS = -Wall -Wextra -Werror
 
 # Target binary name
-TARGET = ClapTrap
+TARGET = Sernena
 
 # Source files
 SRC = main.cpp ClapTrap.cpp

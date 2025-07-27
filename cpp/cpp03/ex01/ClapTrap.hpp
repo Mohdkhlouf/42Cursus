@@ -4,12 +4,14 @@
 #include <string>
 #include <iostream>
 class ClapTrap{
+
     private:
-        std::string name_;
+         std::string name_;
         int hit_points_;
         int energy_points_;
         int attack_damage_;
     public:
+   
         ClapTrap();
         ClapTrap(std::string name);
         ClapTrap(ClapTrap &obj);
