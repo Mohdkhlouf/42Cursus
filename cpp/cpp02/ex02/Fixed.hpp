@@ -3,12 +3,13 @@
 
 #include <iostream>
 #include <cmath>
+#include <cstdint>
 
 class Fixed
 {
 	private:
 		int fpn_value; //fixed point number value
-		static const int fractional_bits = 8;
+		static const int fractional_bits = 8; // fractional Bits value
 	public:
 		Fixed();
 		~Fixed();
