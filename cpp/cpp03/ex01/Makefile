@@ -8,7 +8,7 @@ CXX = c++
 TARGET = Sernena
 
 # Source files
-SRC = main.cpp ClapTrap.cpp
+SRC = main.cpp ClapTrap.cpp ScavTrap.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)
