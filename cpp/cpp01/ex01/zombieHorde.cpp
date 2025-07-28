@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:21:56 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/07/22 11:21:57 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/07/28 12:12:20 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ Zombie *zombieHorde(int N, std::string name)
 	}
 	catch (std::bad_alloc &e)
 	{
-		std::cerr <<e.what() << std::endl;
+		std::cout <<e.what() << std::endl;
 		return(nullptr);
 	}
 }

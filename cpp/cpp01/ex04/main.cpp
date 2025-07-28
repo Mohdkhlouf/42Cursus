@@ -27,7 +27,7 @@ int	main(int argc, char **argv)
 {
 	if (argc != 4)
 	{
-		std::cerr << "must be 4 arguments"
+		std::cout << "must be 4 arguments"
 					<< "\n";
 		return (1);
 	}
@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 	std::string new_str;
 	if (!file || !ofile)
 	{
-		std::cerr << "Error opening the file:" << std::strerror(errno) << "\n";
+		std::cout << "Error opening the file:" << std::strerror(errno) << "\n";
 		return (errno);
 	}
 	while (std::getline(file, readStr))
@@ -62,7 +62,7 @@ int	main(int argc, char **argv)
 			new_str.pop_back();
 	if (file.bad())
 	{
-		std::cerr << "Error while reading line: " << strerror(errno) << "\n";
+		std::cout << "Error while reading line: " << strerror(errno) << "\n";
 		return (errno);
 	}
 	std::cout << new_str << std::endl;

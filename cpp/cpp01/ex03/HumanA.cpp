@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   newZombie.cpp                                      :+:      :+:    :+:   */
+/*   HumanA.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/22 11:20:50 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/07/28 12:12:20 by mkhlouf          ###   ########.fr       */
+/*   Created: 2025/07/22 11:50:55 by mkhlouf           #+#    #+#             */
+/*   Updated: 2025/07/22 14:36:54 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#include "HumanA.hpp"
 
-Zombie *newZombie(std::string name)
+void HumanA::attack()
 {
-	try
-	{
-		Zombie *ptr = new Zombie(name);
-		return (ptr);
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << e.what() << '\n';
-		return (nullptr);
-	}
+	std::cout<<name_<<" attacks with their "<<weapon_.getType()<<"\n";
 }
+
+HumanA::HumanA(std::string name, Weapon& weapon):name_(name),weapon_(weapon)
+{
+	
+}
+HumanA::~HumanA(){};

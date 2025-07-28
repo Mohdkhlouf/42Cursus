@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:21:12 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/07/22 11:21:13 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/07/28 12:12:20 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void search_contact(PhoneBook &phonebook)
 	int index = 0;
 
 	if (phonebook.get_counter() == 0)
-		std::cerr << "The phonebook is empty\n**********************************************\n";
+		std::cout << "The phonebook is empty\n**********************************************\n";
 	else
 	{
 		phonebook.phonebook_print();

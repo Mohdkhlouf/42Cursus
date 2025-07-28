@@ -16,5 +16,5 @@ ScavTrap::~ScavTrap(){
 }
 
 void ScavTrap::guardGate(){
-    std::cout<<"ScavTrap is now in Gate Kepper mpde";
+    std::cout<<"ScavTrap " <<name_ <<" is now in Gate Kepper mpde\n";
 }
