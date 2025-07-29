@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wextra -Werror
 TARGET = hit_brain
 
 # Source files
-SRC = main.cpp
+SRC = main.cpp HumanA.cpp HumanB.cpp Weapon.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)

@@ -33,6 +33,11 @@ int	main(int argc, char **argv)
 	}
 	std::string inFile = argv[1];
 	std::string s1 = argv[2];
+	if(s1.empty())
+	{
+		std::cout<<"cannot replace an empty string"<<std::endl;
+		return(1);
+	}
 	std::string s2 = argv[3];
 	std::string outFile = inFile + ".replace";
 	std::string readStr;
@@ -65,8 +70,17 @@ int	main(int argc, char **argv)
 		std::cout << "Error while reading line: " << strerror(errno) << "\n";
 		return (errno);
 	}
-	std::cout << new_str << std::endl;
-	file.close(); // needs also try and catch if it fails;
-	ofile.close();
+	ofile<<new_str;
+	try {
+    file.close();
+	} catch (const std::ios_base::failure& e) {
+		std::cout << "Failed to close input file: " << e.what() << std::endl;
+	}
+
+	try {
+		ofile.close();
+	} catch (const std::ios_base::failure& e) {
+		std::cout << "Failed to close output file: " << e.what() << std::endl;
+	}
 	return (0);
 }

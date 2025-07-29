@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:20:50 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/07/28 12:12:20 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/07/29 15:34:07 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ Zombie *newZombie(std::string name)
 	catch(const std::exception& e)
 	{
 		std::cout << e.what() << '\n';
-		return (nullptr);
+		exit(EXIT_FAILURE);
 	}
 }

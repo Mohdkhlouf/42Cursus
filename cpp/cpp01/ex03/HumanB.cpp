@@ -1,12 +1,23 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   HumanB.cpp                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/22 11:50:57 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/07/22 11:50:58 by mkhlouf          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
+#include "HumanB.hpp"
+
+void HumanB::attack()
+{
+	if(!weapon_)
+		{
+			std::cout<<"Cannot attack without a weapon."<<std::endl;
+			exit(EXIT_FAILURE);
+		}
+	std::cout<<name_<<" attacks with their "<<weapon_->getType()<<"\n";
+}
+
+void HumanB::setWeapon(Weapon &web){
+	weapon_ = &web;
+}
+
+HumanB::HumanB(std::string name){
+	name_ = name;
+}
+
+HumanB::~HumanB(){
+}

@@ -3,19 +3,19 @@
 
 void Harl::debug(void)
 {
-	std::cout << "DEBUG: i am debugging the software and may you be useful as me!"<<"\n";
+	std::cout << "DEBUG: i am debugging the software and may you be useful as me!"<<std::endl;
 }
 void Harl::info(void)
 {
-	std::cout << "INFO: i am debugging the software and may you be useful as me!"<<"\n";
+	std::cout << "INFO: it is an important to check this info."<<std::endl;
 }
 void Harl::warning(void)
 {
-	std::cout << "WARNING: i warn you from some possible bugs."<<"\n";
+	std::cout << "WARNING: i warn you from some possible bugs."<<std::endl;
 }
 void Harl::error(void)
 {
-	std::cout << "ERROR: i am s sorry to declare that you have many errors!"<<"\n";
+	std::cout << "ERROR: i am s sorry to declare that you have many errors!"<<std::endl;
 }
 
 void Harl::complain(std::string level)

@@ -8,9 +8,12 @@ class HumanB
 {
 	private:
 		std::string name_;
-		Weapon weapon_;
+		Weapon *weapon_ = nullptr;
 	public:
 		void attack();
+		void setWeapon(Weapon &web);
+		HumanB(std::string name);
+		~HumanB();
 };
 
 #endif

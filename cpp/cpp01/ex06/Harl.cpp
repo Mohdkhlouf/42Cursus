@@ -40,26 +40,26 @@ void Harl::filtered(std::string level)
 		if (level_arr[i] == level)
 			int_level = i;
 	}
-	if(int_level == -1)
-		std::cout<<"only these are correct {DEBUG, INFO, WARNING, ERROR}"<<"\n";
-	
+
 	switch (int_level)
 	{
 		case 0:
-			for(int i=0;i<4;i++)
-				(this->*funcs_ptrs[i])();
-			break;
+			(this->*funcs_ptrs[0])();
+			[[fallthrough]];
+
 		case 1:
-			for(int i=1;i<4;i++)
-				(this->*funcs_ptrs[i])();
-			break;
+			(this->*funcs_ptrs[1])();
+			[[fallthrough]];
+
 		case 2:
-			for(int i=2;i<4;i++)
-				(this->*funcs_ptrs[i])();
-			break;
+			(this->*funcs_ptrs[2])();
+			[[fallthrough]];
+
 		case 3:
-			for(int i=3;i<4;i++)
-				(this->*funcs_ptrs[i])();
-			break;
+			(this->*funcs_ptrs[3])();
+			[[fallthrough]];
+
+		default:
+			std::cout<<"only these are correct {DEBUG, INFO, WARNING, ERROR}"<<"\n";
 	}
 }
