@@ -12,9 +12,9 @@ class Animal
 	public:
 		Animal();
 		Animal(std::string type);
-		Animal(cont Animal &obj);
+		Animal(const Animal &obj);
 		Animal & operator=(const Animal &obj);
-		~Animal();
+		virtual ~Animal();
 		virtual void makeSound() const;
 		std::string getType() const;
 };

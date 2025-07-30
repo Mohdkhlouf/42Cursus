@@ -1,20 +1,22 @@
 #ifndef CAT_HPP
 #define CAT_HPP
 
-#include "Animal.hpp"
 #include <iostream>
-#include <bits/stdc++.h>
+#include "Animal.hpp"
+#include "Brain.hpp"
 
 class Cat : public Animal
 {
 	private:
 		std::string type;
+		Brain *BrainPtr;
+
 	public:
 	Cat();
 	Cat(std::string type);
 	Cat(const Cat &obj);
 	Cat& operator=(const Cat& cat);
-	~Cat();
+	~Cat() override;
 	void makeSound() const override;
 	std::string getType();
 };

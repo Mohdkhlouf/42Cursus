@@ -13,12 +13,12 @@ FragTrap::FragTrap(const std::string &name): ClapTrap(name)
 FragTrap::~FragTrap(){
 	std::cout<<"FragTrap "<<name_<<" Destructor is called. \n";
 }
-FragTrap::FragTrap(FragTrap &obj){
+FragTrap::FragTrap(const FragTrap &obj){
 	std::cout<<"FragTrap copy constructor is called \n";
 	*this = obj;
 }
 
-FragTrap & FragTrap::operator=(FragTrap &obj)
+FragTrap & FragTrap::operator=(const FragTrap &obj)
 {
 	std::cout<<"FragTrap equal operator overloading constructor is called \n";
 	if(this == &obj)

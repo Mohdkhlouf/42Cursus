@@ -10,7 +10,7 @@
     std::cout<<"ClapTrap Parameterized Constructor is called.\n";        
     name_=name;
   }
-  ClapTrap::ClapTrap(ClapTrap &obj)
+  ClapTrap::ClapTrap(const ClapTrap &obj)
   {
     std::cout<<"ClapTrap Copy constructor is called\n";
     *this=obj;
@@ -21,7 +21,7 @@
     std::cout<<"ClapTrap Destructor is called. ClapTrap "<<name_<<" is destroyed \n";
   }
 
-  ClapTrap& ClapTrap::operator=(ClapTrap &obj)
+  ClapTrap& ClapTrap::operator=(const ClapTrap &obj)
   {
     std::cout<<"ClapTrap Copy assignment operator called\n";
     if(this == &obj)

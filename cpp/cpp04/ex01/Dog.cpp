@@ -3,6 +3,7 @@
 Dog::Dog(){
 	std::cout<<"Dog default constructor called."<<std::endl;
 	type= "Dog";
+	BrainPtr = new Brain();
 }
 Dog::Dog(std::string type)
 {
@@ -25,8 +26,8 @@ Dog& Dog::operator=(const Dog& dog)
 }
 Dog::~Dog()
 {
-		std::cout<<"Dog Destructor called."<<std::endl;
-
+	std::cout<<"Dog Destructor called."<<std::endl;
+	delete BrainPtr;
 }
 
 void Dog::makeSound() const

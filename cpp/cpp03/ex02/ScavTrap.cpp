@@ -14,12 +14,12 @@ ScavTrap::ScavTrap(const std::string &name):ClapTrap(name){
 ScavTrap::~ScavTrap(){
     std::cout<<"ScavTrap destructor called.\n";
 }
-ScavTrap::ScavTrap(ScavTrap &obj)
+ScavTrap::ScavTrap(const ScavTrap &obj)
 {
     std::cout<<"ScavTrap copy constructor called.\n";
     *this = obj;
 }
-ScavTrap & ScavTrap::operator=(ScavTrap &obj)
+ScavTrap & ScavTrap::operator=(const ScavTrap &obj)
 {
     std::cout<<"ScavTrap equal operator overloading called.\n";
     if(this == &obj)

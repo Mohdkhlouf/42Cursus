@@ -5,10 +5,10 @@ CXX = c++
 # CXXFLAGS = -Wall -Wextra -Werror
 
 # Target binary name
-TARGET = Animal
+TARGET = brain
 
 # Source files
-SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp  WrongCat.cpp 
+SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp  WrongCat.cpp Brain.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)
