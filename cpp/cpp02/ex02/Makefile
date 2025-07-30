@@ -2,7 +2,7 @@
 CXX = c++
 
 # Compilation flags
-# CXXFLAGS = -Wall -Wextra -Werror
+CXXFLAGS = -Wall -Wextra -Werror
 
 # Target binary name
 TARGET = Fixed

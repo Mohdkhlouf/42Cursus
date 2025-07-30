@@ -23,12 +23,13 @@ Fixed::Fixed(const float float_value)
 Fixed::Fixed(const Fixed &obj)
 {
 	std::cout<<"Copy constructor called"<<"\n";
-	fpn_value = obj.getRawBits();
+	*this = obj;
 };
 
 Fixed &Fixed::operator=(const Fixed &obj){
 	std::cout<<"Copy assignment operator called"<<"\n";
-	fpn_value = obj.getRawBits();	
+	if(this != &obj)
+		fpn_value = obj.fpn_value;
 	return (*this);
 };
 
@@ -46,4 +47,10 @@ float Fixed::toFloat( void ) const{
 
 int Fixed::toInt( void ) const{
 	return( static_cast<int> (fpn_value >> fractional_bits));
+}
+
+std::ostream &operator<<(std::ostream &os, const Fixed &obj)
+{
+	os << obj.toFloat();
+	return (os);
 }

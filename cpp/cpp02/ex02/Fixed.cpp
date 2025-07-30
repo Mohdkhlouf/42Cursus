@@ -26,7 +26,7 @@ Fixed::Fixed(const int value)
 Fixed::Fixed(const float float_value)
 {
 	std::cout << "Float constructor called"	<< "\n";
-	long long int tmp = static_cast<long>(float_value * (1 << fractional_bits));
+	long long int tmp = static_cast<long>(roundf(float_value * (1 << fractional_bits)));
 	if (tmp > INT32_MAX || tmp < INT32_MIN)
 	{
 		fpn_value = (tmp > INT32_MAX) ? INT32_MAX : INT32_MIN;
@@ -58,7 +58,7 @@ void Fixed::setRawBits(int const raw)
 // Converting Functions
 float Fixed::toFloat(void) const
 {
-	return (static_cast<float>(fpn_value) / (1 << fractional_bits));
+	return (static_cast<float>(roundf(fpn_value) / (1 << fractional_bits)));
 }
 
 int Fixed::toInt(void) const
@@ -188,20 +188,16 @@ Fixed &Fixed::operator--()
 		fpn_value = static_cast<int>(tmp);
 	return (*this);
 }
-Fixed &Fixed::operator++(int)
+Fixed Fixed::operator++(int)
 {
-	Fixed	tmp;
-
-	tmp = *this;
-	operator++();
+	Fixed	tmp(*this);
+	fpn_value = fpn_value +1;
 	return (tmp);
 }
-Fixed &Fixed::operator--(int)
+Fixed Fixed::operator--(int)
 {
-	Fixed	tmp;
-
-	tmp = *this;
-	operator--();
+	Fixed	tmp(*this);
+	fpn_value = fpn_value -1;
 	return (tmp);
 }
 

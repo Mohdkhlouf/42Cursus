@@ -5,7 +5,7 @@ CXX = c++
 # CXXFLAGS = -Wall -Wextra -Werror
 
 # Target binary name
-TARGET = brain
+TARGET = Abstract
 
 # Source files
 SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp  WrongCat.cpp Brain.cpp

@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:06:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/07/26 23:15:36 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/07/30 18:44:01 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void test_divide_by_zero(){
 	Fixed a(5);
-	Fixed b (10);
+	Fixed b (0);
 	Fixed c = a/b;
 }
 
@@ -25,10 +25,10 @@ void test_comparing_operators(){
 	const Fixed c(10);
 	const Fixed d(10);
 	
-	std::cout<<"Max value: "<<Fixed::max(a,b) <<"\n";
-	std::cout<<"Min value: "<<Fixed::min(a,b) <<"\n";
-	std::cout<<"Const Max value: "<<Fixed::max( c, d) <<"\n";
-	std::cout<<"Const Min value: "<<Fixed::min( c, d) <<"\n";
+	std::cout<<"Max value a&b: "<<Fixed::max(a,b) <<"\n";
+	std::cout<<"Min value a&b: "<<Fixed::min(a,b) <<"\n";
+	std::cout<<"Const Max value c&d: "<<Fixed::max( c, d) <<"\n";
+	std::cout<<"Const Min value c&d: "<<Fixed::min( c, d) <<"\n";
 
 	if (a>b)
 		std::cout<<"a>b True: a is larger than b\n";
@@ -92,10 +92,10 @@ int	main(void)
 	// test for bad fractional bits
 	// change the value from the hpp file to be something else than 8.
 
-	// test_divide_by_zero();	// test the division value by zero
-	// test_comparing_operators(); 	// test Comparing operators
-	// test_numeric_operators(); / test numeric operators
-	// test_inc_dec_operators();  // increment and decrement tests
+//test_divide_by_zero();	// test the division value by zero
+// test_comparing_operators(); 	// test Comparing operators
+// test_numeric_operators(); / test numeric operators
+// test_inc_dec_operators();  // increment and decrement tests
 Fixed a;
 Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
 std::cout << a << std::endl;
@@ -105,6 +105,5 @@ std::cout << a++ << std::endl;
 std::cout << a << std::endl;
 std::cout << b << std::endl;
 std::cout << Fixed::max( a, b ) << std::endl;
-
-	return (0);
+return (0);
 }
