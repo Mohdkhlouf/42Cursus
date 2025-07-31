@@ -10,7 +10,8 @@
     std::cout<<"ClapTrap Parameterized Constructor is called.\n";        
     name_=name;
   }
-  ClapTrap::ClapTrap(ClapTrap &obj)
+
+  ClapTrap::ClapTrap(const ClapTrap &obj)
   {
     std::cout<<"ClapTrap Copy constructor is called\n";
     *this=obj;
@@ -21,14 +22,16 @@
     std::cout<<"ClapTrap Destructor is called. ClapTrap "<<name_<<" is destroyed \n";
   }
 
-  ClapTrap& ClapTrap::operator=(ClapTrap &obj)
+  ClapTrap& ClapTrap::operator=(const ClapTrap &obj)
   {
-    std::cout<<"ClapTrap Copy assignment operator called\n";
-    if(this == &obj)
+    std::cout<<"Copy assignment operator called\n";
+    if(this != &obj)
     {
-        return(*this);
+        name_ = obj.name_;
+        attack_damage_ = obj.attack_damage_;
+        hit_points_ = obj.hit_points_;
+        energy_points_ = obj.energy_points_;
     }
-    *this = obj;
     return(*this);
   }
 

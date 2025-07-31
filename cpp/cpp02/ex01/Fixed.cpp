@@ -3,7 +3,6 @@
 Fixed::Fixed():fpn_value(0)
 {
 	std::cout<<"Default constructor called"<<"\n";
-	// you can add a check here to check the value of the fractional bit.
 }
 Fixed::~Fixed(){
 	std::cout<<"Destructor called"<<"\n";

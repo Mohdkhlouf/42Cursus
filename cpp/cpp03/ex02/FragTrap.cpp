@@ -21,9 +21,13 @@ FragTrap::FragTrap(const FragTrap &obj){
 FragTrap & FragTrap::operator=(const FragTrap &obj)
 {
 	std::cout<<"FragTrap equal operator overloading constructor is called \n";
-	if(this == &obj)
-		return (*this);
-	*this = obj;
+	if(this != &obj)
+		{
+			name_ = obj.name_;
+			hit_points_ = obj.hit_points_;
+			attack_damage_ = obj.attack_damage_;
+			energy_points_ = obj.energy_points_;
+		}
 	return (*this);		
 }
 

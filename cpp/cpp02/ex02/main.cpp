@@ -6,7 +6,7 @@
 /*   By: mkhlouf <mkhlouf@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:06:24 by mkhlouf           #+#    #+#             */
-/*   Updated: 2025/07/30 18:44:01 by mkhlouf          ###   ########.fr       */
+/*   Updated: 2025/07/31 11:26:50 by mkhlouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,8 @@ void test_inc_dec_operators()
 
 int	main(void)
 {
-	// test for bad fractional bits
-	// change the value from the hpp file to be something else than 8.
 
-//test_divide_by_zero();	// test the division value by zero
-// test_comparing_operators(); 	// test Comparing operators
-// test_numeric_operators(); / test numeric operators
-// test_inc_dec_operators();  // increment and decrement tests
+
 Fixed a;
 Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
 std::cout << a << std::endl;
@@ -105,5 +100,10 @@ std::cout << a++ << std::endl;
 std::cout << a << std::endl;
 std::cout << b << std::endl;
 std::cout << Fixed::max( a, b ) << std::endl;
+
+//test_divide_by_zero();	// test the division value by zero
+test_comparing_operators(); 	// test Comparing operators
+test_numeric_operators(); //test numeric operators
+test_inc_dec_operators();  // increment and decrement tests
 return (0);
 }

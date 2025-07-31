@@ -13,15 +13,11 @@ Cat::Cat(const Cat &obj)
 	std::cout<<"Cat Copy constructor called."<<std::endl;
 	*this = obj;
 }
-Cat& Cat::operator=(const Cat& Cat)
+Cat& Cat::operator=(const Cat& obj)
 {
-	if(this != &Cat)
-	{
-		*this = Cat;
-		return(*this);
-	}
-	else
-		return(*this);
+	if(this != &obj)
+		type = obj.type;
+	return(*this);
 }
 Cat::~Cat()
 {

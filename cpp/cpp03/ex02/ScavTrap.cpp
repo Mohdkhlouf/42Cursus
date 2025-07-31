@@ -22,9 +22,12 @@ ScavTrap::ScavTrap(const ScavTrap &obj)
 ScavTrap & ScavTrap::operator=(const ScavTrap &obj)
 {
     std::cout<<"ScavTrap equal operator overloading called.\n";
-    if(this == &obj)
-        return (*this);
-    *this = obj;
+    if(this != &obj){
+        name_ = obj.name_;
+        attack_damage_ = obj.attack_damage_;
+        hit_points_ = obj.hit_points_;
+        energy_points_ = obj.energy_points_;
+    }
     return (*this);
 }
 

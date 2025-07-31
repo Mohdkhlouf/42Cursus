@@ -3,10 +3,10 @@
 Fixed::Fixed()
 {
 	fpn_value = 0;
-	std::cout<<"Default constructor called"<<"\n";
+	std::cout<<"default constructor called"<<"\n";
 }
 Fixed::~Fixed(){
-	std::cout<<"Destructor called"<<"\n";
+	std::cout<<"destructor called"<<"\n";
 };
 
 Fixed::Fixed(int value)
@@ -17,7 +17,7 @@ Fixed::Fixed(int value)
 Fixed::Fixed(const Fixed &obj)
 {
 	std::cout<<"Copy constructor called"<<"\n";
-	this->fpn_value = obj.getRawBits();
+	*this = obj;
 	
 };
 
@@ -25,16 +25,15 @@ Fixed& Fixed::operator=(const Fixed &obj){
 	std::cout<<"Copy assignment operator called"<<"\n";
 	if(this != &obj)
 		this->fpn_value = obj.getRawBits();
-	
 	return(*this);
 };
 
 int Fixed::getRawBits() const{
-	std::cout<<"getRawBits member function called"<<"\n";
+	std::cout<<"GetRawBits member function called"<<"\n";
 	return(fpn_value);
 };
 
 void Fixed::setRawBits(int const raw){
-	std::cout<<"setRawBits member function called"<<"\n";
+	std::cout<<"SetRawBits member function called"<<"\n";
 	fpn_value = raw;
 };

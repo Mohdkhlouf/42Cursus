@@ -4,15 +4,14 @@
 
 Fixed::Fixed() : fpn_value(0)
 {
-	std::cout << "Default constructor called"
-				<< "\n";
+	std::cout << "Default constructor called"<< "\n";
 	if (fractional_bits != 8)
 		throw std::runtime_error("Fractional Bits must be 8 \n");
 }
 
 Fixed::Fixed(const int value)
 {
-		std::cout << "int constructor called"<< "\n";
+		std::cout << "Parameterized constructor called"<< "\n";
 	long long int	tmp;
 
 	tmp = static_cast<long>(value << fractional_bits);

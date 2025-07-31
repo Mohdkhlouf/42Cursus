@@ -16,12 +16,8 @@ Dog::Dog(const Dog &obj)
 Dog& Dog::operator=(const Dog& dog)
 {
 	if(this != &dog)
-	{
-		*this = dog;
-		return(*this);
-	}
-	else
-		return(*this);
+		type= dog.type;
+	return(*this);
 }
 Dog::~Dog()
 {

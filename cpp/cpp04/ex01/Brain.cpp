@@ -12,12 +12,9 @@ Brain::Brain(const Brain &obj)
 Brain& Brain::operator=(const Brain &obj)
 {
 	std::cout<<"Brain assignment operator called"<<std::endl;
-	if(this != &obj)
-	{
-		*this = obj;
-		return (*this);
-	}
-	return (*this);
+	if (this != &obj)
+		ideas_ = obj.ideas_;
+	return(*this);
 }
 
 Brain::~Brain()

@@ -24,11 +24,13 @@
   ClapTrap& ClapTrap::operator=(const ClapTrap &obj)
   {
     std::cout<<"Copy assignment operator called\n";
-    if(this == &obj)
+    if(this != &obj)
     {
-        return(*this);
+        name_ = obj.name_;
+        attack_damage_ = obj.attack_damage_;
+        hit_points_ = obj.hit_points_;
+        energy_points_ = obj.energy_points_;
     }
-    *this = obj;
     return(*this);
   }
 
@@ -92,7 +94,7 @@ void ClapTrap::beRepaired(unsigned int amount){
 // printing
     void ClapTrap::print()
     {
-        std::cout<<"Hit poinsts: "<<hit_points_<<"\n";
-        std::cout<<"Energy poinsts: "<<energy_points_<<"\n";
-        std::cout<<"Damage poinsts: "<<attack_damage_<<"\n";
+        std::cout<<"Hit points: "<<hit_points_<<"\n";
+        std::cout<<"Energy points: "<<energy_points_<<"\n";
+        std::cout<<"Damage points: "<<attack_damage_<<"\n";
     }

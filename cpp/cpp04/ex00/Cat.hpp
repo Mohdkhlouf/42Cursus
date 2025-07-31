@@ -13,7 +13,7 @@ class Cat : public Animal
 	Cat();
 	Cat(std::string type);
 	Cat(const Cat &obj);
-	Cat& operator=(const Cat& cat);
+	Cat& operator=(const Cat &obj);
 	~Cat();
 	void makeSound() const override;
 	std::string getType();
