@@ -8,22 +8,21 @@ Dog::Dog(){
 Dog::Dog(std::string type)
 {
 	std::cout<<"Dog Parameterized constructor called."<<std::endl;
+	this->type =type;
 }
 Dog::Dog(const Dog &obj)
 {
 	std::cout<<"Dog Copy constructor called."<<std::endl;
 	*this = obj;
 }
-Dog& Dog::operator=(const Dog& dog)
+
+Dog& Dog::operator=(const Dog& obj)
 {
-	if(this != &dog)
-	{
-		*this = dog;
-		return(*this);
-	}
-	else
-		return(*this);
+	if(this != &obj)
+		type = obj.type;
+	return(*this);
 }
+
 Dog::~Dog()
 {
 	std::cout<<"Dog Destructor called."<<std::endl;

@@ -2,31 +2,31 @@
 CXX = c++
 
 # Compilation flags
-# CXXFLAGS = -Wall -Wextra -Werror
+CXXFLAGS = -Wall -Wextra -Werror
 
-# Target binary name
-TARGET = ClapTrap
+# NAME binary name
+NAME = ClapTrap
 
 # Source files
-SRC = main.cpp ClapTrap.cpp
+SRC = src/main.cpp src/ClapTrap.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)
 
-# Default target
-all: $(TARGET)
+# Default NAME
+all: $(NAME)
 
-# Build the target from object files
-$(TARGET): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJ)
+# Build the NAME from object files
+$(NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
 
 # Compile each .cpp file to .o
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Run the program
-run: $(TARGET)
-	./$(TARGET)
+run: $(NAME)
+	./$(NAME)
 
 # Remove object files
 clean:
@@ -34,10 +34,10 @@ clean:
 
 # Full clean: object files + binary
 fclean: clean
-	rm -f $(TARGET) $(OBJ)
+	rm -f $(NAME) $(OBJ)
 
 # Rebuild everything from scratch
 re: fclean all
 
-# Phony targets
+# Phony NAMEs
 .PHONY: all run clean fclean re

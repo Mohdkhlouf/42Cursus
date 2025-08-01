@@ -16,7 +16,6 @@ class Cat : public Animal
 	Cat& operator=(const Cat &obj);
 	~Cat();
 	void makeSound() const override;
-	std::string getType();
 };
 
 #endif

@@ -7,6 +7,7 @@ Dog::Dog(){
 Dog::Dog(std::string type)
 {
 	std::cout<<"Dog Parameterized constructor called."<<std::endl;
+	this->type = type;
 }
 Dog::Dog(const Dog &obj)
 {
