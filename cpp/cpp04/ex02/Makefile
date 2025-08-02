@@ -2,13 +2,13 @@
 CXX = c++
 
 # Compilation flags
-CXXFLAGS = -Wall -Wextra -Werror
+CXXFLAGS = -Wall -Wextra -Werror -g
 
 # NAME binary name
-NAME = Abstract
+NAME = abstract
 
 # Source files
-SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp  WrongCat.cpp Brain.cpp
+SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp Brain.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)

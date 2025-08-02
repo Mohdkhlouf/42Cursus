@@ -1,32 +1,30 @@
 #include "Dog.hpp"
 
-Dog::Dog(){
+Dog::Dog():Animal("Dog"){
 	std::cout<<"Dog default constructor called."<<std::endl;
-	type= "Dog";
-	BrainPtr = new Brain();
+	brain = new Brain();
 }
-Dog::Dog(std::string type)
-{
-	std::cout<<"Dog Parameterized constructor called."<<std::endl;
-	this->type =type;
-}
-Dog::Dog(const Dog &obj)
+
+Dog::Dog(const Dog &obj):Animal(obj)
 {
 	std::cout<<"Dog Copy constructor called."<<std::endl;
 	*this = obj;
 }
-
 Dog& Dog::operator=(const Dog& obj)
 {
 	if(this != &obj)
-		type = obj.type;
+	{
+		Animal::operator=(obj);
+		delete brain;
+		brain = new Brain(*obj.brain);
+	}
+		
 	return(*this);
 }
-
 Dog::~Dog()
 {
 	std::cout<<"Dog Destructor called."<<std::endl;
-	delete BrainPtr;
+	delete brain;
 }
 
 void Dog::makeSound() const

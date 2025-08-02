@@ -2,7 +2,7 @@
 CXX = c++
 
 # Compilation flags
-CXXFLAGS = -Wall -Wextra -Werror
+CXXFLAGS = -Wall -Wextra -Werror -g
 
 # NAME binary name
 NAME = brain

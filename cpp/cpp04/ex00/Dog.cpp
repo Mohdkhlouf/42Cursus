@@ -1,23 +1,19 @@
 #include "Dog.hpp"
 
-Dog::Dog(){
+Dog::Dog():Animal("Dog"){
 	std::cout<<"Dog default constructor called."<<std::endl;
 	type= "Dog";
 }
-Dog::Dog(std::string type)
-{
-	std::cout<<"Dog Parameterized constructor called."<<std::endl;
-	this->type = type;
-}
-Dog::Dog(const Dog &obj)
+
+Dog::Dog(const Dog &obj):Animal(obj)
 {
 	std::cout<<"Dog Copy constructor called."<<std::endl;
 	*this = obj;
 }
-Dog& Dog::operator=(const Dog& dog)
+Dog& Dog::operator=(const Dog& obj)
 {
-	if(this != &dog)
-		type= dog.type;
+	if(this != &obj)
+		Animal::operator=(obj);
 	return(*this);
 }
 Dog::~Dog()

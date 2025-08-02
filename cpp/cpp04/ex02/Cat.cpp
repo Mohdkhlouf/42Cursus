@@ -1,37 +1,32 @@
 #include "Cat.hpp"
 
-Cat::Cat(){
+Cat::Cat():Animal("Cat"){
 	std::cout<<"Cat default constructor called."<<std::endl;
-	type = "Cat";
-	BrainPtr = new Brain();
+	brain = new Brain();
 }
-Cat::Cat(std::string type)
-{
-	std::cout<<"Cat Parameterized constructor called."<<std::endl;
-}
-Cat::Cat(const Cat &obj)
+
+Cat::Cat(const Cat &obj):Animal(obj)
 {
 	std::cout<<"Cat Copy constructor called."<<std::endl;
 	*this = obj;
 }
-Cat& Cat::operator=(const Cat& Cat)
-{
-	if(this != &Cat)
+
+Cat& Cat::operator=(const Cat& obj){
+	if(this != &obj)
 	{
-		*this = Cat;
-		return(*this);
+		Animal::operator=(obj);
+		delete brain;
+		brain = new Brain(*obj.brain);
 	}
-	else
-		return(*this);
+	return(*this);
 }
+
 Cat::~Cat()
 {
-		std::cout<<"Cat Destructor called."<<std::endl;
-		delete BrainPtr;
-
+	std::cout<<"Cat Destructor called."<<std::endl;
+	delete brain;
 }
 
 void Cat::makeSound() const{
 	std::cout<<"Cat sound is Meao Meao."<<std::endl;
 }
-

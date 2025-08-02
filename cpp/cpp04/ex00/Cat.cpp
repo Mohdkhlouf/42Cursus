@@ -1,25 +1,21 @@
 #include "Cat.hpp"
 
-Cat::Cat(){
+Cat::Cat():Animal("Cat"){
 	std::cout<<"Cat default constructor called."<<std::endl;
-	type = "Cat";
 }
-Cat::Cat(std::string type)
-{
-	std::cout<<"Cat Parameterized constructor called."<<std::endl;
-	this->type = type;
-}
-Cat::Cat(const Cat &obj)
+
+Cat::Cat(const Cat &obj):Animal(obj)
 {
 	std::cout<<"Cat Copy constructor called."<<std::endl;
 	*this = obj;
 }
-Cat& Cat::operator=(const Cat& obj)
-{
+
+Cat& Cat::operator=(const Cat& obj){
 	if(this != &obj)
-		type = obj.type;
+		Animal::operator=(obj);
 	return(*this);
 }
+
 Cat::~Cat()
 {
 	std::cout<<"Cat Destructor called."<<std::endl;

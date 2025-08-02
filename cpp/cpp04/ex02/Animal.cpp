@@ -17,21 +17,17 @@ Animal::Animal(const Animal &obj)
 Animal & Animal::operator=(const Animal &obj)
 {
 	if (this != &obj)
-	{
-		*this = obj;
-		return (*this);
-	}
-	else
-		return(*this);
+			type = obj.type;
+	return(*this);
 }
 
 Animal::~Animal()
 {
-	std::cout<<"Animal default destructor called."<<std::endl;
+	std::cout<<"Animal destructor called."<<std::endl;
 }
 
 void Animal::makeSound() const{
-	std::cout<<"Animal is make an animal sound"<<std::endl;
+	std::cout<<"Animal makes an animal sound"<<std::endl;
 }
 
 std::string Animal::getType()const
