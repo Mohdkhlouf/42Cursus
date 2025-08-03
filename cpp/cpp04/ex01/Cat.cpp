@@ -8,7 +8,7 @@ Cat::Cat():Animal("Cat"){
 Cat::Cat(const Cat &obj):Animal(obj)
 {
 	std::cout<<"Cat Copy constructor called."<<std::endl;
-	*this = obj;
+	brain = new Brain(*obj.brain);
 }
 
 Cat& Cat::operator=(const Cat& obj){
@@ -29,4 +29,14 @@ Cat::~Cat()
 
 void Cat::makeSound() const{
 	std::cout<<"Cat sound is Meao Meao."<<std::endl;
+}
+
+std::string Cat::getIdea(unsigned int index)
+{
+	return (brain->getIdea(index));
+}
+
+void Cat::setIdea(unsigned int index, std::string idea)
+{
+	brain->setIdea(index, idea);
 }

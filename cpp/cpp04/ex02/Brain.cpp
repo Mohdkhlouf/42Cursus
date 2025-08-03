@@ -2,6 +2,10 @@
 
 Brain::Brain() {
 	std::cout<<"Brain default constructor called"<<std::endl;
+	for (int i = 0; i< 100; i++)
+	{
+		ideas_[i] = "Idea " + std::to_string(i + 1); // cannot compile because of string added to integer, must casting before;
+	}
 }
 
 Brain::Brain(const Brain &obj)

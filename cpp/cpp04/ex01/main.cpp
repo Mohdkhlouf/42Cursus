@@ -4,34 +4,64 @@
 #include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
 
-int main()
+void copy_test()
 {
-const Animal* j = new Dog();
-const Animal* i = new Cat();
+	std::cout << std::endl << "\033[35m" << "	__| DEEP COPY TEST |__		";
+	std::cout << "\033[37m"  << std::endl;
 
-delete j;//should not create a leak
-delete i;
+	Dog dog1;
+	Dog dog2(dog1);
 
+	std::cout << std::endl << "IDEAS (before change) " << std::endl;
+	std::cout << "Dog1 IDEA: " << dog1.getIdea(0) << std::endl;
+	std::cout << "Dog2 IDEA: " << dog2.getIdea(0) << std::endl;
 
+	dog1.setIdea(0, "new idea 1");
+	dog2.setIdea(0, "new idea 2");
+
+	std::cout << std::endl << "IDEAS (after change) " << std::endl;
+	std::cout << "Dog1 IDEA: " << dog1.getIdea(0) << std::endl;
+	std::cout << "Dog2 IDEA: " << dog2.getIdea(0) << std::endl;
+	std::cout << std::endl;
+}
+void arr_test()
+{
 // animal array
 std::cout<<"\nAnimal array test"<<std::endl;
-Animal* animals[100];
-for (int i = 0; i < 100; i++)
+Animal* animals[10];
+for (int i = 0; i < 10; i++)
 {
-	if(i <50)
+
+	if(i <5)
 		animals[i] = new Dog();
-	if (i >= 50 && i <100)
+	if (i >= 5 && i <10)
 		animals[i] = new Cat();
 }
 
-for (int i = 0; i < 100; i++)
+for (int i = 0; i < 10; i++)
 	{
 		animals[i]->makeSound();
 	}
 
-for (int j = 0; j < 100; j++)
+for (int j = 0; j < 10; j++)
 	{
 		delete animals[j];
 	}
+}
+
+void defualt_test()
+{
+const Animal* j = new Dog();
+const Animal* i = new Cat();
+
+delete j;
+delete i;
+
+}
+int main()
+{
+	// defualt_test();
+	// arr_test();
+	copy_test();
 return (0);
 }
