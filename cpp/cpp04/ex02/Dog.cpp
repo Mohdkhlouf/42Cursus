@@ -8,14 +8,15 @@ Dog::Dog():Animal("Dog"){
 Dog::Dog(const Dog &obj):Animal(obj)
 {
 	std::cout<<"Dog Copy constructor called."<<std::endl;
-	*this = obj;
+	brain = new Brain(*obj.brain);
 }
+
 Dog& Dog::operator=(const Dog& obj)
 {
 	if(this != &obj)
 	{
 		Animal::operator=(obj);
-		delete brain;
+		delete this->brain;
 		brain = new Brain(*obj.brain);
 	}
 		
@@ -30,4 +31,14 @@ Dog::~Dog()
 void Dog::makeSound() const
 {
 	std::cout<<"Dog sound is Woof Woof."<<std::endl;
+}
+
+std::string Dog::getIdea(unsigned int index)
+{
+	return (brain->getIdea(index));
+}
+
+void Dog::setIdea(unsigned int index, std::string idea)
+{
+	brain->setIdea(index, idea);
 }

@@ -5,10 +5,10 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -g
 
 # NAME binary name
-NAME = brain
+NAME = Interface_recap
 
 # Source files
-SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp Brain.cpp
+SRC = main.cpp AMateria.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)

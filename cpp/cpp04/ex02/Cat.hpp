@@ -15,6 +15,8 @@ class Cat : public Animal
 		Cat& operator=(const Cat &obj);
 		~Cat() override;
 		void makeSound() const override;
+		std::string getIdea(unsigned int index);
+		void setIdea(unsigned int index, std::string idea);
 };
 
 #endif

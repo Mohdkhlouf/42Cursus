@@ -1,13 +1,11 @@
 #include "Animal.hpp"
 #include "Dog.hpp"
 #include "Cat.hpp"
-#include "WrongAnimal.hpp"
-#include "WrongCat.hpp"
+
 
 void copy_test()
 {
-	std::cout << std::endl << "\033[35m" << "	__| DEEP COPY TEST |__		";
-	std::cout << "\033[37m"  << std::endl;
+	std::cout << std::endl << "#####DEEP COPY TEST#####"<<std::endl;
 
 	Dog dog1;
 	Dog dog2(dog1);
@@ -57,11 +55,14 @@ const Animal* i = new Cat();
 delete j;
 delete i;
 
+Animal a;
+
+
 }
 int main()
 {
-	// defualt_test();
-	// arr_test();
+	defualt_test();
+	arr_test();
 	copy_test();
 return (0);
 }
