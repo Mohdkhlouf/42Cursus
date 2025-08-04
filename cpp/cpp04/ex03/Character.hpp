@@ -2,6 +2,7 @@
 #define CHARACTER_HPP
 
 #include "ICharacter.hpp"
+#include "AMateria.hpp"
 
 class Character : public ICharacter{
 	private:
@@ -9,6 +10,11 @@ class Character : public ICharacter{
 	public:
 		Character();
 		~Character();
+		Character(const Character &obj);
+		Character& operator=(const Character& obj);
+
+
+
 		std::string const & getName() const override;
 		void equip(AMateria* m) override;
 		void unequip(int idx) override;
