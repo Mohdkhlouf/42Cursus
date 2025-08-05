@@ -1,7 +1,7 @@
 #include "Cure.hpp"
 #include "AMateria.hpp"
 
-Cure::Cure():AMateria("Cure")
+Cure::Cure():AMateria("cure")
 {}
 Cure::Cure(const Cure &obj):AMateria(obj)
 {
@@ -14,14 +14,15 @@ Cure& Cure::operator=(const Cure &obj)
 	}
 	return (*this);
 }
+
 Cure::~Cure(){
 
 }
 
-void AMateria::use(ICharacter& target){
+void Cure::use(ICharacter& target){
 	std::cout<<"* heals "<<target.getName()<<"'s wounds *"<<std::endl;
 }
 
-AMateria* AMateria::clone() const{
-	return (new Cure());
+AMateria* Cure::clone() const {
+    return new Cure(*this);
 }

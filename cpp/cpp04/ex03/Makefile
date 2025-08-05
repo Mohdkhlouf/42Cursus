@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wextra -Werror -g
 NAME = Interface_recap
 
 # Source files
-SRC = main.cpp AMateria.cpp
+SRC = main.cpp AMateria.cpp Character.cpp Cure.cpp Ice.cpp MateriaSource.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)

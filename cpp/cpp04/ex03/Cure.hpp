@@ -10,7 +10,7 @@ class Cure : public AMateria{
 		Cure &operator=(const Cure& obj);
 		~Cure();
 		AMateria* clone() const override;
-		virtual void use(ICharacter& target) override;
+		void use(ICharacter& target) override;
 };
 
 #endif
