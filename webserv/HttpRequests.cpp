@@ -20,20 +20,157 @@ HttpRequests::HttpRequests():requestString(""){
 HttpRequests::~HttpRequests(){};
 
 
+bool HttpRequests::extractRequestBody(int &i, size_t requestLength, const std::vector<char> &request){
+	for (; i <= requestLength; i++)
+		{
+			requestBody+=request[i];
+		}
+	return (true);
+	
+}
+
+bool HttpRequests::extractRequestLine(int &i, size_t requestLength, const std::vector<char> &request){
+	std::string method;
+	std::string target;
+	std::string httpVersion;
+
+	for (; i <= requestLength; i++)
+		{
+			if(request[i] == '\r' &&  request[i+1] == '\n' )
+			{
+				i = i+2;
+				break;
+			}
+			requestLine+=request[i];
+		}
+
+
+	int j = 0;
+	for(; j<requestLine.size();j++)
+	{
+		if(requestLine[j] == ' ')
+		{
+			j+=1;
+			break;
+		}
+		method += requestLine[j];
+	}
+	for(; j<requestLine.size();j++)
+	{
+		if(requestLine[j] == ' ')
+		{
+			j+=1;
+			break;
+		}
+		target += requestLine[j];
+	}
+
+	for(; j<requestLine.size();j++)
+	{
+		httpVersion += requestLine[j];
+	}
+
+	requestLineMap["Method"] = method;
+	requestLineMap["Target"] = target;
+	requestLineMap["HttpVersion"] = httpVersion;
+	return (true);
+}
+
+
+bool HttpRequests::extractRequestHeader(int &i, size_t requestLength, const std::vector<char> &request){
+	for (; i <= requestLength; i++)
+			{
+				if(request[i] == '\r' &&  request[i+1] == '\n' && request[i+2] == '\r' &&  request[i+3] == '\n')
+				{
+					i+=4;
+					break;
+				}
+				requestHeader+=request[i];
+			}
+	return (true);
+}
+
+
+bool HttpRequests::validateRequestHeader(){
+	// std::cout<<"Return validated data"<<std::endl;
+	return (true);
+}
+
+
+
+bool HttpRequests::validateHttpVersion()
+{
+	if( requestLineMap["HttpVersion"] == "HTTP/1.1" || requestLineMap["HttpVersion"] == "HTTP/1.0")
+		return (true);
+	return false;
+}
+
+bool HttpRequests::validateTarget()
+{
+	std::string invalidCharactersUri = " <>\"{}|\\^`";
+	for(char j:requestLineMap["Target"] ){
+		for(char i:invalidCharactersUri)
+			{
+				if (i == j)
+					return false;
+			}
+	}
+	return true;
+}
+
+
+bool HttpRequests::validateMethod()
+{
+	std::vector<std::string> validMethods = {"GET", "POST", "DELETE"};
+
+	for(std::string im:validMethods)
+	{
+		if(requestLineMap["Method"] == im)
+			return (true);
+	}
+	return (false);
+}
+
+bool HttpRequests::validateRequestLine(){
+
+	//validate the method type
+	if(!validateMethod())
+		return (false);
+	if (!validateTarget())
+		return false;
+	if(!validateHttpVersion())
+		return false;
+	return (true);
+}
+
 HttpRequests &HttpRequests::httpParser(const std::vector<char> &request){
-	// here i convert the vector to a string.
-	std::string requestString(request.begin(),request.end()) ;	
-	std::cout<<"String from vector:\n"<<requestString<<std::endl;
 
+	size_t requestLength = request.size();
+	int i = 0;
+	
+	if(!extractRequestLine(i, requestLength, request))
+		std::cerr<<"extractRequestLine";
 
-	//extracting the request line:
-	size_t pos;
-	pos = requestString.find("\r\n");
-	requestLine = requestString.substr(0,pos);
-	requestString.erase(0,pos+2);
-	std::cout<< requestLine<< std::endl;
-	std::cout<< "########################"<< std::endl;
-	std::cout<< requestString<< std::endl;
+	if(!validateRequestLine())
+		std::cerr<<"validateRequestLine";		
+
+	if(!extractRequestHeader(i, requestLength, request))
+			std::cerr<<"extractRequestHeader";
+	if(!validateRequestHeader())
+			std::cerr<<"Validate extractRequestHeader";
+
+	if (i != requestLength)
+		if(!extractRequestBody(i, requestLength, request))
+			std::cerr<<"extractRequestBody";
+
+	// std::cout<<"Request Line:\n"<<requestLine<<"\n";
+	// std::cout<<"\n";
+	// std::cout<<"Request Header:\n"<<requestHeader<<"\n";
+	// std::cout<<"\n";
+	// std::cout<<"Request Body:\n"<<requestBody<<"\n";
+	// std::cout<<"\n";
+
+	// std::cout<<requestLineMap["Method"];
 
 return(*this);
 
