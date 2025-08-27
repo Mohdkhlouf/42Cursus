@@ -8,15 +8,18 @@
 class  Bureaucrat{
     private:
         const std::string name_;
-        uint8_t grade_;  // ranged from 0 to 255
+        int grade_;  // ranged from 0 to 255
 
     public:
         Bureaucrat();
+        Bureaucrat(const std::string &name, const int grade);
         ~Bureaucrat();
         Bureaucrat(const Bureaucrat &obj);
         Bureaucrat &operator=(const Bureaucrat &obj);
+
         std::string getName();
-        uint8_t getGrade();
+        int getGrade();
+        
 };
 
 #endif

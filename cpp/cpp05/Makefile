@@ -5,10 +5,10 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 
 # NAME binary name
-NAME = brain
+NAME = Bureaucrat
 
 # Source files
-SRC = main.cpp Bureaucrat.cpp
+SRC = main.cpp Bureaucrat.cpp GradeTooHighException.cpp GradeTooLowException.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)
