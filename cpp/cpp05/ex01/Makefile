@@ -5,7 +5,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 
 # NAME binary name
-NAME = Bureaucrat
+NAME = Form
 
 # Source files
 SRC = main.cpp Bureaucrat.cpp GradeTooHighException.cpp GradeTooLowException.cpp Form.cpp

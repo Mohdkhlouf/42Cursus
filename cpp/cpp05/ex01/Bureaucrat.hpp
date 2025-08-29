@@ -1,10 +1,11 @@
 #ifndef BUREAUCRAT_HPP
 #define BUREAUCRAT_HPP
-
+class Form;
 #include <string>
 #include <cstdint>
 #include <iostream>
 #include "Form.hpp"
+
 
 class Bureaucrat
 {
@@ -24,7 +25,7 @@ public:
     void decrement();
     std::string getName() const;
     int getGrade() const;
-    signForm();
+    void signForm(Form &form);
 };
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat);
 

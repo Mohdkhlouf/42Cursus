@@ -1,8 +1,11 @@
 #pragma once
+
 #include <iostream>
+#include "Bureaucrat.hpp"
 #include "GradeTooHighException.hpp"
 #include "GradeTooLowException.hpp"
-#include "Bureaucrat.hpp"
+
+class Bureaucrat;
 
 class Form{
 	private:
@@ -11,11 +14,16 @@ class Form{
 		const int signItGrade_;
 		const int executeItGrade_;
 	public:
-		const std::string getName();
-		const int getSignItGrade();
-		const int getExecuteItGrade();
-		bool getSignedStatus();
-		beSigned(Bureaucrat &bureaucrat)
+		Form();
+		Form(std::string name, int signitgrade, int executeitgrade);
+		~Form();
+		Form(const Form &obj);
+		Form &operator=(const Form& obj);
+		std::string getName() const;
+		int getSignItGrade() const;
+		int getExecuteItGrade() const;
+		bool getSignedStatus() const;
+		void beSigned(Bureaucrat &obj);
 
 };
 std::ostream &operator<<(std::ostream &os, const Form &obj);
