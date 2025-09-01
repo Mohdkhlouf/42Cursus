@@ -1,0 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkhlouf <mklouf@student.hive.fi>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/10 13:32:48 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/08/10 14:34:56 by mkhlouf          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include <unistd.h>
+#include <stdio.h>
+
+int main (int argc, char* argv[])
+{
+	int i;
+	/*colup*/
+	char* col1up = argv[0];
+	char* col2up= argv[1];
+	char* col3up= argv[2];
+	char* col4up= argv[3];
+	/*coldown*/
+	char col1down= argv[4];
+	char col2down=argv[5];
+	char col3down=argv[6];
+	char col4down=argv[7];
+	/*rowright*/
+	char row1left=argv[8];
+	char row2left=argv[9];
+	char row3left=argv[10];
+	char row4left=argv[11];
+	/*row right*/
+	char row1right=argv[12];
+	char row2right=argv[13];
+	char row3right=argv[14];
+	char row4right=argv[15];
+	
+
+	printf("%d\n",col1up);
+
+	}
+	return (0);
+}

@@ -1,0 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkhlouf <mklouf@student.hive.fi>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/18 15:29:41 by mkhlouf           #+#    #+#             */
+/*   Updated: 2024/08/18 15:29:43 by mkhlouf          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdio.h>
+
+int	ft_atoi(char *str)
+{
+	int	count;
+	int	convert;
+
+	count = 0;
+	convert = 0;
+	while ((*str <= 13 && *str >= 9) || *str == 32) //white spaces
+		str++;
+	while (*str == 43 || *str == 45) //+ and - signs
+	{
+		if (*str == 45)
+			count++;
+		str++;
+	}	
+	while (*str >= 48 && *str <= 57)
+	{
+		convert *= 10;
+		convert += *str - '0';
+		str++;
+	}
+	if (!(count % 2 == 0))
+		return (-convert);
+	return (convert);
+}
