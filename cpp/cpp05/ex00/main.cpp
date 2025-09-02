@@ -1,6 +1,4 @@
 #include "Bureaucrat.hpp"
-#include "GradeTooHighException.hpp"
-#include "GradeTooLowException.hpp"
 
 int main(void)
 {
@@ -12,11 +10,11 @@ int main(void)
 		a.decrement();
 		std::cout << a;
 	}
-	catch (const GradeTooLowException &e)
+	catch (const Bureaucrat::GradeTooLowException &e)
 	{
 		std::cout << "GradeTooLowException: " << e.what() << std::endl;
 	}
-	catch (const GradeTooHighException &e)
+	catch (const Bureaucrat::GradeTooHighException &e)
 	{
 		std::cout << "GradeTooHighException: " << e.what() << std::endl;
 	}
@@ -38,11 +36,11 @@ int main(void)
 		std::cout << c.getGrade() << std::endl;
 		std::cout << c;
 	}
-	catch (const GradeTooLowException &e)
+	catch (const Bureaucrat::GradeTooLowException &e)
 	{
 		std::cout << "GradeTooLowException: " << e.what() << std::endl;
 	}
-	catch (const GradeTooHighException &e)
+	catch (const Bureaucrat::GradeTooHighException &e)
 	{
 		std::cout << "GradeTooHighException: " << e.what() << std::endl;
 	}

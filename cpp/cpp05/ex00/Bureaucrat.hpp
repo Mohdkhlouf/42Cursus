@@ -23,6 +23,31 @@ public:
     void decrement();
     std::string getName() const;
     int getGrade() const;
+
+
+
+
+class GradeTooHighException : public std::exception
+{
+private:
+	std::string msg;
+
+public:
+	GradeTooHighException(const char *message);
+	const char *what() const noexcept override;
+};
+
+class GradeTooLowException : public std::exception
+{
+private:
+	std::string message;
+
+public:
+	GradeTooLowException(const char *msg);
+	const char *what() const noexcept override;
+};
+
+
 };
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat);
 

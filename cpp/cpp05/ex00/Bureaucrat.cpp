@@ -1,6 +1,5 @@
 #include "Bureaucrat.hpp"
-#include "GradeTooHighException.hpp"
-#include "GradeTooLowException.hpp"
+
 
 Bureaucrat::Bureaucrat() : name_("unnamed"), grade_(150) {}
 
@@ -79,4 +78,20 @@ std::ostream &operator<<(std::ostream &os, const Bureaucrat &obj)
        << ", bureaucrat grade "
        << obj.getGrade() << ". \n";
     return os;
+}
+
+
+
+Bureaucrat::GradeTooHighException::GradeTooHighException(const char *message) : msg(message) {};
+const char *Bureaucrat::GradeTooHighException::what() const throw()
+{
+	return (msg.c_str());
+}
+
+
+Bureaucrat::GradeTooLowException::GradeTooLowException(const char *msg) : message(msg) {};
+
+const char *Bureaucrat::GradeTooLowException::what() const throw()
+{
+	return (message.c_str());
 }

@@ -13,6 +13,14 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm &o
 }
 
 bool RobotomyRequestForm::execute(Bureaucrat const & executor) const{
-	(void)	executor;
+	if (getSignedStatus()){
+		if (executor.getGrade() <= getExecuteItGrade()){
+			std::cout<<target_<<"has been robotomized successfully 50'%' of the time."<<std::endl;
+			return (true);
+		}
+		else{
+			std::cout<<target_<<" robotomized Failed"<<std::endl;
+		}
+	}
 	return (false);
 }

@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wextra -Werror
 NAME = Bureaucrat
 
 # Source files
-SRC = main.cpp Bureaucrat.cpp GradeTooHighException.cpp GradeTooLowException.cpp
+SRC = main.cpp Bureaucrat.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)
