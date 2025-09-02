@@ -22,10 +22,10 @@ class AForm{
 		AForm &operator=(const AForm& obj);
 		std::string getName() const;
 		int getSignItGrade() const;
-		virtual int getExecuteItGrade() const = 0;
+		int getExecuteItGrade() const;
 		bool getSignedStatus() const;
 		void beSigned(Bureaucrat &obj);
-		void virtual execute(Bureaucrat const & executor) const = 0;
+		bool virtual execute(Bureaucrat const & executor) const = 0;
 
 };
 std::ostream &operator<<(std::ostream &os, const AForm &obj);

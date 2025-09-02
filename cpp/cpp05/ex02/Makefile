@@ -5,10 +5,10 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 
 # NAME binary name
-NAME = Form
+NAME = AForm
 
 # Source files
-SRC = main.cpp Bureaucrat.cpp GradeTooHighException.cpp GradeTooLowException.cpp Form.cpp
+SRC = main.cpp Bureaucrat.cpp GradeTooHighException.cpp GradeTooLowException.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)

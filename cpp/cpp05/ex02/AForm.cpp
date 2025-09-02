@@ -49,17 +49,3 @@ AForm::AForm(std::string name, int signitgrade, int executeitgrade): name_(name)
 }
 
 
-void AForm::execute(Bureaucrat const & executor) const {
-
-	if (is_signed){
-		if(executor.getGrade() < 1)
-			throw GradeTooHighException("Grade is higher than the max value 1");
-		else if (executor.getGrade() > 150){
-			throw GradeTooLowException("Grade is Lower than the Min value 150");
-		}
-	}
-	else{
-		throw std::runtime_error("it is not signeed in");
-	}
-
-}

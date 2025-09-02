@@ -73,7 +73,7 @@ void Bureaucrat::decrement()
     }
 }
 
-void Bureaucrat::signForm(Form &form){
+void Bureaucrat::signForm(AForm &form){
     try{
         form.beSigned(*this);
         std::cout<<name_<<" signed "<<form.getName()<<"."<<std::endl;
@@ -91,4 +91,14 @@ std::ostream &operator<<(std::ostream &os, const Bureaucrat &obj)
        << ", bureaucrat grade "
        << obj.getGrade() << ". \n";
     return os;
+}
+
+
+void Bureaucrat::executeForm(AForm const & form){
+    if(form.execute(*this) ){
+        std::cout<<name_<<" executed "<<form.getName()<<std::endl;
+    }
+    else{
+        std::cout<<"NOT execute "<<form.getName()<<std::endl;
+    }
 }
