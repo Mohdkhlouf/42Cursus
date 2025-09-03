@@ -2,8 +2,6 @@
 
 #include <iostream>
 #include "Bureaucrat.hpp"
-#include "GradeTooHighException.hpp"
-#include "GradeTooLowException.hpp"
 
 class Bureaucrat;
 

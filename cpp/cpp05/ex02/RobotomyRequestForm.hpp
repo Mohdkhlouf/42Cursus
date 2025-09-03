@@ -1,8 +1,8 @@
 #pragma once
 #include "AForm.hpp"
+#include <stdlib.h>
 
-
-class RobotomyRequestForm: private AForm{
+class RobotomyRequestForm: public AForm{
 	private:
 		std::string target_;
 

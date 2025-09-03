@@ -1,6 +1,4 @@
 #include "Bureaucrat.hpp"
-#include "GradeTooHighException.hpp"
-#include "GradeTooLowException.hpp"
 
 Bureaucrat::Bureaucrat() : name_("unnamed"), grade_(150) {}
 
@@ -101,4 +99,27 @@ void Bureaucrat::executeForm(AForm const & form){
     else{
         std::cout<<"NOT execute "<<form.getName()<<std::endl;
     }
+}
+
+
+Bureaucrat::GradeTooHighException::GradeTooHighException(const char *message) : msg(message) {};
+const char *Bureaucrat::GradeTooHighException::what() const noexcept
+{
+	return (msg.c_str());
+}
+
+
+
+Bureaucrat::GradeTooLowException::GradeTooLowException(const char *msg) : message(msg) {};
+
+const char *Bureaucrat::GradeTooLowException::what() const noexcept
+{
+	return (message.c_str());
+}
+
+
+Bureaucrat::FormNotSignedException::FormNotSignedException(const char *msg):message(msg){};
+
+const char *Bureaucrat::FormNotSignedException::what() const noexcept{
+    return (message.c_str());
 }

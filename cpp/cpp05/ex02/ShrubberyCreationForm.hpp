@@ -11,5 +11,5 @@ class ShrubberyCreationForm: public AForm{
 		ShrubberyCreationForm(const ShrubberyCreationForm &obj);
 		ShrubberyCreationForm& operator=(const ShrubberyCreationForm &obj);
 		bool virtual execute(Bureaucrat const & executor) const override;
-		bool draw_trees(const std::string &target) const;
+		void draw_trees(const std::string &target) const;
 };

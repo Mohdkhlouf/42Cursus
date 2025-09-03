@@ -6,7 +6,6 @@ class AForm;
 #include <iostream>
 #include "AForm.hpp"
 
-
 class Bureaucrat
 {
 private:
@@ -26,7 +25,35 @@ public:
     std::string getName() const;
     int getGrade() const;
     void signForm(AForm &form);
-    void executeForm(AForm const & form);
+    void executeForm(AForm const &form);
+
+    class GradeTooHighException : public std::exception
+    {
+    private:
+        std::string msg;
+
+    public:
+        GradeTooHighException(const char *message);
+        const char *what() const noexcept override;
+    };
+
+    class GradeTooLowException : public std::exception
+    {
+    private:
+        std::string message;
+
+    public:
+        GradeTooLowException(const char *msg);
+        const char *what() const noexcept override;
+    };
+
+    class FormNotSignedException: public std::exception{
+        private:
+            std::string message;
+        public:
+            FormNotSignedException(const char *msg);
+            const char * what() const noexcept override;
+    };
 };
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat);
 
