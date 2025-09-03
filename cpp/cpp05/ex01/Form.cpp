@@ -31,7 +31,7 @@ void Form::beSigned(Bureaucrat &obj){
 	if(obj.getGrade() <= signItGrade_)
 		is_signed = true;
 	else
-		throw GradeTooLowException("grade is too low");
+		throw Bureaucrat::GradeTooLowException("grade is too low");
 }
 
 std::ostream &operator<<(std::ostream &os, const Form &obj) {
@@ -42,7 +42,7 @@ std::ostream &operator<<(std::ostream &os, const Form &obj) {
 
 Form::Form(std::string name, int signitgrade, int executeitgrade): name_(name),is_signed(false),signItGrade_(signitgrade),executeItGrade_(executeitgrade){
 	if (signItGrade_ < 1 || executeItGrade_<1)
-		throw GradeTooHighException("Grade is too High");
+		throw Bureaucrat::GradeTooHighException("Grade is too High");
 	else if(signItGrade_ > 150 || executeItGrade_ > 150)
-		throw GradeTooLowException("Grade is too Low");
+		throw Bureaucrat::GradeTooLowException("Grade is too Low");
 }

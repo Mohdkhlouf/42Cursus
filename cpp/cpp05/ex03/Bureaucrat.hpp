@@ -1,10 +1,10 @@
 #ifndef BUREAUCRAT_HPP
 #define BUREAUCRAT_HPP
-class Form;
+class AForm;
 #include <string>
 #include <cstdint>
 #include <iostream>
-#include "Form.hpp"
+#include "AForm.hpp"
 
 class Bureaucrat
 {
@@ -24,7 +24,8 @@ public:
     void decrement();
     std::string getName() const;
     int getGrade() const;
-    void signForm(Form &form);
+    void signForm(AForm &form);
+    void executeForm(AForm const &form);
 
     class GradeTooHighException : public std::exception
     {
@@ -44,6 +45,14 @@ public:
     public:
         GradeTooLowException(const char *msg);
         const char *what() const noexcept override;
+    };
+
+    class FormNotSignedException: public std::exception{
+        private:
+            std::string message;
+        public:
+            FormNotSignedException(const char *msg);
+            const char * what() const noexcept override;
     };
 };
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat);

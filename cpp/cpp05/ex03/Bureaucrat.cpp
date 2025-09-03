@@ -1,6 +1,5 @@
 #include "Bureaucrat.hpp"
 
-
 Bureaucrat::Bureaucrat() : name_("unnamed"), grade_(150) {}
 
 Bureaucrat::Bureaucrat(const int grade) : name_("unnamed")
@@ -72,7 +71,7 @@ void Bureaucrat::decrement()
     }
 }
 
-void Bureaucrat::signForm(Form &form){
+void Bureaucrat::signForm(AForm &form){
     try{
         form.beSigned(*this);
         std::cout<<name_<<" signed "<<form.getName()<<"."<<std::endl;
@@ -93,17 +92,34 @@ std::ostream &operator<<(std::ostream &os, const Bureaucrat &obj)
 }
 
 
+void Bureaucrat::executeForm(AForm const & form){
+    if(form.execute(*this) ){
+        std::cout<<name_<<" executed "<<form.getName()<<std::endl;
+    }
+    else{
+        std::cout<<"NOT execute "<<form.getName()<<std::endl;
+    }
+}
+
+
+Bureaucrat::GradeTooHighException::GradeTooHighException(const char *message) : msg(message) {};
+const char *Bureaucrat::GradeTooHighException::what() const noexcept
+{
+	return (msg.c_str());
+}
+
+
 
 Bureaucrat::GradeTooLowException::GradeTooLowException(const char *msg) : message(msg) {};
 
-const char *Bureaucrat::GradeTooLowException::what() const throw()
+const char *Bureaucrat::GradeTooLowException::what() const noexcept
 {
 	return (message.c_str());
 }
 
 
-Bureaucrat::GradeTooHighException::GradeTooHighException(const char *message) : msg(message) {};
-const char *Bureaucrat::GradeTooHighException::what() const throw()
-{
-	return (msg.c_str());
+Bureaucrat::FormNotSignedException::FormNotSignedException(const char *msg):message(msg){};
+
+const char *Bureaucrat::FormNotSignedException::what() const noexcept{
+    return (message.c_str());
 }
