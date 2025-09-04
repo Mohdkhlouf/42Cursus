@@ -1,8 +1,10 @@
 #include "ShrubberyCreationForm.hpp"
 #include "fstream"
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string &target) : AForm("ShrubberyCreationForm", 145, 137), target_(target) {}
-ShrubberyCreationForm::~ShrubberyCreationForm() {}
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target) : AForm("ShrubberyCreationForm", 145, 137), target_(target) {}
+ShrubberyCreationForm::~ShrubberyCreationForm() {
+	 std::cout << "Shrubbery destroyed\n";
+}
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &obj)
 {
 	target_ = obj.target_;

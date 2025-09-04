@@ -30,6 +30,8 @@ int main(void)
 		std::cout << c.getGrade() << std::endl;
 		c.decrement();
 		c.decrement();
+		std::cout << c.getName() << std::endl;
+		std::cout << c.getGrade() << std::endl;
 		c.increment();
 		c.increment();
 		std::cout << c.getName() << std::endl;

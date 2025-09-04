@@ -10,7 +10,7 @@ class Bureaucrat
 {
 private:
     const std::string name_;
-    int grade_; // ranged from 0 to 255
+    int grade_; // ranged from 0 to 150
 
 public:
     Bureaucrat();

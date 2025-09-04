@@ -3,6 +3,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 
 int main(void)
 {
@@ -10,32 +11,42 @@ int main(void)
 	try
 	{
 		{
-		std::cout << "######Case 1:######" << std::endl;
-		Bureaucrat ber("BER",1);
-		std::string teststr = "mohammad";
-		ShrubberyCreationForm test(teststr);
-		test.beSigned(ber);
-		ber.executeForm(test);
+			std::cout<<"************Case1:\n";
+			Intern test;
+			AForm *rrf = nullptr;
+			rrf = test.makeForm("ShrubberyCreationForm", "Bender");
+			delete rrf;
 		}
 
 		{
-		std::cout << "######Case 2:######" << std::endl;
-		Bureaucrat ber("BER2",44);
-		std::string teststr = "Khaled";
-		RobotomyRequestForm test2(teststr);
-		test2.beSigned(ber);
-		ber.executeForm(test2);
+			std::cout<<"************Case2:\n";
+			Bureaucrat ber("test", 130);
+			Intern test;
+			AForm *rrf = nullptr;
+			rrf = test.makeForm("ShrubberyCreationForm", "Bender");
+			ber.signForm(*rrf);
+			rrf->execute(ber);
+			delete rrf;
 		}
 
 		{
-		std::cout << "######Case 3:######" << std::endl;
-		Bureaucrat ber("BER3",4);
-		std::string teststr = "Ali";
-		PresidentialPardonForm test3(teststr);
-		test3.beSigned(ber);
-		ber.executeForm(test3);
+			std::cout<<"************Case3:\n";
+			Bureaucrat ber("test", 30);
+			Intern test;
+			AForm *rrf = nullptr;
+			rrf = test.makeForm("RobotomyRequestForm", "NiceBender");
+			ber.signForm(*rrf);
+			rrf->execute(ber);
+			delete rrf;
 		}
 
+		{
+			std::cout<<"************Case4:\n";
+			Intern someRandomIntern;
+			AForm *rrf = nullptr;
+			rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+			delete rrf;
+		}
 	}
 
 	catch (Bureaucrat::GradeTooHighException &e)

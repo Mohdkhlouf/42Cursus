@@ -14,8 +14,8 @@ class AForm{
 
 	public:
 		AForm();
-		AForm(std::string name, int signitgrade, int executeitgrade);
-		~AForm();
+		AForm(const std::string name, int signitgrade, int executeitgrade);
+		virtual ~AForm();
 		AForm(const AForm &obj);
 		AForm &operator=(const AForm& obj);
 		std::string getName() const;

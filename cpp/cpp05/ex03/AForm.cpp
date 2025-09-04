@@ -1,7 +1,9 @@
 #include "AForm.hpp"
 
 AForm::AForm():name_("Unnamed"),is_signed(false),signItGrade_(150), executeItGrade_(150){}
-AForm::~AForm(){}
+AForm::~AForm(){
+	 std::cout << "AForm destroyed\n";
+}
 AForm::AForm(const AForm &obj):name_(obj.name_),is_signed(obj.is_signed), signItGrade_(obj.signItGrade_), executeItGrade_(obj.executeItGrade_){}
 
 AForm &AForm::operator=(const AForm& obj){

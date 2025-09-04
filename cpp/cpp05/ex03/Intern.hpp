@@ -12,7 +12,6 @@ class Intern{
 		~Intern() = default;
 		Intern(const Intern& obj) = default;
 		Intern & operator=(const Intern & obj) = default;
-
 		AForm * makeForm(std::string name, std::string target);
 
 };
