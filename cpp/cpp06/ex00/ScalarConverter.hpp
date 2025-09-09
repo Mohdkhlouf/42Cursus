@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <climits>
+#include <cmath>
 
 typedef enum s_types{
 	CHAR,
