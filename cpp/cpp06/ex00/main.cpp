@@ -1,7 +1,9 @@
 #include "ScalarConverter.hpp"
 
-int main(){
-	std::string test = "25";
-	ScalarConverter::convert(test);
+int main(int argc, char **argv){
+	if (argc != 2){
+		std::cout<<"Error\nBad arguments must be ./Scalar string";
+	}
+	ScalarConverter::convert(argv[1]);
 	return (0);
 }

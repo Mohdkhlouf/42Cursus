@@ -11,40 +11,44 @@ int main(void)
 	try
 	{
 		{
-			std::cout<<"************Case1:\n";
+			std::cout << "************Case1:\n";
 			Intern test;
 			AForm *rrf = nullptr;
 			rrf = test.makeForm("ShrubberyCreationForm", "Bender");
+			std::cout << "Form info " << rrf->getName() << "  " << rrf->getSignItGrade() << std::endl;
 			delete rrf;
 		}
 
 		{
-			std::cout<<"************Case2:\n";
+			std::cout << "************Case2:\n";
 			Bureaucrat ber("test", 130);
 			Intern test;
 			AForm *rrf = nullptr;
 			rrf = test.makeForm("ShrubberyCreationForm", "Bender");
 			ber.signForm(*rrf);
 			rrf->execute(ber);
+			std::cout << "Form info " << rrf->getName() << "  " << rrf->getSignItGrade() << std::endl;
 			delete rrf;
 		}
 
 		{
-			std::cout<<"************Case3:\n";
+			std::cout << "************Case3:\n";
 			Bureaucrat ber("test", 30);
 			Intern test;
 			AForm *rrf = nullptr;
 			rrf = test.makeForm("RobotomyRequestForm", "NiceBender");
 			ber.signForm(*rrf);
 			rrf->execute(ber);
+			std::cout << "Form info " << rrf->getName() << "  " << rrf->getSignItGrade() << std::endl;
 			delete rrf;
 		}
 
 		{
-			std::cout<<"************Case4:\n";
+			std::cout << "************Case4:\n";
 			Intern someRandomIntern;
 			AForm *rrf = nullptr;
 			rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+			std::cout << "Form info " << rrf->getName() << "  " << rrf->getSignItGrade() << std::endl;
 			delete rrf;
 		}
 	}

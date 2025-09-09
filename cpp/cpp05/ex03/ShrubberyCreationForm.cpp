@@ -2,8 +2,9 @@
 #include "fstream"
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target) : AForm("ShrubberyCreationForm", 145, 137), target_(target) {}
-ShrubberyCreationForm::~ShrubberyCreationForm() {
-	 std::cout << "Shrubbery destroyed\n";
+ShrubberyCreationForm::~ShrubberyCreationForm()
+{
+	std::cout << "Shrubbery destroyed\n";
 }
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &obj)
 {
@@ -61,7 +62,7 @@ bool ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
 	if (!getSignedStatus())
 		throw Bureaucrat::FormNotSignedException("Cannot be assigned");
-	else if(executor.getGrade() > getExecuteItGrade())
+	else if (executor.getGrade() > getExecuteItGrade())
 		throw Bureaucrat::GradeTooLowException("grade is not high enough");
 	draw_trees(this->target_);
 	return (true);

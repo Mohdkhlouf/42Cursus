@@ -15,14 +15,13 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &o
 	return (*this);
 }
 
-
 bool RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
 	if (!getSignedStatus())
 		throw Bureaucrat::FormNotSignedException("Cannot be assigned");
 	else if (executor.getGrade() > getExecuteItGrade())
 		throw Bureaucrat::GradeTooLowException("grade is not high enough");
-	if(rand() % 2)
+	if (rand() % 2)
 		std::cout << target_ << "has been robotomized successfully 50'%' of the time." << std::endl;
 	else
 		std::cout << target_ << "the robotomy failed." << std::endl;
