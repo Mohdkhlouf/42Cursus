@@ -157,14 +157,20 @@ void printCasted(int n)
 
 void printCasted(float n, bool has_decimal)
 {
-	if (n < 33 || n > 126)
+	if ((n < 33 && n> static_cast<float>(INT_MIN))|| (n > 126 && n < static_cast<float>(INT_MAX)))
 		std::cout << "char: " << "Non displayable" << std::endl;
+	else if(n !=n || n == -INFINITY || n == +INFINITY)
+		std::cout << "char: " << "Impossible" << std::endl;
 	else
 		std::cout << "char: " << static_cast<char>(n) << std::endl;
-	if (n < static_cast<float>(INT_MIN) || n > static_cast<float>(INT_MAX))
-		std::cout << "char: " << "Overflow" << std::endl;
+
+	if ((n < static_cast<float>(INT_MIN) && n > -INFINITY) || (n > static_cast<float>(INT_MAX) && n < +INFINITY))
+		std::cout << "int: " << "Overflow" << std::endl;
+	else if(n !=n || n == -INFINITY || n == +INFINITY)
+		std::cout << "int: " << "Impossible" << std::endl;
 	else
 		std::cout << "int: " << static_cast<int>(n) << std::endl;
+
 	if (!has_decimal)
 	{
 		std::cout << "float: " << n << "f" << std::endl;
@@ -179,12 +185,17 @@ void printCasted(float n, bool has_decimal)
 
 void printCasted(double n, bool has_decimal)
 {
-	if (n < 33 || n > 126)
+	if ((n < 33 && n> static_cast<float>(INT_MIN))|| (n > 126 && n < static_cast<float>(INT_MAX)))
 		std::cout << "char: " << "Non displayable" << std::endl;
+	else if (n != n || n == -INFINITY || n == +INFINITY)
+		std::cout << "char: " << "Impossible" << std::endl;
 	else
 		std::cout << "char: " << static_cast<char>(n) << std::endl;
-	if (n < static_cast<float>(INT_MIN) || n > static_cast<float>(INT_MAX))
-		std::cout << "char: " << "Overflow" << std::endl;
+
+	if ((n < static_cast<float>(INT_MIN) && n > -INFINITY) || (n > static_cast<float>(INT_MAX) && n < +INFINITY))
+		std::cout << "int: " << "Overflow" << std::endl;
+	else if (n != n || n == -INFINITY || n == +INFINITY)
+		std::cout << "int: " << "Impossible" << std::endl;
 	else
 		std::cout << "int: " << static_cast<int>(n) << std::endl;
 	if (!has_decimal){
@@ -207,25 +218,21 @@ void ScalarConverter::convert(const std::string &str)
 	{
 	case 0:
 	{
-		std::cout << "Char Type detected" << std::endl;
 		printCasted(str[0]);
 		break;
 	}
 	case 1:
 	{
-		std::cout << "Int Type detected" << std::endl;
 		printCasted(std::stoi(str));
 		break;
 	}
 	case 2:
 	{
-		std::cout << "Float Type detected" << std::endl;
 		printCasted(std::stof(str), hasDecimal(str));
 		break;
 	}
 	case 3:
 	{
-		std::cout << "Double Type detected" << std::endl;
 		printCasted(std::stod(str), hasDecimal(str));
 		break;
 	}
