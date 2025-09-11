@@ -12,7 +12,7 @@ bool isChar(const std::string &str)
 	{
 		return (false);
 	}
-	if (str[0] < 33 || str[0] > 126)
+	if (str[0] < 32 || str[0] > 126)
 		print_message("not displayable character");
 	else
 	{
@@ -146,7 +146,7 @@ void printCasted(char ch)
 
 void printCasted(int n)
 {
-	if (n < 33 || n > 126)
+	if (n < 32 || n > 126)
 		std::cout << "char: " << "Non displayable" << std::endl;
 	else
 		std::cout << "char: " << static_cast<char>(n) << std::endl;
@@ -157,7 +157,7 @@ void printCasted(int n)
 
 void printCasted(float n, bool has_decimal)
 {
-	if ((n < 33 && n> static_cast<float>(INT_MIN))|| (n > 126 && n < static_cast<float>(INT_MAX)))
+	if ((n < 32 && n> static_cast<float>(INT_MIN))|| (n > 126 && n < static_cast<float>(INT_MAX)))
 		std::cout << "char: " << "Non displayable" << std::endl;
 	else if(n !=n || n == -INFINITY || n == +INFINITY)
 		std::cout << "char: " << "Impossible" << std::endl;
@@ -171,7 +171,7 @@ void printCasted(float n, bool has_decimal)
 	else
 		std::cout << "int: " << static_cast<int>(n) << std::endl;
 
-	if (!has_decimal)
+	if (has_decimal || n == -INFINITY || n == +INFINITY || n != n )
 	{
 		std::cout << "float: " << n << "f" << std::endl;
 		std::cout << "double: " << static_cast<double>(n) <<std::endl;
@@ -185,7 +185,7 @@ void printCasted(float n, bool has_decimal)
 
 void printCasted(double n, bool has_decimal)
 {
-	if ((n < 33 && n> static_cast<float>(INT_MIN))|| (n > 126 && n < static_cast<float>(INT_MAX)))
+	if ((n < 32 && n > static_cast<long>(INT_MIN))|| (n > 126 && n < static_cast<long>(INT_MAX)))
 		std::cout << "char: " << "Non displayable" << std::endl;
 	else if (n != n || n == -INFINITY || n == +INFINITY)
 		std::cout << "char: " << "Impossible" << std::endl;
@@ -198,7 +198,7 @@ void printCasted(double n, bool has_decimal)
 		std::cout << "int: " << "Impossible" << std::endl;
 	else
 		std::cout << "int: " << static_cast<int>(n) << std::endl;
-	if (!has_decimal){
+	if (has_decimal || n == -INFINITY || n == +INFINITY || n != n  ){
 		std::cout << "float: " << static_cast<float>(n) << "f" << std::endl;
 		std::cout << "double: " << static_cast<double>(n) << std::endl;
 	}
