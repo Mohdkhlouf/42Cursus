@@ -11,7 +11,7 @@ int main(int argc, char **argv){
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr <<"Error in your string "<<e.what() << '\n';
 	}
 	
 	// ScalarConverter::convert(argv[1]);

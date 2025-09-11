@@ -157,7 +157,7 @@ void printCasted(int n)
 
 void printCasted(float n, bool has_decimal)
 {
-	if ((n < 32 && n> static_cast<float>(INT_MIN))|| (n > 126 && n < static_cast<float>(INT_MAX)))
+	if ((n < 32 && n > -INFINITY)|| (n > 126 && n < +INFINITY))
 		std::cout << "char: " << "Non displayable" << std::endl;
 	else if(n !=n || n == -INFINITY || n == +INFINITY)
 		std::cout << "char: " << "Impossible" << std::endl;
@@ -185,23 +185,29 @@ void printCasted(float n, bool has_decimal)
 
 void printCasted(double n, bool has_decimal)
 {
-	if ((n < 32 && n > static_cast<long>(INT_MIN))|| (n > 126 && n < static_cast<long>(INT_MAX)))
+	if ((n < 32 && n > -INFINITY)|| (n > 126 && n < +INFINITY))
 		std::cout << "char: " << "Non displayable" << std::endl;
 	else if (n != n || n == -INFINITY || n == +INFINITY)
 		std::cout << "char: " << "Impossible" << std::endl;
 	else
 		std::cout << "char: " << static_cast<char>(n) << std::endl;
 
-	if ((n < static_cast<float>(INT_MIN) && n > -INFINITY) || (n > static_cast<float>(INT_MAX) && n < +INFINITY))
+	if ((n < static_cast<long>(INT_MIN) && (n > -INFINITY)) || (n > static_cast<long>(INT_MAX) && (n < +INFINITY)))
 		std::cout << "int: " << "Overflow" << std::endl;
 	else if (n != n || n == -INFINITY || n == +INFINITY)
 		std::cout << "int: " << "Impossible" << std::endl;
 	else
 		std::cout << "int: " << static_cast<int>(n) << std::endl;
+
+
 	if (has_decimal || n == -INFINITY || n == +INFINITY || n != n  ){
-		std::cout << "float: " << static_cast<float>(n) << "f" << std::endl;
+		if(){
+				std::cout << "float: " << "Overflow" << std::endl;
+		}else #TODO
+			std::cout << "float: " << static_cast<float>(n) << "f" << std::endl;
 		std::cout << "double: " << static_cast<double>(n) << std::endl;
 	}
+
 	else{
 		std::cout << "float: " << static_cast<float>(n) << ".0f" << std::endl;
 		std::cout << "double: " << static_cast<double>(n) << ".0" << std::endl;
