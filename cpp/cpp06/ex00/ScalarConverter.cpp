@@ -1,5 +1,6 @@
 
 #include "ScalarConverter.hpp"
+#include <cfloat>
 
 void print_message(const std::string &str)
 {
@@ -200,14 +201,15 @@ void printCasted(double n, bool has_decimal)
 		std::cout << "int: " << static_cast<int>(n) << std::endl;
 
 
-	if (has_decimal || n == -INFINITY || n == +INFINITY || n != n  ){
-		if(){
-				std::cout << "float: " << "Overflow" << std::endl;
-		}else #TODO
-			std::cout << "float: " << static_cast<float>(n) << "f" << std::endl;
+
+	if(has_decimal || n > FLT_MAX || n< -FLT_MAX){
+		std::cout << "float: " << "Overflow" << std::endl;
 		std::cout << "double: " << static_cast<double>(n) << std::endl;
 	}
-
+	else if (has_decimal || n == -INFINITY || n == +INFINITY || n != n  ){
+		std::cout << "float: " << static_cast<float>(n) << "f" << std::endl;
+		std::cout << "double: " << static_cast<double>(n) << std::endl;
+	}
 	else{
 		std::cout << "float: " << static_cast<float>(n) << ".0f" << std::endl;
 		std::cout << "double: " << static_cast<double>(n) << ".0" << std::endl;

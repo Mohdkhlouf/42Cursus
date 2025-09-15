@@ -3,7 +3,8 @@
 #include <climits>
 #include <cmath>
 
-typedef enum s_types{
+typedef enum s_types
+{
 	CHAR,
 	INT,
 	FLOAT,
@@ -11,11 +12,14 @@ typedef enum s_types{
 	INVALID
 } t_types;
 
-class ScalarConverter{
-	public:
+class ScalarConverter
+{
+private:
 	ScalarConverter() = delete;
 	~ScalarConverter() = delete;
 	ScalarConverter(const ScalarConverter &obj) = delete;
 	ScalarConverter &operator=(const ScalarConverter &obj) = delete;
+
+public:
 	static void convert(const std::string &str);
 };

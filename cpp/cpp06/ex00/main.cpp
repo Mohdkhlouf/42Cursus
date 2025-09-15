@@ -9,6 +9,9 @@ int main(int argc, char **argv){
 	{
 		ScalarConverter::convert(argv[1]);
 	}
+	catch(const std::out_of_range &e){
+		std::cerr <<"Out of range."<<std::endl;
+	}
 	catch(const std::exception& e)
 	{
 		std::cerr <<"Error in your string "<<e.what() << '\n';

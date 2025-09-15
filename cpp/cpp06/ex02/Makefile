@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wextra -Werror
 NAME = Base
 
 # Source files
-SRC = main.cpp A.cpp B.cpp C.cpp Base.cpp
+SRC = main.cpp Base.cpp
 
 # Object files
 OBJ = $(SRC:.cpp=.o)

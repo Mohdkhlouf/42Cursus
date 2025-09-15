@@ -18,6 +18,8 @@ Base * generate(void){
 			return (new B);
 		case 2:
 			return (new C);
+		default:
+			return (nullptr);
 	}
 	return (nullptr);
 }
@@ -33,6 +35,8 @@ void identify(Base* p){
 	else if (C *c = dynamic_cast<C*>(p)){
 		std::cout<<"it is from C Type"<<std::endl;
 	}
+	else
+		std::cout << "Unknown type\n";
 }
 
 void identify(Base& p){
@@ -59,6 +63,5 @@ void identify(Base& p){
 		std::cout<<"the refrence is from C Type"<<std::endl;
 		return;
 	}catch (...){}
-	
-	std::cout<<"the refrence is from Uknown Type"<<std::endl;
+	std::cout<<"the refrence is from Unknown Type"<<std::endl;
 }
