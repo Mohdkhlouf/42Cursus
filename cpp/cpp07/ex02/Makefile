@@ -5,10 +5,10 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 
 # NAME binary name
-NAME = Iter
+NAME = Array
 
 # Source files
-SRC = main.cpp 
+SRC = main.cpp
 # Object files
 OBJ = $(SRC:.cpp=.o)
 

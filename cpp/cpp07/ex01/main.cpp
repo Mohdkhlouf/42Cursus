@@ -5,7 +5,20 @@
 int main()
 {
 	{
-		std::cout<<"Case 1\n";
+		std::cout<<"Case 00\n";
+		int tab[] = {0,1,2,3,4};
+		Awesome tab2[5];
+
+		Iter(tab, 5, function);
+		Iter(tab2, 5, function);
+		Iter(tab, 5, increment);
+		Iter(tab, 5, function);
+		
+	}
+
+
+	{
+		std::cout<<"\nCase 1\n";
 		int arr[] = {1, 2, 3};
 		Iter(arr, sizeof(arr) / sizeof(arr[0]), function);
 	}

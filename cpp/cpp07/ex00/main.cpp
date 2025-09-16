@@ -1,4 +1,4 @@
-#include "main.hpp"
+#include "whatever.hpp"
 #include <iostream>
 
 int main()
