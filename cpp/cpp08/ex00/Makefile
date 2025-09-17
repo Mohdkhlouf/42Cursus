@@ -5,7 +5,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror
 
 # NAME binary name
-NAME = iter
+NAME = templates
 
 # Source files
 SRC = main.cpp 

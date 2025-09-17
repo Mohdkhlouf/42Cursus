@@ -1,15 +1,9 @@
 #pragma once
 #include <iostream>
 
-// Change to print
-template<typename T>
-void function(const T& v){
-	std::cout<<"Value is:"<<v<<"\n";
-}
-
 
 template<typename T>
-void Iter(T *arrAddress, int arrayLength, void(*arrFunc)(T &)){
+void iter(T *arrAddress, int arrayLength, void(*arrFunc)(T&)){
 	if(arrAddress == nullptr || arrFunc == nullptr)
 		return;
 	for(int i = 0;i < arrayLength; i++){
@@ -18,7 +12,7 @@ void Iter(T *arrAddress, int arrayLength, void(*arrFunc)(T &)){
 }
 
 template<typename T>
-void Iter(T *arrAddress, int arrayLength, void(*arrFunc)(const T&)){
+void iter(T *arrAddress, int arrayLength, void(*arrFunc)(const T&)){
 	if(arrAddress == nullptr || arrFunc == nullptr)
 		return;
 	for(int i = 0;i < arrayLength; i++){
@@ -26,11 +20,6 @@ void Iter(T *arrAddress, int arrayLength, void(*arrFunc)(const T&)){
 	}
 }
 
-template<typename T>
-void	increment(T value)
-{
-	value++;
-}
 
 
 class Awesome{
@@ -53,3 +42,9 @@ void print( T const &x){
 	return;
 };
 
+
+template<typename T>
+void increment(T &value)
+{
+	value++;
+}

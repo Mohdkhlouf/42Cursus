@@ -9,33 +9,42 @@ int main()
 		int tab[] = {0,1,2,3,4};
 		Awesome tab2[5];
 
-		Iter(tab, 5, function);
-		Iter(tab2, 5, function);
-		Iter(tab, 5, increment);
-		Iter(tab, 5, function);
+		iter(tab, 5, print);
+		iter(tab2, 5, print);
+
+		iter(tab, 5, increment<int>);
+		iter(tab, 5, print);
 		
+	}
+
+	{
+		std::cout<<"\nCase 01\n";
+		int tab[] = {'a','b','c','d','e'};
+		iter(tab, 5, print);	
+		iter(tab, 5, increment<int>);
+		iter(tab, 5, print);		
 	}
 
 
 	{
 		std::cout<<"\nCase 1\n";
 		int arr[] = {1, 2, 3};
-		Iter(arr, sizeof(arr) / sizeof(arr[0]), function);
+		iter(arr, sizeof(arr) / sizeof(arr[0]), print);
 	}
 	{
 		std::cout<<"\nCase 2\n";
 		float arr[] = {1.1f, 2.2f, 3.3f};
-		Iter(arr, sizeof(arr) / sizeof(arr[0]), function);
+		iter(arr, sizeof(arr) / sizeof(arr[0]), print);
 	}
 	{
 		std::cout<<"\nCase 3\n";
 		double arr[] = {1.9, 2.5, 3.8};
-		Iter(arr, sizeof(arr) / sizeof(arr[0]), function);
+		iter(arr, sizeof(arr) / sizeof(arr[0]), print);
 	}
 	{
 		std::cout<<"\nCase 4\n";
 		char arr[] = {'a', 'b', 'c'};
-		Iter(arr, sizeof(arr) / sizeof(arr[0]), function);
+		iter(arr, sizeof(arr) / sizeof(arr[0]), print);
 	}
 	return (0);
 }
