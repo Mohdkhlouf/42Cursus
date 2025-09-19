@@ -24,3 +24,12 @@ typename T::iterator easyfind(T &v, int v2){
 	}
 	throw value_not_found("Element not found");
 }
+
+template <typename T>
+typename T::const_iterator easyfind(const T &v, int v2){
+    typename T::const_iterator it = std::find(v.begin(), v.end(), v2);
+    if (it != v.end()){
+        return (it);
+	}
+	throw value_not_found("Element not found");
+}
