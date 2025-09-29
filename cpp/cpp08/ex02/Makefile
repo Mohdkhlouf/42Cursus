@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wextra -Werror
 NAME = MutantStack
 
 # Source files
-SRC = main.cpp Span.cpp
+SRC = main.cpp
 # Object files
 OBJ = $(SRC:.cpp=.o)
 
