@@ -15,10 +15,10 @@ int	main(void)
 	mstack.push(5);
 	mstack.push(737);
 	mstack.push(0);
-	MutantStack<int>::iterator it = mstack.begin();
-	MutantStack<int>::iterator itEnd = mstack.end();
-	++it;
-	--it;
+
+
+	auto it = mstack.begin();
+	auto itEnd = mstack.end();
 	std::cout<<"\nMutant stack members:"<<std::endl;
 	while (it != itEnd)
 	{
@@ -27,11 +27,14 @@ int	main(void)
 	}
 	std::stack<int> s(mstack);
 
-	std::cout<<"\nMutant stack members with for loop:"<<std::endl;
-	for (auto iterator = mstack.begin(); iterator != mstack.end(); iterator++)
-	{
-		std::cout<<*iterator<<std::endl;
-	}
+	auto mstack_begin = mstack.begin();
+	std::cout<<"mstack_begin value: "<<*mstack_begin<<std::endl;
+	auto mstack_end= mstack.end();
+	std::cout<<"mstack_end value: "<<*(mstack_end-2)<<std::endl;
+	auto mstack_rbegin = mstack.rbegin();
+	std::cout<<"mstack_rbegin value: "<<*mstack_rbegin<<std::endl;
+	auto mstack_rend= mstack.rend();
+	std::cout<<"mstack_rend value: "<<*(mstack_rend - 2)<<std::endl;
 	
 	return (0);
 }
