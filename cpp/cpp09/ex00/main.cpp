@@ -27,7 +27,8 @@ int	main(int argc, char **argv)
 	try
 	{
 		btc.parseData(datafile);
-		btc.printDataMap();
+		// btc.printDataMap();
+		btc.calculateValue(inputFile);
 	}
 	catch (const std::exception &e)
 	{

@@ -1,6 +1,8 @@
 #include "BitcoinExchange.hpp"
+#include <iterator>
+#include <string>
 
-std::map<std::string, std::string> BitcoinExchange::getMap()
+std::map<std::string, float> BitcoinExchange::getMap()
 {
 	return (bitData);
 }
@@ -18,7 +20,8 @@ void BitcoinExchange::parseData(std::ifstream &dataFile)
 		{
 			std::string firstPart = line.substr(0, pos);
 			std::string secondPart = line.substr(pos + 1);
-			bitData.insert({firstPart, secondPart});
+			if (firstPart != "date")
+			    bitData.insert({firstPart, std::stof(secondPart)});
 		}
 	}
 	if (dataFile.eof())
@@ -33,9 +36,48 @@ void BitcoinExchange::parseData(std::ifstream &dataFile)
 void BitcoinExchange::printDataMap()
 {
 	std::cout << "debug" << std::endl;
-	std::map<std::string, std::string>::iterator it;
+	std::map<std::string, float>::iterator it;
 	for (it = bitData.begin(); it != bitData.end(); it++)
 	{
 		std::cout << "First:" << it->first << "| second:" << it->second << std::endl;
 	}
+}
+
+float BitcoinExchange::result(const std::string &firstP, float value){
+    float secondValue = 0;
+    std::map<std::string,float>::iterator it;
+    for(it = bitData.begin();(it != bitData.end() && it->first <= firstP); it++ ){
+        if (firstP == it->first)
+            return (value * it->second);
+        secondValue = it->second;
+    }
+    return (value * secondValue);
+}
+
+void BitcoinExchange::calculateValue(std::ifstream &inputFile){
+    std::string line;
+    size_t pos = 0;
+
+    while (std::getline(inputFile, line)){
+        std::string firstP;
+        std::string secondP;
+        pos = line.find(" | ");
+        if(pos != std::string::npos){
+            firstP = line.substr(0,pos);
+            secondP = line.substr(pos+3);
+            if(firstP != "date"){
+                if (stof(secondP) < 0){
+                    std::cout<<"Error: not a positive number."<<std::endl;
+                }
+                else{
+                    std::cout<<firstP<<" => "<<secondP<<" = "<<result(firstP ,stof(secondP))<<std::endl;
+                }
+
+            }
+        }
+        else {
+            std::cout<<"Error: bad input => "<<line<<std::endl;
+        }
+    }
+
 }
