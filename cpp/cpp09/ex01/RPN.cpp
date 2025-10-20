@@ -11,7 +11,6 @@ bool isValidOperation(const char c){
 }
 
 bool checkValues(const std::string &numbers){
-
     for (auto it:numbers){
         if (!std::isdigit(it) || !isValidOperation(it)){
             std::cerr<<"Error\nInvalid values!"<<std::endl;
@@ -19,9 +18,6 @@ bool checkValues(const std::string &numbers){
         }
         std::cout<<it<<std::endl;
     }
-
-
-
     return (true);
 }
 
