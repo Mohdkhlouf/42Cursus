@@ -70,9 +70,11 @@ void BitcoinExchange::calculateValue(std::ifstream &inputFile){
                     std::cout<<"Error: not a positive number."<<std::endl;
                 }
                 else{
-                    std::cout<<firstP<<" => "<<secondP<<" = "<<result(firstP ,stof(secondP))<<std::endl;
+                    if (stof(secondP) < 1000 && stof(secondP) >0)
+                        std::cout<<firstP<<" => "<<secondP<<" = "<<result(firstP ,stof(secondP))<<std::endl;
+                    else
+                        std::cout<<"Error: too large a number."<<std::endl;
                 }
-
             }
         }
         else {
