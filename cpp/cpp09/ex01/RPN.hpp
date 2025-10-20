@@ -11,6 +11,6 @@ class RPN{
         ~RPN() = default;
         RPN(const RPN&);
         RPN& operator=(const RPN&);
-        void calculate(const std::string &);
+        bool calculate(const std::string &);
 
 };
