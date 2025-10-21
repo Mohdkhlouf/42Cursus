@@ -3,7 +3,6 @@
 bool	checkFile(std::ifstream &sfile, const std::string &fileName)
 {
 	sfile.open(fileName);
-	std::cout << "File Name is:" << fileName << std::endl;
 	if (!sfile.is_open())
 	{
 		std::cerr << "cannot open the file" << std::endl;
@@ -14,9 +13,10 @@ bool	checkFile(std::ifstream &sfile, const std::string &fileName)
 
 int	main(int argc, char **argv)
 {
+	BitcoinExchange	btc;
+
 	std::ifstream inputFile;
 	std::ifstream datafile;
-	BitcoinExchange btc;
 	if (argc != 2)
 	{
 		std::cerr << "Error\nit must be [btc filename]" << std::endl;
@@ -34,6 +34,5 @@ int	main(int argc, char **argv)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-
 	return (0);
 }

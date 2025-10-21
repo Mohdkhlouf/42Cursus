@@ -24,14 +24,6 @@ void BitcoinExchange::parseData(std::ifstream &dataFile)
 			    bitData.insert({firstPart, std::stof(secondPart)});
 		}
 	}
-	if (dataFile.eof())
-	{
-		std::cout << "Reached end of file." << std::endl;
-	}
-	else if (dataFile.fail())
-	{
-		std::cerr << "Read failed due to an error." << std::endl;
-	}
 }
 void BitcoinExchange::printDataMap()
 {
@@ -54,19 +46,29 @@ float BitcoinExchange::result(const std::string &firstP, float value){
     return (value * secondValue);
 }
 
-void BitcoinExchange::calculateValue(std::ifstream &inputFile){
+bool BitcoinExchange::calculateValue(std::ifstream &inputFile){
     std::string line;
     size_t pos = 0;
 
+	std::getline(inputFile, line);
+	if(line != "date | value"){
+		std::cerr<<"Error\nbad input file"<<std::endl;
+		return false;
+	}
+		
     while (std::getline(inputFile, line)){
-        std::string firstP;
-        std::string secondP;
+        std::string firstP="";
+        std::string secondP="";
+		std::map<std::string,float>::iterator it = bitData.begin();
         pos = line.find(" | ");
         if(pos != std::string::npos){
             firstP = line.substr(0,pos);
             secondP = line.substr(pos+3);
             if(firstP != "date"){
-                if (stof(secondP) < 0){
+				if(firstP < it->first){
+					std::cout<<"Error: no record for this."<<std::endl;
+				}
+                else if (stof(secondP) < 0){
                     std::cout<<"Error: not a positive number."<<std::endl;
                 }
                 else{
@@ -81,5 +83,6 @@ void BitcoinExchange::calculateValue(std::ifstream &inputFile){
             std::cout<<"Error: bad input => "<<line<<std::endl;
         }
     }
+	return (true);
 
 }

@@ -17,6 +17,6 @@ class BitcoinExchange{
         std::map<std::string, float> getMap();
         void parseData(std::ifstream &dataFile);
         void printDataMap();
-        void calculateValue(std::ifstream &inputFile);
+        bool calculateValue(std::ifstream &inputFile);
         float result(const std::string &firstP, float value);
 };
