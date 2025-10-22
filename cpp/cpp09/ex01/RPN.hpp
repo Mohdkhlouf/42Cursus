@@ -9,8 +9,13 @@ class RPN{
     public:
         RPN() = default;
         ~RPN() = default;
-        RPN(const RPN&);
-        RPN& operator=(const RPN&);
+        RPN(const RPN&) = default;
+        RPN& operator=(const RPN&) = default;
+
         bool calculate(const std::string &);
+        bool checkValues(const std::string &numbers);
+        bool isValidOperation(const char c);
+        void print_stack();
+        void transaction(char c, int *result);
 
 };
