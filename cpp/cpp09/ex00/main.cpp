@@ -1,14 +1,12 @@
 #include "BitcoinExchange.hpp"
 
-bool	checkFile(std::ifstream &sfile, const std::string &fileName)
+void	checkFile(std::ifstream &sfile, const std::string &fileName)
 {
 	sfile.open(fileName);
 	if (!sfile.is_open())
 	{
-		std::cerr << "cannot open the file" << std::endl;
-		return (false);
+		throw std::runtime_error("Error\nconnot open the file");
 	}
-	return (true);
 }
 
 int	main(int argc, char **argv)
@@ -22,10 +20,11 @@ int	main(int argc, char **argv)
 		std::cerr << "Error\nit must be [btc filename]" << std::endl;
 		return (1);
 	}
-	if (!checkFile(datafile, "data.csv") || !checkFile(inputFile, argv[1]))
-		return (1);
+	
 	try
 	{
+		checkFile(datafile, "data.csv");
+		checkFile(inputFile, argv[1]);
 		btc.parseData(datafile);
 		// btc.printDataMap();
 		btc.calculateValue(inputFile);
