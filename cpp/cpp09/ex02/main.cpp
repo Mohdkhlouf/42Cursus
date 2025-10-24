@@ -7,10 +7,11 @@ int main(int argc, char **argv){
         std::cerr<<"Error\nno numbers, EX:./PmergeMe 3 5 9 7 4"<<std::endl;
     }
     PmergeMe sort;
-    sort.fillVector(argc, argv);
-    sort.fillDeque(argc, argv);
-
-
-
+    try{
+        sort.fillVector(argc, argv);
+        sort.fillDeque(argc, argv);
+    }catch (const std::exception &e){
+        std::cerr<<e.what()<<std::endl;
+    }
     return (0);
 }
