@@ -23,23 +23,9 @@ void PmergeMe::fillDeque(int argc, char **argv)
     std::cout << intDeque.front() << " | " << intDeque.back() << std::endl;
 }
 
-void PmergeMe::print_pairVector()
-{
-    for (auto it = pairVector.begin(); it != pairVector.end(); it++)
-    {
-        std::cout << "(" << (*it).num1 << "," << (*it).num2 << ")" << std::endl;
-    }
-}
-void PmergeMe::sortVector()
-{
-
-    for (auto it = intVector.begin(); it != intVector.end(); it++)
-    {
-        t_pair pair;
-        pair.num1 = *it;
-        pair.num2 = *(it + 1);
-        it++;
-        pairVector.push_back(pair);
-    }
-    print_pairVector();
+void PmergeMe::run(int argc, char **argv){
+    fillVector(argc, argv);
+    // fillDeque(argc, argv);
+    sortData(intVector, 1);
+    // sortData(intDeque, 1);
 }
