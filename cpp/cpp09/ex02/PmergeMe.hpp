@@ -2,6 +2,7 @@
 #include <vector>
 #include <deque>
 #include <iostream>
+#include <cmath> 
 class PmergeMe{
     private:
         std::vector<int> intVector;
@@ -25,7 +26,10 @@ class PmergeMe{
         }
         template <typename T>
         void sortData(T &container, size_t level){
+            std::cout<<"LeveL: "<<level<<std::endl;
             if (container.size() < 2)
+                return;
+            if (container.size() / level < 2)
                 return;
             bool is_odd = (container.size() / level )%2;
             // typename T::iterator itb = container.begin();
@@ -41,18 +45,20 @@ class PmergeMe{
             //     }
 
             size_t end = (is_odd) ? container.size() - 1 : container.size();
-            for (size_t i = level - 1 ; i < end; i+=level*2){
-                std::cout<<"debug:"<<container[i]<<" Debug2:"<<container[i + (level*2)-1]<<std::endl;
-                if (container[i] > container[i + (level*2)-1]){
-                    auto temp = container[i];
-                    container[i] = container[i + (level*2)-1];
-                    container[i + (level*2)-1] = temp;
-                }
-                std::cout<<"debug:"<<i<<std::endl;
-                // std::cout<<"DEbig:"<<i+(level * 2)<<std::endl;
-
+            for (size_t i = 0 ; i < end; i += static_cast<size_t>(std::pow(2, level))){
+                if (container[(i+level) -1] > container[i + (level*2)-1])
+                    swap(container, ((i+level) -1) , (i + (level*2)-1));
             }
             printDate(container);
+            sortData(intVector, level *2);
         }
 
+        template <typename T>
+        void swap(T &container, size_t firstPairEnd, size_t seconPairEnd){
+            auto temp = container[firstPairEnd];
+            container[firstPairEnd] = container[seconPairEnd];
+            container[seconPairEnd] = temp;
+
+            std::cout<<container[firstPairEnd]<<" | "<<container[seconPairEnd]<<std::endl;
+        }
 };
