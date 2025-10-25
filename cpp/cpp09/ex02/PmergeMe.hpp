@@ -3,6 +3,16 @@
 #include <deque>
 #include <iostream>
 #include <cmath>
+#include <sstream>
+
+#define DEBUG true
+
+#if DEBUG
+    #define DEBUG_LOG(x) do { std::cout << x << std::endl; } while(0)
+#else
+    #define DEBUG_LOG(x) do {} while(0)
+#endif
+
 class PmergeMe
 {
 private:
@@ -18,37 +28,28 @@ public:
     void fillDeque(int argc, char **argv);
 
     void run(int argc, char **argv);
+
     template <typename T>
-    void printDate(T &container)
+    std::string printDate(T &container)
     {
         typename T::iterator it;
+        std::ostringstream oss;
         for (it = container.begin(); it != container.end(); it++)
         {
-            std::cout << *it << " ";
+            oss<<*it<<" ";
         }
-        std::cout << std::endl;
+        return (oss.str());
     }
+
     template <typename T>
     void sortData(T &container, size_t level)
     {
-        std::cout << "LeveL: " << level << std::endl;
+
         if (container.size() < 2)
             return;
         if (container.size() / level < 2)
             return;
         bool is_odd = (container.size() / level) % 2;
-        // typename T::iterator itb = container.begin();
-        // typename T::iterator ite = (is_odd) ? std::prev(container.end()) : container.end();
-
-        // for(auto it =itb + level;it != ite; it+=(level *2)){
-        //     auto first = (it);
-        //     auto second = (it+level*2);
-        //     if (*first > *second){
-        //         auto temp = *first;
-        //         *first = *second;
-        //         *second= temp;
-        //     }
-
         size_t end = (is_odd) ? container.size() - 1 : container.size();
         for (size_t i = 0; i < end; i += static_cast<size_t>(std::pow(2, level)))
         {
@@ -57,7 +58,7 @@ public:
                 swap(container, ((i + level) - 1), (i + (level * 2) - 1), level);
             }
         }
-        // printDate(container);
+        DEBUG_LOG("LeveL " << level<<": "<<printDate(intVector));
         sortData(intVector, level *2);
     }
 
@@ -70,9 +71,5 @@ public:
         {
             std::swap(container[firstPairStart + i], container[secondPairStart + i]);
         }
-        printDate(container);
-        // auto temp = container[firstPairEnd];
-        // container[firstPairEnd] = container[seconPairEnd];
-        // container[seconPairEnd] = temp;
     }
 };

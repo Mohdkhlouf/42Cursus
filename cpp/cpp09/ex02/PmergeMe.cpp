@@ -11,7 +11,6 @@ void PmergeMe::fillVector(int argc, char **argv)
         else
             throw std::runtime_error("Error\ninvalid inputs");
     }
-    std::cout << intVector.front() << " | " << intVector.back() << std::endl;
 }
 
 void PmergeMe::fillDeque(int argc, char **argv)
