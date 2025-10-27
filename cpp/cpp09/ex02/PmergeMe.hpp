@@ -50,8 +50,8 @@ public:
         if (container.size() / level < 2)
             return;
         bool is_odd = (container.size() / level) % 2;
-        size_t end = (is_odd) ? container.size() - 1 : container.size();
-        for (size_t i = 0; i < end; i += static_cast<size_t>(std::pow(2, level)))
+        size_t end = (is_odd) ? container.size() - (level * 2) + 1 : container.size();
+        for (size_t i = 0; i < end ; i += (2 * level))
         {
             if (container[(i + level) - 1] > container[i + (level * 2) - 1])
             {
