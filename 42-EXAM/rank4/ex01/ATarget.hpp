@@ -2,13 +2,13 @@
 #include <string>
 #include "ASpell.hpp"
 
-
+class ASpell;
 class ATarget{
 	protected:
 		std::string type_;
 
 	public:
-		~ATarget();
+		virtual ~ATarget();
 		ATarget(const std::string &type);
 		std::string getType() const;
 		virtual ATarget *clone() const = 0;
