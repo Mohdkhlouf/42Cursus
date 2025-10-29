@@ -80,7 +80,19 @@ public:
         sortData(container, level);
     }
 
+    template <typename T>
+    void pushMain(T &main, T &container, size_t startPoint,size_t level){
+        for (size_t i = 0; i < level; i++){
+            main.push_back(container[startPoint]);
+        }
+    }
 
+     template <typename T>
+    void pushPend(T &pend, T &container, size_t startPoint,size_t level){
+        for (size_t i = 0; i < level; i++){
+            pend.push_back(container[startPoint]);
+        }
+    }
 
 
     template <typename T>
@@ -91,17 +103,32 @@ public:
         DEBUG_LOG("\n"<<"I am JacobsThal!"<< *level);
         T main;
         T pend;
-        T noneparticipating;
+        T leftNumbers;
         T temp;
         bool is_odd = (container.size() % *level);
         if (is_odd){
             size_t counter = container.size() % *level;
             for (size_t i = container.size() - counter; i < container.size() ; i++){
-                noneparticipating.push_back(container[i]);
+                leftNumbers.push_back(container[i]);
             }
             DEBUG_LOG("it is odd, and there are "<<counter<<" numbers will be moved to the nonearticipating container");
-            DEBUG_LOG("noneparticipating:"<<printDate(noneparticipating));
+            
+        }else{
+            size_t pairCounter = container.size() / *level;
+            for (size_t e = 0; e < pairCounter ; e++){
+                if(e == 0){
+                    pushMain(main, container, e*(*level), *level);
+                }
+                else if(e % 2 == 0 ){
+                    pushMain(main, container, e * (*level), *level);
+                }
+                else{
+                    pushPend(pend, container, e * (*level), *level);
+                }
+            }
         }
+        DEBUG_LOG("Main:"<<printDate(main));
+        DEBUG_LOG("Pend:"<<printDate(pend));
         
         // size_t end = (is_odd) ? container.size() - (level * 2) + 1 : container.size();
         // for (size_t i = 0; i < end ; i += (2 * level))
