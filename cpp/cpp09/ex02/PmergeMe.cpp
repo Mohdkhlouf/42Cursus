@@ -23,8 +23,10 @@ void PmergeMe::fillDeque(int argc, char **argv)
 }
 
 void PmergeMe::run(int argc, char **argv){
+    size_t level = 1;
     fillVector(argc, argv);
     // fillDeque(argc, argv);
-    sortData(intVector, 1);
+    sortData(intVector, &level);
     // sortData(intDeque, 1);
+    jacobsThal(intVector, &level);
 }
