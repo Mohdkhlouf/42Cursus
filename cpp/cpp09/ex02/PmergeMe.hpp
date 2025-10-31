@@ -102,14 +102,6 @@ public:
         }
     }
 
-    template <typename T>
-    T pendValue(const T &pend)
-    {
-        (void) pend;
-        T temp;
-        // std::cout << "select the pend part to be added.";
-        return (temp);
-    }
 
     template <typename T>
     size_t whereToAdd(const T &main, const T &PendMember, size_t level)
@@ -126,10 +118,13 @@ public:
     void binaryInsertion(T &main, T &pend, T &leftNumbers, size_t level)
     {
         (void)leftNumbers;
+        std::vector<size_t> jacobsThalNumbers = {1,3,5,11, 21,43,85,171,341,683,1365};
         size_t counter = pend.size() / level;
         
-        for (size_t e = 0 ; e < counter ; e++){
-            size_t position = whereToAdd(main, pendValue(pend), level);
+        for (size_t e = jacobsThalNumbers.begin() ; e < counter; e++){
+            
+            // size_t position = whereToAdd(main, pendValue(pend), level);
+            size_t position = main.end();
             main.insert(main.begin() + position , pendValue(pend).begin(), pendValue(pend).end());
         }
     }
