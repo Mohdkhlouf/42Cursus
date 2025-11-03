@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <sstream>
+#include <algorithm> 
 
 #define DEBUG true
 
@@ -102,31 +103,62 @@ public:
         }
     }
 
-
+    ////this function will decide where to add the pend value by binary search.
     template <typename T>
-    size_t whereToAdd(const T &main, const T &PendMember, size_t level)
+    size_t whereToAdd(const T &main,const T &pend, int e, size_t level)
     {
-        (void) PendMember;
         (void) main;
         (void) level;
+        (void) pend;
+        (void) e;
         // std::cout << "select whereToAdd.";
         return (0);
     }
 
+    //this function will return the value will be added from the pend vector.
+    template <typename T>
+    T whatToAdd(T pend, int level, int index){
+        T temp;
+        temp.insert(temp.begin(), pend.begin() + index * level ,pend.begin() + index * level + level);
+        return (temp);
+    }
 
+    template <typename T>
+    bool is_JacobsTahl(T jacobsThalNumbers, size_t e){
+        for(size_t it: jacobsThalNumbers){
+            if(it == e)
+                return (true);
+        }
+        return false;
+    }
     template <typename T>
     void binaryInsertion(T &main, T &pend, T &leftNumbers, size_t level)
     {
         (void)leftNumbers;
-        std::vector<size_t> jacobsThalNumbers = {1,3,5,11, 21,43,85,171,341,683,1365};
+
+        T jacobsThalNumbers = {1,3,5,11, 21,43,85,171,341,683,1365};
         size_t counter = pend.size() / level;
-        
-        for (size_t e = jacobsThalNumbers.begin() ; e < counter; e++){
-            
-            // size_t position = whereToAdd(main, pendValue(pend), level);
-            size_t position = main.end();
-            main.insert(main.begin() + position , pendValue(pend).begin(), pendValue(pend).end());
+        T pendValue;
+
+        //this will add the values from pend by jacobsthal numbers.
+        for (size_t e = 0 ; e < counter; e++){
+            auto fit = std::find(jacobsThalNumbers.begin(), jacobsThalNumbers.end(), e );
+            if(fit != jacobsThalNumbers.end()){
+                pendValue = whatToAdd(pend, level, e);
+                size_t position = whereToAdd(main, pend, e, level);
+                main.insert(main.begin() + position , pendValue.begin(), pendValue.end());
+            }
         }
+
+        //this will add the rest values from pend by excepting the jacobsthal numbers.
+        for (size_t e = 0 ; e < counter; e++){
+            auto fit = std::find(jacobsThalNumbers.begin(), jacobsThalNumbers.end(), e );
+            if(fit == jacobsThalNumbers.end()){
+                pendValue = whatToAdd(pend, level, e);
+                size_t position = whereToAdd(main, pend, e, level);
+                main.insert(main.begin() + position , pendValue.begin(), pendValue.end());
+        }
+    }
     }
 
     template <typename T>
