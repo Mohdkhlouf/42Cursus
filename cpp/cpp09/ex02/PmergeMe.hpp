@@ -235,3 +235,9 @@ public:
         jacobsThal(main, level);
     }
 };
+
+
+
+/*
+
+there is an errot after adding to main and also with the lefted numbers, must be handled before.*/
