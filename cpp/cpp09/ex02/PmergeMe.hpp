@@ -40,9 +40,9 @@ public:
     template <typename T>
     std::string printDate(T &container)
     {
-        typename T::iterator it;
+        // typename T::iterator it;
         std::ostringstream oss;
-        for (it = container.begin(); it != container.end(); it++)
+        for ( auto it = container.begin(); it != container.end(); it++)
         {
             oss << *it << " ";
         }
@@ -105,14 +105,20 @@ public:
 
     ////this function will decide where to add the pend value by binary search.
     template <typename T>
-    size_t whereToAdd(const T &main,const T &pend, int e, size_t level)
+    size_t whereToAdd(const T &main,const T &pendvalue, int e, size_t level, int last_position)
     {
-        (void) main;
-        (void) level;
-        (void) pend;
+        (void) last_position;
         (void) e;
-        // std::cout << "select whereToAdd.";
-        return (0);
+        int pendPosition = pendvalue[level - 1];
+        // int mainPosition = main[e*level -1 ];
+        DEBUG_LOG("\n"<< "Main is:" << printDate(main));
+        size_t counter = main.size() / level;
+        for(size_t s = 1; s <= counter ; s++){
+            if ( pendPosition < main[s*level -1 ]){
+                return((s - 1)*level);
+            }
+        }
+        return (counter);
     }
 
     //this function will return the value will be added from the pend vector.
@@ -138,9 +144,12 @@ public:
     template <typename T>
     void binaryInsertion(T &main, T &pend, T &leftNumbers, size_t level)
     {
+        DEBUG_LOG("Main in binaryInsertion:" << printDate(main));
+        DEBUG_LOG("Pend in binaryInsertion:" << printDate(pend));
+        DEBUG_LOG("leftNumbers in binaryInsertion:" << printDate(leftNumbers));
         (void)leftNumbers;
         (void)main;
-
+        size_t position = 0;
         std::vector<size_t> jacobsThalNumbers = {1,3,5,11, 21,43,85,171,341,683,1365};
         size_t counter = pend.size() / level;
         (void) counter;
@@ -158,7 +167,7 @@ public:
                     if (k > counter)
                         continue;
                     pendValue = whatToAdd(pend, level, k-1);
-                    size_t position = whereToAdd(main, pend, k-1, level);
+                    position = whereToAdd(main, pendValue, k-1, level, position);
                     main.insert(main.begin() + position , pendValue.begin(), pendValue.end());
                 }
                            
@@ -166,7 +175,7 @@ public:
                 break;
             }
             pendValue = whatToAdd(pend, level, 0);
-            size_t position = whereToAdd(main, pend, 0, level);
+            position = whereToAdd(main, pend, 0, level, position);
             main.insert(main.begin() + position , pendValue.begin(), pendValue.end()); 
         }    
 
@@ -175,8 +184,7 @@ public:
     {
         if (*level < 1)
             return;
-        DEBUG_LOG("\n"
-                  << "I am JacobsThal!" << *level << " container is: " << printDate(container));
+        DEBUG_LOG("\n"<< "I am JacobsThal!" <<" LEVEL is: "<< *level );
         T main;
         T pend;
         T leftNumbers;
@@ -190,7 +198,6 @@ public:
             {
                 leftNumbers.push_back(container[i]);
             }
-            DEBUG_LOG("it is odd, and there are " << counter << " numbers will be moved to the nonearticipating container");
         }
         size_t pairCounter = container.size() / *level;
         for (size_t e = 0; e < pairCounter; e++)
@@ -211,7 +218,7 @@ public:
 
         if (pend.empty())
         {
-            DEBUG_LOG("Pend is empty, so all felt will pushed to main");
+            DEBUG_LOG("Pend is empty, so all lefted numbers will pushed to main");
             pushMain(main, leftNumbers, 0, leftNumbers.size());
         }
         else
