@@ -117,9 +117,13 @@ public:
 
     //this function will return the value will be added from the pend vector.
     template <typename T>
-    T whatToAdd(T pend, int level, int index){
+    T whatToAdd(T &pend, int level, int index){
         T temp;
-        temp.insert(temp.begin(), pend.begin() + index * level ,pend.begin() + index * level + level);
+        size_t startIndex = index * level;
+        size_t endIndex = startIndex + level;
+
+        temp.insert(temp.begin(), pend.begin() + startIndex ,pend.begin() + endIndex);
+        DEBUG_LOG("what to add:"<<printDate(temp));
         return (temp);
     }
 
@@ -135,31 +139,36 @@ public:
     void binaryInsertion(T &main, T &pend, T &leftNumbers, size_t level)
     {
         (void)leftNumbers;
+        (void)main;
 
-        T jacobsThalNumbers = {1,3,5,11, 21,43,85,171,341,683,1365};
+        std::vector<size_t> jacobsThalNumbers = {1,3,5,11, 21,43,85,171,341,683,1365};
         size_t counter = pend.size() / level;
+        (void) counter;
         T pendValue;
-
         //this will add the values from pend by jacobsthal numbers.
-        for (size_t e = 0 ; e < counter; e++){
-            auto fit = std::find(jacobsThalNumbers.begin(), jacobsThalNumbers.end(), e );
-            if(fit != jacobsThalNumbers.end()){
-                pendValue = whatToAdd(pend, level, e);
-                size_t position = whereToAdd(main, pend, e, level);
-                main.insert(main.begin() + position , pendValue.begin(), pendValue.end());
-            }
-        }
 
-        //this will add the rest values from pend by excepting the jacobsthal numbers.
-        for (size_t e = 0 ; e < counter; e++){
-            auto fit = std::find(jacobsThalNumbers.begin(), jacobsThalNumbers.end(), e );
-            if(fit == jacobsThalNumbers.end()){
-                pendValue = whatToAdd(pend, level, e);
-                size_t position = whereToAdd(main, pend, e, level);
-                main.insert(main.begin() + position , pendValue.begin(), pendValue.end());
-        }
-    }
-    }
+
+        for (size_t j = 1; j < jacobsThalNumbers.size() ; j++){
+            size_t start = jacobsThalNumbers[j];
+            size_t end = jacobsThalNumbers[j - 1];
+            size_t step = start - end;
+
+            std::cout <<"step is: "<<step<<std::endl;
+                for(size_t k = start; k > end  ; k--){
+                    if (k > counter)
+                        continue;
+                    pendValue = whatToAdd(pend, level, k-1);
+                    size_t position = whereToAdd(main, pend, k-1, level);
+                    main.insert(main.begin() + position , pendValue.begin(), pendValue.end());
+                }
+                           
+            if (jacobsThalNumbers[j] > counter)
+                break;
+            }
+            pendValue = whatToAdd(pend, level, 0);
+            size_t position = whereToAdd(main, pend, 0, level);
+            main.insert(main.begin() + position , pendValue.begin(), pendValue.end()); 
+        }    
 
     template <typename T>
     void jacobsThal(T &container, size_t *level)
@@ -216,6 +225,6 @@ public:
 
         *level = *level / 2;
 
-        jacobsThal(container, level);
+        jacobsThal(main, level);
     }
 };
