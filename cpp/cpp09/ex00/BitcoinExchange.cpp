@@ -53,9 +53,32 @@ float BitcoinExchange::result(const std::string &firstP, float value)
 	return (value * secondValue);
 }
 
+
+bool isLeapYear(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+bool validateDate(int year, int month, int day){
+	if(month > 12 || month <0){
+		return false;
+	}
+
+	if((day > 31 || day <0)||  ((day == 31 || day == 30) && month == 2) || (day == 29 && !isLeapYear(year) && month == 2)
+				|| (day == 31 && month == 4) || (day == 31 && month == 6)
+				|| (day == 31 && month == 9) || (day == 31 && month == 11)){
+		return false;
+	}
+
+	return (true);
+}
+
+
 bool	pre_validate(std::ifstream &inputFile)
 {
 	std::string line;
+	int year;
+	int month;
+	int day;
 	std::regex date_pattern1(R"(\d{4}-\d{2}-\d{2})");
 	std::regex date_pattern2(R"(\d{4}-\d{2}-\d{2} \| -?\d+(\.\d+)?$)");
 	std::getline(inputFile, line);
@@ -65,7 +88,17 @@ bool	pre_validate(std::ifstream &inputFile)
 	{
 		if (!std::regex_match(line, date_pattern1) && !std::regex_match(line, date_pattern2))
 			throw std::runtime_error("Error\nfile has incorrect values");
+		year = stoi(line.substr(0,4));
+		month = stoi(line.substr(5,2));
+		day = stoi(line.substr(8,2));
+		if (!validateDate(year, month, day)){
+			std::string errorMessage = "Error\n"+line.substr(0,10) + " this date is not correct";
+			throw std::runtime_error(errorMessage);
+		}
 	}
+
+
+
 	return (true);
 }
 
