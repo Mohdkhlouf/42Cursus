@@ -105,20 +105,31 @@ public:
 
     ////this function will decide where to add the pend value by binary search.
     template <typename T>
-    size_t whereToAdd(const T &main,const T &pendvalue, int e, size_t level, int last_position)
+    size_t whereToAdd(const T &main,const T &pendValue, size_t level)
     {
-        (void) last_position;
-        (void) e;
-        int pendPosition = pendvalue[level - 1];
-        // int mainPosition = main[e*level -1 ];
-        DEBUG_LOG("\n"<< "Main is:" << printDate(main));
-        size_t counter = main.size() / level;
-        for(size_t s = 1; s <= counter ; s++){
-            if ( pendPosition < main[s*level -1 ]){
-                return((s - 1)*level);
-            }
-        }
-        return (counter);
+       if (main.empty())
+        return 0;
+    
+    // Get the value we're trying to insert
+    int targetValue = pendValue[level - 1];
+    
+    // Binary search on the number of groups
+    size_t left = 0;
+    size_t right = main.size() / level;  // Number of groups in main
+    
+    while (left < right)
+    {
+        size_t mid = left + (right - left) / 2;  // Middle group
+        int midValue = main[mid * level + level - 1];  // Last element of middle group
+        
+        if (targetValue < midValue)
+            right = mid;  // Search left half
+        else
+            left = mid + 1;  // Search right half
+    }
+    
+    // left now points to the correct group position
+    return left * level;  // Convert to element position
     }
 
     //this function will return the value will be added from the pend vector.
@@ -154,9 +165,18 @@ public:
         size_t counter = pend.size() / level;
         (void) counter;
         T pendValue;
+
+
+
+
+
+        // this to add the fitst value of pend
+        pendValue = whatToAdd(pend, level, 0);
+        position = whereToAdd(main, pendValue, level);
+        main.insert(main.begin() + position , pendValue.begin(), pendValue.end()); 
+        
+        
         //this will add the values from pend by jacobsthal numbers.
-
-
         for (size_t j = 1; j < jacobsThalNumbers.size() ; j++){
             size_t start = jacobsThalNumbers[j];
             size_t end = jacobsThalNumbers[j - 1];
@@ -167,16 +187,13 @@ public:
                     if (k > counter)
                         continue;
                     pendValue = whatToAdd(pend, level, k-1);
-                    position = whereToAdd(main, pendValue, k-1, level, position);
+                    position = whereToAdd(main, pendValue, level);
                     main.insert(main.begin() + position , pendValue.begin(), pendValue.end());
                 }
                            
             if (jacobsThalNumbers[j] > counter)
                 break;
             }
-            pendValue = whatToAdd(pend, level, 0);
-            position = whereToAdd(main, pend, 0, level, position);
-            main.insert(main.begin() + position , pendValue.begin(), pendValue.end()); 
         }    
 
     template <typename T>
@@ -216,15 +233,9 @@ public:
             }
         }
 
-        if (pend.empty())
-        {
-            DEBUG_LOG("Pend is empty, so all lefted numbers will pushed to main");
-            pushMain(main, leftNumbers, 0, leftNumbers.size());
-        }
-        else
-        {
+        if (!pend.empty())
             binaryInsertion(main, pend, leftNumbers, *level);
-        }
+        main.insert(main.end(), leftNumbers.begin(), leftNumbers.end());
 
         DEBUG_LOG("Main:" << printDate(main));
         DEBUG_LOG("Pend:" << printDate(pend));
