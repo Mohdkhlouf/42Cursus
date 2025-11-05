@@ -1,9 +1,10 @@
 #include "RPN.hpp"
 #include <iostream>
 #include <string> 
+#include <stack>
 
 void RPN::print_stack(){
-    std::stack print = rpnStack;
+    std::stack<int> print = rpnStack;
     if(print.size() != 1)
         throw std::runtime_error("Error\nNot enough operands");
 
