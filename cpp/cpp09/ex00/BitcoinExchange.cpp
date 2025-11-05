@@ -56,13 +56,14 @@ float BitcoinExchange::result(const std::string &firstP, float value)
 bool	pre_validate(std::ifstream &inputFile)
 {
 	std::string line;
-	std::regex date_pattern(R"(\d{4}-\d{2}-\d{2}.*)");
+	std::regex date_pattern1(R"(\d{4}-\d{2}-\d{2})");
+	std::regex date_pattern2(R"(\d{4}-\d{2}-\d{2} \| -?\d+(\.\d+)?$)");
 	std::getline(inputFile, line);
 	if (line != "date | value")
 		throw std::runtime_error("Error\nfile has incorrect values");
 	while (std::getline(inputFile, line))
 	{
-		if (!std::regex_match(line, date_pattern))
+		if (!std::regex_match(line, date_pattern1) && !std::regex_match(line, date_pattern2))
 			throw std::runtime_error("Error\nfile has incorrect values");
 	}
 	return (true);

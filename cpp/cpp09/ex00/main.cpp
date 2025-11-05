@@ -3,7 +3,7 @@
 void	checkFile(std::ifstream &sfile, const std::string &fileName)
 {
 	sfile.open(fileName);
-	if (!sfile.is_open())
+	if (!sfile)
 	{
 		throw std::runtime_error("Error\nconnot open the file");
 	}
