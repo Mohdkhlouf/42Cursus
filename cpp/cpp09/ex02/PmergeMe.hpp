@@ -6,9 +6,9 @@
 #include <cmath>
 #include <sstream>
 #include <algorithm>
+#include <type_traits>
 
 #define DEBUG false
-
 #if DEBUG
 #define DEBUG_LOG(x)                 \
     do                               \
@@ -31,6 +31,7 @@ private:
     std::deque<int> intDeque_orginal;
 
 public:
+    static int globalCounter;
     PmergeMe() = default;
     ~PmergeMe() = default;
     PmergeMe(const PmergeMe &obj) = default;
@@ -90,39 +91,58 @@ public:
     template <typename T>
     void swap(T &container, size_t firstPairEnd, size_t secondPairEnd, size_t *level)
     {
-       
+
         size_t firstPairStart = firstPairEnd - *level + 1;
         size_t secondPairStart = secondPairEnd - *level + 1;
         for (size_t i = 0; i < *level; ++i)
         {
+            PmergeMe::globalCounter++;
             std::swap(container[firstPairStart + i], container[secondPairStart + i]);
         }
     }
-
     template <typename T>
     void sortData(T &container, size_t *level)
     {
-        if (container.size() < 2)
+        if (*level == 0 || container.size() < 2)
             return;
-        if (container.size() / *level < 2)
+
+        size_t numPairs = container.size() / *level;
+        if (numPairs < 2)
         {
             *level = *level / 2;
             return;
         }
 
-        bool is_odd = (container.size() / *level) % 2;
-        size_t end = (is_odd) ? container.size() - (*level * 2) + 1 : container.size();
+        bool isOdd = (numPairs % 2 != 0);
+        size_t end = (isOdd) ? container.size() - (*level * 2) + 1 : container.size();
+
         for (size_t i = 0; i < end; i += (2 * *level))
         {
-            if (container[(i + *level) - 1] > container[i + (*level * 2) - 1])
+            size_t firstIndex = i + *level - 1;
+            size_t secondIndex = i + (*level * 2) - 1;
+
+            // Clamp indices to container size
+            if (firstIndex >= container.size())
+                firstIndex = container.size() - 1;
+            if (secondIndex >= container.size())
+                secondIndex = container.size() - 1;
+
+            if (container[firstIndex] > container[secondIndex])
             {
-                swap(container, ((i + *level) - 1), (i + (*level * 2) - 1), level);
+                swap(container, firstIndex, secondIndex, level);
             }
         }
-        DEBUG_LOG("LeveL " << *level << ": " << printData(container));
+
+        DEBUG_LOG("Level " << *level << ": " << printData(container));
+
         *level = *level * 2;
         sortData(container, level);
-        
+    }
+
+    template <typename T>
+    bool isSorted(const T &container)
+    {
+        return std::is_sorted(container.begin(), container.end());
     }
 
     template <typename T>
@@ -149,26 +169,23 @@ public:
     {
         if (main.empty())
             return 0;
+        size_t pendSize = pendValue.size();
+        int targetValue = pendValue[pendSize - 1]; // last element safely
 
-        // Get the value we're trying to insert
-        int targetValue = pendValue[level - 1];
-
-        // Binary search on the number of groups
         size_t left = 0;
-        size_t right = main.size() / level; // Number of groups in main
+        size_t right = main.size() / level;
 
         while (left < right)
         {
-            size_t mid = left + (right - left) / 2;       // Middle group
-            int midValue = main[mid * level + level - 1]; // Last element of middle group
-
+            size_t mid = left + (right - left) / 2; // Middle group
+            size_t midStart = mid * level;
+            size_t midEnd = std::min(midStart + level, main.size()); // avoid overflow
+            int midValue = main[midEnd - 1];
             if (targetValue < midValue)
                 right = mid; // Search left half
             else
                 left = mid + 1; // Search right half
         }
-
-        // left now points to the correct group position
         return left * level; // Convert to element position
     }
 
@@ -178,7 +195,7 @@ public:
     {
         T temp;
         size_t startIndex = index * level;
-        size_t endIndex = startIndex + level;
+        size_t endIndex = std::min(startIndex + level, pend.size()); // to protect from overflow
 
         temp.insert(temp.begin(), pend.begin() + startIndex, pend.begin() + endIndex);
         DEBUG_LOG("what to add:" << printData(temp));
@@ -195,70 +212,73 @@ public:
         }
         return false;
     }
+
     template <typename T>
-    void binaryInsertion(T &main, T &pend,size_t level)
+    void binaryInsertion(T &main, T &pend, size_t level)
     {
         size_t position = 0;
         size_t counter = pend.size() / level;
         T pendValue;
-        T addingOrder = findJacobsthalOrder<T>( counter);
+        T addingOrder = findJacobsthalOrder<T>(counter);
         DEBUG_LOG("addingOrder:" << printData(addingOrder));
+
         for (size_t j : addingOrder)
         {
-            pendValue = whatToAdd(pend, level, j-1);
+            pendValue = whatToAdd(pend, level, j - 1);
             position = whereToAdd(main, pendValue, level);
             main.insert(main.begin() + position, pendValue.begin(), pendValue.end());
-        } 
-}
-
-template <typename T>
-void jacobsThal(T &container, size_t *level)
-{
-    if (*level < 1)
-        return;
-    DEBUG_LOG("\n"<< "I am JacobsThal!" << " LEVEL is: " << *level << "\nOriginal:" << printData(container));
-    T main;
-    T pend;
-    T leftNumbers;
-    T temp;
-    size_t counter = 0;
-    bool is_odd = (container.size() % *level);
-    if (is_odd)
-    {
-        counter = container.size() % *level;
-        for (size_t i = container.size() - counter; i < container.size(); i++)
-        {
-            leftNumbers.push_back(container[i]);
-        }
-    }
-    size_t pairCounter = container.size() / *level;
-    for (size_t e = 0; e < pairCounter; e++)
-    {
-        if (e == 0)
-        {
-            pushMain(main, container, e * (*level), *level);
-        }
-        else if (e % 2 != 0)
-        {
-            pushMain(main, container, e * (*level), *level);
-        }
-        else
-        {
-            pushPend(pend, container, e * (*level), *level);
+            PmergeMe::globalCounter++;
         }
     }
 
-    if (!pend.empty())
-        binaryInsertion(main, pend, *level);
-    main.insert(main.end(), leftNumbers.begin(), leftNumbers.end());
+    template <typename T>
+    void jacobsThal(T &container, size_t *level)
+    {
+        if (*level < 1)
+            return;
+        DEBUG_LOG("\n"
+                  << "I am JacobsThal!" << " LEVEL is: " << *level << "\nOriginal:" << printData(container));
+        T main;
+        T pend;
+        T leftNumbers;
+        T temp;
+        size_t counter = 0;
+        bool is_odd = (container.size() % *level);
+        if (is_odd)
+        {
+            counter = container.size() % *level;
+            for (size_t i = container.size() - counter; i < container.size(); i++)
+            {
+                leftNumbers.push_back(container[i]);
+            }
+        }
+        size_t pairCounter = container.size() / *level;
+        for (size_t e = 0; e < pairCounter; e++)
+        {
+            if (e == 0)
+            {
+                pushMain(main, container, e * (*level), *level);
+            }
+            else if (e % 2 != 0)
+            {
+                pushMain(main, container, e * (*level), *level);
+            }
+            else
+            {
+                pushPend(pend, container, e * (*level), *level);
+            }
+        }
 
-    DEBUG_LOG("Main:" << printData(main));
-    DEBUG_LOG("Pend:" << printData(pend));
-    DEBUG_LOG("leftNumbers:" << printData(leftNumbers));
+        if (!pend.empty())
+            binaryInsertion(main, pend, *level);
+        main.insert(main.end(), leftNumbers.begin(), leftNumbers.end());
 
-    *level = *level / 2;
-    jacobsThal(main, level);
-    container = main;
-}
-}
-;
+        DEBUG_LOG("Main:" << printData(main));
+        DEBUG_LOG("Pend:" << printData(pend));
+        DEBUG_LOG("leftNumbers:" << printData(leftNumbers));
+
+        *level = *level / 2;
+        jacobsThal(main, level);
+        container = main;
+    }
+};

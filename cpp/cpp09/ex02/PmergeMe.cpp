@@ -1,6 +1,8 @@
 #include "PmergeMe.hpp"
 #include <iostream>
+#include <chrono>
 
+int PmergeMe::globalCounter = 0;
 
 bool PmergeMe::hasDuplicates(std::vector<int> v) { // pass by value so we can sort
     std::sort(v.begin(), v.end());
@@ -12,6 +14,7 @@ void PmergeMe::fillVector(int argc, char **argv)
 {
     for (int i = 1; i < argc; i++)
     {
+        
         int toBeAdded = std::stoi(argv[i]);
         if (toBeAdded >= 0){
             intVector.push_back(toBeAdded);
@@ -44,17 +47,40 @@ void PmergeMe::run(int argc, char **argv){
         size_t level = 1;
         fillVector(argc, argv);
         std::cout<<"Before: "<<printData(intVector_orginal);
+        auto start = std::chrono::high_resolution_clock::now();
         sortData(intVector, &level);
         jacobsThal(intVector, &level);
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         std::cout<<"\nAfter : "<<printData(intVector);
+        if (isSorted(intVector)){
+            std::cout << "\nSORT STATUS = SORTED CORRECTLY"<< std::endl;
+        }else
+        {
+             std::cout << "\nSORT STATUS = FAILED"<< std::endl;
+        }
+        std::cout<<"Steps Counter is :"<<PmergeMe::globalCounter<<std::endl;
+        std::cout << "Time taken by function: " << duration.count() << " microseconds" << std::endl;
     }
    
     {
+        PmergeMe::globalCounter = 0;
         size_t level = 1;
         fillDeque(argc, argv);
         std::cout<<"\nBefore: "<<printData(intDeque_orginal);
+        auto start = std::chrono::high_resolution_clock::now();
         sortData(intDeque, &level);
         jacobsThal(intDeque, &level);
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         std::cout<<"\nAfter : "<<printData(intDeque);
+        if (isSorted(intDeque)){
+            std::cout << "\nSORT STATUS = SORTED CORRECTLY"<< std::endl;
+        }else
+        {
+             std::cout << "\nSORT STATUS = FAILED"<< std::endl;
+        }
+        std::cout<<"Steps Counter is :"<<PmergeMe::globalCounter<<std::endl;
+        std::cout << "Time taken by function: " << duration.count() << " microseconds" << std::endl;
     }
 }

@@ -2,7 +2,7 @@
 CXX = c++
 
 # Compilation flags
-CXXFLAGS = -Wall -Wextra -Werror
+CXXFLAGS = -Wall -Wextra -Werror -std=c++17
 
 # NAME binary name
 NAME = PmergeMe
