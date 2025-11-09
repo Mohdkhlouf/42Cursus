@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string> 
 #include <stack>
+#include <climits>
 
 void RPN::print_stack(){
     std::stack<int> print = rpnStack;
@@ -35,31 +36,33 @@ bool RPN::checkValues(const std::string &numbers){
     return (true);
 }
 
-void  RPN::transaction(char c, int *result){
+void  RPN::transaction(char c, long long *result){
     if(rpnStack.size() < 2)
         throw std::runtime_error("invalid inputs");
-    int second = 0;
-    int first = 0;
+    long long second = 0;
+    long long first = 0;
 
     second = rpnStack.top();
     rpnStack.pop();
     first = rpnStack.top();
     rpnStack.pop();
-        if (c == '+')
-            *result = (first + second);
-        else if (c == '-')
-            *result = (first - second);
-        else if (c == '*')
-            *result =  (first * second);
-        else if (c == '/'){
-            if (second == 0)
-                throw std::runtime_error("Error\ndivision by zero");
-            *result  = (first / second);   
+    if (c == '+')
+        *result = (first + second);
+    else if (c == '-')
+        *result = (first - second);
+    else if (c == '*')
+        *result =  (first * second);
+    else if (c == '/'){
+        if (second == 0)
+            throw std::runtime_error("Error\ndivision by zero");
+        *result  = (first / second);   
         }
+    if (*result > INT_MAX || *result < INT_MIN  )
+            throw std::overflow_error("Error\ninteger overflow");
 }
 
 bool RPN::calculate(const std::string &numbers){
-    int result = 0;
+    long long result = 0;
     if(!checkValues(numbers))
         return false;
     for(auto it:numbers){

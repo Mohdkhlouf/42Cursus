@@ -16,6 +16,6 @@ class RPN{
         bool checkValues(const std::string &numbers);
         bool isValidOperation(const char c);
         void print_stack();
-        void transaction(char c, int *result);
+        void transaction(char c, long long *result);
 
 };
