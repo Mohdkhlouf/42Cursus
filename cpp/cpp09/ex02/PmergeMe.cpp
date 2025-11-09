@@ -46,7 +46,7 @@ void PmergeMe::run(int argc, char **argv){
     {
         size_t level = 1;
         fillVector(argc, argv);
-        std::cout<<"Before: "<<printData(intVector_orginal);
+        std::cout<<"VECTOR CONTAINER:\nBefore: "<<printData(intVector_orginal);
         auto start = std::chrono::high_resolution_clock::now();
         sortData(intVector, &level);
         jacobsThal(intVector, &level);
@@ -67,7 +67,7 @@ void PmergeMe::run(int argc, char **argv){
         PmergeMe::globalCounter = 0;
         size_t level = 1;
         fillDeque(argc, argv);
-        std::cout<<"\nBefore: "<<printData(intDeque_orginal);
+        std::cout<<"\nDEQUE CONTAINER:\nBefore: "<<printData(intDeque_orginal);
         auto start = std::chrono::high_resolution_clock::now();
         sortData(intDeque, &level);
         jacobsThal(intDeque, &level);
