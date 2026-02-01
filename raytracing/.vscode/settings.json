@@ -1,8 +1,0 @@
-{
-	"files.associations": {
-		"minirt.h": "c",
-		"chrono": "c",
-		"functional": "c",
-		"vector": "c"
-	}
-}

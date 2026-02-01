@@ -74,6 +74,17 @@ bool isLeapYear(int year)
 	return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
+
+bool pre_validate(std::string &line)
+{
+	std::regex date_pattern1(R"(\d{4}-\d{2}-\d{2})");
+	std::regex date_pattern2(R"(\d{4}-\d{2}-\d{2} \| -?\d+(\.\d+)?$)");
+	if (!std::regex_match(line, date_pattern1) && !std::regex_match(line, date_pattern2))
+			return false;
+	return (true);
+}
+
+
 bool validateDate(std::string &dateStr)
 {
 
@@ -85,6 +96,9 @@ bool validateDate(std::string &dateStr)
 	month = stoi(dateStr.substr(5, 2));
 	day = stoi(dateStr.substr(8, 2));
 
+	if (!pre_validate(dateStr)){
+			return false;
+		}
 	if (month > 12 || month < 0)
 	{
 		return false;
@@ -95,15 +109,6 @@ bool validateDate(std::string &dateStr)
 		return false;
 	}
 
-	return (true);
-}
-
-bool pre_validate(std::string &line)
-{
-	std::regex date_pattern1(R"(\d{4}-\d{2}-\d{2})");
-	std::regex date_pattern2(R"(\d{4}-\d{2}-\d{2} \| -?\d+(\.\d+)?$)");
-	if (!std::regex_match(line, date_pattern1) && !std::regex_match(line, date_pattern2))
-			return false;
 	return (true);
 }
 
@@ -119,13 +124,11 @@ bool BitcoinExchange::calculateValue(std::ifstream &inputFile)
 	std::getline(inputFile, line);
 	if (line != "date | value")
 	{
-		throw std::runtime_error("Error\nfile has incorrect values");
+		throw std::runtime_error("Error\nfile header is not correct");
 	}
 	while (std::getline(inputFile, line))
 	{
-		if (!pre_validate(line)){
-			std::cout << "bad input => " << line<<std::endl;
-		}
+
 		std::string firstP = "";
 		std::string secondP = "";
 		std::map<std::string, float>::iterator it = bitData.begin();
@@ -140,7 +143,7 @@ bool BitcoinExchange::calculateValue(std::ifstream &inputFile)
 				{
 					std::cout << "Error: no record for this." << std::endl;
 				}else if(!validateDate(firstP)){
-					std::cout << "bad input => " << firstP<<std::endl;
+					std::cout << "Error: bad input => " << firstP<<std::endl;
 				}
 				else if (stof(secondP) < 0)
 				{
